@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Refer Engine - Make your iOS, Android and Windows 8 Apps Go Viral!</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Apexa Inc.">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <!--[if lt IE 8]>
+	      <link href="~/css/font-awesome-ie7.css" rel="stylesheet">
+        <![endif]-->
+    <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    <link rel="shortcut icon" href="~/img/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/img/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/img/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/img/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" href="~/img/ico/favicon.ico">
+    
+        <!-- start Mixpanel -->
+    <script type="text/javascript">(function(c,a){window.mixpanel=a;var b,d,h,e;b=c.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===c.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.1.min.js';d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d);a._i=[];a.init=function(b,c,f){function d(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]);a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var g=a;"undefined"!==typeof f?
+    g=a[f]=[]:f="mixpanel";g.people=g.people||[];h="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config people.identify people.set people.increment".split(" ");for(e=0;e<h.length;e++)d(g,h[e]);a._i.push([b,c,f])};a.__SV=1.1})(document,window.mixpanel||[]);
+mixpanel.init("d76136086d701abbecf55a6de775127c");
+
+mixpanel.register({ DocumentURL: document.URL, Site: "ReferEngine" });
+mixpanel.track("LandingPage", { name: "@ViewBag.LandingPageName" });
+    </script>
+    <!-- end Mixpanel -->
+
+    @Styles.Render("~/css/bootstrap")
+</head>
+<body>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand">Refer Engine</a>
+            </div>
+        </div>
+    </div>
+
+    @RenderBody()
+
+	<div id="copywrite">
+	  <div class="container">
+	    <div class="row">
+		  <div class="span12">
+		    <p>&copy; @DateTime.Now.Year - ReferEngine.com <span id="totop" class="pull-right">Back to Top <i class="icon-arrow-up"></i></span></p>
+		  </div>		  
+		</div>	  
+      </div>	  
+    </div>    
+
+    @*        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)*@
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="~/js/jquery-1.8.2.min.js"><\/script>')</script>
+    <script src="~/js/jquery-validate.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery.fitvids.js"></script>
+    <script src="~/js/emailForm.js"></script>
+    <script>
+$(document).ready(function () {
+    $(".js-video").fitVids();
+    $("#totop").click(function () {
+        $("body, html").animate({
+            scrollTop: 0
+        }, 300);
+        return false;
+    });
+});
+    </script>
+    
+    @*Google Analytics*@
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36239382-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    
+    @*Focus on Input*@
+    <script type="text/javascript">
+        var pageName = "@ViewBag.LandingPageName";
+        if (pageName === "FocusOnInput") {
+            $("input").focus();
+        }
+    </script>
+</body>
+</html>
