@@ -2,38 +2,42 @@
   <RecentFiles>
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:App_Start/f:BundleConfig.cs" caret="1252" fromTop="9" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/f:index.html" caret="0" fromTop="0" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Controllers/f:AccountController.cs" caret="505" fromTop="12" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Models/f:AccountModels.cs" caret="46" fromTop="1" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/f:Global.asax.cs" caret="0" fromTop="0" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:css/f:bootstrap.css" caret="8936" fromTop="3" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:css/f:blue.css" caret="3725" fromTop="11" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:js/f:jquery-validate.js" caret="54468" fromTop="34" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/f:Web.config" caret="638" fromTop="11" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:css/f:base.css" caret="277" fromTop="11" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:DataAccess/f:DataAccess.cs" caret="1207" fromTop="15" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Account/f:Manage.cshtml" caret="0" fromTop="0" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Account/f:Login.cshtml" caret="1174" fromTop="16" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Home/f:About.cshtml" caret="0" fromTop="0" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/f:_ViewStart.cshtml" caret="54" fromTop="3" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Home/f:Index.cshtml" caret="1070" fromTop="15" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Controllers/f:HomeController.cs" caret="5363" fromTop="25" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Shared/f:_Layout.cshtml" caret="2152" fromTop="15" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:js/f:emailForm.js" caret="243" fromTop="8" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:css/f:base.css" caret="277" fromTop="11" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Properties/f:AssemblyInfo.cs" caret="414" fromTop="9" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/f:packages.config" caret="0" fromTop="0" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/f:Global.asax.cs" caret="681" fromTop="22" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:js/f:facebook.js" caret="52" fromTop="1" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:js/f:emailForm.js" caret="42" fromTop="1" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:css/f:bootstrap.css" caret="4170" fromTop="11" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:css/f:base.css" caret="9067" fromTop="21" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Controllers/f:HomeController.cs" caret="12011" fromTop="67" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Home/f:Index.cshtml" caret="1143" fromTop="20" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/f:Web.config" caret="1127" fromTop="17" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:App_Start/f:RouteConfig.cs" caret="578" fromTop="19" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Controllers/f:ReferController.cs" caret="983" fromTop="14" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/f:_ViewStart.cshtml" caret="0" fromTop="0" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Refer/f:Start.cshtml" caret="2" fromTop="0" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Shared/f:_Layout.cshtml" caret="2681" fromTop="46" />
   </RecentFiles>
   <RecentEdits>
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Home/f:About.cshtml" caret="0" fromTop="0" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Models/f:AccountModels.cs" caret="0" fromTop="0" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:css/f:bootstrap.css" caret="8936" fromTop="3" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:css/f:blue.css" caret="3725" fromTop="11" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:js/f:jquery-validate.js" caret="54468" fromTop="34" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/f:Web.config" caret="647" fromTop="11" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:DataAccess/f:DataAccess.cs" caret="1160" fromTop="13" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:js/f:emailForm.js" caret="818" fromTop="13" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Shared/f:_Layout.cshtml" caret="2010" fromTop="25" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:css/f:bootstrap.css" caret="15187" fromTop="27" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Home/f:Index.cshtml" caret="62" fromTop="5" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:js/f:facebook.js" caret="891" fromTop="6" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:js/f:emailForm.js" caret="42" fromTop="1" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:css/f:base.css" caret="9064" fromTop="20" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Controllers/f:HomeController.cs" caret="12011" fromTop="10" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/f:_ViewStart.cshtml" caret="54" fromTop="3" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Home/f:Index.cshtml" caret="708" fromTop="10" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:css/f:base.css" caret="9013" fromTop="16" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Controllers/f:HomeController.cs" caret="5363" fromTop="25" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:App_Start/f:RouteConfig.cs" caret="578" fromTop="19" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Controllers/f:ReferController.cs" caret="878" fromTop="8" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Shared/f:_Layout.cshtml" caret="2382" fromTop="17" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Refer/f:Start.cshtml" caret="96" fromTop="3" />
   </RecentEdits>
 </RecentFiles>

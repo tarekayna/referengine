@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
+using Facebook;
 
 namespace ReferEngine.Controllers
 {
@@ -44,13 +45,13 @@ namespace ReferEngine.Controllers
                                                       new LandingPageVariation 
                                                           {
                                                               Name = "Base",
-                                                              Probability = 40,
+                                                              Probability = 20,
                                                               ViewProperties = new ViewProperties()
                                                           },
                                                       new LandingPageVariation 
                                                           {
                                                               Name = "WinWinFirst",
-                                                              Probability = 10,
+                                                              Probability = 20,
                                                               ViewProperties = new ViewProperties
                                                                                    {
                                                                                        HeadlineText = "It's a win-win! Increase your app sales and reward your customers."
@@ -59,10 +60,20 @@ namespace ReferEngine.Controllers
                                                       new LandingPageVariation 
                                                           {
                                                               Name = "GoViral",
-                                                              Probability = 10,
+                                                              Probability = 25,
                                                               ViewProperties = new ViewProperties
                                                                                    {
-                                                                                       HeadlineText = "Your app can go viral! Increase your app sales and reward your customers."
+                                                                                       HeadlineText = "Your app can go viral with Refer Engine. Increase your app sales and reward your customers."
+                                                                                   }
+                                                          },
+                                                      new LandingPageVariation 
+                                                          {
+                                                              Name = "GoViralOrange",
+                                                              Probability = 25,
+                                                              ViewProperties = new ViewProperties
+                                                                                   {
+                                                                                       HeadlineText = "Your app can go viral with Refer Engine. Increase your app sales and reward your customers.",
+                                                                                       ButtonClass = "btn-warning"
                                                                                    }
                                                           },
                                                       new LandingPageVariation
@@ -77,7 +88,7 @@ namespace ReferEngine.Controllers
                                                       new LandingPageVariation
                                                           {
                                                               Name = "RedButton",
-                                                              Probability = 10,
+                                                              Probability = 0,
                                                               ViewProperties = new ViewProperties
                                                                                    {
                                                                                        ButtonClass = "btn-danger"
@@ -86,7 +97,7 @@ namespace ReferEngine.Controllers
                                                       new LandingPageVariation
                                                           {
                                                               Name = "GreenButton",
-                                                              Probability = 10,
+                                                              Probability = 0,
                                                               ViewProperties = new ViewProperties
                                                                                    {
                                                                                        ButtonClass = "btn-success"
@@ -163,18 +174,64 @@ namespace ReferEngine.Controllers
             return View("Index");
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your app description page.";
+        //public ActionResult Facebook()
+        //{
+        //    if (Request.HttpMethod == "POST")
+        //    {
+        //        string accessToken = Request.Form["AccessToken"];
+        //        //string accessToken = "AAAFPdb7v06oBAOrQh1IUHdNOlDZBuXtG3zZBri1sYY6EmPkXQuF5vyTPgoUKw6z5EdumsE7E7UMIZAjeqbWzEHCEp6lDGecg3clZAzJEnwZDZD";
+        //        var client = new FacebookClient(accessToken);
+        //        dynamic response = client.Get("me/friends?fields=name,devices");
+        //        dynamic data = response.data;
 
-            return View();
-        }
+        //        List<Person> peopleWithIPhone = new List<Person>();
+        //        List<Person> peopleWithIPad = new List<Person>();
+        //        List<Person> peopleWithAndroid = new List<Person>();
+        //        List<Person> peopleWithNothing = new List<Person>();
+        //        for (int i = 0; i < data.Count; i++)
+        //        {
+        //            string name = data[i].name;
+        //            Int64 id = Convert.ToInt64(data[i].id);
+        //            Person person = new Person(id, name);
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+        //            if (data[i].devices == null)
+        //            {
+        //                peopleWithNothing.Add(person);
+        //            }
+        //            else 
+        //            {
+        //                for (int j = 0; j < data[i].devices.Count; j++)
+        //                {
+        //                    string deviceName = data[i].devices[j].hardware;
+        //                    string os = data[i].devices[j].os;
+        //                    if (deviceName != null && deviceName.Equals("iPhone"))
+        //                    {
+        //                        peopleWithIPhone.Add(person);
+        //                    }
+        //                    else if (deviceName != null && deviceName.Equals("iPad"))
+        //                    {
+        //                        peopleWithIPad.Add(person);
+        //                    }
+        //                    else if (os != null && os.Equals("Android"))
+        //                    {
+        //                        peopleWithAndroid.Add(person);
+        //                    }
+        //                }
+        //            }
 
-            return View();
-        }
+        //            i++;
+        //        }
+
+        //        return Json(new 
+        //        {
+        //            iPhone = peopleWithIPhone,
+        //            iPad = peopleWithIPad,
+        //            Android = peopleWithAndroid
+        //        }
+        //        );
+        //    }
+
+        //    return View();
+        //}
     }
 }

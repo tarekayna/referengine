@@ -428,4 +428,6 @@ ul.plans {
 
 #submit-button {
     font-size: large;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

@@ -44,6 +44,8 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\DotNetOpenAuth.OAuth
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\DotNetOpenAuth.OAuth.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\DotNetOpenAuth.OpenId.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
-C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\obj\Debug\ReferEngine.csprojResolveAssemblyReference.cache
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\obj\Debug\ReferEngine.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\obj\Debug\ReferEngine.pdb
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\Facebook.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\Facebook.xml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\obj\Debug\ReferEngine.csprojResolveAssemblyReference.cache

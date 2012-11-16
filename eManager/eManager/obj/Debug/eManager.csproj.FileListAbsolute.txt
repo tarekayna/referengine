@@ -1,0 +1,7 @@
+C:\Users\Tarek\Documents\GitHub\referengine\eManager\eManager\bin\Debug\eManager.dll
+C:\Users\Tarek\Documents\GitHub\referengine\eManager\eManager\bin\Debug\eManager.pdb
+C:\Users\Tarek\Documents\GitHub\referengine\eManager\eManager\obj\Debug\eManager.dll
+C:\Users\Tarek\Documents\GitHub\referengine\eManager\eManager\obj\Debug\eManager.pdb
+C:\Users\Tarek\Documents\GitHub\referengine\eManager\eManager\obj\Debug\eManager.csprojResolveAssemblyReference.cache
+C:\Users\Tarek\Documents\GitHub\referengine\eManager\eManager\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\Tarek\Documents\GitHub\referengine\eManager\eManager\bin\Debug\WebActivator.dll

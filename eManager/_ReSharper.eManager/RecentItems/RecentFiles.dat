@@ -1,0 +1,44 @@
+﻿<RecentFiles>
+  <RecentFiles>
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Views/d:Home/f:Contact.cshtml" caret="0" fromTop="0" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:App_Start/f:StructuremapMvc.cs" caret="0" fromTop="0" />
+    <File id="02B96326-312D-4E58-8679-E337DE0963B8/f:packages.config" caret="141" fromTop="2" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Views/d:Department/f:Detail.cshtml" caret="92" fromTop="7" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Scripts/f:jquery-ui-1.8.20.js" caret="0" fromTop="0" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Views/d:Employee/f:Create.cshtml" caret="337" fromTop="15" />
+    <File id="02B96326-312D-4E58-8679-E337DE0963B8/f:IDepartmentDataSource.cs" caret="175" fromTop="8" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Controllers/f:DepartmentController.cs" caret="362" fromTop="14" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:DependencyResolution/f:SmDependencyResolver.cs" caret="257" fromTop="11" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Views/d:Home/f:Index.cshtml" caret="265" fromTop="11" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:DependencyResolution/f:IoC.cs" caret="316" fromTop="9" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/f:Web.config" caret="611" fromTop="1" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Migrations/f:Configuration.cs" caret="376" fromTop="13" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Views/d:Shared/f:_Layout.cshtml" caret="1418" fromTop="13" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:App_Start/f:RouteConfig.cs" caret="344" fromTop="13" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/f:Global.asax.cs" caret="708" fromTop="22" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Controllers/f:HomeController.cs" caret="390" fromTop="17" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Controllers/f:EmployeeController.cs" caret="1067" fromTop="15" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Models/f:CreateEmployeeViewModel.cs" caret="399" fromTop="6" />
+    <File id="02B96326-312D-4E58-8679-E337DE0963B8/f:Department.cs" caret="275" fromTop="11" />
+    <File id="02B96326-312D-4E58-8679-E337DE0963B8/f:Employee.cs" caret="273" fromTop="11" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Intrastructure/f:DepartmentDb.cs" caret="327" fromTop="14" />
+  </RecentFiles>
+  <RecentEdits>
+    <File id="02B96326-312D-4E58-8679-E337DE0963B8/f:Department.cs" caret="331" fromTop="12" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:App_Start/f:RouteConfig.cs" caret="454" fromTop="19" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Migrations/f:Configuration.cs" caret="781" fromTop="20" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/f:Web.config" caret="782" fromTop="1" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Controllers/f:HomeController.cs" caret="377" fromTop="15" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:DependencyResolution/f:IoC.cs" caret="578" fromTop="13" />
+    <File id="02B96326-312D-4E58-8679-E337DE0963B8/f:packages.config" caret="141" fromTop="2" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Views/d:Home/f:Index.cshtml" caret="265" fromTop="11" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Controllers/f:DepartmentController.cs" caret="529" fromTop="20" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Views/d:Department/f:Detail.cshtml" caret="92" fromTop="7" />
+    <File id="02B96326-312D-4E58-8679-E337DE0963B8/f:IDepartmentDataSource.cs" caret="319" fromTop="12" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Intrastructure/f:DepartmentDb.cs" caret="527" fromTop="20" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Views/d:Employee/f:Create.cshtml" caret="1055" fromTop="25" />
+    <File id="02B96326-312D-4E58-8679-E337DE0963B8/f:Employee.cs" caret="306" fromTop="12" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Models/f:CreateEmployeeViewModel.cs" caret="452" fromTop="8" />
+    <File id="E622E67C-EEAA-4A60-8710-4AC878A9C72C/d:Controllers/f:EmployeeController.cs" caret="1157" fromTop="17" />
+  </RecentEdits>
+</RecentFiles>

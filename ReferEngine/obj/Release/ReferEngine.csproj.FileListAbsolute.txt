@@ -47,3 +47,5 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\DotNetOpenAuth.OpenI
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\obj\Release\ReferEngine.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\obj\Release\ReferEngine.pdb
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\obj\Release\ReferEngine.csprojResolveAssemblyReference.cache
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\Facebook.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\Facebook.xml
