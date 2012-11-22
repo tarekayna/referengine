@@ -30,6 +30,7 @@
     <!-- end Mixpanel -->
 
     @Styles.Render("~/css/bootstrap")
+    @RenderSection("styles", required: false)
 </head>
 <body>
           
@@ -54,7 +55,17 @@
                         <div class="span12">
                             <p>&copy; @DateTime.Now.Year - ReferEngine.com <span id="totop" class="pull-right">Back to Top <i class="icon-arrow-up"></i></span></p>
                         </div>		  
-                    </div>	  
+                    </div>
+                    <div class="row">
+		              <div class="span3">
+			            <h3>We're Social</h3>
+		                  <ul>
+		                      <li><a href="#">Facebook</a></li>
+		                      <li><a href="#">Twitter</a></li>
+		                      <li><a href="#">Google &#43;</a></li>
+		                  </ul>
+		              </div>
+		            </div>
                 </div>	  
             </div>             
         }

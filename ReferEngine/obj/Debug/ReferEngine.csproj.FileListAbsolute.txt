@@ -8,6 +8,7 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\DotNetOpenAuth.OAuth
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\DotNetOpenAuth.OpenId.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\EntityFramework.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\Facebook.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\Microsoft.Web.WebPages.OAuth.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\Newtonsoft.Json.dll
@@ -24,6 +25,7 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\System.Web.WebPages.
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\WebGrease.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\WebMatrix.Data.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\WebMatrix.WebData.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\Facebook.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\EntityFramework.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\Newtonsoft.Json.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\System.Net.Http.Formatting.xml
@@ -44,8 +46,6 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\DotNetOpenAuth.OAuth
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\DotNetOpenAuth.OAuth.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\DotNetOpenAuth.OpenId.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\obj\Debug\ReferEngine.csprojResolveAssemblyReference.cache
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\obj\Debug\ReferEngine.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\obj\Debug\ReferEngine.pdb
-C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\Facebook.dll
-C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\bin\Facebook.xml
-C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine\obj\Debug\ReferEngine.csprojResolveAssemblyReference.cache

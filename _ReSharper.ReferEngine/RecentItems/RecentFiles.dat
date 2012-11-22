@@ -14,13 +14,13 @@
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:css/f:bootstrap.css" caret="4170" fromTop="11" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:css/f:base.css" caret="9067" fromTop="21" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Controllers/f:HomeController.cs" caret="12011" fromTop="67" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Home/f:Index.cshtml" caret="1143" fromTop="20" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/f:Web.config" caret="1127" fromTop="17" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:App_Start/f:RouteConfig.cs" caret="578" fromTop="19" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Controllers/f:ReferController.cs" caret="983" fromTop="14" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/f:_ViewStart.cshtml" caret="0" fromTop="0" />
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Refer/f:Start.cshtml" caret="2" fromTop="0" />
-    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Shared/f:_Layout.cshtml" caret="2681" fromTop="46" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/f:_ViewStart.cshtml" caret="0" fromTop="0" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Home/f:Index.cshtml" caret="1143" fromTop="20" />
+    <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Views/d:Shared/f:_Layout.cshtml" caret="1081" fromTop="20" />
   </RecentFiles>
   <RecentEdits>
     <File id="61776AD4-E74C-4830-B507-9AF49EA2BF1F/d:Models/f:AccountModels.cs" caret="0" fromTop="0" />

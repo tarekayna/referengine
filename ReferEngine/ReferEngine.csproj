@@ -238,12 +238,16 @@
     <Content Include="css\font-awesome-ie7.css" />
     <Content Include="css\font-awesome.css" />
     <Content Include="css\fonts\fontawesome-webfont.svg" />
+    <Content Include="css\refer\intro.css" />
+    <Content Include="css\refer\start.css" />
     <Content Include="facebook_channel.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="css\fonts\fontawesome-webfont.eot" />
     <Content Include="css\fonts\fontawesome-webfont.ttf" />
     <Content Include="css\fonts\fontawesome-webfont.woff" />
+    <Content Include="img\ReferEngine50.png" />
+    <Content Include="img\ReferEngine50_1.png" />
     <Content Include="img\Thumbs.db" />
     <None Include="Properties\PublishProfiles\referengine - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\referengine - Web Deploy.pubxml" />
@@ -259,6 +263,7 @@
     <Content Include="js\jquery-1.8.2.min.js" />
     <Content Include="js\jquery-validate.js" />
     <Content Include="js\jquery.fitvids.js" />
+    <Content Include="js\refer\start.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -296,12 +301,14 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Refer\Start.cshtml" />
+    <Content Include="Views\Refer\start.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Refer\intro.cshtml" />
+    <Content Include="Views\Refer\friends.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

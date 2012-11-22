@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "About";
+    ViewBag.HideHeader = true;
+    ViewBag.HideFooter = true;
+}
+
+@section scripts
+{
+    <script src="~/js/refer/friends.js"></script>
+}
+
+@section styles
+{
+    <link rel="stylesheet" href="~/css/refer/friends.css" />
+}
+
+<div class="container">
+    <div class="row">
+        <h2 class="span12">
+            Welcome, <span>@Model.Me.first_name</span>!
+        </h2>
+    </div>
+    <div class="row">
+        <h3 class="span12">
+            Select the list of friends you wish to refer Blu Graphing Calculator to:   
+        </h3>
+    </div>
+    @foreach (dynamic friend in Model.Friends.data)
+    {
+        <div class="row">
+            <p class="span12">
+                <img src="@friend.picture.data.url" />
+                @friend.name
+            </p>
+        </div>
+    }
+</div>

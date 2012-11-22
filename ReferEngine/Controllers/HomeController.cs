@@ -63,7 +63,7 @@ namespace ReferEngine.Controllers
                                                               Probability = 25,
                                                               ViewProperties = new ViewProperties
                                                                                    {
-                                                                                       HeadlineText = "Your app can go viral with Refer Engine. Increase your app sales and reward your customers."
+                                                                                       HeadlineText = "Your app 2 can go viral with Refer Engine. Increase your app sales and reward your customers."
                                                                                    }
                                                           },
                                                       new LandingPageVariation 
@@ -72,7 +72,7 @@ namespace ReferEngine.Controllers
                                                               Probability = 25,
                                                               ViewProperties = new ViewProperties
                                                                                    {
-                                                                                       HeadlineText = "Your app can go viral with Refer Engine. Increase your app sales and reward your customers.",
+                                                                                       HeadlineText = "Your app 2 can go viral with Refer Engine. Increase your app sales and reward your customers.",
                                                                                        ButtonClass = "btn-warning"
                                                                                    }
                                                           },

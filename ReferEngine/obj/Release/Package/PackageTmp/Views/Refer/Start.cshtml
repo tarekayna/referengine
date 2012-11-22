@@ -6,41 +6,27 @@
 
 @section scripts
 {
-    <script src="~/js/facebook.js"></script>
+    <script src="~/js/refer/start.js"></script>
 }
 
-
-<div id="fb-root"></div>
-
-<hr/>
+@section styles
+{
+    <link rel="stylesheet" href="~/css/refer/start.css" />
+}
 
 <div class="container">
     <div class="row">
-        <div class="span12">
-            <div class="fb-login-button" data-show-faces="true" data-width="400" data-max-rows="1"></div>
-        </div>
+        <h2 class="span12">
+            Great! Let's Start by Logging in to Facebook
+        </h2>
     </div>
-    <hr/>
     <div class="row">
-        <div class="span12">
-            <input id="get-devices" type="button" value="Get Friends Devices" class="btn btn-primary"/>            
-        </div>
+        <p class="span12">
+        </p>
     </div>
-    <div class="row" id="result">
-        <hr/>
-        <div class="span4">
-            <strong>iPhone</strong><br/>
-            <div id="iPhoneNames"></div>
-        </div>
-        <div class="span4">
-            <strong>iPad</strong><br/>
-            <div id="iPadNames"></div>
-        </div>
-        <div class="span4">
-            <strong>Android</strong><br/>
-            <div id="AndroidNames"></div>
+    <div class="row" id="start-row">
+        <div class="span12 center-content">
+            <a class="btn btn-primary btn-large" id="login-button">Login</a>
         </div>
     </div>
 </div>
-
-<hr/>

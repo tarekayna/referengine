@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "ReferCloud", "ReferCloud\ReferCloud.ccproj", "{23CD7E74-84B8-441A-AF6E-628E6166E93F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine", "ReferEngine\ReferEngine.csproj", "{8B12746F-826A-4FFC-A877-1119A0474C68}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{23CD7E74-84B8-441A-AF6E-628E6166E93F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23CD7E74-84B8-441A-AF6E-628E6166E93F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23CD7E74-84B8-441A-AF6E-628E6166E93F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23CD7E74-84B8-441A-AF6E-628E6166E93F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B12746F-826A-4FFC-A877-1119A0474C68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B12746F-826A-4FFC-A877-1119A0474C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B12746F-826A-4FFC-A877-1119A0474C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B12746F-826A-4FFC-A877-1119A0474C68}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
