@@ -14,10 +14,10 @@ body {
 /* Navbar
 -------------------------------------------------- */
 .navbar-inner {
-    background: none repeat scroll 0 0 #394755;
+    background: none repeat scroll 0 0 #FFF;
 }
 .navbar .brand {
-    color: #FFFFFF;
+    color: #000;
 }
 .navbar .nav > li > a {
     color: #D6DFE5;

@@ -18,11 +18,15 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/img/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/img/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" href="~/img/ico/favicon.ico">
-    
+
     <!-- start Mixpanel -->
-    <script type="text/javascript"> 
-        (function(c,a){window.mixpanel=a;var b,d,h,e;b=c.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===c.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.1.min.js';d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d);a._i=[];a.init=function(b,c,f){function d(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]);a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var g=a;"undefined"!==typeof f?
-        g=a[f]=[]:f="mixpanel";g.people=g.people||[];h="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config people.identify people.set people.increment".split(" ");for(e=0;e<h.length;e++)d(g,h[e]);a._i.push([b,c,f])};a.__SV=1.1})(document,window.mixpanel||[]);
+    <script type="text/javascript">
+        (function (c, a) {
+            window.mixpanel = a; var b, d, h, e; b = c.createElement("script"); b.type = "text/javascript"; b.async = !0; b.src = ("https:" === c.location.protocol ? "https:" : "http:") + '//cdn.mxpnl.com/libs/mixpanel-2.1.min.js'; d = c.getElementsByTagName("script")[0]; d.parentNode.insertBefore(b, d); a._i = []; a.init = function (b, c, f) {
+                function d(a, b) { var c = b.split("."); 2 == c.length && (a = a[c[0]], b = c[1]); a[b] = function () { a.push([b].concat(Array.prototype.slice.call(arguments, 0))) } } var g = a; "undefined" !== typeof f ?
+                g = a[f] = [] : f = "mixpanel"; g.people = g.people || []; h = "disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config people.identify people.set people.increment".split(" "); for (e = 0; e < h.length; e++) d(g, h[e]); a._i.push([b, c, f])
+            }; a.__SV = 1.1
+        })(document, window.mixpanel || []);
         mixpanel.init("d76136086d701abbecf55a6de775127c");
         mixpanel.register({ DocumentURL: document.URL, Site: "ReferEngine" });
         mixpanel.track("LandingPage", { name: "@ViewBag.LandingPageName" });
@@ -32,51 +36,52 @@
     @Styles.Render("~/css/bootstrap")
 </head>
 <body>
-          
-        @if (!Convert.ToBoolean(ViewBag.HideHeader))
-        {
-            <div class="navbar navbar-fixed-top">
-                <div class="navbar-inner">
-                    <div class="container">
-                        <a class="brand">Refer Engine</a>
+
+    @if (!Convert.ToBoolean(ViewBag.HideHeader))
+    {
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <img src="~/img/logo_mark.png" style="height: 50px" />
+                    <a class="brand">Refer Engine</a>
+                </div>
+            </div>
+        </div>            
+    }
+
+    @RenderBody()
+
+    @if (!Convert.ToBoolean(ViewBag.HideFooter))
+    {
+        <div id="copywrite">
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <p>&copy; @DateTime.Now.Year - ReferEngine.com <span id="totop" class="pull-right">Back to Top <i class="icon-arrow-up"></i></span></p>
                     </div>
                 </div>
-            </div>            
-        }
+            </div>
+        </div>             
+    }
 
-        @RenderBody()
-    
-        @if (!Convert.ToBoolean(ViewBag.HideFooter))
-        {
-            <div id="copywrite">
-                <div class="container">
-                    <div class="row">
-                        <div class="span12">
-                            <p>&copy; @DateTime.Now.Year - ReferEngine.com <span id="totop" class="pull-right">Back to Top <i class="icon-arrow-up"></i></span></p>
-                        </div>		  
-                    </div>	  
-                </div>	  
-            </div>             
-        }
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="~/js/jquery-1.8.2.min.js"><\/script>')</script>
+    <script src="~/js/jquery-validate.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="~/js/jquery-1.8.2.min.js"><\/script>')</script>
-        <script src="~/js/jquery-validate.js"></script>
-        <script src="~/js/bootstrap.min.js"></script>
-    
-        @RenderSection("scripts", required: false)
-    
-        @*Google Analytics*@
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-36239382-1']);
-                _gaq.push(['_trackPageview']);
+    @RenderSection("scripts", required: false)
 
-                (function () {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    @*Google Analytics*@
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36239382-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
     </script>
-    </body>
+</body>
 </html>
