@@ -1,3 +1,10 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (this.ViewContext.Controller.ToString().Contains("ReferController"))
+    {
+        Layout = "~/Views/Shared/_ReferLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 }
