@@ -6,15 +6,12 @@ using System.Web.Mvc;
 
 namespace ReferEngine.Controllers
 {
+    //[Authorize(Roles = "Dev")]
     public class DevController : Controller
     {
-        //
-        // GET: /Dev/
-
         public ActionResult CreateApp()
         {
             return View();
         }
-
     }
 }
