@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+
+@*@section scripts
+{
+    <script src="~/js/facebook.js"></script>
+}*@
+
+@section styles
+{
+    <link rel="stylesheet" href="~/css/refer/intro.css" />
+}
+
+<div class="container">
+    <form class="form-horizontal">
+        <fieldset>
+            <legend>Create A New App</legend>
+        </fieldset>
+        <div class="control-group">
+            <label class="control-label" for="platform">Platform</label>
+            <div class="controls">
+                <select id="platform">
+                    <option selected="selected">Windows 8</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="appName">App Name</label>
+            <div class="controls">
+                <input type="text" id="appName" placeholder="Blu Graphing Calculator">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="storeLink">App Store Link</label>
+            <div class="controls">
+                <input type="text" id="storeLink">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
