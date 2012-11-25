@@ -139,7 +139,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DevController.cs" />
-    <Compile Include="Controllers\FacebookController.cs" />
+    <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReferController.cs" />
     <Compile Include="DataAccess\DataAccess.cs" />
@@ -147,8 +147,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\App.cs" />
-    <Compile Include="Models\Developer.cs" />
+    <Compile Include="Migrations\201211240301187_InitialCreate.cs" />
+    <Compile Include="Migrations\201211240301187_InitialCreate.Designer.cs">
+      <DependentUpon>201211240301187_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ReferDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebRole.cs" />
   </ItemGroup>
@@ -242,7 +246,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Refer\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Refer\friends.cshtml" />
     <Content Include="Views\Refer\intro.cshtml" />
@@ -267,13 +271,42 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Facebook\app.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Dev\createApp.cshtml" />
+    <Content Include="Views\App\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_ReferLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Dev\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Dev\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Dev\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_FavIcon.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\App\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReferLib\ReferLib.csproj">
+      <Project>{175f5eb3-aa40-4032-a3e4-a0d9643b8d21}</Project>
+      <Name>ReferLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Dev\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201211240301187_InitialCreate.resx">
+      <DependentUpon>201211240301187_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

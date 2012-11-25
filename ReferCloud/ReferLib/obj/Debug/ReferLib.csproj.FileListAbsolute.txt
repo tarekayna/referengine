@@ -1,0 +1,4 @@
+C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferLib\bin\Debug\ReferLib.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferLib\bin\Debug\ReferLib.pdb
+C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferLib\obj\Debug\ReferLib.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferLib\obj\Debug\ReferLib.pdb

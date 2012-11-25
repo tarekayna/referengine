@@ -1,0 +1,31 @@
+﻿@model ReferLib.App
+
+@{
+    ViewBag.Title = "About";
+    ViewBag.HideHeader = true;
+    ViewBag.HideFooter = true;
+}
+
+@*@section scripts
+{
+    <script src="~/js/facebook.js"></script>
+}*@
+
+@section styles
+{
+    @*<link rel="stylesheet" href="~/css/refer/intro.css" />*@
+}
+
+<div class="container">
+    <div class="row">
+        <div class="span1">
+            <img src="@Model.ImageLink" />
+        </div>
+        <h2 class="span11">@Model.Name for @Model.Platform</h2>
+    </div>
+    <div class="row">
+        <div class="span12">
+            @Html.Raw(Model.Description)
+        </div>
+    </div>
+</div>
