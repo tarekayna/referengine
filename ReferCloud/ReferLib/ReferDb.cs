@@ -1,7 +1,7 @@
 ﻿using ReferLib;
 using System.Data.Entity;
 
-namespace ReferEngine.Models
+namespace ReferLib
 {
     public class ReferDb : DbContext
     {

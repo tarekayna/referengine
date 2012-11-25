@@ -147,12 +147,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201211240301187_InitialCreate.cs" />
-    <Compile Include="Migrations\201211240301187_InitialCreate.Designer.cs">
-      <DependentUpon>201211240301187_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\ReferDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebRole.cs" />
   </ItemGroup>
@@ -227,9 +221,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
+    <Content Include="img\logo-mark-128.ico" />
     <Content Include="img\noise.png" />
-    <Content Include="img\ReferEngine50.png" />
-    <Content Include="img\ReferEngine50_1.png" />
     <Content Include="index.html" />
     <Content Include="js\lib\bootstrap.js" />
     <Content Include="js\emailForm.js" />
@@ -255,6 +248,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -302,11 +296,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Dev\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201211240301187_InitialCreate.resx">
-      <DependentUpon>201211240301187_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

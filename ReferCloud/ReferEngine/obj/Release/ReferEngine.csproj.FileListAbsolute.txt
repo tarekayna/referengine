@@ -34,3 +34,5 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferEngine\bin\System.We
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferEngine\obj\Release\ReferEngine.csprojResolveAssemblyReference.cache
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferEngine\obj\Release\ReferEngine.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferEngine\obj\Release\ReferEngine.pdb
+C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferEngine\bin\ReferLib.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferEngine\bin\ReferLib.pdb

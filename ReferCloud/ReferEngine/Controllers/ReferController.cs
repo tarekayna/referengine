@@ -50,13 +50,24 @@ namespace ReferEngine.Controllers
     {
         public ActionResult Friends()
         {
-            string accessToken = Request["access_token"];
-            if (accessToken != null)
+            string userAccessToken = Request["access_token"];
+            if (userAccessToken != null)
             {
-                var client = new FacebookClient(accessToken);
+                var client = new FacebookClient(userAccessToken);
                 dynamic me = client.Get("me");
                 dynamic friends = client.Get("me/friends?fields=picture,name,first_name");
                 FriendsViewModel viewModel = new FriendsViewModel(me, friends);
+                client.AppId = "368842109866922";
+                client.AppSecret = "b673f45aa978225ae8c9e4817a726be7";
+
+                dynamic appAccess = client.Get(
+                   "https://graph.facebook.com/oauth/access_token?client_id=368842109866922&client_secret=b673f45aa978225ae8c9e4817a726be7&grant_type=client_credentials");
+
+                dynamic parameters = new ExpandoObject();
+                parameters.app = "http://www.referengine.com/app/details/2";
+                //parameters.access_token = appAccess.access_token;
+                parameters.access_token = userAccessToken;
+                client.Post("me/referengine:refer", parameters);
                 return View(viewModel);
             }
 
@@ -73,64 +84,6 @@ namespace ReferEngine.Controllers
             return View();
         }
 
-        //public ActionResult Facebook()
-        //{
-        //    if (Request.HttpMethod == "POST")
-        //    {
-        //        string accessToken = Request.Form["AccessToken"];
-        //        //string accessToken = "AAAFPdb7v06oBAOrQh1IUHdNOlDZBuXtG3zZBri1sYY6EmPkXQuF5vyTPgoUKw6z5EdumsE7E7UMIZAjeqbWzEHCEp6lDGecg3clZAzJEnwZDZD";
-        //        var client = new FacebookClient(accessToken);
-        //        dynamic response = client.Get("me/friends?fields=name,devices");
-        //        dynamic data = response.data;
 
-        //        List<Person> peopleWithIPhone = new List<Person>();
-        //        List<Person> peopleWithIPad = new List<Person>();
-        //        List<Person> peopleWithAndroid = new List<Person>();
-        //        List<Person> peopleWithNothing = new List<Person>();
-        //        for (int i = 0; i < data.Count; i++)
-        //        {
-        //            string name = data[i].name;
-        //            Int64 id = Convert.ToInt64(data[i].id);
-        //            Person person = new Person(id, name);
-
-        //            if (data[i].devices == null)
-        //            {
-        //                peopleWithNothing.Add(person);
-        //            }
-        //            else 
-        //            {
-        //                for (int j = 0; j < data[i].devices.Count; j++)
-        //                {
-        //                    string deviceName = data[i].devices[j].hardware;
-        //                    string os = data[i].devices[j].os;
-        //                    if (deviceName != null && deviceName.Equals("iPhone"))
-        //                    {
-        //                        peopleWithIPhone.Add(person);
-        //                    }
-        //                    else if (deviceName != null && deviceName.Equals("iPad"))
-        //                    {
-        //                        peopleWithIPad.Add(person);
-        //                    }
-        //                    else if (os != null && os.Equals("Android"))
-        //                    {
-        //                        peopleWithAndroid.Add(person);
-        //                    }
-        //                }
-        //            }
-
-        //            i++;
-        //        }
-
-        //        return Json(new 
-        //        {
-        //            iPhone = peopleWithIPhone,
-        //            iPad = peopleWithIPad,
-        //            Android = peopleWithAndroid
-        //        }
-        //        );
-        //    }
-
-        //    return View();
-        //}
     }
 }

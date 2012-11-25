@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using ReferEngine.Filters;
-using ReferEngine.Models;
 using ReferLib;
 
 namespace ReferEngine.Controllers
@@ -21,11 +17,9 @@ namespace ReferEngine.Controllers
 
         public ActionResult Details(string id)
         {
-            var apps = _db.Apps.ToList();
-            int appId = Convert.ToInt32(Server.HtmlEncode(id));
-            App model = apps.First(a => a.Id == appId);
-
-            return View(model);
+            int inputId = Convert.ToInt32(id);
+            App app = _db.Apps.First(a => a.Id == inputId);
+            return View(app);
         }
 
         public ActionResult Create()

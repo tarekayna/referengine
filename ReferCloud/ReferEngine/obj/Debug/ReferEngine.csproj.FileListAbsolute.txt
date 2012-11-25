@@ -72,5 +72,3 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferEngine\obj\Debug\Ref
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferEngine\obj\Debug\ReferEngine.csprojResolveAssemblyReference.cache
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferEngine\bin\ReferLib.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferEngine\bin\ReferLib.pdb
-C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferEngine\obj\Debug\ReferEngine.Migrations.InitialCreate.resources
-C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferEngine\obj\Debug\ReferEngine.csproj.GenerateResource.Cache

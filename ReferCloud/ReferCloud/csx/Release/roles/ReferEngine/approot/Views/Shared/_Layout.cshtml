@@ -1,42 +1,40 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Refer Engine - Make your iOS, Android and Windows 8 Apps Go Viral!</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Apexa Inc.">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <!--[if lt IE 8]>
-	      <link href="~/css/font-awesome-ie7.css" rel="stylesheet">
+    @RenderSection("CustomHead", false)
+    <head>
+        <title>Refer Engine - Make your iOS, Android and Windows 8 Apps Go Viral!</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="Apexa Inc.">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <!--[if lt IE 8]>
+            <link href="~/css/font-awesome-ie7.css" rel="stylesheet">
         <![endif]-->
-    <!--[if lt IE 9]>
-          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-    <link rel="shortcut icon" href="~/img/logo-mark-225.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/img/logo-mark-225.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/img/logo-mark-225.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/img/logo-mark-225.ico">
-    <link rel="apple-touch-icon-precomposed" href="~/img/logo-mark-225.ico">
     
-    <!-- start Mixpanel -->
-    <script type="text/javascript">
-        (function (c, a) {
-            window.mixpanel = a; var b, d, h, e; b = c.createElement("script"); b.type = "text/javascript"; b.async = !0; b.src = ("https:" === c.location.protocol ? "https:" : "http:") + '//cdn.mxpnl.com/libs/mixpanel-2.1.min.js'; d = c.getElementsByTagName("script")[0]; d.parentNode.insertBefore(b, d); a._i = []; a.init = function (b, c, f) {
-                function d(a, b) { var c = b.split("."); 2 == c.length && (a = a[c[0]], b = c[1]); a[b] = function () { a.push([b].concat(Array.prototype.slice.call(arguments, 0))) } } var g = a; "undefined" !== typeof f ?
-                g = a[f] = [] : f = "mixpanel"; g.people = g.people || []; h = "disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config people.identify people.set people.increment".split(" "); for (e = 0; e < h.length; e++) d(g, h[e]); a._i.push([b, c, f])
-            }; a.__SV = 1.1
-        })(document, window.mixpanel || []);
-        mixpanel.init("d76136086d701abbecf55a6de775127c");
-        mixpanel.register({ DocumentURL: document.URL, Site: "ReferEngine" });
-        mixpanel.track("LandingPage", { name: "@ViewBag.LandingPageName" });
-    </script>
-    <!-- end Mixpanel -->
+        @Html.Partial("_FavIcon")
+    
+        <!-- start Mixpanel -->
+        <script type="text/javascript">
+            (function (c, a) {
+                window.mixpanel = a; var b, d, h, e; b = c.createElement("script"); b.type = "text/javascript"; b.async = !0; b.src = ("https:" === c.location.protocol ? "https:" : "http:") + '//cdn.mxpnl.com/libs/mixpanel-2.1.min.js'; d = c.getElementsByTagName("script")[0]; d.parentNode.insertBefore(b, d); a._i = []; a.init = function (b, c, f) {
+                    function d(a, b) { var c = b.split("."); 2 == c.length && (a = a[c[0]], b = c[1]); a[b] = function () { a.push([b].concat(Array.prototype.slice.call(arguments, 0))) } } var g = a; "undefined" !== typeof f ?
+                        g = a[f] = [] : f = "mixpanel"; g.people = g.people || []; h = "disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config people.identify people.set people.increment".split(" "); for (e = 0; e < h.length; e++) d(g, h[e]); a._i.push([b, c, f])
+                }; a.__SV = 1.1
+            })(document, window.mixpanel || []);
+            mixpanel.init("d76136086d701abbecf55a6de775127c");
+            mixpanel.register({ DocumentURL: document.URL, Site: "ReferEngine" });
+            mixpanel.track("LandingPage", { name: "@ViewBag.LandingPageName" });
+        </script>
+        <!-- end Mixpanel -->
 
-    @Styles.Render("~/css/bootstrap")
-    @RenderSection("styles", required: false)
-</head>
-<body>
+        @Styles.Render("~/css/bootstrap")
+        @RenderSection("styles", required: false)
+    </head>
+    <body>
           
         @if (!Convert.ToBoolean(ViewBag.HideHeader))
         {
@@ -71,8 +69,19 @@
 		              </div>
 		            </div>*@
                 </div>	  
-            </div>             
+            </div>
         }
+    
+        @if (Convert.ToBoolean(ViewBag.ShowPowered))
+        {
+            <div class="container" style="text-align: right">
+                <div class="row">
+                    <div class="span12">
+                        <img src="~/img/logo-powered.png" />
+                    </div>		  
+                </div>
+            </div>
+        }        
 
         @Scripts.Render("~/bundles/libs")
         @RenderSection("scripts", required: false)
@@ -88,6 +97,6 @@
                 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
             })();
-    </script>
+        </script>
     </body>
 </html>

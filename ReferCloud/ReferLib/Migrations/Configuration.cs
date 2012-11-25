@@ -1,17 +1,18 @@
-namespace ReferEngine.Migrations
+namespace ReferLib.Migrations
 {
+    using System;
+    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using ReferEngine.Models;
+    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ReferDb>
+    internal sealed class Configuration : DbMigrationsConfiguration<ReferLib.ReferDb>
     {
         public Configuration()
         {
-            // TODO: Set this to false 
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(ReferDb context)
+        protected override void Seed(ReferLib.ReferDb context)
         {
             //  This method will be called after migrating to the latest version.
 
