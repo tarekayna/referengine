@@ -215,6 +215,7 @@
     <Content Include="css\font-awesome.css" />
     <Content Include="css\fonts\fontawesome-webfont.svg" />
     <Content Include="css\refer\intro.css" />
+    <Content Include="css\refer\re-win.css" />
     <Content Include="css\refer\start.css" />
     <Content Include="facebook_channel.html" />
     <Content Include="Global.asax" />
@@ -222,6 +223,9 @@
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
     <Content Include="img\logo-mark-128.ico" />
+    <Content Include="img\logo-mark-white-25.png" />
+    <Content Include="img\logo-powered.png" />
+    <Content Include="img\Logo_WebHeader.png" />
     <Content Include="img\noise.png" />
     <Content Include="index.html" />
     <Content Include="js\lib\bootstrap.js" />

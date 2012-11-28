@@ -1,4 +1,6 @@
-﻿@{
+﻿@model ReferLib.App
+
+@{
     ViewBag.Title = "About";
 }
 
@@ -15,24 +17,24 @@
 <div class="container">
     <div class="row">
         <h2 class="span12">
-            Spread the word about Blu Graphing Calculator and earn rewards! 
+            Spread the word about @Model.Name and earn rewards! 
         </h2>
     </div>
     <div class="row">
         <p class="span12">
-            Introducing the Blu Graphing Calculator referral program!
+            Introducing the @Model.Name referral program!
         </p>
         <p class="span12">
             It is very simple:
         </p>
         <ol>
-            <li>Login to Facebook and tell your friends about Blu Graphing Calculator</li>
-            <li>Earn rewards for every friend who buys Blu Graphing Calculator!</li>
+            <li>Login to Facebook and tell your friends about @Model.Name</li>
+            <li>Earn rewards for every friend who buys @Model.Name!</li>
         </ol>
     </div>
     <div class="row" id="start-row">
         <div class="span12 center-content">
-            <a class="btn btn-success btn-large" href="~/refer/start">Start</a>
+            <a class="btn btn-success btn-large" href="~/refer/start/@Model.Id">Start</a>
         </div>
     </div>
     <div class="row">

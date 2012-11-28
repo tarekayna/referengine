@@ -89,12 +89,16 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\Re
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\css\fonts\fontawesome-webfont.ttf
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\css\fonts\fontawesome-webfont.woff
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\css\refer\intro.css
+C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\css\refer\re-win.css
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\css\refer\start.css
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\facebook_channel.html
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\Global.asax
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\img\glyphicons-halflings-white.png
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\img\glyphicons-halflings.png
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\img\logo-mark-128.ico
+C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\img\logo-mark-white-25.png
+C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\img\logo-powered.png
+C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\img\Logo_WebHeader.png
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\img\noise.png
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\img\Thumbs.db
 C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\obj\Release\ReferEngine\index.html

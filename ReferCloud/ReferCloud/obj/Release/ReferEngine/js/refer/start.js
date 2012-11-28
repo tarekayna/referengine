@@ -20,6 +20,7 @@
             message.text("Logged in successfully. Loading...");
 
             //window.location.href = "http://www.referengine.com/refer/friends?access_token=" + token;
+            debugger;
             window.location.href = "friends?access_token=" + token;
         }
     });
