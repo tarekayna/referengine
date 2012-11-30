@@ -47,7 +47,7 @@ namespace ReferEngine.DataAccess
                 app = ReferDb.Apps.First(a => a.Id == id);
                 return true;
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
                 app = null;
                 return false;
