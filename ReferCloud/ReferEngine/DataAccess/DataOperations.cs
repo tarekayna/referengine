@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using ReferLib;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace ReferEngine.DataAccess
 {
-    public static class DataAccess
+    public static class DataOperations
     {
         private static SqlConnectionStringBuilder _connectionString;
         private static SqlConnection _connection;
+        private static readonly ReferDb ReferDb = new ReferDb();
         private static bool _initialized = false;
         private static void Initialize()
         {
@@ -35,6 +38,29 @@ namespace ReferEngine.DataAccess
             _connection.Open();
             command.ExecuteNonQuery();
             _connection.Close();
+        }
+
+        public static bool TryGetApp(int id, out App app)
+        {
+            try
+            {
+                app = ReferDb.Apps.First(a => a.Id == id);
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                app = null;
+                return false;
+            }
+        }
+
+        public static void AddPerson(Person person)
+        {
+            if (ReferDb.People.Count(p => p.FacebookId == person.FacebookId) == 0)
+            {
+                ReferDb.People.Add(person);
+                ReferDb.SaveChanges();   
+            }
         }
     }
 }

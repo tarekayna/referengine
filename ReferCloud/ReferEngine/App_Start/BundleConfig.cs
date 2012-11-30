@@ -19,6 +19,21 @@ namespace ReferEngine
                 "~/css/font-awesome.css",
                 "~/css/base.css",
                 "~/css/blue.css"));
+
+            bundles.Add(new StyleBundle("~/css/refer/win8").Include(
+                "~/css/refer/win8/refer-win8.css"));
+
+            bundles.Add(new ScriptBundle("~/js/refer/win8/intro").Include(
+                "~/js/refer/win8/intro.js"));
+
+            bundles.Add(new StyleBundle("~/css/refer/win8/intro").Include(
+                "~/css/refer/win8/intro.css"));
+
+            bundles.Add(new ScriptBundle("~/js/refer/win8/friends").Include(
+                "~/js/refer/win8/friends.js"));
+
+            bundles.Add(new StyleBundle("~/css/refer/win8/friends").Include(
+                "~/css/refer/win8/friends.css"));
         }
     }
 }

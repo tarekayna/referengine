@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
+using ReferEngine.DataAccess;
 
 namespace ReferEngine.Controllers
 {
@@ -122,7 +123,7 @@ namespace ReferEngine.Controllers
         {
             string email = Request.Form["Email"];
 
-            DataAccess.DataAccess.InsertPrivateBetaEmail(email);
+            DataOperations.InsertPrivateBetaEmail(email);
 
             // Send the customer a thank you email
             string body = "Hello! " + "\n\n";

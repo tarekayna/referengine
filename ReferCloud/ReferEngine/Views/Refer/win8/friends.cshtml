@@ -1,20 +1,28 @@
-﻿@{
-    ViewBag.Title = "About";
-    ViewBag.HideHeader = true;
-    ViewBag.HideFooter = true;
-}
+﻿@model ReferEngine.Models.Refer.Win8.FriendsViewModel
 
 @section scripts
 {
-    <script src="~/js/refer/friends.js"></script>
+    @Scripts.Render("~/js/refer/win8/friends")
 }
 
 @section styles
 {
-    <link rel="stylesheet" href="~/css/refer/friends.css" />
+    @Styles.Render("~/css/refer/win8/friends")
 }
 
-<div class="container">
+@if (Model.Message != null)
+{
+    <div class="container">
+        <div class="row">
+            <p class="span12">
+                @Model.Message
+            </p>
+        </div>
+    </div>
+}
+else
+{
+@*<div class="container">
     <div class="row">
         <h2 class="span12">Welcome, <span>@Model.Me.first_name</span>!
         </h2>
@@ -53,4 +61,5 @@
             </div>
         </div>
     </form>
-</div>
+</div>*@
+}

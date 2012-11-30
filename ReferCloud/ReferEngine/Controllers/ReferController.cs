@@ -1,70 +1,83 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Web.Mvc;
-using Facebook;
+﻿using Facebook;
+using ReferEngine.DataAccess;
+using ReferEngine.Models.Refer.Win8;
+using ReferEngine.Utilities;
 using ReferLib;
+using System.Dynamic;
+using System.Web.Mvc;
 
 namespace ReferEngine.Controllers
 {
-    public class FriendsViewModel
-    {
-        public dynamic Me { get; private set; }
-        public dynamic Friends { get; private set; }
-
-        public FriendsViewModel(dynamic me, dynamic friends)
-        {
-            Me = me;
-            Friends = friends;
-        }
-    }
-
     public class ReferController : Controller
     {
-        private readonly ReferDb _db = new ReferDb();
-
-        public ActionResult Friends()
+        public ActionResult Friends(string platform, string id, string userAccessToken)
         {
-            string userAccessToken = Request["access_token"];
             if (userAccessToken != null)
             {
-                var client = new FacebookClient(userAccessToken);
-                dynamic me = client.Get("me");
-                dynamic friends = client.Get("me/friends?fields=picture,name,first_name");
-                FriendsViewModel viewModel = new FriendsViewModel(me, friends);
-                client.AppId = "368842109866922";
-                client.AppSecret = "b673f45aa978225ae8c9e4817a726be7";
+                int inputId;
+                if (id != null && Util.TryConvertToInt(id, out inputId))
+                {
+                    App app;
+                    if (DataOperations.TryGetApp(inputId, out app))
+                    {
+                        FacebookClient client = new FacebookClient(userAccessToken);
+                        const string meRequest =
+                            "me?fields=id,name,devices,first_name,last_name,email,gender,address,birthday,picture,relationship_status,timezone,verified,work";
+                        dynamic me = client.Get(meRequest);
+                        Person myself = new Person(me);
+                        DataOperations.AddPerson(myself);
 
-                //dynamic appAccess = client.Get(
-                //   "https://graph.facebook.com/oauth/access_token?client_id=368842109866922&client_secret=b673f45aa978225ae8c9e4817a726be7&grant_type=client_credentials");
+                        // If not in database, add them and connect them to this app
 
-                dynamic parameters = new ExpandoObject();
-                //parameters.app = "http://apps.facebook.com/referengine/2";
-                parameters.app = "http://127.0.0.1/referengine/2";
-                //parameters.access_token = appAccess.access_token;
-                parameters.access_token = userAccessToken;
-                client.Post("me/referengine:refer", parameters);
-                return View(viewModel);
+                        // Post Refer Action
+                        dynamic parameters = new ExpandoObject();
+                        parameters.app = "http://www.referengine.com/app/details/2";
+                        parameters.access_token = userAccessToken;
+                        dynamic postResult = client.Post("me/referengine:refer", parameters);
+
+                        // Get friends list and pass on to the view
+                        dynamic friends = client.Get("me/friends?fields=picture,name,first_name");
+                        
+                        return View(platform + "/friends", new FriendsViewModel(myself, friends, app));
+                    }
+                }
+            }
+            else
+            {
+                return View(platform + "/friends", new FriendsViewModel("Missing User Access Token"));
             }
 
-            return RedirectToRoute("Start");
+            return RedirectToRoute("Default", new { controller = "Home", action = "Index" });
         }
 
-        public ActionResult Start(string id)
+        public ActionResult Start(string platform, string id)
         {
-            int inputId = Convert.ToInt32(id);
-            App app = _db.Apps.First(a => a.Id == inputId);
-            return View(app);
+            int inputId;
+            if (id != null && Util.TryConvertToInt(id, out inputId))
+            {
+                App app;
+                if (DataOperations.TryGetApp(inputId, out app))
+                {
+                    return View(platform + "/start", app);
+                }
+            }
+
+            return RedirectToRoute("Default", new { controller = "Home", action = "Index" });
         }
 
-        public ActionResult Intro(string id)
+        public ActionResult Intro(string platform, string id)
         {
-            int inputId = Convert.ToInt32(id);
-            App app = _db.Apps.First(a => a.Id == inputId);
-            return View(app);
+            int inputId;
+            if (id != null && Util.TryConvertToInt(id, out inputId))
+            {
+                App app;
+                if (DataOperations.TryGetApp(inputId, out app))
+                {
+                    return View(platform + "/intro", app);
+                }
+            }
+            
+            return RedirectToRoute("Default", new {controller = "Home", action = "Index"});
         }
     }
 }
