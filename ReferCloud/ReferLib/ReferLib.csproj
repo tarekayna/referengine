@@ -49,13 +49,17 @@
     <Compile Include="Developer.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Person.cs" />
-    <Compile Include="PersonAppReferral.cs" />
+    <Compile Include="AppReferral.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferDb.cs" />
+    <Compile Include="TimelinePost.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="facebook-users.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

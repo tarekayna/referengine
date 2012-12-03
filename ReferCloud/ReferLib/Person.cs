@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReferLib
 {
     public class Person
     {
-        public int FacebookId { get; set; }
+        public Int64 FacebookId { get; set; }
         public string Name { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -21,7 +17,7 @@ namespace ReferLib
 
         public Person(dynamic person)
         {
-            FacebookId = Convert.ToInt32(person.id);
+            FacebookId = Convert.ToInt64(person.id);
             Name = person.name;
             FirstName = person.first_name;
             LastName = person.last_name;

@@ -3,103 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ReferEngine.DataAccess;
+using ReferEngine.Utilities;
+using ReferLib;
 
 namespace ReferEngine.Controllers
 {
     public class FacebookController : Controller
     {
-        //
-        // GET: /Facebook/
-
-        public ActionResult Index()
+        public ActionResult App(string id, string fb_action_ids, string fb_source, string action_object_map,
+            string action_type_map, string action_ref_map)
         {
-            return View();
-        }
-
-        //
-        // GET: /Facebook/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /Facebook/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Facebook/Create
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            int inputId;
+            if (id != null && Util.TryConvertToInt(id, out inputId))
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                App app;
+                if (DataOperations.TryGetApp(inputId, out app))
+                {
+                    return View(app);
+                }
             }
-            catch
-            {
-                return View();
-            }
-        }
 
-        //
-        // GET: /Facebook/Edit/5
-
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Facebook/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Facebook/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Facebook/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToRoute("Default", new { controller = "Home", action = "Index" });
         }
     }
 }

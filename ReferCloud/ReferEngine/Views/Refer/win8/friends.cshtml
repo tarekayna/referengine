@@ -1,0 +1,55 @@
+﻿@model ReferEngine.Models.Refer.Win8.FriendsViewModel
+
+@section scripts
+{
+    @Scripts.Render("~/js/refer/win8/friends")
+}
+
+@section styles
+{
+    @Styles.Render("~/css/refer/win8/friends")
+}
+
+<input type="hidden" id="appId" value="@Model.App.Id" />
+<input type="hidden" id="userAccessToken" value="@Model.UserAccessToken" />
+
+<div class="container">
+    <div class="row">
+        <h2 class="span12">Welcome, <span>@Model.Me.FirstName</span>!
+        </h2>
+    </div>
+    <div class="row">
+        <p class="span12">
+            Select the list of friends you wish to refer Blu Graphing Calculator to.
+        </p>
+    </div>
+    <form class=".form-horizontal">
+        <div class="control-group">
+            <label class="control-label">
+                Default Message
+            </label>
+            <div class="controls">
+                <textarea rows="3">
+                    Hey [first_name], check out Blu Graphing Calculator!
+                </textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            @foreach (dynamic friend in Model.Friends.data)
+            {
+                <div class="controls">
+                    <label class="checkbox">
+                        <input type="checkbox" name="@friend.id" />
+                        <img src="@friend.picture.data.url" />
+                        @friend.name
+                    </label>
+                </div>
+            }
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <a id="submit-button" class="btn btn-success">Submit</a>
+            </div>
+        </div>
+    </form>
+</div>

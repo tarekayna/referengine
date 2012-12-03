@@ -1,5 +1,8 @@
-﻿using Facebook;
+﻿using System;
+using System.Collections.Generic;
+using Facebook;
 using ReferEngine.DataAccess;
+using ReferEngine.Models.Error;
 using ReferEngine.Models.Refer.Win8;
 using ReferEngine.Utilities;
 using ReferLib;
@@ -10,6 +13,7 @@ namespace ReferEngine.Controllers
 {
     public class ReferController : Controller
     {
+        [HttpGet]
         public ActionResult Friends(string platform, string id, string userAccessToken)
         {
             if (userAccessToken != null)
@@ -20,51 +24,73 @@ namespace ReferEngine.Controllers
                     App app;
                     if (DataOperations.TryGetApp(inputId, out app))
                     {
-                        FacebookClient client = new FacebookClient(userAccessToken);
+                        FacebookClient facebookClient = new FacebookClient(userAccessToken);
                         const string meRequest =
                             "me?fields=id,name,devices,first_name,last_name,email,gender,address,birthday,picture,relationship_status,timezone,verified,work";
-                        dynamic me = client.Get(meRequest);
-                        Person myself = new Person(me);
-                        DataOperations.AddPerson(myself);
+                        dynamic me = facebookClient.Get(meRequest);
+                        Person user = new Person(me);
+                        //DataOperations.AddPerson(user);
 
-                        // If not in database, add them and connect them to this app
-
-                        // Post Refer Action
-                        dynamic parameters = new ExpandoObject();
-                        parameters.app = "http://www.referengine.com/app/details/2";
-                        parameters.access_token = userAccessToken;
-                        dynamic postResult = client.Post("me/referengine:refer", parameters);
+                        //dynamic parameters = new ExpandoObject();
+                        //parameters.app = "http://apps.facebook.com/referengine/app/" + id;
+                        //parameters.access_token = userAccessToken;
+                        //dynamic postResult = facebookClient.Post("me/referengine:referto", parameters);
+                        //Int64 postId;
+                        //if (Util.TryConvertToInt64(postResult.id, out postId))
+                        //{
+                        //    AppReferral referral = new AppReferral(app.Id, postId, user.FacebookId);
+                        //    DataOperations.AddReferral(referral);
+                        //}
 
                         // Get friends list and pass on to the view
-                        dynamic friends = client.Get("me/friends?fields=picture,name,first_name");
-                        
-                        return View(platform + "/friends", new FriendsViewModel(myself, friends, app));
+                        dynamic friends = facebookClient.Get("me/friends?fields=picture,name,first_name");
+
+                        return View(platform + "/friends", new FriendsViewModel(user, friends, app, userAccessToken));
+                    }
+                    else
+                    {
+                        return ErrorResult("Invalid Id.");
                     }
                 }
             }
             else
             {
-                return View(platform + "/friends", new FriendsViewModel("Missing User Access Token"));
+                return ErrorResult("Missing User Access Token");
             }
 
             return RedirectToRoute("Default", new { controller = "Home", action = "Index" });
         }
-
-        public ActionResult Start(string platform, string id)
+        
+        // refer/win8/postToTimeline/id?userAccessToken=#&friendId=#
+        [HttpPost]
+        public ActionResult PostToTimeline(string platform, string id, string userAccessToken, string friendId)
         {
-            int inputId;
-            if (id != null && Util.TryConvertToInt(id, out inputId))
+            if (userAccessToken != null)
             {
-                App app;
-                if (DataOperations.TryGetApp(inputId, out app))
+                int inputId;
+                if (id != null && Util.TryConvertToInt(id, out inputId))
                 {
-                    return View(platform + "/start", app);
+                    App app;
+                    if (DataOperations.TryGetApp(inputId, out app))
+                    {
+                        FacebookClient client = new FacebookClient(userAccessToken);
+                        Dictionary<string,object> parameters = new Dictionary<string, object>();
+                        parameters["message"] = "Hey";
+                        parameters["picture"] = app.ImageLink;
+                        parameters["link"] = "http://apps.facebook.com/referengine/app" + app.Id;
+                        parameters["name"] = app.Name;
+                        parameters["description"] = app.Description;
+                        parameters["access_token"] = userAccessToken;
+                        var post = client.Post(friendId + "/feed", parameters);
+                        return Json(new { result = "success" });
+                    }
                 }
             }
 
-            return RedirectToRoute("Default", new { controller = "Home", action = "Index" });
+            return Json(new { result = "error" });
         }
 
+        [OutputCache(Duration=0)]
         public ActionResult Intro(string platform, string id)
         {
             int inputId;
@@ -76,8 +102,16 @@ namespace ReferEngine.Controllers
                     return View(platform + "/intro", app);
                 }
             }
-            
-            return RedirectToRoute("Default", new {controller = "Home", action = "Index"});
+
+            return ErrorResult("Invalid App ID.");
+        }
+
+        private ActionResult ErrorResult(string error)
+        {
+            return RedirectToAction("Error", "Error", new
+            {
+                message = error
+            });
         }
     }
 }

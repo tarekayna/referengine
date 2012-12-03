@@ -22,5 +22,21 @@ namespace ReferEngine.Utilities
                 return false;
             }
         }
+
+        public static bool TryConvertToInt64(string str, out Int64 result)
+        {
+            Int64 actualResult = 0;
+            try
+            {
+                actualResult = Convert.ToInt64(str);
+                result = actualResult;
+                return true;
+            }
+            catch (FormatException)
+            {
+                result = actualResult;
+                return false;
+            }
+        }
     }
 }

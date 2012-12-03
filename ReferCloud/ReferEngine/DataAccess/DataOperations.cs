@@ -11,7 +11,6 @@ namespace ReferEngine.DataAccess
     {
         private static SqlConnectionStringBuilder _connectionString;
         private static SqlConnection _connection;
-        private static readonly ReferDb ReferDb = new ReferDb();
         private static bool _initialized = false;
         private static void Initialize()
         {
@@ -44,8 +43,11 @@ namespace ReferEngine.DataAccess
         {
             try
             {
-                app = ReferDb.Apps.First(a => a.Id == id);
-                return true;
+                using (var db = new ReferDb())
+                {
+                    app = db.Apps.First(a => a.Id == id);
+                    return true;
+                }
             }
             catch (InvalidOperationException ex)
             {
@@ -56,10 +58,31 @@ namespace ReferEngine.DataAccess
 
         public static void AddPerson(Person person)
         {
-            if (ReferDb.People.Count(p => p.FacebookId == person.FacebookId) == 0)
+            using (ReferDb db = new ReferDb())
             {
-                ReferDb.People.Add(person);
-                ReferDb.SaveChanges();   
+                if (db.People.Count(p => p.FacebookId == person.FacebookId) == 0)
+                {
+                    db.People.Add(person);
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public static void AddReferral(AppReferral referral)
+        {
+            using (ReferDb db = new ReferDb())
+            {
+                db.AppReferrals.Add(referral);
+                db.SaveChanges();
+            }
+        }
+
+        public static void AddApp(App app)
+        {
+            using (ReferDb db = new ReferDb())
+            {
+                db.Apps.Add(app);
+                db.SaveChanges();
             }
         }
     }

@@ -17,6 +17,7 @@ namespace ReferEngine
                 "~/css/bootstrap.css",
                 "~/css/bootstrap-responsive.css",
                 "~/css/font-awesome.css",
+                "~/css/m-buttons.css",
                 "~/css/base.css",
                 "~/css/blue.css"));
 
