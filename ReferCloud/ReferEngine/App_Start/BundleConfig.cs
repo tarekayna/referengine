@@ -35,6 +35,12 @@ namespace ReferEngine
 
             bundles.Add(new StyleBundle("~/css/refer/win8/friends").Include(
                 "~/css/refer/win8/friends.css"));
+
+            bundles.Add(new ScriptBundle("~/js/lib/jquery.aceditable").Include(
+                "~/js/lib/jquery.aceditable.js"));
+
+            bundles.Add(new StyleBundle("~/css/lib/jquery.aceditable").Include(
+                "~/css/lib/jquery.aceditable.css"));
         }
     }
 }

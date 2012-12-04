@@ -29,12 +29,14 @@ namespace ReferEngine.Controllers
                             "me?fields=id,name,devices,first_name,last_name,email,gender,address,birthday,picture,relationship_status,timezone,verified,work";
                         dynamic me = facebookClient.Get(meRequest);
                         Person user = new Person(me);
-                        //DataOperations.AddPerson(user);
+                        DataOperations.AddPerson(user);
 
-                        //dynamic parameters = new ExpandoObject();
-                        //parameters.app = "http://apps.facebook.com/referengine/app/" + id;
-                        //parameters.access_token = userAccessToken;
-                        //dynamic postResult = facebookClient.Post("me/referengine:referto", parameters);
+                        //Dictionary<string, object> parameters = new Dictionary<string, object>();
+                        //parameters["app"] = "http://apps.facebook.com/referengine/app/" + id;
+                        //parameters["access_token"] = userAccessToken;
+                        //parameters["fb:explicitly_shared"] = "true";
+                        //parameters["message"] = "Great app!. @[tarek.ayna]";
+                        //dynamic postResult = facebookClient.Post("me/referengine:recommend", parameters);
                         //Int64 postId;
                         //if (Util.TryConvertToInt64(postResult.id, out postId))
                         //{
@@ -43,9 +45,9 @@ namespace ReferEngine.Controllers
                         //}
 
                         // Get friends list and pass on to the view
-                        dynamic friends = facebookClient.Get("me/friends?fields=picture,name,first_name");
+                        //dynamic friends = facebookClient.Get("me/friends?fields=picture,name,first_name");
 
-                        return View(platform + "/friends", new FriendsViewModel(user, friends, app, userAccessToken));
+                        return View(platform + "/friends", new FriendsViewModel(user, null, app, userAccessToken));
                     }
                     else
                     {

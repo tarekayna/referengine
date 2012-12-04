@@ -220,6 +220,7 @@
     <Content Include="css\font-awesome-ie7.css" />
     <Content Include="css\font-awesome.css" />
     <Content Include="css\fonts\fontawesome-webfont.svg" />
+    <Content Include="css\lib\jquery.aceditable.css" />
     <Content Include="css\m-buttons.css" />
     <Content Include="css\refer\win8\friends.css" />
     <Content Include="css\refer\win8\intro.css" />
@@ -242,6 +243,7 @@
     <Content Include="js\facebook.js" />
     <Content Include="js\lib\jquery-1.8.3.js" />
     <Content Include="js\lib\jquery-validate.js" />
+    <Content Include="js\lib\jquery.aceditable.js" />
     <Content Include="js\lib\jquery.fitvids.js" />
     <Content Include="js\refer\win8\friends.js" />
     <Content Include="js\refer\win8\intro.js" />

@@ -4,30 +4,18 @@
     var baseUrl = "http://127.0.0.1";
     var appId = $("#appId").val();
     var userAccessToken = $("#userAccessToken").val();
+    var parentLocation = "ms-appx://apexa.co.calculi/Blu.html";
+
+    var postToParent = function (data) {
+        var str = JSON.stringify(data);
+        window.parent.postMessage(str, parentLocation);
+    };
 
     submitButton.click(function () {
-        var checked = $("input[type='checkbox']:checked");
-        for (var i = 0; i < checked.length; i++) {
-            var friendId = checked[i].name;
-            var link = baseUrl + "/refer/win8/postToTimeline/" +
-                appId + "?userAccessToken=" + userAccessToken +
-                "&friendId=" + friendId;
-            $.ajax({
-                url: link,
-                type: "POST",
-                beforeSend: function() {
-                    
-                },
-                success: function(data) {
-                    
-                },
-                error: function() {
-                    
-                },
-                complete: function() {
-                    
-                }
-            });
-        }
+
     });
+    
+    // get the list of friends
+
+
 });
