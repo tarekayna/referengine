@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
-    var baseUrl = "http://127.0.0.1/";
-    //var baseUrl = "http://www.referengine.com/";
+    //var baseUrl = "http://127.0.0.1/";
+    var baseUrl = "http://www.referengine.com/";
     var loginButton = $("#re-login");
     var notNowButton = $("#re-not-now");
     var dontAskButton = $("#re-dont-ask");

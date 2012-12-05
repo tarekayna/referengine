@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
-    var baseUrl = "http://127.0.0.1/";
-    //var baseUrl = "http://www.referengine.com/";
+    //var baseUrl = "http://127.0.0.1/";
+    var baseUrl = "http://www.referengine.com/";
     var loginButton = $("#re-login");
     var notNowButton = $("#re-not-now");
     var dontAskButton = $("#re-dont-ask");
@@ -34,7 +34,6 @@
         // TODO: Verify origin
         var data = JSON.parse(msg.data);
         if (data.msg === "logged-in") {
-            debugger;
             var token = data.token;
             var expiresIn = data.expiresIn;
             message.text("Logged in successfully. Loading...");

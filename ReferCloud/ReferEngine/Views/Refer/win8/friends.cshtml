@@ -12,6 +12,30 @@
     @Styles.Render("~/css/refer/win8/friends")
 }
 
+@*<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: '368842109866922', 
+      channelUrl : 'http://www.referengine.COM/facebook_channel.html', 
+      status     : true, 
+      cookie     : true, 
+      xfbml      : true  
+    });
+
+    // Additional initialization code such as adding Event Listeners goes here
+
+  };
+
+  (function(d, debug){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document, /*debug*/ false));
+</script>*@
+
 <input type="hidden" id="appId" value="@Model.App.Id" />
 <input type="hidden" id="userAccessToken" value="@Model.UserAccessToken" />
 

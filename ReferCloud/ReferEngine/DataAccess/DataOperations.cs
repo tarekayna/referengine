@@ -1,4 +1,6 @@
-﻿using ReferLib;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using ReferLib;
 using System;
 using System.Configuration;
 using System.Data;
@@ -68,11 +70,11 @@ namespace ReferEngine.DataAccess
             }
         }
 
-        public static void AddReferral(AppReferral referral)
+        public static void AddRecommendation(AppRecommendation recommendation)
         {
             using (ReferDb db = new ReferDb())
             {
-                db.AppReferrals.Add(referral);
+                db.AppRecommendations.Add(recommendation);
                 db.SaveChanges();
             }
         }
@@ -84,6 +86,35 @@ namespace ReferEngine.DataAccess
                 db.Apps.Add(app);
                 db.SaveChanges();
             }
+        }
+
+        public static void AddFriendship(Friendship friendship)
+        {
+            using (ReferDb db = new ReferDb())
+            {
+                db.Friendships.Add(friendship);
+                db.SaveChanges();
+            }
+        }
+
+        public static void AddPersonAndFriends(Person user, IList<Person> friends)
+        {
+            using (ReferDb db = new ReferDb())
+            {
+                if (db.People.Count(p => p.FacebookId == user.FacebookId) == 0)
+                {
+                    db.People.Add(user);
+                }
+
+                Friendship friendship = new Friendship(user, friend);
+                db.Friendships.Add(friendship);
+                db.SaveChanges();
+            }
+        }
+
+        public static async Task GoDoSomething()
+        {
+            
         }
     }
 }

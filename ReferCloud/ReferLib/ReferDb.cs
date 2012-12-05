@@ -10,10 +10,10 @@ namespace ReferLib
             : base("name=DefaultConnection") { }
 
         public DbSet<App> Apps { get; set; }
-        public DbSet<AppReferral> AppReferrals { get; set; }
+        public DbSet<AppRecommendation> AppRecommendations { get; set; }
         public DbSet<Developer> Developers { get; set; }
+        public DbSet<Friendship> Friendships { get; set; }
         public DbSet<Person> People { get; set; }
-        public DbSet<TimelinePost> TimelinePosts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {
@@ -34,24 +34,20 @@ namespace ReferLib
             mb.Entity<Developer>().Property(d => d.State).IsRequired();
             mb.Entity<Developer>().Property(d => d.ZipCode).IsRequired();
 
+            mb.Entity<Friendship>().Property(f => f.Person1FacebookId).IsRequired();
+            mb.Entity<Friendship>().Property(f => f.Person2FacebookId).IsRequired();
+            mb.Entity<Friendship>().Property(f => f.UpdatedDateTime).IsRequired();
+
             mb.Entity<Person>().HasKey(p => p.FacebookId);
             mb.Entity<Person>().Property(p => p.FacebookId)
                         .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
-            mb.Entity<AppReferral>().HasKey(r => r.FacebookPostId);
-            mb.Entity<AppReferral>().Property(r => r.FacebookPostId)
+            mb.Entity<AppRecommendation>().HasKey(r => r.FacebookPostId);
+            mb.Entity<AppRecommendation>().Property(r => r.FacebookPostId)
                         .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-            mb.Entity<AppReferral>().Property(r => r.AppId).IsRequired();
-            mb.Entity<AppReferral>().Property(r => r.PersonFacebookId).IsRequired();
-            mb.Entity<AppReferral>().Property(r => r.DateTime).IsRequired();
-
-            mb.Entity<TimelinePost>().HasKey(p => p.FacebookPostId);
-            mb.Entity<TimelinePost>().Property(p => p.FacebookPostId)
-                        .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-            mb.Entity<TimelinePost>().Property(p => p.FriendFacebookId).IsRequired();
-            mb.Entity<TimelinePost>().Property(p => p.Message).IsRequired();
-            mb.Entity<TimelinePost>().Property(p => p.PersonFacebookId).IsRequired();
-            mb.Entity<TimelinePost>().Property(p => p.DateTime).IsRequired();
+            mb.Entity<AppRecommendation>().Property(r => r.AppId).IsRequired();
+            mb.Entity<AppRecommendation>().Property(r => r.PersonFacebookId).IsRequired();
+            mb.Entity<AppRecommendation>().Property(r => r.DateTime).IsRequired();
 
             base.OnModelCreating(mb);
         }

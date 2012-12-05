@@ -25,8 +25,10 @@ namespace ReferEngine.Controllers
                     if (DataOperations.TryGetApp(inputId, out app))
                     {
                         FacebookClient facebookClient = new FacebookClient(userAccessToken);
-                        const string meRequest =
-                            "me?fields=id,name,devices,first_name,last_name,email,gender,address,birthday,picture,relationship_status,timezone,verified,work";
+
+                        const string requestFields =
+                            "?fields=id,name,devices,first_name,last_name,email,gender,address,birthday,picture,relationship_status,timezone,verified,work";
+                        const string meRequest = "me" + requestFields;
                         dynamic me = facebookClient.Get(meRequest);
                         Person user = new Person(me);
                         DataOperations.AddPerson(user);
@@ -45,7 +47,15 @@ namespace ReferEngine.Controllers
                         //}
 
                         // Get friends list and pass on to the view
-                        //dynamic friends = facebookClient.Get("me/friends?fields=picture,name,first_name");
+                        const string friendsRequest = "me/friends" + requestFields;
+                        dynamic friends = facebookClient.Get(friendsRequest);
+                        int i = 0;
+                        while (friends.data[i] != null)
+                        {
+                            Person friend = new Person(friends.data[i]);
+                            DataOperations.AddPersonAndFriendship(user, friend);
+                            i++;
+                        }
 
                         return View(platform + "/friends", new FriendsViewModel(user, null, app, userAccessToken));
                     }

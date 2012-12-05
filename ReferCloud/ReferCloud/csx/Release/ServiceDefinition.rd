@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="fd2a18eb-be1e-4b7b-af5e-1d7a4b12fcc8" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="f2df2067-b103-4a7a-b316-1b652402a23b" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="ReferCloudGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -70,9 +70,9 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="73297cf9-0cbb-49a1-aafe-7b7a03268be4" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
+    <implementation Id="8653149b-9102-4e0f-b9c7-133a2fd8bb98" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="3c9599d4-275c-4af8-9143-dbbfab26f9f2" ref="Microsoft.RedDog.Contract\Interface\ReferEngine:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="8e8c769d-c4b7-4b18-ad7a-2ed663b3258f" ref="Microsoft.RedDog.Contract\Interface\ReferEngine:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine:Endpoint1" />
           </inPort>
