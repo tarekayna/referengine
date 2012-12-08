@@ -60,6 +60,7 @@
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -245,6 +246,8 @@
     <Content Include="js\lib\jquery-validate.js" />
     <Content Include="js\lib\jquery.aceditable.js" />
     <Content Include="js\lib\jquery.fitvids.js" />
+    <Content Include="js\lib\knockout.js" />
+    <Content Include="js\refer\win8\common.js" />
     <Content Include="js\refer\win8\friends.js" />
     <Content Include="js\refer\win8\intro.js" />
     <Content Include="Web.config" />
@@ -338,7 +341,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>10336</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:17124/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

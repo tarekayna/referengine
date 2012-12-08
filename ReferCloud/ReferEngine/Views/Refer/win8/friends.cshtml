@@ -1,4 +1,6 @@
-﻿@model ReferEngine.Models.Refer.Win8.FriendsViewModel
+﻿@using System.Runtime.Serialization.Json
+@using ReferLib
+@model ReferEngine.Models.Refer.Win8.FriendsViewModel
 
 @section scripts
 {
@@ -12,51 +14,65 @@
     @Styles.Render("~/css/refer/win8/friends")
 }
 
-@*<div id="fb-root"></div>
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId: '368842109866922', 
-      channelUrl : 'http://www.referengine.COM/facebook_channel.html', 
-      status     : true, 
-      cookie     : true, 
-      xfbml      : true  
-    });
-
-    // Additional initialization code such as adding Event Listeners goes here
-
-  };
-
-  (function(d, debug){
-     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement('script'); js.id = id; js.async = true;
-     js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
-     ref.parentNode.insertBefore(js, ref);
-   }(document, /*debug*/ false));
-</script>*@
-
 <input type="hidden" id="appId" value="@Model.App.Id" />
 <input type="hidden" id="userAccessToken" value="@Model.UserAccessToken" />
+<script type="text/javascript">
+    window.RE = window.RE == undefined ? {} : window.RE;
+    window.RE.Friends = @Html.Raw(Person.Serialize(Model.Friends));   
+</script>
 
 <div class="container">
     <div class="row">
-        <h2 class="span12">Welcome, <span>@Model.Me.FirstName</span>!
+        <h2 class="span12"><span>@Model.Me.FirstName</span>, your're almost done!
         </h2>
     </div>
-    <form class=".form-horizontal">
-        <div class="control-group">
-            <label class="control-label">
-                Custom message: (use @@ to tag your friends)
-            </label>
-            <div class="controls">
-                <div contenteditable id="message" class="input-medium"></div>
+    <div class="row">
+        <h4 class="span12">1- Include a message? (optional)</h4>
+        <p class="span12">
+            You may include a message if you wish. To tag your friends, just start typing their name.
+        </p>
+        <div class="span12">
+            <div contenteditable id="message" data-bind="html: msgHTML"></div>
+        </div>
+    </div>
+    <div class="row previewRow">
+        <h4 class="span12">2- Check out the Post Preview<sup class="ast"> *</sup></h4>
+        <div class="span12" id="preview">
+            <div class="storyContent">
+                <img class="actorPhoto" src="@Model.Me.PictureUrl" />
+                <div class="storyInnerContent">
+                    <p class="storyTitle"><a class="userName">@Model.Me.Name</a> recommended an app using <a>Refer Engine</a>.</p>
+                    <p class="msg" data-bind="html: msgHTML"></p>
+                    <div class="shareContainer">
+                        <div class="appImageContainer">
+                            <img src="@Model.App.ImageLink" title="@Model.App.Name" />
+                        </div>
+                        <div class="appInfo">
+                            <a class="appTitle">@Model.App.Name</a>
+                            <p class="appDesc">@Model.App.Description</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="control-group">
-            <div class="controls">
-                <a id="submit-button" class="btn btn-success">Post Recommendation to Facebook</a>
-            </div>
+    </div>
+    <hr />
+    <div class="row">
+        <h4 class="span12">3- Click Submit to Post</h4>
+        <div class="span12 center-content">
+            <a id="submit-button" class="m-btn blue large">Submit</a>
         </div>
-    </form>
+    </div>
+    <div class="row disclaimer">
+        <p class="span12">* This preview is an approximation. Facebook may display this post differently.</p>
+    </div>
+    
+    <div id="asContainer" data-bind="foreach: searchResult, visible: searchResult() != []">
+        <div class="asItem m-btn" data-bind="click: $parent.onClick, css: {selected: $index() == $parent.selectedIndex()}">
+            <i class="icon-user"></i>
+            <span class="firstName" data-bind="text: FirstName"></span>
+            <span class="lastName" data-bind="text: LastName"></span>
+        </div>
+    </div>
 </div>
+

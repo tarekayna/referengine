@@ -106,15 +106,18 @@ namespace ReferEngine.DataAccess
                     db.People.Add(user);
                 }
 
-                Friendship friendship = new Friendship(user, friend);
-                db.Friendships.Add(friendship);
+                foreach (var friend in friends)
+                {
+                    if (db.People.Count(p => p.FacebookId == friend.FacebookId) == 0)
+                    {
+                        db.People.Add(friend);
+                    }
+
+                    db.Friendships.Add(new Friendship(user, friend));   
+                }
+
                 db.SaveChanges();
             }
-        }
-
-        public static async Task GoDoSomething()
-        {
-            
         }
     }
 }

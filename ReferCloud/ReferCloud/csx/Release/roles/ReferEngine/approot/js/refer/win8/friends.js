@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     var submitButton = $("#submit-button");
+    var messageDiv = $("#message");
     var baseUrl = "http://www.referengine.com";
     //var baseUrl = "http://127.0.0.1";
     var appId = $("#appId").val();
@@ -14,8 +15,15 @@
     submitButton.click(function () {
 
     });
-    
-    // get the list of friends
 
+    var getFacebookFriends = function() {
+        FB.api('/me/friends', function (response) {
+            alert('Your name is ' + response.name);
+        });
+    };
 
+    messageDiv.keyup(function(event) {
+        var which = 50;
+        getFacebookFriends();
+    });
 });

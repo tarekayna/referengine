@@ -1,19 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using Facebook;
+﻿using Facebook;
 using ReferEngine.DataAccess;
-using ReferEngine.Models.Error;
 using ReferEngine.Models.Refer.Win8;
 using ReferEngine.Utilities;
 using ReferLib;
-using System.Dynamic;
+using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace ReferEngine.Controllers
 {
     public class ReferController : Controller
     {
-        [HttpGet]
+        const string RequestFields =
+            "?fields=id,name,devices,first_name,last_name,email,gender,address,birthday,picture,relationship_status,timezone,verified,work";
+
+        [OutputCache(Duration=0)]
+        public ActionResult Intro(string platform, string id)
+        {
+            DateTime start = DateTime.Now;
+            int inputId;
+            if (id != null && Util.TryConvertToInt(id, out inputId))
+            {
+                App app;
+                if (DataOperations.TryGetApp(inputId, out app))
+                {
+                    ViewBag.TimeSpan = DateTime.Now - start;
+                    return View(platform + "/intro", app);
+                }
+            }
+
+            return ErrorResult("Invalid App ID.");
+        }
+
+        [OutputCache(Duration = 0)]
         public ActionResult Friends(string platform, string id, string userAccessToken)
         {
             if (userAccessToken != null)
@@ -26,12 +45,10 @@ namespace ReferEngine.Controllers
                     {
                         FacebookClient facebookClient = new FacebookClient(userAccessToken);
 
-                        const string requestFields =
-                            "?fields=id,name,devices,first_name,last_name,email,gender,address,birthday,picture,relationship_status,timezone,verified,work";
-                        const string meRequest = "me" + requestFields;
+                        const string meRequest = "me" + RequestFields;
                         dynamic me = facebookClient.Get(meRequest);
                         Person user = new Person(me);
-                        DataOperations.AddPerson(user);
+                        //DataOperations.AddPerson(user);
 
                         //Dictionary<string, object> parameters = new Dictionary<string, object>();
                         //parameters["app"] = "http://apps.facebook.com/referengine/app/" + id;
@@ -47,17 +64,17 @@ namespace ReferEngine.Controllers
                         //}
 
                         // Get friends list and pass on to the view
-                        const string friendsRequest = "me/friends" + requestFields;
+                        const string friendsRequest = "me/friends" + RequestFields;
                         dynamic friends = facebookClient.Get(friendsRequest);
-                        int i = 0;
-                        while (friends.data[i] != null)
+                        List<Person> friendsList = new List<Person>();
+                        for (int i = 0; i < friends.data.Count; i++)
                         {
-                            Person friend = new Person(friends.data[i]);
-                            DataOperations.AddPersonAndFriendship(user, friend);
-                            i++;
+                            friendsList.Add(new Person(friends.data[i]));
                         }
+                        friendsList.Add(user);
+                        //DataOperations.AddPersonAndFriends(user, friendsList);
 
-                        return View(platform + "/friends", new FriendsViewModel(user, null, app, userAccessToken));
+                        return View(platform + "/friends", new FriendsViewModel(user, friendsList, app, userAccessToken));
                     }
                     else
                     {
@@ -72,10 +89,9 @@ namespace ReferEngine.Controllers
 
             return RedirectToRoute("Default", new { controller = "Home", action = "Index" });
         }
-        
-        // refer/win8/postToTimeline/id?userAccessToken=#&friendId=#
+
         [HttpPost]
-        public ActionResult PostToTimeline(string platform, string id, string userAccessToken, string friendId)
+        public ActionResult PostRecommendation(string platform, string id, string userAccessToken, string message)
         {
             if (userAccessToken != null)
             {
@@ -85,37 +101,29 @@ namespace ReferEngine.Controllers
                     App app;
                     if (DataOperations.TryGetApp(inputId, out app))
                     {
-                        FacebookClient client = new FacebookClient(userAccessToken);
-                        Dictionary<string,object> parameters = new Dictionary<string, object>();
-                        parameters["message"] = "Hey";
-                        parameters["picture"] = app.ImageLink;
-                        parameters["link"] = "http://apps.facebook.com/referengine/app" + app.Id;
-                        parameters["name"] = app.Name;
-                        parameters["description"] = app.Description;
+                        FacebookClient facebookClient = new FacebookClient(userAccessToken);
+
+                        const string meRequest = "me" + RequestFields;
+                        dynamic me = facebookClient.Get(meRequest);
+                        Person user = new Person(me);
+
+                        Dictionary<string, object> parameters = new Dictionary<string, object>();
+                        parameters["app"] = "http://apps.facebook.com/referengine/app/" + id;
                         parameters["access_token"] = userAccessToken;
-                        var post = client.Post(friendId + "/feed", parameters);
-                        return Json(new { result = "success" });
+                        parameters["fb:explicitly_shared"] = "true";
+                        parameters["message"] = message;
+                        dynamic postResult = facebookClient.Post("me/referengine:recommend", parameters);
+                        Int64 postId;
+                        if (Util.TryConvertToInt64(postResult.id, out postId))
+                        {
+                            var recommendation = new AppRecommendation(app.Id, postId, user.FacebookId);
+                            DataOperations.AddRecommendation(recommendation);
+                        }
                     }
                 }
             }
 
-            return Json(new { result = "error" });
-        }
-
-        [OutputCache(Duration=0)]
-        public ActionResult Intro(string platform, string id)
-        {
-            int inputId;
-            if (id != null && Util.TryConvertToInt(id, out inputId))
-            {
-                App app;
-                if (DataOperations.TryGetApp(inputId, out app))
-                {
-                    return View(platform + "/intro", app);
-                }
-            }
-
-            return ErrorResult("Invalid App ID.");
+            return new JsonResult();
         }
 
         private ActionResult ErrorResult(string error)

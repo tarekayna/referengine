@@ -25,12 +25,15 @@ namespace ReferEngine
                 "~/css/refer/win8/refer-win8.css"));
 
             bundles.Add(new ScriptBundle("~/js/refer/win8/intro").Include(
+                "~/js/refer/win8/common.js",
                 "~/js/refer/win8/intro.js"));
 
             bundles.Add(new StyleBundle("~/css/refer/win8/intro").Include(
                 "~/css/refer/win8/intro.css"));
 
             bundles.Add(new ScriptBundle("~/js/refer/win8/friends").Include(
+                "~/js/lib/knockout.js",
+                "~/js/refer/win8/common.js",
                 "~/js/refer/win8/friends.js"));
 
             bundles.Add(new StyleBundle("~/css/refer/win8/friends").Include(
