@@ -1,5 +1,0 @@
-C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferModels\bin\Debug\ReferModels.dll
-C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferModels\bin\Debug\ReferModels.pdb
-C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferModels\obj\Debug\ReferModels.csprojResolveAssemblyReference.cache
-C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferModels\obj\Debug\ReferModels.dll
-C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferModels\obj\Debug\ReferModels.pdb
