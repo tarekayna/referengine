@@ -1,0 +1,125 @@
+﻿#start-row
+{
+    margin-bottom: 15px;
+}
+
+#message {
+    width: 500px;
+    height: 75px;
+    border: 1px solid blue;
+}
+
+#asContainer {
+    position: absolute;
+    display: -ms-flexbox;
+    -ms-flex-direction: column;
+    -ms-flex-align: start;
+}
+
+#asContainer .asItem.m-btn {
+    width: 100%;
+    text-align: left;
+}
+
+    #asContainer .asItem.m-btn.selected {
+        color: #3b5998;
+    }
+
+.friendTag {
+    color: #3b5998;
+    font-weight: 700;
+}
+
+.search-str.highlighted {
+    background-color: red;
+    color: white;
+}
+
+.m-btn + .m-btn, .m-btn + .m-btn-group, .m-btn-group + .m-btn, .m-btn-group + .m-btn-group {
+   margin-left: 0 !important;
+}
+
+.storyContent {
+    color: #333;
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    list-style-type: none;
+    padding-bottom: 2px;
+    text-align: left;
+    word-wrap: break-word;
+    width: 511px;
+    font-size: 13px;
+}
+
+.storyInnerContent {
+    margin-left: 60px;
+}
+
+.actorPhoto {
+    float: left;
+}
+
+.mainWrapper {
+    margin: 0 35px 16px 0;
+    padding-top: 18px;
+}
+
+.storyTitle {
+    color: gray;
+    margin-bottom: 2px;
+}
+
+#preview .search-str.highlighted {
+    color: #333;
+    background-color: white;
+}
+
+#preview a,
+#preview .friendTag {
+    color: #3b5998;
+    cursor: pointer;
+}
+
+#preview .userName {
+    font-weight: bold !important;
+}
+
+.shareContainer {
+    display: -ms-flexbox;
+    -ms-flex-direction: row;
+    width: 398px;
+    height: 90px;
+    font-size: 11px;
+    background-color: rgb(247, 247, 247);
+    margin-top: 10px;
+}
+
+.appImageContainer {
+    width: 50px;
+    height: 48px;
+    padding: 20px;
+    border: 1px solid rgb(220, 220, 220);
+}
+
+.appInfo {
+    color: gray;
+    padding: 8px 10px 10px;
+    border: 1px solid rgb(220, 220, 220);
+    border-left: none;
+    -ms-flex: 1 auto;
+}
+
+.appTitle {
+    font-weight: bold !important;
+}
+
+.disclaimer {
+    font-size: 9px;
+}
+
+.ast {
+    font-size: 12px;
+}
+
+.previewRow {
+    margin-top: 20px;
+}

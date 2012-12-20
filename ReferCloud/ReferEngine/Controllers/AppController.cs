@@ -1,95 +1,59 @@
-﻿using System;
-using System.Linq;
-using System.Web.Mvc;
+﻿using ReferEngineWeb.DataAccess;
 using ReferLib;
+using System.Collections.Generic;
+using System.Web;
+using System.Web.Mvc;
 
-namespace ReferEngine.Controllers
+namespace ReferEngineWeb.Controllers
 {
     public class AppController : Controller
     {
-        private readonly ReferDb _db = new ReferDb();
+        private IReferDataReader DataReader { get; set; }
+        private IReferDataWriter DataWriter { get; set; }
 
-        public ActionResult Index()
+        public AppController(IReferDataReader dataReader, IReferDataWriter dataWriter)
         {
-            var model = _db.Apps.ToList();
-            return View(model);
+            DataReader = dataReader;
+            DataWriter = dataWriter;
         }
 
-        public ActionResult Details(string id)
+        public ActionResult Details(long id)
         {
-            int inputId = Convert.ToInt32(id);
-            App app = _db.Apps.First(a => a.Id == inputId);
+            App app = DataReader.GetApp(id);
             return View(app);
         }
 
-        public ActionResult Create()
+        public ActionResult Edit(long id)
         {
-            return View();
+            App app = DatabaseOperations.GetApp(id);
+            return View(app);
         }
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Edit(long id, FormCollection collection)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Edit(int id)
-        {
-            return View();
+            App app = DataReader.GetApp(id);
+            return View(app);
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult UploadScreenshots(int id, string description)
         {
-            try
+            var screenshots = new List<AppScreenshot>();
+            foreach (string file in Request.Files)
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (_db != null)
-            {
-                _db.Dispose();
+                HttpPostedFileBase fileBase = Request.Files[file];
+                if (fileBase != null)
+                {
+                    var screenshot = AppScreenshot.Create(fileBase, id);
+                    var addedScreenshot = DatabaseOperations.AddAppScreenshot(screenshot);
+                    fileBase.InputStream.Position = 0;
+                    BlobStorageOperations.UploadAppScreenshot(addedScreenshot, fileBase.InputStream);
+                    screenshots.Add(addedScreenshot);
+                }
             }
 
-            base.Dispose(disposing);
+            return View(screenshots);
         }
     }
 }

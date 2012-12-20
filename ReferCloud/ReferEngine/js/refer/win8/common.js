@@ -1,8 +1,8 @@
 ﻿$(document).ready(function () {
     var parentLocation = "ms-appx://apexa.co.calculi/Blu.html",
-        baseUrl = "http://127.0.0.2/";
-        //baseUrl = "http://www.referengine.com/",
-        
+        baseUrl = "http://127.0.0.1:81/";
+        //baseUrl = "https://www.referengine.com/";
+
     var postToParent = function (data) {
         var jsonData;
         if (typeof data === 'string') {
@@ -16,8 +16,8 @@
         window.parent.postMessage(JSON.stringify(jsonData), parentLocation);
     };
     
-    var getLink = function(name, appId) {
-        return baseUrl + "refer/win8/" + name + "/" + appId;
+    var getLink = function(name) {
+        return baseUrl + "refer/win8/" + name;
     };
 
     var hideLoading = function() {

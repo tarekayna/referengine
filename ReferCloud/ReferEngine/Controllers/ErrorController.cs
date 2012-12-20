@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
-using ReferEngine.Models.Error;
+using ReferEngineWeb.Models.Error;
 
-namespace ReferEngine.Controllers
+namespace ReferEngineWeb.Controllers
 {
     public class ErrorController : Controller
     {

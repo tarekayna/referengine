@@ -43,7 +43,7 @@ namespace ReferLib.Migrations
                                       "http://apps.microsoft.com/webpdp/en-US/app/blu-graphing-calculator/764cce31-8f93-48a6-b4fc-008eb78e50d4",
                                   Copyright = "Copyright © 2012, Apexa Inc.",
                                   Publisher = "Apexa Inc.",
-                                  Platform = AppPlatform.Windows8,
+                                  PackageFamilyName = "Apexa.co.Calculi_pn2wyk5mfanv6",
                                   ImageLink =
                                       "http://wscont1.apps.microsoft.com/winstore/1x/2460c09e-39d8-4e6f-a35a-e20c0cebaa79/Icon.20879.png",
                                   ShortDescription = "Blu is calculator reimagined"

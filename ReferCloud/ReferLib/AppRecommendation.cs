@@ -8,12 +8,10 @@ namespace ReferLib
         public DateTime DateTime { get; set; }
         public Int64 FacebookPostId { get; set; }
         public Int64 PersonFacebookId { get; set; }
+        public string UserMessage { get; set; }
 
-        public AppRecommendation(Int64 appId, Int64 facebookPostId, Int64 personFacebookId)
+        public AppRecommendation()
         {
-            this.AppId = appId;
-            this.FacebookPostId = facebookPostId;
-            this.PersonFacebookId = personFacebookId;
             DateTime = DateTime.Now;
         }
     }

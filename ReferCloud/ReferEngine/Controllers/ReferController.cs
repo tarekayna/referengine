@@ -1,136 +1,93 @@
-﻿using Facebook;
-using ReferEngine.DataAccess;
-using ReferEngine.Models.Refer.Win8;
-using ReferEngine.Utilities;
+﻿using ReferEngineWeb.DataAccess;
+using ReferEngineWeb.Models.Refer.Win8;
 using ReferLib;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace ReferEngine.Controllers
+namespace ReferEngineWeb.Controllers
 {
     public class ReferController : Controller
     {
-        const string RequestFields =
-            "?fields=id,name,devices,first_name,last_name,email,gender,address,birthday,picture,relationship_status,timezone,verified,work";
+        private IReferDataReader DataReader { get; set; }
+        private IReferDataWriter DataWriter { get; set; }
+
+        public ReferController(IReferDataReader dataReader, IReferDataWriter dataWriter)
+        {
+            DataReader = dataReader;
+            DataWriter = dataWriter;
+        }
 
         [OutputCache(Duration=0)]
-        public ActionResult Intro(string platform, string id)
+        public ActionResult Intro(string platform, long id)
         {
-            DateTime start = DateTime.Now;
-            int inputId;
-            if (id != null && Util.TryConvertToInt(id, out inputId))
-            {
-                App app;
-                if (DataOperations.TryGetApp(inputId, out app))
-                {
-                    ViewBag.TimeSpan = DateTime.Now - start;
-                    return View(platform + "/intro", app);
-                }
-            }
-
-            return ErrorResult("Invalid App ID.");
+            App app = DataReader.GetApp(id);
+            string viewName = String.Format("{0}/intro", platform);
+            return View(viewName, app);
         }
 
         [OutputCache(Duration = 0)]
-        public ActionResult Friends(string platform, string id, string userAccessToken)
+        public async Task<ActionResult> Recommend(string platform, string re_auth_token, string fb_access_code)
         {
-            if (userAccessToken != null)
+            string userHostAddress = System.Web.HttpContext.Current.Request.UserHostAddress;
+            AppAuthorization appAuthorization = DataReader.GetAppAuthorization(re_auth_token, userHostAddress);
+            if (appAuthorization != null)
             {
-                int inputId;
-                if (id != null && Util.TryConvertToInt(id, out inputId))
-                {
-                    App app;
-                    if (DataOperations.TryGetApp(inputId, out app))
+                App app = appAuthorization.App;
+                string accessCode = fb_access_code.Replace("%23", "#");
+                FacebookOperations facebookOperations = await FacebookOperations.CreateAsync(accessCode);
+
+                Person me = await facebookOperations.GetCurrentUserAsync();
+                IList<Person> friends = await facebookOperations.GetFriendsAsync();
+                CurrentUser currentUser = new CurrentUser
                     {
-                        FacebookClient facebookClient = new FacebookClient(userAccessToken);
+                        Person = me,
+                        Friends = friends
+                    };
 
-                        const string meRequest = "me" + RequestFields;
-                        dynamic me = facebookClient.Get(meRequest);
-                        Person user = new Person(me);
-                        //DataOperations.AddPerson(user);
+                DataWriter.AddFacebookOperations(re_auth_token, facebookOperations);
+                DataWriter.AddPersonAndFriends(currentUser);
 
-                        //Dictionary<string, object> parameters = new Dictionary<string, object>();
-                        //parameters["app"] = "http://apps.facebook.com/referengine/app/" + id;
-                        //parameters["access_token"] = userAccessToken;
-                        //parameters["fb:explicitly_shared"] = "true";
-                        //parameters["message"] = "Great app!. @[tarek.ayna]";
-                        //dynamic postResult = facebookClient.Post("me/referengine:recommend", parameters);
-                        //Int64 postId;
-                        //if (Util.TryConvertToInt64(postResult.id, out postId))
-                        //{
-                        //    AppReferral referral = new AppReferral(app.Id, postId, user.FacebookId);
-                        //    DataOperations.AddReferral(referral);
-                        //}
-
-                        // Get friends list and pass on to the view
-                        const string friendsRequest = "me/friends" + RequestFields;
-                        dynamic friends = facebookClient.Get(friendsRequest);
-                        List<Person> friendsList = new List<Person>();
-                        for (int i = 0; i < friends.data.Count; i++)
-                        {
-                            friendsList.Add(new Person(friends.data[i]));
-                        }
-                        friendsList.Add(user);
-                        //DataOperations.AddPersonAndFriends(user, friendsList);
-
-                        return View(platform + "/friends", new FriendsViewModel(user, friendsList, app, userAccessToken));
-                    }
-                    else
-                    {
-                        return ErrorResult("Invalid Id.");
-                    }
-                }
-            }
-            else
-            {
-                return ErrorResult("Missing User Access Token");
+                string viewName = String.Format("{0}/recommend", platform);
+                var viewModel = new RecommendViewModel(currentUser, app, re_auth_token);
+                return View(viewName, viewModel);
             }
 
-            return RedirectToRoute("Default", new { controller = "Home", action = "Index" });
+            //TODO
+            throw new Exception();
         }
 
         [HttpPost]
-        public ActionResult PostRecommendation(string platform, string id, string userAccessToken, string message)
+        public async Task<ActionResult> PostRecommendation(string platform, string re_auth_token, string message)
         {
-            if (userAccessToken != null)
+            string userHostAddress = System.Web.HttpContext.Current.Request.UserHostAddress;
+            AppAuthorization appAuthorization = DataReader.GetAppAuthorization(re_auth_token, userHostAddress);
+            if (appAuthorization != null)
             {
-                int inputId;
-                if (id != null && Util.TryConvertToInt(id, out inputId))
+                var facebookOperations = DataReader.GetFacebookOperations(re_auth_token);
+                if (facebookOperations != null)
                 {
-                    App app;
-                    if (DataOperations.TryGetApp(inputId, out app))
-                    {
-                        FacebookClient facebookClient = new FacebookClient(userAccessToken);
-
-                        const string meRequest = "me" + RequestFields;
-                        dynamic me = facebookClient.Get(meRequest);
-                        Person user = new Person(me);
-
-                        Dictionary<string, object> parameters = new Dictionary<string, object>();
-                        parameters["app"] = "http://apps.facebook.com/referengine/app/" + id;
-                        parameters["access_token"] = userAccessToken;
-                        parameters["fb:explicitly_shared"] = "true";
-                        parameters["message"] = message;
-                        dynamic postResult = facebookClient.Post("me/referengine:recommend", parameters);
-                        Int64 postId;
-                        if (Util.TryConvertToInt64(postResult.id, out postId))
+                    var currentUser = await facebookOperations.GetCurrentUserAsync();
+                    var recommendation = new AppRecommendation
                         {
-                            var recommendation = new AppRecommendation(app.Id, postId, user.FacebookId);
-                            DataOperations.AddRecommendation(recommendation);
-                        }
-                    }
+                            AppId = appAuthorization.App.Id,
+                            PersonFacebookId = currentUser.FacebookId,
+                            UserMessage = message
+                        };
+
+                    var postedRecommendation = await facebookOperations.PostAppRecommendationAsync(recommendation);
+                    DataWriter.AddAppRecommendation(postedRecommendation);
+                    return Json(new
+                        {
+                            success = true
+                        });
                 }
             }
 
-            return new JsonResult();
-        }
-
-        private ActionResult ErrorResult(string error)
-        {
-            return RedirectToAction("Error", "Error", new
+            return Json(new
             {
-                message = error
+                success = false
             });
         }
     }

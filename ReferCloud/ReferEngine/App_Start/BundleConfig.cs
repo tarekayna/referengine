@@ -1,7 +1,6 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
-namespace ReferEngine
+namespace ReferEngineWeb
 {
     public class BundleConfig
     {
@@ -31,19 +30,25 @@ namespace ReferEngine
             bundles.Add(new StyleBundle("~/css/refer/win8/intro").Include(
                 "~/css/refer/win8/intro.css"));
 
-            bundles.Add(new ScriptBundle("~/js/refer/win8/friends").Include(
+            bundles.Add(new ScriptBundle("~/js/refer/win8/recommend").Include(
                 "~/js/lib/knockout.js",
                 "~/js/refer/win8/common.js",
-                "~/js/refer/win8/friends.js"));
+                "~/js/refer/win8/recommend.js"));
 
-            bundles.Add(new StyleBundle("~/css/refer/win8/friends").Include(
-                "~/css/refer/win8/friends.css"));
+            bundles.Add(new StyleBundle("~/css/refer/win8/recommend").Include(
+                "~/css/refer/win8/recommend.css"));
 
             bundles.Add(new ScriptBundle("~/js/lib/jquery.aceditable").Include(
                 "~/js/lib/jquery.aceditable.js"));
 
             bundles.Add(new StyleBundle("~/css/lib/jquery.aceditable").Include(
                 "~/css/lib/jquery.aceditable.css"));
+
+            bundles.Add(new StyleBundle("~/css/app/edit").Include(
+                "~/css/app/edit.css"));
+
+            bundles.Add(new ScriptBundle("~/js/app/edit").Include(
+                "~/js/app/edit.js"));
         }
     }
 }

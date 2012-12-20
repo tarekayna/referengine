@@ -1,0 +1,20 @@
+﻿@using ReferLib
+@model IList<AppScreenshot>
+
+@{
+    ViewBag.HideHeader = true;
+    ViewBag.HideFooter = true;
+}
+
+<div id="screenshots">
+    @foreach (AppScreenshot appScreenshot in Model)
+    {
+        <div class="screenshot">
+            <div class="id">@appScreenshot.Id</div>
+            <div class="link">@appScreenshot.Link</div>
+            <div class="width">@appScreenshot.Width</div>
+            <div class="height">@appScreenshot.Height</div>
+            <div class="desc">@appScreenshot.Description</div>
+        </div>
+    }
+</div>

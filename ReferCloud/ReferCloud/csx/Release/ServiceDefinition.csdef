@@ -5,11 +5,36 @@
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="StorageConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="80" localPort="80" />
+      <InputEndpoint name="HttpsIn" protocol="https" port="443" certificate="ReferEngineTestCertificate" localPort="443" />
+    </Endpoints>
+    <Certificates>
+      <Certificate name="ReferEngineTestCertificate" storeLocation="LocalMachine" storeName="My" />
+    </Certificates>
+  </WebRole>
+  <WorkerRole name="ReferCache">
+    <LocalResources>
+      <LocalStorage name="DiagnosticStore" sizeInMB="20000" cleanOnRoleRecycle="false" />
+    </LocalResources>
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+    </ConfigurationSettings>
+    <Endpoints>
+      <InternalEndpoint name="Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp" />
+      <InternalEndpoint name="Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" protocol="tcp" />
+      <InternalEndpoint name="Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" protocol="tcp" />
+      <InternalEndpoint name="Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" protocol="tcp" />
+      <InternalEndpoint name="Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" protocol="tcp" />
     </Endpoints>
     <Certificates />
-  </WebRole>
+  </WorkerRole>
 </ServiceDefinition>

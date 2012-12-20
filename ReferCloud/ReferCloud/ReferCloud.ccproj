@@ -37,12 +37,28 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ReferEngine\ReferEngine.csproj">
-      <Name>ReferEngine</Name>
+    <ProjectReference Include="..\ReferCache\ReferCache.csproj">
+      <Name>ReferCache</Name>
+      <Project>{1d50bf68-f8f5-418a-87d7-4f2fc0aa4398}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>ReferCache</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
+    <ProjectReference Include="..\ReferDataWorker\ReferDataWorker.csproj">
+      <Name>ReferDataWorker</Name>
+      <Project>{15b3e0d2-6217-493a-a690-158c497f5318}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>ReferDataWorker</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
+    <ProjectReference Include="..\ReferEngine\ReferEngineWeb.csproj">
+      <Name>ReferEngineWeb</Name>
       <Project>{8b12746f-826a-4ffc-a877-1119a0474c68}</Project>
       <Private>True</Private>
       <RoleType>Web</RoleType>
-      <RoleName>ReferEngine</RoleName>
+      <RoleName>ReferEngineWeb</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
   </ItemGroup>

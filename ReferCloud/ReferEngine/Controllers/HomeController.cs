@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
-using ReferEngine.DataAccess;
+using ReferEngineWeb.DataAccess;
 
-namespace ReferEngine.Controllers
+namespace ReferEngineWeb.Controllers
 {
     internal class ViewProperties
     {
@@ -123,7 +123,7 @@ namespace ReferEngine.Controllers
         {
             string email = Request.Form["Email"];
 
-            DataOperations.InsertPrivateBetaEmail(email);
+            DatabaseOperations.InsertPrivateBetaEmail(email);
 
             // Send the customer a thank you email
             string body = "Hello! " + "\n\n";

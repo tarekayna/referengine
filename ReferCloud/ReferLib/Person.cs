@@ -21,12 +21,25 @@ namespace ReferLib
         [DataMember]
         public string LastName { get; set; }
 
+        [DataMember]
         public string Email { get; set; }
+
+        [DataMember]
         public string Gender { get; set; }
+
+        [DataMember]
         public int Timezone { get; set; }
+
+        [DataMember]
         public bool Verified { get; set; }
+
+        [DataMember]
         public string PictureUrl { get; set; }
+
+        [DataMember]
         public bool PictureIsSilhouette { get; set; }
+
+        public Person(){}
 
         public Person(dynamic person)
         {
@@ -40,6 +53,23 @@ namespace ReferLib
             Verified = Convert.ToBoolean(person.verified);
             PictureUrl = person.picture != null && person.picture.data != null ? person.picture.data.url : null;
             PictureIsSilhouette = person.picture != null && person.picture.data != null ? person.picture.data.is_silhouette : null;
+        }
+
+        public void Update(Person latestPerson)
+        {
+            if (this.FacebookId != latestPerson.FacebookId)
+            {
+                throw new InvalidOperationException();
+            }
+            
+            Email = latestPerson.Email ?? this.Email;
+            FirstName = latestPerson.FirstName ?? FirstName;
+            Gender = latestPerson.Gender ?? Gender;
+            LastName = latestPerson.LastName ?? LastName;
+            Name = latestPerson.Name ?? Name;
+            PictureIsSilhouette = latestPerson.PictureUrl != null ? latestPerson.PictureIsSilhouette : PictureIsSilhouette;
+            PictureUrl = latestPerson.PictureUrl ?? PictureUrl;
+            Verified = latestPerson.Verified;
         }
 
         public static string Serialize(IList<Person> people)

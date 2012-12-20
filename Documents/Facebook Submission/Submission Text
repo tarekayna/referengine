@@ -1,0 +1,41 @@
+This action can only be triggered using native Windows 8 applications that are using the Refer Engine service (www.referengine.com). The service is under development now and is in the initial testing phase. The first app that supports Refer Engine is Blu Graphing Calculator for Windows 8 (it is live in the Windows 8 Store).
+
+(every step below is describing the screenshots attached)
+Step 1: Launch Blu Graphing Calculator show the bottom application bar. Click on the Recommend button.
+Step 2: This is the introductory page for the Refer Engine service within Blu Graphing Calculator. It is explaining what Refer Engine does. Click Start to login to facebook.
+Step 3: This is the Windows 8 native login experience for external services. The user would login to facebook here.
+Step 4: This is the final within the app. Here the user can enter a custom message to be published with this action and optionally tag their friends in the message as shown below (I have to tag myself here because the action is not yet approved).
+Step 5: Actiona is published to facebook.
+
+
+
+
+
+Note: These are the exact same steps mentioned in the "Tags" and "Explicitly shared" capability request. (not sure if different people will read those).
+
+The action supports mention tags and not action tagging. This allows the user to mention her friends when recommending an application. An example could be "hey John Doe and Mary Joe, I think you would find this app useful.". or could be "Playing ## game with John Doe"...
+
+These steps apply to all three capabilities requested here (tags, user messages and explicit sharing). Please refer to the "trigger steps" for steps to get to the page described below.
+
+Screenshot 1: http://sdrv.ms/YiMqbW 
+This shows the final page when the user is recommending an app using refer engine. As you can see the page has a textarea where the user can enter their message. The user starts typing the message.
+
+Screenshot 2: http://sdrv.ms/TxdcbK
+As the user is typing her message, the page will show auto-complete with the user's friends to get them.
+
+Screenshot 3: http://sdrv.ms/Txdlfs
+After showing a suggestion, if the user continues typing, auto-complete will filter out to show only friends that match the current word.
+
+Screenshot 4: http://sdrv.ms/YiMWqA
+When the user sees the friend they want to tag, they can use the Down and Up arrow keys to select the friend they want to get. (they can also just click on the friend name)
+
+Screenshot 5: http://sdrv.ms/YiN7Sy
+After pressing Down arrow until the friend is highlighted, the user can hit Enter to tag this friend.
+
+Screenshot 6: http://sdrv.ms/TxdUWp
+Now the user's friend is tagged and they continue writing their message. Auto-suggest will detect other friends that need to be tagged. If the user just continues typing auto-suggest will dismiss.
+
+Screenshot 7: http://sdrv.ms/T6KPSZ
+Now the user's message is ready to be posted. All they have to do is check-out the Post Preview (step 2) and click on the Submit button (step 3).
+
+Now the post submitted the the user's timeline. 

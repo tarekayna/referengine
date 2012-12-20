@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ReferEngine.Models.Error
+namespace ReferEngineWeb.Models.Error
 {
     public class ErrorViewModel
     {

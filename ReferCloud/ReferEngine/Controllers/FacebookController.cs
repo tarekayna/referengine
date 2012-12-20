@@ -3,28 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ReferEngine.DataAccess;
-using ReferEngine.Utilities;
+using ReferEngineWeb.DataAccess;
+using ReferEngineWeb.Utilities;
 using ReferLib;
 
-namespace ReferEngine.Controllers
+namespace ReferEngineWeb.Controllers
 {
     public class FacebookController : Controller
     {
-        public ActionResult App(string id, string fb_action_ids, string fb_source, string action_object_map,
+        private IReferDataReader DataReader { get; set; }
+
+        public FacebookController(IReferDataReader dataReader)
+        {
+            DataReader = dataReader;
+        }
+
+        public ActionResult App(long id, string fb_action_ids, string fb_source, string action_object_map,
             string action_type_map, string action_ref_map)
         {
-            int inputId;
-            if (id != null && Util.TryConvertToInt(id, out inputId))
-            {
-                App app;
-                if (DataOperations.TryGetApp(inputId, out app))
-                {
-                    return View(app);
-                }
-            }
-
-            return RedirectToRoute("Default", new { controller = "Home", action = "Index" });
+            App app = DataReader.GetApp(id);
+            return View(app);
         }
     }
 }

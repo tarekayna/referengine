@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using ReferLib;
 
-namespace ReferEngine.Controllers
+namespace ReferEngineWeb.Controllers
 {
     public class DevController : Controller
     {
