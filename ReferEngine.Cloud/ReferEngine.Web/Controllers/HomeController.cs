@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
+using ReferEngine.Common.Data;
+using ReferEngine.Common.Models;
 using ReferEngine.Web.DataAccess;
 
 namespace ReferEngine.Web.Controllers
@@ -30,14 +32,46 @@ namespace ReferEngine.Web.Controllers
 
     public class HomeController : Controller
     {
-        internal void SetViewProperties(ViewProperties viewProperties)
+        private IReferDataReader DataReader { get; set; }
+        private IReferDataWriter DataWriter { get; set; }
+
+        public HomeController(IReferDataReader dataReader, IReferDataWriter dataWriter)
+        {
+            DataReader = dataReader;
+            DataWriter = dataWriter;
+        }
+
+        [HttpPost]
+        public ActionResult Index(string email)
+        {
+            if (email == null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            PrivateBetaSignup privateBetaSignup = new PrivateBetaSignup(email);
+            DataWriter.AddPrivateBetaSignup(privateBetaSignup);
+            return Json(new { Email = email });           
+        }
+
+        [HttpGet]
+        public ActionResult Index()
+        {
+            LandingPageVariation landingPageToUse = GetLandingPage();
+            ViewBag.LandingPageName = landingPageToUse.Name;
+            SetViewProperties(landingPageToUse.ViewProperties);
+
+            return View();
+        }
+
+        private void SetViewProperties(ViewProperties viewProperties)
         {
             ViewBag.ButtonClass = viewProperties.ButtonClass;
             ViewBag.HeadlineText = viewProperties.HeadlineText;
             ViewBag.FocusOnInput = viewProperties.FocusOnInput;
         }
 
-        internal LandingPageVariation GetLandingPage()
+        private static LandingPageVariation GetLandingPage()
         {
             List<LandingPageVariation> list = new List<LandingPageVariation>
                                                   {
@@ -117,60 +151,6 @@ namespace ReferEngine.Web.Controllers
             LandingPageVariation landingPageToUse = false ? list[0] : weightedList[random.Next(0, weightedList.Count - 1)];
 
             return landingPageToUse;
-        }
-
-        internal ActionResult ProcessPostbackAndSendEmails()
-        {
-            string email = Request.Form["Email"];
-
-            DatabaseOperations.InsertPrivateBetaEmail(email);
-
-            // Send the customer a thank you email
-            string body = "Hello! " + "\n\n";
-            body += "Thank you for signing up for Refer Engine's private beta. We will let you as soon as we are ready.\n\n";
-            body += "Tarek\n";
-            body += "ReferEngine.com Founder and Developer";
-
-            try
-            {
-                MailAddress from = new MailAddress("tarek@referengine.co", "Tarek, ReferEngine.com");
-                const string subject = "ReferEngine.com Signup";
-
-                var to = new MailAddress(email);
-                var mailMessage = new MailMessage(from, to)
-                {
-                    Body = body,
-                    IsBodyHtml = false,
-                    Sender = from,
-                    Subject = subject
-                };
-                mailMessage.ReplyToList.Add(to);
-                var client = new SmtpClient("smtp.mandrillapp.com") { Port = 587 };
-                const string username = "tarek@apexa.co";
-                const string password = "38b99f5a-45aa-4dab-8c94-452718b2afee";
-                client.Credentials = new NetworkCredential(username, password);
-                client.Send(mailMessage);
-            }
-            catch (Exception)
-            {
-                return new HttpStatusCodeResult(500);
-            }
-
-            return Json(new { Email = email });
-        }
-
-        public ActionResult Index()
-        {
-            if (Request.HttpMethod == "POST")
-            {
-                return ProcessPostbackAndSendEmails();
-            }
-
-            LandingPageVariation landingPageToUse = GetLandingPage();
-            ViewBag.LandingPageName = landingPageToUse.Name;
-            SetViewProperties(landingPageToUse.ViewProperties);
-
-            return View("Index");
         }
     }
 }

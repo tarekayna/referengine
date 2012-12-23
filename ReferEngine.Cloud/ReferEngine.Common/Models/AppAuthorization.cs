@@ -2,7 +2,6 @@
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
-using ReferLib;
 
 namespace ReferEngine.Common.Models
 {
@@ -10,16 +9,19 @@ namespace ReferEngine.Common.Models
     public class AppAuthorization
     {
         [DataMember]
-        public App App { get; private set; }
+        public App App { get; set; }
 
         [DataMember]
-        public AppReceipt AppReceipt { get; private set; }
+        public AppReceipt AppReceipt { get; set; }
 
         [DataMember]
-        public string Token { get; private set; }
+        public string Token { get; set; }
 
         [DataMember]
-        public string UserHostAddress { get; private set; }
+        public string UserHostAddress { get; set; }
+
+        [DataMember]
+        public bool IsVerified { get; set; }
 
         private string _privateKey = "fo435u49ftrl93455498634jrlkenrfp3woijrewrjewlkrjewjrwlerew";
 
@@ -29,6 +31,7 @@ namespace ReferEngine.Common.Models
             AppReceipt = appReceipt;
             UserHostAddress = userHostAddress;
             Token = ComputeToken();
+            IsVerified = false;
         }
 
         private string ComputeToken()

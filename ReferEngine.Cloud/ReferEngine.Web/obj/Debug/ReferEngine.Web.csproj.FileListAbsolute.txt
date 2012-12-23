@@ -69,3 +69,10 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\ob
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\obj\Debug\ReferEngine.Web.csprojResolveAssemblyReference.cache
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\bin\Newtonsoft.Json.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\bin\Newtonsoft.Json.xml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\bin\Microsoft.Data.Edm.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\bin\Microsoft.Data.OData.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\bin\System.Spatial.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\bin\Microsoft.Data.Edm.xml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\bin\Microsoft.Data.OData.xml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\bin\System.Spatial.xml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\bin\Microsoft.WindowsAzure.StorageClient.xml

@@ -1,4 +1,5 @@
 ﻿using ReferEngine.Common;
+using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using System.Linq;
 
@@ -11,7 +12,7 @@ namespace ReferEngine.Web.DataAccess
             App app = CacheOperations.GetApp(packageFamilyName);
             if (app == null)
             {
-                using (var db = new ReferDb())
+                using (var db = new ReferEngineDatabaseContext())
                 {
                     app = db.Apps.First(a => a.PackageFamilyName == packageFamilyName);
                     CacheOperations.AddApp(packageFamilyName, app);
@@ -25,8 +26,8 @@ namespace ReferEngine.Web.DataAccess
             App app = CacheOperations.GetApp(id);
             if (app == null)
             {
-                using (var db = new ReferDb())
-                {
+                using (var db = new ReferEngineDatabaseContext())
+                {  
                     app = db.Apps.First(a => a.Id == id);
                     CacheOperations.AddApp(id, app);
                 }

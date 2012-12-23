@@ -1,18 +1,19 @@
 using System;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 
 namespace ReferEngine.Common.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<ReferDb>
+    internal sealed class Configuration : DbMigrationsConfiguration<ReferEngineDatabaseContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(ReferDb context)
+        protected override void Seed(ReferEngineDatabaseContext context)
         {
             Developer developer = new Developer
                                       {

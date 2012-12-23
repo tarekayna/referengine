@@ -4,20 +4,22 @@ using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using ReferEngine.Common.Models;
 using System.Linq;
+using ReferEngine.Common.Properties;
 
 namespace ReferEngine.Common.Data
 {
     public static class ServiceBusOperations
     {
-        private const string Namespace = "referenginedatabus";
-        private const string IssuerName = "owner";
-        private const string IssuerKey = "zvWWDVXb0SmLvs8mdWjLnKeszs1ETvWVMZ9SPGCCRCk=";
+        //private static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromMinutes(5);
         private static readonly IList<Queue> Queues = new List<Queue>();
 
         private static NamespaceManager CreateNamespaceManager()
         {
-            Uri uri = ServiceBusEnvironment.CreateServiceUri("sb", Namespace, String.Empty);
-            TokenProvider tokenProvider = TokenProvider.CreateSharedSecretTokenProvider(IssuerName, IssuerKey);
+            string dataWriteNamespace = Settings.Default.DataWriteBusNamespace;
+            string issuerName = Settings.Default.DataWriteBusIssuerName;
+            string issuerKey = Settings.Default.DataWriteBusIssuerKey;
+            Uri uri = ServiceBusEnvironment.CreateServiceUri("sb", dataWriteNamespace, String.Empty);
+            TokenProvider tokenProvider = TokenProvider.CreateSharedSecretTokenProvider(issuerName, issuerKey);
             return new NamespaceManager(uri, tokenProvider);
         }
 
@@ -26,19 +28,40 @@ namespace ReferEngine.Common.Data
             ServiceBusEnvironment.SystemConnectivity.Mode = ConnectivityMode.Http;
 
             var namespaceManager = CreateNamespaceManager();
+            MessagingFactorySettings messagingFactorySettings = new MessagingFactorySettings
+                {
+                    TokenProvider = namespaceManager.Settings.TokenProvider,
+                    //OperationTimeout = DefaultOperationTimeout
+                };
             var messagingFactory = MessagingFactory.Create(namespaceManager.Address,
-                                                           namespaceManager.Settings.TokenProvider);
+                                                           messagingFactorySettings);
 
+            // Add Queues by Priority
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppAuthorization", typeof(AppAuthorization)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "CurrentUser", typeof(CurrentUser)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "AppRecommendation", typeof(AppRecommendation)));
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppReceipt", typeof(AppReceipt)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "AppScreenshot", typeof(AppScreenshot)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "PrivateBetaSignup", typeof(PrivateBetaSignup)));
         }
 
         public static void AddToQueue(Object objectToQueue)
         {
             Queue queue = Queues.First(q => q.SupportedType.IsEquivalentTo(objectToQueue.GetType()));
             queue.Enqueue(objectToQueue);
+        }
+
+        public static BrokeredMessage GetMessage()
+        {
+            BrokeredMessage message = null;
+            foreach (Queue queue in Queues)
+            {
+                message = queue.Receive();
+                if (message != null)
+                {
+                    break;
+                }
+            }
+            return message;
         }
 
         private class Queue
@@ -65,6 +88,18 @@ namespace ReferEngine.Common.Data
                 {
                     Client.Send(new BrokeredMessage(obj));
                 }
+            }
+
+            public BrokeredMessage Receive()
+            {
+                TimeSpan timeSpan = TimeSpan.FromMinutes(0);
+                BrokeredMessage message = Client.Receive(timeSpan);
+
+                if (message != null)
+                {
+                    message.ContentType = SupportedType.ToString();
+                }
+                return message;
             }
 
             private void CreateIfNeeded()

@@ -11,9 +11,10 @@ namespace ReferEngine.Web.DataAccess
             CacheOperations.AddFacebookOperations(referEngineAuthToken, facebookOperations);
         }
 
-        public void AddAppAuthorization(AppAuthorization appAuthorization, TimeSpan expiresIn)
+        public void AddAppAuthorization(AppAuthorization appAuthorization)
         {
-            CacheOperations.AddAppAuthorization(appAuthorization, expiresIn);
+            CacheOperations.AddAppAuthorization(appAuthorization, TimeSpan.FromMinutes(20));
+            ServiceBusOperations.AddToQueue(appAuthorization);
         }
 
         public void AddAppReceipt(AppReceipt appReceipt)
@@ -34,6 +35,11 @@ namespace ReferEngine.Web.DataAccess
         public void AddAppRecommendation(AppRecommendation appRecommendation)
         {
             ServiceBusOperations.AddToQueue(appRecommendation);
+        }
+
+        public void AddPrivateBetaSignup(PrivateBetaSignup privateBetaSignup)
+        {
+            ServiceBusOperations.AddToQueue(privateBetaSignup);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 
 namespace ReferEngine.Web.DataAccess
@@ -8,8 +9,9 @@ namespace ReferEngine.Web.DataAccess
         void AddFacebookOperations(string referEngineAuthToken, FacebookOperations facebookOperations);
         void AddPersonAndFriends(CurrentUser currentUser);
         void AddAppRecommendation(AppRecommendation appRecommendation);
-        void AddAppAuthorization(AppAuthorization appAuthorization, TimeSpan expiresIn);
+        void AddAppAuthorization(AppAuthorization appAuthorization);
         void AddAppScreenshot(AppScreenshot appScreenshot);
         void AddAppReceipt(AppReceipt appReceipt);
+        void AddPrivateBetaSignup(PrivateBetaSignup privateBetaSignup);
     }
 }

@@ -22,9 +22,9 @@ namespace ReferEngine.Web.App_Start
             );
 
             routes.MapRoute(
-                name: "Refer",
-                url: "refer/{platform}/{action}/{id}",
-                defaults: new { controller = "Refer", platform = "Win8", action = "Intro", id = UrlParameter.Optional }
+                name: "Recommend",
+                url: "recommend/{platform}/{action}/{id}",
+                defaults: new { controller = "Recommend", platform = "Win8", action = "Intro", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(

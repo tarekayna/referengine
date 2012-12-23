@@ -2,13 +2,14 @@
 using System.Linq;
 using System.Web.Mvc;
 using ReferEngine.Common;
+using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 
 namespace ReferEngine.Web.Controllers
 {
     public class DevController : Controller
     {
-        private ReferDb _db = new ReferDb();
+        private ReferEngineDatabaseContext _db = new ReferEngineDatabaseContext();
 
         public ActionResult Index()
         {

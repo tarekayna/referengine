@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="bb4f195c-bc9d-4810-ad76-1e0b4c81a0c0" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="2c0c14a9-006d-48c7-a1e7-c97385a415d1" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="ReferCloudGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -73,6 +73,11 @@
         <aCS name="ReferEngine.Workers.DataWriter:Microsoft.ServiceBus.ConnectionString" defaultValue="">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriter:Microsoft.ServiceBus.ConnectionString" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
           </maps>
         </aCS>
         <aCS name="ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
@@ -182,6 +187,11 @@
         <map name="MapReferEngine.Workers.DataWriter:Microsoft.ServiceBus.ConnectionString" kind="Identity">
           <setting>
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/Microsoft.ServiceBus.ConnectionString" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
           </setting>
         </map>
         <map name="MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
@@ -342,6 +352,7 @@
             </componentports>
             <settings>
               <aCS name="Microsoft.ServiceBus.ConnectionString" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
               <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Workers.DataWriter&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;/m&gt;" />
             </settings>
@@ -371,14 +382,14 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="7d50b8b0-9289-4976-b67c-908e6c392a58" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
+    <implementation Id="9a2807f6-6bfa-49f5-abc5-3c31d2e8c998" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="2685c2a5-5cd6-4209-a150-63ae95543805" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="d4a84ec6-b02e-401a-8e54-eea8601cc227" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="b1fd7961-fb5d-4515-b5d7-505dbb9e07b4" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
+        <interfaceReference Id="9f257dc4-533c-4217-bbfc-9f2c90e79a62" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:HttpsIn" />
           </inPort>

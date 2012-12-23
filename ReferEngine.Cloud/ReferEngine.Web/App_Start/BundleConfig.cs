@@ -20,23 +20,26 @@ namespace ReferEngine.Web.App_Start
                 "~/css/base.css",
                 "~/css/blue.css"));
 
-            bundles.Add(new StyleBundle("~/css/refer/win8").Include(
-                "~/css/refer/win8/refer-win8.css"));
+            bundles.Add(new ScriptBundle("~/js/home/index").Include(
+                "~/js/home/index.js"));
 
-            bundles.Add(new ScriptBundle("~/js/refer/win8/intro").Include(
-                "~/js/refer/win8/common.js",
-                "~/js/refer/win8/intro.js"));
+            bundles.Add(new StyleBundle("~/css/recommend/win8").Include(
+                "~/css/recommend/win8/refer-win8.css"));
 
-            bundles.Add(new StyleBundle("~/css/refer/win8/intro").Include(
-                "~/css/refer/win8/intro.css"));
+            bundles.Add(new ScriptBundle("~/js/recommend/win8/intro").Include(
+                "~/js/recommend/win8/common.js",
+                "~/js/recommend/win8/intro.js"));
 
-            bundles.Add(new ScriptBundle("~/js/refer/win8/recommend").Include(
+            bundles.Add(new StyleBundle("~/css/recommend/win8/intro").Include(
+                "~/css/recommend/win8/intro.css"));
+
+            bundles.Add(new ScriptBundle("~/js/recommend/win8/recommend").Include(
                 "~/js/lib/knockout.js",
-                "~/js/refer/win8/common.js",
-                "~/js/refer/win8/recommend.js"));
+                "~/js/recommend/win8/common.js",
+                "~/js/recommend/win8/recommend.js"));
 
-            bundles.Add(new StyleBundle("~/css/refer/win8/recommend").Include(
-                "~/css/refer/win8/recommend.css"));
+            bundles.Add(new StyleBundle("~/css/recommend/win8/recommend").Include(
+                "~/css/recommend/win8/recommend.css"));
 
             bundles.Add(new ScriptBundle("~/js/lib/jquery.aceditable").Include(
                 "~/js/lib/jquery.aceditable.js"));

@@ -13,31 +13,31 @@ namespace ReferEngine.Common.Models
     public class AppReceipt
     {
         [DataMember]
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
         [DataMember]
-        public Int64 AppId { get; private set; }
+        public string CertificateId { get; set; }
 
         [DataMember]
-        public string AppPackageFamilyName { get; private set; }
+        public Int64 AppId { get; set; }
 
         [DataMember]
-        public DateTime PurchaseDate { get; private set; }
+        public string AppPackageFamilyName { get; set; }
 
         [DataMember]
-        public LicenseType LicenseType { get; private set; }
+        public DateTime PurchaseDate { get; set; }
+
+        [DataMember]
+        public LicenseType LicenseType { get; set; }
 
         [DataMember]
         public Int64 PersonFacebookId { get; set; }
 
-        public AppReceipt(string id, Int64 appId, string appPackageFamilyName, DateTime purchaseDate, LicenseType licenseType)
-        {
-            AppId = appId;
-            AppPackageFamilyName = appPackageFamilyName;
-            Id = id;
-            PurchaseDate = purchaseDate;
-            LicenseType = licenseType;
-        }
+        [DataMember]
+        public string XmlContent { get; set; }
+
+        [DataMember]
+        public bool Verified { get; set; }
 
         public static LicenseType GetLicenseType(string licenseTypeStr)
         {

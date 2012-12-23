@@ -1,23 +1,20 @@
-﻿using System;
+﻿using Microsoft.ServiceBus.Messaging;
+using Microsoft.WindowsAzure.ServiceRuntime;
+using ReferEngine.Common.Data;
+using ReferEngine.Common.Email;
+using ReferEngine.Common.Models;
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
-using Microsoft.ServiceBus;
-using Microsoft.ServiceBus.Messaging;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.ServiceRuntime;
+using ReferEngine.Common.Utilities;
+using ReferEngine.Workers.DataWriter.Properties;
 
 namespace ReferEngine.Workers.DataWriter
 {
     public class WorkerRole : RoleEntryPoint
     {
-        // The name of your queue
-        const string QueueName = "UserAndFriendsQueue";
-
-        // QueueClient is thread-safe. Recommended that you cache 
-        // rather than recreating it on every request
-        QueueClient Client;
-        bool IsStopped;
+        public bool IsStopped { get; set; }
 
         public override void Run()
         {
@@ -25,16 +22,58 @@ namespace ReferEngine.Workers.DataWriter
             {
                 try
                 {
-                    // Receive the message
-                    BrokeredMessage receivedMessage = null;
-                    receivedMessage = Client.Receive();
-
-                    if (receivedMessage != null)
+                    BrokeredMessage message = ServiceBusOperations.GetMessage();
+                    if (message == null)
                     {
-                        // Process the message
-                        Trace.WriteLine("Processing", receivedMessage.SequenceNumber.ToString());
-                        receivedMessage.Complete();
+                        Thread.Sleep(Settings.Default.WorkerThreadSleepTimeout);
                     }
+                    else
+                    {
+                        Trace.WriteLine("Processing", message.SequenceNumber.ToString());
+
+                        switch (message.ContentType)
+                        {
+                            case "ReferEngine.Common.Models.AppAuthorization":
+                                {
+                                    AppAuthorization appAuthorization = message.GetBody<AppAuthorization>();
+                                    appAuthorization.AppReceipt.Verified = Util.VerifyAppAuthorization(appAuthorization);
+                                    appAuthorization.IsVerified = appAuthorization.AppReceipt.Verified;
+                                    if (appAuthorization.AppReceipt.Verified)
+                                    {
+                                        CacheOperations.AddAppAuthorization(appAuthorization, TimeSpan.FromMinutes(20));
+                                    }
+                                    DatabaseOperations.AddAppReceipt(appAuthorization.AppReceipt);
+                                    break;
+                                }
+                            case "ReferEngine.Common.Models.CurrentUser":
+                                {
+                                    CurrentUser currentUser = message.GetBody<CurrentUser>();
+                                    DatabaseOperations.AddCurrentUser(currentUser, message);
+                                    break;
+                                }
+                            case "ReferEngine.Common.Models.AppRecommendation":
+                                {
+                                    AppRecommendation appRecommendation = message.GetBody<AppRecommendation>();
+                                    DatabaseOperations.AddRecommendation(appRecommendation);
+                                    break;
+                                }
+                            case "ReferEngine.Common.Models.PrivateBetaSignup":
+                                {
+                                    PrivateBetaSignup privateBetaSignup = message.GetBody<PrivateBetaSignup>();
+                                    ReferEmailer.ProcessPrivateBetaSignup(privateBetaSignup);
+                                    DatabaseOperations.AddPrivateBetaSignup(privateBetaSignup);
+                                    break;
+                                }
+                        }
+
+                        message.Complete();
+                    }
+                }
+                catch (MessageLockLostException e)
+                {
+                    // What to do? Message took too long.
+                    // It's ok, process it again.
+                    Trace.WriteLine(e.Message);
                 }
                 catch (MessagingException e)
                 {
@@ -44,7 +83,7 @@ namespace ReferEngine.Workers.DataWriter
                         throw;
                     }
 
-                    Thread.Sleep(10000);
+                    Thread.Sleep(Settings.Default.WorkerThreadSleepTimeout);
                 }
                 catch (OperationCanceledException e)
                 {
@@ -54,33 +93,25 @@ namespace ReferEngine.Workers.DataWriter
                         throw;
                     }
                 }
+                catch (Exception e)
+                {
+                    Trace.WriteLine(e.Message);
+                }
             }
         }
 
         public override bool OnStart()
         {
-            // Set the maximum number of concurrent connections 
-            ServicePointManager.DefaultConnectionLimit = 12;
+            ServicePointManager.DefaultConnectionLimit = Environment.ProcessorCount;
+            ServiceBusOperations.Initialize();
 
-            // Create the queue if it does not exist already
-            string connectionString = CloudConfigurationManager.GetSetting("Microsoft.ServiceBus.ConnectionString");
-            var namespaceManager = NamespaceManager.CreateFromConnectionString(connectionString);
-            if (!namespaceManager.QueueExists(QueueName))
-            {
-                namespaceManager.CreateQueue(QueueName);
-            }
-
-            // Initialize the connection to Service Bus Queue
-            Client = QueueClient.CreateFromConnectionString(connectionString, QueueName);
             IsStopped = false;
             return base.OnStart();
         }
 
         public override void OnStop()
         {
-            // Close the connection to Service Bus Queue
             IsStopped = true;
-            Client.Close();
             base.OnStop();
         }
     }

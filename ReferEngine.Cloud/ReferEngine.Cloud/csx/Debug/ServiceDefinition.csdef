@@ -43,6 +43,7 @@
     </LocalResources>
     <ConfigurationSettings>
       <Setting name="Microsoft.ServiceBus.ConnectionString" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
     <Endpoints />

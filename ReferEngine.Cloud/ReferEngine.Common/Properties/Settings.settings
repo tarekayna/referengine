@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ReferEngine.Common.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DataWriteBusNamespace" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">referenginedatawritebus</Value>
+    </Setting>
+    <Setting Name="DataWriteBusIssuerName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">owner</Value>
+    </Setting>
+    <Setting Name="DataWriteBusIssuerKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">gyFFjJOT98wjzS77VRhZGic8YooQhQTSOcv9VSjSzW4=</Value>
+    </Setting>
+    <Setting Name="RenewLockDelta" Type="System.TimeSpan" Scope="Application">
+      <Value Profile="(Default)">00:00:10</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

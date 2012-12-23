@@ -1,17 +1,13 @@
 ﻿using System;
-using System.IO;
-using System.Net.Http;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography.Xml;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Xml;
+using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using ReferEngine.Web.DataAccess;
-using ReferLib;
 
 namespace ReferEngine.Web.Controllers.Win8
 {
@@ -41,19 +37,14 @@ namespace ReferEngine.Web.Controllers.Win8
                     int end = streamStr.IndexOf("</Receipt>", 0, StringComparison.OrdinalIgnoreCase) + 10;
                     string appReceiptXmlStr = streamStr.Substring(start, end - start);
 
-                    CryptoConfig.AddAlgorithm(typeof (RSAPKCS1SHA256SignatureDescription),
-                                              "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256");
-
                     XmlDocument xmlDoc = new XmlDocument();
                     xmlDoc.LoadXml(appReceiptXmlStr);
                     XmlNode node = xmlDoc.DocumentElement;
-                    string certificateId = node.Attributes["CertificateId"].Value;
-                    X509Certificate2 verificationCertificate = await RetrieveCertificate(certificateId);
-
-                    if (ValidateXml(xmlDoc, verificationCertificate))
+                    if (node != null && node.Attributes != null)
                     {
+                        string certificateId = node.Attributes["CertificateId"].Value;
                         XmlNode appReceiptNode = node.SelectSingleNode("descendant::AppReceipt");
-                        if (appReceiptNode != null)
+                        if (appReceiptNode != null && appReceiptNode.Attributes != null)
                         {
                             string receiptId = appReceiptNode.Attributes.GetNamedItem("Id").Value;
                             string packageFamilyName = appReceiptNode.Attributes.GetNamedItem("AppId").Value;
@@ -61,26 +52,31 @@ namespace ReferEngine.Web.Controllers.Win8
                             LicenseType licenseType = AppReceipt.GetLicenseType(licenseTypeStr);
                             DateTime purchaseDate =
                                 Convert.ToDateTime(appReceiptNode.Attributes.GetNamedItem("PurchaseDate").Value);
-
                             App app = DatabaseOperations.GetApp(packageFamilyName);
 
-                            AppReceipt appReceipt = new AppReceipt(receiptId, app.Id,
-                                                                   packageFamilyName, purchaseDate, licenseType);
-                            DataWriter.AddAppReceipt(appReceipt);
+                            AppReceipt appReceipt = new AppReceipt
+                            {
+                                Id = receiptId,
+                                AppPackageFamilyName = packageFamilyName,
+                                LicenseType = licenseType,
+                                PurchaseDate = purchaseDate,
+                                AppId = app.Id,
+                                XmlContent = appReceiptXmlStr,
+                                CertificateId = certificateId
+                            };
 
-                            string userHostAddress = HttpContext.Current.Request.UserHostAddress;
-                            AppAuthorization appAuthorization = new AppAuthorization(app, appReceipt, userHostAddress);
-                            DataWriter.AddAppAuthorization(appAuthorization, TokenExpiresIn);
+                             string userHostAddress = HttpContext.Current.Request.UserHostAddress;
+                             AppAuthorization appAuthorization = new AppAuthorization(app, appReceipt, userHostAddress);
+                             DataWriter.AddAppAuthorization(appAuthorization);
 
-                            return new JsonResult()
-                                       {
-                                           Data = new
-                                                      {
-                                                          success = true,
-                                                          token = appAuthorization.Token,
-                                                          expiresIn = TokenExpiresIn.TotalSeconds
-                                                      }
-                                       };
+                             return new JsonResult
+                             {
+                                 Data = new {
+                                                success = true,
+                                                token = appAuthorization.Token,
+                                                expiresIn = TokenExpiresIn.TotalSeconds
+                                            }
+                             };
                         }
                     }
                 }
@@ -88,66 +84,10 @@ namespace ReferEngine.Web.Controllers.Win8
             catch (Exception e)
             {
                 //TODO Exception handling
-
+                Trace.WriteLine(e.Message);
             }
 
-            return new JsonResult()
-            {
-                Data = new { success = false }
-            };
-        }
-
-        public async Task<JsonResult> Get()
-        {
-            return new JsonResult()
-                {
-                    Data = "what!"
-                };
-        }
-
-        private static int ReadResponseBytes(byte[] responseBuffer, Stream resStream)
-        {
-            int count = 0;
-
-            int numBytesRead = 0;
-            int numBytesToRead = responseBuffer.Length;
-
-            do
-            {
-                count = resStream.Read(responseBuffer, numBytesRead, numBytesToRead);
-
-                numBytesRead += count;
-                numBytesToRead -= count;
-
-            } while (count > 0);
-
-            return numBytesRead;
-        }
-
-        private static async Task<X509Certificate2> RetrieveCertificate(string certificateId)
-        {
-            // http://msdn.microsoft.com/en-us/library/windows/apps/windows.applicationmodel.store.currentapp.getappreceiptasync.aspx
-            String certificateUrl = String.Format("https://go.microsoft.com/fwlink/?LinkId=246509&cid={0}", certificateId);
-
-            HttpClient httpClient = new HttpClient();
-            HttpResponseMessage responseMessage = await httpClient.GetAsync(certificateUrl);
-            responseMessage.EnsureSuccessStatusCode();
-            byte[] responseBuffer = await responseMessage.Content.ReadAsByteArrayAsync();
-
-            return new X509Certificate2(responseBuffer);
-        }
-
-        private static bool ValidateXml(XmlDocument receipt, X509Certificate2 certificate)
-        {
-            SignedXml signedXml = new SignedXml(receipt);
-            XmlNode signatureNode = receipt.GetElementsByTagName("Signature", SignedXml.XmlDsigNamespaceUrl)[0];
-            if (signatureNode == null)
-            {
-                return false;
-            }
-
-            signedXml.LoadXml((XmlElement)signatureNode);
-            return signedXml.CheckSignature(certificate, true);
+            return new JsonResult { Data = new { success = false } };
         }
     }
 }
