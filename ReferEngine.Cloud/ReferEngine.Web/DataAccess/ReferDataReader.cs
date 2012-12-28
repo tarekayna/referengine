@@ -49,5 +49,15 @@ namespace ReferEngine.Web.DataAccess
         {
             return CacheOperations.GetAppScreenshot(appId, description);
         }
+
+        public AppReceipt GetAppReceipt(string id)
+        {
+            return DatabaseOperations.GetAppReceipt(id);
+        }
+    
+        public AppRecommendation GetAppRecommendation(long appId, long personFacebookId)
+        {
+            return DatabaseOperations.GetAppRecommdation(appId, personFacebookId);
+        }
     }
 }

@@ -31,13 +31,18 @@ namespace ReferEngine.Common.Models
         public LicenseType LicenseType { get; set; }
 
         [DataMember]
-        public Int64 PersonFacebookId { get; set; }
+        public Int64? PersonFacebookId { get; set; }
 
         [DataMember]
         public string XmlContent { get; set; }
 
         [DataMember]
         public bool Verified { get; set; }
+
+        public AppReceipt()
+        {
+            PersonFacebookId = null;
+        }
 
         public static LicenseType GetLicenseType(string licenseTypeStr)
         {

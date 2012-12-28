@@ -70,6 +70,32 @@ namespace ReferEngine.Common.Data
             return app;
         }
 
+        public static void AddOrUpdateAppReceipt(AppReceipt appReceipt)
+        {
+            using (var db = new ReferEngineDatabaseContext())
+            {
+                AppReceipt existingReceipt = db.AppReceipts.Find(appReceipt.Id);
+                if (existingReceipt == null)
+                {
+                    db.AppReceipts.Add(appReceipt);
+                }
+                else
+                {
+                    existingReceipt.PersonFacebookId = appReceipt.PersonFacebookId;
+                }
+
+                db.SaveChanges();
+            }
+        }
+
+        public static AppReceipt GetAppReceipt(string id)
+        {
+            using (var db = new ReferEngineDatabaseContext())
+            {
+                return db.AppReceipts.Find(id);
+            }
+        }
+
         public static AppScreenshot GetAppScreenshot(long appId, string description)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
@@ -91,6 +117,14 @@ namespace ReferEngine.Common.Data
             }
 
             return person;
+        }
+
+        public static AppRecommendation GetAppRecommdation(long appId, long personFacebookId)
+        {
+            using (var db = new ReferEngineDatabaseContext())
+            {
+                return db.AppRecommendations.FirstOrDefault(r => r.AppId == appId && r.PersonFacebookId == personFacebookId);
+            }
         }
 
         public static void AddApp(App app)

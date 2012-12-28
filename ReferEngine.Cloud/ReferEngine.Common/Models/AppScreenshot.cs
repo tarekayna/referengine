@@ -18,6 +18,9 @@ namespace ReferEngine.Common.Models
         public Int64 AppId { get; set; }
 
         [DataMember]
+        public string Title { get; set; }
+
+        [DataMember]
         public string Description { get; set; }
 
         [DataMember]
@@ -29,10 +32,9 @@ namespace ReferEngine.Common.Models
         [DataMember]
         public int Size { get; set; }
 
-        [DataMember]
         public string Link
         {
-            get { return "https://referenginestorage.blob.core.windows.net/app-screenshots/" + AppId; }
+            get { return string.Format("https://referenginestorage.blob.core.windows.net/app-screenshots/{0}.png", Id); }
         }
 
         public static AppScreenshot Create(HttpPostedFileBase file, int appId)

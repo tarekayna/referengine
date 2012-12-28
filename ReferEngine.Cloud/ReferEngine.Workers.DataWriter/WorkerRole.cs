@@ -57,6 +57,12 @@ namespace ReferEngine.Workers.DataWriter
                                     DatabaseOperations.AddRecommendation(appRecommendation);
                                     break;
                                 }
+                            case "ReferEngine.Common.Models.AppReceipt":
+                                {
+                                    AppReceipt appReceipt = message.GetBody<AppReceipt>();
+                                    DatabaseOperations.AddOrUpdateAppReceipt(appReceipt);
+                                    break;
+                                }
                             case "ReferEngine.Common.Models.PrivateBetaSignup":
                                 {
                                     PrivateBetaSignup privateBetaSignup = message.GetBody<PrivateBetaSignup>();

@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="dotless.Core">
+      <HintPath>..\packages\dotless.1.3.1.0\lib\dotless.Core.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.0.0-alpha2\lib\net45\EntityFramework.dll</HintPath>
@@ -189,6 +192,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\LessTransform.cs" />
     <Compile Include="App_Start\NinjectResolver.cs" />
     <Compile Include="App_Start\NinjectScope.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
@@ -211,6 +215,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Error\ErrorViewModel.cs" />
+    <Compile Include="Models\Facebook\FacebookAppViewModel.cs" />
     <Compile Include="Models\Refer\Win8\RecommendViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebRole.cs" />
@@ -282,9 +287,6 @@
     <Content Include="css\fonts\fontawesome-webfont.svg" />
     <Content Include="css\lib\jquery.aceditable.css" />
     <Content Include="css\m-buttons.css" />
-    <Content Include="css\recommend\win8\recommend.css" />
-    <Content Include="css\recommend\win8\intro.css" />
-    <Content Include="css\recommend\win8\refer-win8.css" />
     <Content Include="facebook_channel.html" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -310,6 +312,25 @@
     <Content Include="js\recommend\win8\common.js" />
     <Content Include="js\recommend\win8\recommend.js" />
     <Content Include="js\recommend\win8\intro.js" />
+    <Content Include="Less\common.css">
+      <DependentUpon>common.less</DependentUpon>
+    </Content>
+    <Content Include="Less\common.min.css">
+      <DependentUpon>common.less</DependentUpon>
+    </Content>
+    <Content Include="Less\recommend\win8\common.css">
+      <DependentUpon>common.less</DependentUpon>
+    </Content>
+    <Content Include="Less\recommend\win8\common.less" />
+    <Content Include="Less\recommend\win8\intro.css">
+      <DependentUpon>intro.less</DependentUpon>
+    </Content>
+    <Content Include="Less\recommend\win8\intro.less" />
+    <Content Include="Less\recommend\win8\recommend.css">
+      <DependentUpon>recommend.less</DependentUpon>
+    </Content>
+    <Content Include="Less\recommend\win8\recommend.less" />
+    <Content Include="Less\common.less" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -341,9 +362,6 @@
     <Content Include="css\fonts\fontawesome-webfont.eot" />
     <Content Include="css\fonts\fontawesome-webfont.ttf" />
     <Content Include="css\fonts\fontawesome-webfont.woff" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="img\Thumbs.db" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Layout.cshtml" />

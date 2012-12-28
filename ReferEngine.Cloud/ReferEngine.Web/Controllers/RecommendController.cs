@@ -35,11 +35,54 @@ namespace ReferEngine.Web.Controllers
             AppAuthorization appAuthorization = GetAppAuthorization(re_auth_token, false);
             if (appAuthorization != null)
             {
+                // App is cool
                 App app = appAuthorization.App;
                 string accessCode = fb_access_code.Replace("%23", "#");
                 FacebookOperations facebookOperations = await FacebookOperations.CreateAsync(accessCode);
 
+                // Facebook is cool
                 Person me = await facebookOperations.GetCurrentUserAsync();
+
+                AppReceipt appReceipt = appAuthorization.AppReceipt;
+                AppReceipt existingReceipt = DataReader.GetAppReceipt(appReceipt.Id);
+                if (existingReceipt != null && existingReceipt.PersonFacebookId.HasValue)
+                {
+                    // App + Person: something is up
+                    if (existingReceipt.PersonFacebookId == me.FacebookId)
+                    {
+                        // Current user is already associated with this receipt
+                        AppRecommendation appRecommendation = DataReader.GetAppRecommendation(app.Id, me.FacebookId);
+                        if (appRecommendation != null)
+                        {
+                            // Person has already posted a recommendation for this app using this receipt
+                            // TODO tell the user they already recommended
+                        }
+
+                        // Person has logged in before but did not submit a recommendation
+                        // That's ok, continue
+                    }
+                    else
+                    {
+                        // Another user is associated with this receipt
+                        AppRecommendation appRecommendation = DataReader.GetAppRecommendation(app.Id, me.FacebookId);
+                        if (appRecommendation != null)
+                        {
+                            // Another user already posted a recommendation for this app using this receipt
+                            // TODO show error page
+                        }
+
+                        // Well that user logged in, but didn't submit a recommendation
+                        // That's ok, continue
+                    }
+                }
+
+                // App + Person is cool
+
+                // AppReceipt should already be in the database
+                // Update it with the Facebook Id of the user
+                appReceipt.PersonFacebookId = me.FacebookId;
+                DataWriter.AddAppReceipt(appReceipt);
+
                 IList<Person> friends = await facebookOperations.GetFriendsAsync();
                 CurrentUser currentUser = new CurrentUser
                     {

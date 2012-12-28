@@ -1,202 +1,304 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="7859062f-6fec-4a4e-8fa4-b4cb8ad2d1d4" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="17cec761-9244-4d46-8295-7cbc0af47f18" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="ReferCloudGroup" generation="1" functional="0" release="0">
       <componentports>
-        <inPort name="ReferEngine:Endpoint1" protocol="http">
+        <inPort name="ReferEngine.Web:Endpoint1" protocol="http">
           <inToChannel>
-            <lBChannelMoniker name="/ReferCloud/ReferCloudGroup/LB:ReferEngine:Endpoint1" />
+            <lBChannelMoniker name="/ReferCloud/ReferCloudGroup/LB:ReferEngine.Web:Endpoint1" />
           </inToChannel>
         </inPort>
-        <inPort name="ReferEngine:HttpsIn" protocol="https">
+        <inPort name="ReferEngine.Web:HttpsIn" protocol="https">
           <inToChannel>
-            <lBChannelMoniker name="/ReferCloud/ReferCloudGroup/LB:ReferEngine:HttpsIn" />
+            <lBChannelMoniker name="/ReferCloud/ReferCloudGroup/LB:ReferEngine.Web:HttpsIn" />
           </inToChannel>
         </inPort>
       </componentports>
       <settings>
-        <aCS name="Certificate|ReferEngine:ReferEngineTestCertificate" defaultValue="">
+        <aCS name="Certificate|ReferEngine.Web:ReferEngineTestCertificate" defaultValue="">
           <maps>
-            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapCertificate|ReferEngine:ReferEngineTestCertificate" />
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapCertificate|ReferEngine.Web:ReferEngineTestCertificate" />
           </maps>
         </aCS>
-        <aCS name="ReferCache:Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" defaultValue="">
+        <aCS name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" defaultValue="">
           <maps>
-            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferCache:Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" />
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" />
           </maps>
         </aCS>
-        <aCS name="ReferCache:Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" defaultValue="">
+        <aCS name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" defaultValue="">
           <maps>
-            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferCache:Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" />
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" />
           </maps>
         </aCS>
-        <aCS name="ReferCache:Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" defaultValue="">
+        <aCS name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" defaultValue="">
           <maps>
-            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferCache:Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" />
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" />
           </maps>
         </aCS>
-        <aCS name="ReferCache:Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" defaultValue="">
+        <aCS name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" defaultValue="">
           <maps>
-            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferCache:Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" />
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" />
           </maps>
         </aCS>
-        <aCS name="ReferCache:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
+        <aCS name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
           <maps>
-            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferCache:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
           </maps>
         </aCS>
-        <aCS name="ReferCacheInstances" defaultValue="[1,1,1]">
+        <aCS name="ReferEngine.Web.CacheInstances" defaultValue="[1,1,1]">
           <maps>
-            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferCacheInstances" />
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web.CacheInstances" />
           </maps>
         </aCS>
-        <aCS name="ReferEngine:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="">
+        <aCS name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="">
           <maps>
-            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
           </maps>
         </aCS>
-        <aCS name="ReferEngine:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
+        <aCS name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
           <maps>
-            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
           </maps>
         </aCS>
-        <aCS name="ReferEngine:StorageConnectionString" defaultValue="">
+        <aCS name="ReferEngine.Web:StorageConnectionString" defaultValue="">
           <maps>
-            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine:StorageConnectionString" />
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:StorageConnectionString" />
           </maps>
         </aCS>
-        <aCS name="ReferEngineInstances" defaultValue="[1,1,1]">
+        <aCS name="ReferEngine.WebInstances" defaultValue="[1,1,1]">
           <maps>
-            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngineInstances" />
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.WebInstances" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.DataWriter:Microsoft.ServiceBus.ConnectionString" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriter:Microsoft.ServiceBus.ConnectionString" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.DataWriterInstances" defaultValue="[1,1,1]">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriterInstances" />
           </maps>
         </aCS>
       </settings>
       <channels>
-        <lBChannel name="LB:ReferEngine:Endpoint1">
+        <lBChannel name="LB:ReferEngine.Web:Endpoint1">
           <toPorts>
-            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine/Endpoint1" />
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/Endpoint1" />
           </toPorts>
         </lBChannel>
-        <lBChannel name="LB:ReferEngine:HttpsIn">
+        <lBChannel name="LB:ReferEngine.Web:HttpsIn">
           <toPorts>
-            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine/HttpsIn" />
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/HttpsIn" />
           </toPorts>
         </lBChannel>
-        <sFSwitchChannel name="SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort">
+        <sFSwitchChannel name="SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort">
           <toPorts>
-            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferCache/Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" />
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" />
           </toPorts>
         </sFSwitchChannel>
-        <sFSwitchChannel name="SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort">
+        <sFSwitchChannel name="SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort">
           <toPorts>
-            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferCache/Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" />
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" />
           </toPorts>
         </sFSwitchChannel>
-        <sFSwitchChannel name="SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort">
+        <sFSwitchChannel name="SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort">
           <toPorts>
-            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferCache/Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" />
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" />
           </toPorts>
         </sFSwitchChannel>
-        <sFSwitchChannel name="SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal">
+        <sFSwitchChannel name="SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal">
           <toPorts>
-            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferCache/Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" />
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" />
           </toPorts>
         </sFSwitchChannel>
-        <sFSwitchChannel name="SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort">
+        <sFSwitchChannel name="SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort">
           <toPorts>
-            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferCache/Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" />
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" />
           </toPorts>
         </sFSwitchChannel>
       </channels>
       <maps>
-        <map name="MapCertificate|ReferEngine:ReferEngineTestCertificate" kind="Identity">
+        <map name="MapCertificate|ReferEngine.Web:ReferEngineTestCertificate" kind="Identity">
           <certificate>
-            <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine/ReferEngineTestCertificate" />
+            <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/ReferEngineTestCertificate" />
           </certificate>
         </map>
-        <map name="MapReferCache:Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" kind="Identity">
+        <map name="MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" kind="Identity">
           <setting>
-            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferCache/Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" />
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" />
           </setting>
         </map>
-        <map name="MapReferCache:Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" kind="Identity">
+        <map name="MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" kind="Identity">
           <setting>
-            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferCache/Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" />
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" />
           </setting>
         </map>
-        <map name="MapReferCache:Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" kind="Identity">
+        <map name="MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" kind="Identity">
           <setting>
-            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferCache/Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" />
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" />
           </setting>
         </map>
-        <map name="MapReferCache:Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" kind="Identity">
+        <map name="MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" kind="Identity">
           <setting>
-            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferCache/Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" />
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" />
           </setting>
         </map>
-        <map name="MapReferCache:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
+        <map name="MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
           <setting>
-            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferCache/Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
           </setting>
         </map>
-        <map name="MapReferCacheInstances" kind="Identity">
+        <map name="MapReferEngine.Web.CacheInstances" kind="Identity">
           <setting>
-            <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferCacheInstances" />
+            <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.CacheInstances" />
           </setting>
         </map>
-        <map name="MapReferEngine:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" kind="Identity">
+        <map name="MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" kind="Identity">
           <setting>
-            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine/Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
           </setting>
         </map>
-        <map name="MapReferEngine:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
+        <map name="MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
           <setting>
-            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine/Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
           </setting>
         </map>
-        <map name="MapReferEngine:StorageConnectionString" kind="Identity">
+        <map name="MapReferEngine.Web:StorageConnectionString" kind="Identity">
           <setting>
-            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine/StorageConnectionString" />
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/StorageConnectionString" />
           </setting>
         </map>
-        <map name="MapReferEngineInstances" kind="Identity">
+        <map name="MapReferEngine.WebInstances" kind="Identity">
           <setting>
-            <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngineInstances" />
+            <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.WebInstances" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.DataWriter:Microsoft.ServiceBus.ConnectionString" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/Microsoft.ServiceBus.ConnectionString" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.DataWriterInstances" kind="Identity">
+          <setting>
+            <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriterInstances" />
           </setting>
         </map>
       </maps>
       <components>
         <groupHascomponents>
-          <role name="ReferCache" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\csx\Release\roles\ReferCache" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="1792" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
+          <role name="ReferEngine.Web" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Release\roles\ReferEngine.Web" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaIISHost.exe " memIndex="1792" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
+            <componentports>
+              <inPort name="Endpoint1" protocol="http" portRanges="80" />
+              <inPort name="HttpsIn" protocol="https" portRanges="443">
+                <certificate>
+                  <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/ReferEngineTestCertificate" />
+                </certificate>
+              </inPort>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" />
+                </outToChannel>
+              </outPort>
+            </componentports>
+            <settings>
+              <aCS name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
+              <aCS name="StorageConnectionString" defaultValue="" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Web&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;/m&gt;" />
+            </settings>
+            <resourcereferences>
+              <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
+              <resourceReference name="EventStore" defaultAmount="[1000,1000,1000]" defaultSticky="false" kind="LogStore" />
+            </resourcereferences>
+            <storedcertificates>
+              <storedCertificate name="Stored0ReferEngineTestCertificate" certificateStore="My" certificateLocation="System">
+                <certificate>
+                  <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/ReferEngineTestCertificate" />
+                </certificate>
+              </storedCertificate>
+            </storedcertificates>
+            <certificates>
+              <certificate name="ReferEngineTestCertificate" />
+            </certificates>
+          </role>
+          <sCSPolicy>
+            <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.WebInstances" />
+            <sCSPolicyUpdateDomainMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.WebUpgradeDomains" />
+            <sCSPolicyFaultDomainMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.WebFaultDomains" />
+          </sCSPolicy>
+        </groupHascomponents>
+        <groupHascomponents>
+          <role name="ReferEngine.Web.Cache" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Release\roles\ReferEngine.Web.Cache" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="1792" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
             <componentports>
               <inPort name="Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp" />
               <inPort name="Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" protocol="tcp" />
               <inPort name="Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" protocol="tcp" />
               <inPort name="Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" protocol="tcp" />
               <inPort name="Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" protocol="tcp" />
-              <outPort name="ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp">
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp">
                 <outToChannel>
-                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" />
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" />
                 </outToChannel>
               </outPort>
-              <outPort name="ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" protocol="tcp">
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" protocol="tcp">
                 <outToChannel>
-                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" />
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" />
                 </outToChannel>
               </outPort>
-              <outPort name="ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" protocol="tcp">
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" protocol="tcp">
                 <outToChannel>
-                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" />
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" />
                 </outToChannel>
               </outPort>
-              <outPort name="ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" protocol="tcp">
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" protocol="tcp">
                 <outToChannel>
-                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" />
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" />
                 </outToChannel>
               </outPort>
-              <outPort name="ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" protocol="tcp">
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" protocol="tcp">
                 <outToChannel>
-                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" />
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" />
                 </outToChannel>
               </outPort>
             </componentports>
@@ -206,7 +308,7 @@
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferCache&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferCache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Web.Cache&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[20000,20000,20000]" defaultSticky="true" kind="Directory" />
@@ -214,95 +316,82 @@
             </resourcereferences>
           </role>
           <sCSPolicy>
-            <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferCacheInstances" />
-            <sCSPolicyUpdateDomainMoniker name="/ReferCloud/ReferCloudGroup/ReferCacheUpgradeDomains" />
-            <sCSPolicyFaultDomainMoniker name="/ReferCloud/ReferCloudGroup/ReferCacheFaultDomains" />
+            <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.CacheInstances" />
+            <sCSPolicyUpdateDomainMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.CacheUpgradeDomains" />
+            <sCSPolicyFaultDomainMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.CacheFaultDomains" />
           </sCSPolicy>
         </groupHascomponents>
         <groupHascomponents>
-          <role name="ReferEngine" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferCloud\ReferCloud\csx\Release\roles\ReferEngine" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaIISHost.exe " memIndex="1792" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
+          <role name="ReferEngine.Workers.DataWriter" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Release\roles\ReferEngine.Workers.DataWriter" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="1792" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
             <componentports>
-              <inPort name="Endpoint1" protocol="http" portRanges="80" />
-              <inPort name="HttpsIn" protocol="https" portRanges="443">
-                <certificate>
-                  <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine/ReferEngineTestCertificate" />
-                </certificate>
-              </inPort>
-              <outPort name="ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp">
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp">
                 <outToChannel>
-                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" />
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" />
                 </outToChannel>
               </outPort>
-              <outPort name="ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" protocol="tcp">
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" protocol="tcp">
                 <outToChannel>
-                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" />
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" />
                 </outToChannel>
               </outPort>
-              <outPort name="ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" protocol="tcp">
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" protocol="tcp">
                 <outToChannel>
-                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" />
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" />
                 </outToChannel>
               </outPort>
-              <outPort name="ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" protocol="tcp">
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" protocol="tcp">
                 <outToChannel>
-                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" />
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" />
                 </outToChannel>
               </outPort>
-              <outPort name="ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" protocol="tcp">
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" protocol="tcp">
                 <outToChannel>
-                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferCache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" />
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" />
                 </outToChannel>
               </outPort>
             </componentports>
             <settings>
+              <aCS name="Microsoft.ServiceBus.ConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="StorageConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferCache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Workers.DataWriter&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
               <resourceReference name="EventStore" defaultAmount="[1000,1000,1000]" defaultSticky="false" kind="LogStore" />
             </resourcereferences>
-            <storedcertificates>
-              <storedCertificate name="Stored0ReferEngineTestCertificate" certificateStore="My" certificateLocation="System">
-                <certificate>
-                  <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine/ReferEngineTestCertificate" />
-                </certificate>
-              </storedCertificate>
-            </storedcertificates>
-            <certificates>
-              <certificate name="ReferEngineTestCertificate" />
-            </certificates>
           </role>
           <sCSPolicy>
-            <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngineInstances" />
-            <sCSPolicyUpdateDomainMoniker name="/ReferCloud/ReferCloudGroup/ReferEngineUpgradeDomains" />
-            <sCSPolicyFaultDomainMoniker name="/ReferCloud/ReferCloudGroup/ReferEngineFaultDomains" />
+            <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriterInstances" />
+            <sCSPolicyUpdateDomainMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriterUpgradeDomains" />
+            <sCSPolicyFaultDomainMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriterFaultDomains" />
           </sCSPolicy>
         </groupHascomponents>
       </components>
       <sCSPolicy>
-        <sCSPolicyUpdateDomain name="ReferEngineUpgradeDomains" defaultPolicy="[5,5,5]" />
-        <sCSPolicyUpdateDomain name="ReferCacheUpgradeDomains" defaultPolicy="[5,5,5]" />
-        <sCSPolicyFaultDomain name="ReferCacheFaultDomains" defaultPolicy="[2,2,2]" />
-        <sCSPolicyFaultDomain name="ReferEngineFaultDomains" defaultPolicy="[2,2,2]" />
-        <sCSPolicyID name="ReferCacheInstances" defaultPolicy="[1,1,1]" />
-        <sCSPolicyID name="ReferEngineInstances" defaultPolicy="[1,1,1]" />
+        <sCSPolicyUpdateDomain name="ReferEngine.WebUpgradeDomains" defaultPolicy="[5,5,5]" />
+        <sCSPolicyUpdateDomain name="ReferEngine.Web.CacheUpgradeDomains" defaultPolicy="[5,5,5]" />
+        <sCSPolicyUpdateDomain name="ReferEngine.Workers.DataWriterUpgradeDomains" defaultPolicy="[5,5,5]" />
+        <sCSPolicyFaultDomain name="ReferEngine.WebFaultDomains" defaultPolicy="[2,2,2]" />
+        <sCSPolicyFaultDomain name="ReferEngine.Web.CacheFaultDomains" defaultPolicy="[2,2,2]" />
+        <sCSPolicyFaultDomain name="ReferEngine.Workers.DataWriterFaultDomains" defaultPolicy="[2,2,2]" />
+        <sCSPolicyID name="ReferEngine.Web.CacheInstances" defaultPolicy="[1,1,1]" />
+        <sCSPolicyID name="ReferEngine.WebInstances" defaultPolicy="[1,1,1]" />
+        <sCSPolicyID name="ReferEngine.Workers.DataWriterInstances" defaultPolicy="[1,1,1]" />
       </sCSPolicy>
     </group>
   </groups>
   <implements>
-    <implementation Id="a13d2272-c25e-4d55-8c91-8692d829cffb" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
+    <implementation Id="28afa23a-6ce5-4f8d-b090-a8aa8aa035b5" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="540c1a45-d267-4abc-8348-b6ce3b7ef7d9" ref="Microsoft.RedDog.Contract\Interface\ReferEngine:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="5d96e30e-855c-45e0-8ecb-436c0c411beb" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
           <inPort>
-            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine:Endpoint1" />
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="cbcc0058-d561-43e0-8c37-1241d902473e" ref="Microsoft.RedDog.Contract\Interface\ReferEngine:HttpsIn@ServiceDefinition">
+        <interfaceReference Id="cfc082c3-2a8b-4a9e-9e1a-da4988dab17e" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
           <inPort>
-            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine:HttpsIn" />
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:HttpsIn" />
           </inPort>
         </interfaceReference>
       </interfacereferences>

@@ -1,0 +1,14 @@
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Release\ReferEngine.Web.Cache.dll.config
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Release\ReferEngine.Web.Cache.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Release\ReferEngine.Web.Cache.pdb
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Release\EntityFramework.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Release\Microsoft.WindowsAzure.Diagnostics.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Release\Microsoft.WindowsAzure.StorageClient.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Release\EntityFramework.xml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Release\Microsoft.WindowsAzure.Diagnostics.xml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Release\Microsoft.WindowsAzure.StorageClient.xml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\obj\Release\ReferEngine.Web.Cache.csprojResolveAssemblyReference.cache
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\obj\Release\ReferEngine.Web.Cache.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\obj\Release\ReferEngine.Web.Cache.pdb

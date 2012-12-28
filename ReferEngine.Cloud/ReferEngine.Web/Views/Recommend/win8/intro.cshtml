@@ -6,46 +6,27 @@
 
 @section scripts
 {
-    @Scripts.Render("~/js/recommend/win8/intro")
+    @Scripts.Render("~/bundles/js/recommend/win8/intro")
 }
 
 @section styles
 {
-    @Styles.Render("~/css/recommend/win8/intro")
+    @Styles.Render("~/bundles/less/recommend/win8/intro")
 }
 
-<div class="container">
-    <div class="row">
-        <h2 class="span12">
-            Earn rewards by recommending @Model.Name to your friends! 
-        </h2>
-    </div>
-    <div class="row">
-        <p class="span12">
-            Introducing the @Model.Name referral program!
-        </p>
-        <p class="span12">
-            It is very simple:
-        </p>
-        <ol>
-            <li>Login to Facebook and tell your friends about @Model.Name. If you would like to, 
-                you can include a custom message in the next step.
-            </li>
-            <li>Refer Engine will track your recommendation and whether any of your friends
-                purchases @Model.Name.
-            </li>
-            <li>Earn cash back for every three friends who buy @Model.Name!</li>
-        </ol>
-    </div>
-    <div class="row" id="start-row">
-        <div class="span12 center-content">
-            <a class="m-btn green big" id="re-login">Start Now!</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="span12 center-content">
-            <a class="m-btn sm" id="re-not-now">Not Now</a>
-            <a class="m-btn sm" id="re-dont-ask">Don't ask me again</a>
-        </div>
-    </div>
+<h2>
+    Earn rewards by recommending @Model.Name to your friends! 
+</h2>
+
+<ol>
+    <li>Recommend @Model.Name on Facebook
+    </li>
+    <li>Receive a $2 cash reward for every four friends who buy @Model.Name!</li>
+</ol>
+<div id="srt-btn-ctnr">
+    <a class="m-btn green big" id="re-login">Start Now!</a>
+</div>
+<div id="not-btns-ctnr">
+    <a class="m-btn sm" id="re-not-now">Not Now</a>
+    <a class="m-btn sm" id="re-dont-ask">Don't ask me again</a>
 </div>

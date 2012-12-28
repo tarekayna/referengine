@@ -1,0 +1,43 @@
+﻿@import "../../common.less";
+
+@width: 900px;
+@height: 590px;
+@padding-horizontal: 10px;
+@padding-bottom: @padding-horizontal;
+@footer-height: 40px;
+
+body {
+	font-family: Segoe UI Light, "Open Sans",Helvetica,Arial,sans-serif;
+}
+
+#re-ctnr {
+	width: (@width - 2 * @padding-horizontal);
+	height: (@height - @padding-bottom);
+	padding: 0 @padding-horizontal @padding-bottom; 
+}
+
+#re-content {
+	height: (@height - @footer-height);
+	font-size: large;
+}
+
+#re-footer { 
+    height: @footer-height;
+    width: (@width - 2 * @padding-horizontal);
+	.flexbox-row;
+
+    .secure-ctnr {
+        -ms-flex: 1 auto;
+		.flexbox-row;
+        -ms-flex-align: center;
+
+		.secure {
+			background: -ms-linear-gradient(top, #FFF, #c7e9c7);
+			border: 1px solid #006400;
+			border-radius: 3px;
+			padding: 0 10px;
+			font-size: x-small;
+			letter-spacing: 0.02em;
+		}
+    }
+}

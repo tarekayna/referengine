@@ -11,19 +11,23 @@
     @Html.Partial("_FavIcon")
     @Html.Partial("_MixPanel")
 
-    @Styles.Render("~/css/bootstrap")
-    @Styles.Render("~/css/recommend/win8")
+    @Styles.Render("~/bundles/css/bootstrap")
     @RenderSection("styles", required: false)
 </head>
     <body>
-        <div id="re-win8-container">
-            <div id="re-win8-content">
+        <div id="re-ctnr">
+            <div id="re-content">
                 @RenderBody()
             </div>
     
-            <div id="re-win8-powered">
+            <div id="re-footer">
+                <div class="secure-ctnr">
+                    <div class="secure">
+                        <i class="icon-lock"></i> Connection to Refer Engine is Encrypted
+                    </div>
+                </div>
                 <a href="https://www.referengine.com" target="_blank">
-                    <img src="~/img/logo-powered.png" />
+                    <img src="~/img/logo-powered.png" alt="Powered by Refer Engine" />
                 </a>
             </div>
         </div>

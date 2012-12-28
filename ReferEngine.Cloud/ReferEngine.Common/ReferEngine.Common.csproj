@@ -112,6 +112,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\UserAgentProperties.cs" />
     <Compile Include="Utilities\RSAPKCS1SHA256SignatureDescription.cs" />
     <Compile Include="Models\AppReceipt.cs" />
     <Compile Include="Models\Developer.cs" />

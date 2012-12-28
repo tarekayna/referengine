@@ -1,0 +1,32 @@
+﻿body {
+  font-family: Segoe UI Light, "Open Sans", Helvetica, Arial, sans-serif;
+}
+#re-ctnr {
+  width: 880px;
+  height: 580px;
+  padding: 0 10px 10px;
+}
+#re-content {
+  height: 550px;
+  font-size: large;
+}
+#re-footer {
+  height: 40px;
+  width: 880px;
+  display: -ms-flexbox;
+  -ms-flex-direction: row;
+}
+#re-footer .secure-ctnr {
+  -ms-flex: 1 auto;
+  display: -ms-flexbox;
+  -ms-flex-direction: row;
+  -ms-flex-align: center;
+}
+#re-footer .secure-ctnr .secure {
+  background: -ms-linear-gradient(top, #ffffff, #c7e9c7);
+  border: 1px solid #006400;
+  border-radius: 3px;
+  padding: 0 10px;
+  font-size: x-small;
+  letter-spacing: 0.02em;
+}

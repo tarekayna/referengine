@@ -1,5 +1,5 @@
-﻿@using ReferLib
-@model ReferEngine.Common.Models.App
+﻿@using ReferEngine.Common.Models
+@model ReferEngine.Web.Models.Facebook.FacebookAppViewModel
 
 @{
     ViewBag.HideFooter = true;
@@ -10,36 +10,96 @@
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# referengine: http://ogp.me/ns/fb/referengine#">
     <meta property="fb:app_id"             content="368842109866922" /> 
     <meta property="og:type"               content="referengine:app" /> 
-    <meta property="og:url"                content="https://apps.facebook.com/referengine/app/@Model.Id" /> 
-    <meta property="og:title"              content="@Model.Name" /> 
-    <meta property="og:image"              content="@Model.ImageLink" /> 
-    <meta property="og:description"        content="@Model.Description" /> 
-    <meta property="referengine:storelink" content="@Model.AppStoreLink" /> 
+    <meta property="og:url"                content="https://apps.facebook.com/referengine/app/@Model.App.Id" /> 
+    <meta property="og:title"              content="@Model.App.Name" /> 
+    <meta property="og:image"              content="@Model.App.ImageLink" /> 
+    <meta property="og:description"        content="@Model.App.Description" /> 
+    <meta property="referengine:storelink" content="@Model.App.AppStoreLink" /> 
 }
-
-<div class="container">
-    <div class="row">
-        <div class="span1">
-            <img src="@Model.ImageLink" />
-        </div>
-        <h2 class="span11">@Model.Name</h2>
-    </div>
-    <div class="row">
-        <div class="span12">
-            @Html.Raw(Model.Description)
-        </div>
-    </div>
-@*    @foreach (AppScreenshot screenshot in Model.Screenshots)
-    {
-        <div class="row">
-            <div class="span12 center-content">
-                <img src="@screenshot.Link" height="@screenshot.Height" width="@screenshot.Width"/>
-            </div>
-        </div>
-    }*@
-    <div class="row">
-        <div class="span12 center-content">
-            @Html.Raw(Model.Copyright)
-        </div>
-    </div>
+        
+<div id="landing">
+	<div class="container">  
+	<div class="row">
+		<div class="span5">
+		<h1><img src="@Model.App.ImageLink" alt="@Model.App.Name Logo" />@Model.App.Name</h1>	
+		<p>
+            @Model.App.Description
+		</p>
+		    <p>
+		        @if (Model.UserAgentProperties.IsWindows8 && Model.UserAgentProperties.SupportsProtocolLaunching)
+                {
+		            <a href="ms-windows-store:PDP?PFN=@Model.App.PackageFamilyName" class="btn btn-primary btn-action">
+		                View in the Windows Store
+		            </a>
+                }
+                else if (Model.UserAgentProperties.IsWindows8 && !Model.UserAgentProperties.SupportsProtocolLaunching)
+                {
+                    <a href="ms-windows-store:PDP?PFN=@Model.App.PackageFamilyName" class="btn btn-primary btn-action">
+                        View in the Windows Store (in another browser)
+                    </a>
+                }
+                else // Not Windows 8
+                {
+                    <a href="ms-windows-store:PDP?PFN=@Model.App.PackageFamilyName" class="btn btn-primary btn-action">
+                        View in the Windows Store (in another OS)
+                    </a>
+                }
+		    </p>  
+		</div>
+		<div class="span7">
+		<div class="js-video">
+			<iframe src="@Model.App.VimeoLink" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+		</div>
+		</div>
+	</div>
+	</div>
 </div>
+<div class="container">
+    
+    @if (Model.App.Screenshots.Count >= 3)
+    {
+        <hr class="dashed" />
+        <div class="row">
+            @for (int i = 0; i < 3; i++)
+            {
+                AppScreenshot screenshot = Model.App.Screenshots.ElementAt(i);
+                <div class="span4">
+                    <a class="thumbnail">
+                        <img alt="@screenshot.Title" src="@screenshot.Link">
+                    </a>		
+                    <h3>@screenshot.Title</h3>
+                    <p>@screenshot.Description</p>
+                </div>
+            }  
+        </div>
+    
+        if (Model.App.Screenshots.Count >= 6)
+        {
+            <hr class="dashed" />
+            <div class="row">
+                @for (int i = 3; i < 6; i++)
+                {
+                    AppScreenshot screenshot = Model.App.Screenshots.ElementAt(i);
+                    <div class="span4">
+                        <a class="thumbnail">
+                            <img alt="@screenshot.Title" src="@screenshot.Link">
+                        </a>		
+                        <h3>@screenshot.Title</h3>
+                        <p>@screenshot.Description</p>
+                    </div>
+                }  
+            </div>
+        }        
+    }
+</div>
+        
+<div id="copywrite">
+	<div class="container">
+	<div class="row">
+		<div class="span12">
+		<p>@Html.Raw(Model.App.Copyright)</p>
+		</div>		  
+	</div>	  
+    </div>	  
+</div>
+

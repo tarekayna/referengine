@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
 namespace ReferEngine.Common.Models
@@ -7,6 +8,14 @@ namespace ReferEngine.Common.Models
     [DataContract]
     public class App
     {
+        public App()
+        {
+            if (Screenshots == null)
+            {
+                Screenshots = new Collection<AppScreenshot>();
+            }
+        }
+
         [DataMember]
         public Int64 Id { get; set; }
 
@@ -38,6 +47,18 @@ namespace ReferEngine.Common.Models
         public string Copyright { get; set; }
 
         [DataMember]
-        public ICollection<AppScreenshot> Screenshots { get; private set; }
+        public string VimeoLink { get; set; }
+
+        [DataMember]
+        public string YouTubeLink { get; set; }
+
+        private ICollection<AppScreenshot> _screenshots;
+
+        [DataMember]
+        public virtual ICollection<AppScreenshot> Screenshots
+        {
+            get { return _screenshots ?? (_screenshots = new Collection<AppScreenshot>()); }
+            set { _screenshots = value; }
+        }
     }
 }

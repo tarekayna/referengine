@@ -1,35 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Mail;
 using System.Web.Mvc;
-using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using ReferEngine.Web.DataAccess;
 
 namespace ReferEngine.Web.Controllers
 {
-    internal class ViewProperties
-    {
-        public string ButtonClass { get; set; }
-        public string HeadlineText { get; set; }
-        public bool FocusOnInput { get; set; }
-
-        internal ViewProperties()
-        {
-            FocusOnInput = false;
-            HeadlineText = "Increase your app sales and reward your customers. It's a win-win!";
-            ButtonClass = "btn-primary";
-        }
-    }
-
-    internal class LandingPageVariation
-    {
-        public string Name { get; set; }
-        public int Probability { get; set; }
-        public ViewProperties ViewProperties { get; set; }
-    }
-
     public class HomeController : Controller
     {
         private IReferDataReader DataReader { get; set; }
@@ -55,6 +31,7 @@ namespace ReferEngine.Web.Controllers
         }
 
         [HttpGet]
+        //[RequireHttps]
         public ActionResult Index()
         {
             LandingPageVariation landingPageToUse = GetLandingPage();
@@ -151,6 +128,27 @@ namespace ReferEngine.Web.Controllers
             LandingPageVariation landingPageToUse = false ? list[0] : weightedList[random.Next(0, weightedList.Count - 1)];
 
             return landingPageToUse;
+        }
+
+        private class ViewProperties
+        {
+            public string ButtonClass { get; set; }
+            public string HeadlineText { get; set; }
+            public bool FocusOnInput { get; set; }
+
+            internal ViewProperties()
+            {
+                FocusOnInput = false;
+                HeadlineText = "Increase your app sales and reward your customers. It's a win-win!";
+                ButtonClass = "btn-primary";
+            }
+        }
+
+        private class LandingPageVariation
+        {
+            public string Name { get; set; }
+            public int Probability { get; set; }
+            public ViewProperties ViewProperties { get; set; }
         }
     }
 }
