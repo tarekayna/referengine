@@ -22,7 +22,7 @@ namespace ReferEngine.Common.Data
             mb.Entity<App>().Property(a => a.AppStoreLink).IsRequired();
             mb.Entity<App>().Property(a => a.Description).IsRequired();
             mb.Entity<App>().Property(a => a.DeveloperId).IsRequired();
-            mb.Entity<App>().Property(a => a.ImageLink).IsRequired();
+            mb.Entity<App>().Property(a => a.LogoLink50).IsRequired();
             mb.Entity<App>().Property(a => a.Name).IsRequired();
             mb.Entity<App>().Property(a => a.PackageFamilyName).IsRequired();
             mb.Entity<App>().Property(a => a.Publisher).IsRequired();

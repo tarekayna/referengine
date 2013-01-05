@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
@@ -100,6 +101,29 @@ namespace ReferEngine.Common.Utilities
 
             signedXml.LoadXml((XmlElement)signatureNode);
             return signedXml.CheckSignature(certificate, true);
+        }
+
+        public static string GetImageBase64String(string path)
+        {
+            if (path.StartsWith("http"))
+            {
+                HttpWebRequest httpWebRequest = WebRequest.CreateHttp(path);
+                WebResponse webResponse = httpWebRequest.GetResponse();
+                Stream receiveStream = webResponse.GetResponseStream();
+                if (receiveStream != null)
+                {
+                    MemoryStream memoryStream = new MemoryStream();
+                    receiveStream.CopyTo(memoryStream);
+                    byte[] bytes = memoryStream.ToArray();
+                    return Convert.ToBase64String(bytes);
+                }
+            }
+            else
+            {
+                byte[] bytes = File.ReadAllBytes(path);
+                return Convert.ToBase64String(bytes);
+            }
+            return null;
         }
     }
 }

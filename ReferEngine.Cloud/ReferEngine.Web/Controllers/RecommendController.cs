@@ -29,6 +29,30 @@ namespace ReferEngine.Web.Controllers
             return View(viewName, app);
         }
 
+        //TODO Remove this action
+        [OutputCache(Duration = 0)]
+        public async Task<ActionResult> RecommendViewOnly(string platform, long id)
+        {
+            App app = DataReader.GetApp(id);
+
+            // Facebook is cool
+            Person me = DatabaseOperations.GetPerson(509572882);
+
+            IList<Person> friends = new List<Person>();
+            friends.Add(DatabaseOperations.GetPerson(12625308));
+            friends.Add(DatabaseOperations.GetPerson(100002179707322));
+            friends.Add(DatabaseOperations.GetPerson(1488075933));
+            CurrentUser currentUser = new CurrentUser
+            {
+                Person = me,
+                Friends = friends
+            };
+
+            string viewName = String.Format("{0}/recommend", platform);
+            var viewModel = new RecommendViewModel(currentUser, app, "fake_auth_token");
+            return View(viewName, viewModel);
+        }
+
         [OutputCache(Duration = 0)]
         public async Task<ActionResult> Recommend(string platform, string re_auth_token, string fb_access_code)
         {
@@ -85,10 +109,10 @@ namespace ReferEngine.Web.Controllers
 
                 IList<Person> friends = await facebookOperations.GetFriendsAsync();
                 CurrentUser currentUser = new CurrentUser
-                    {
-                        Person = me,
-                        Friends = friends
-                    };
+                {
+                    Person = me,
+                    Friends = friends
+                };
 
                 DataWriter.AddFacebookOperations(re_auth_token, facebookOperations);
                 DataWriter.AddPersonAndFriends(currentUser);

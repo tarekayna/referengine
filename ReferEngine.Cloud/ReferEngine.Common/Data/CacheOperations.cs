@@ -13,6 +13,11 @@ namespace ReferEngine.Common.Data
         internal const string AppScreenshotIdDesc= "appscreenshot-id-desc-{0}{1}";
     }
 
+    public static class CacheTimeoutValues
+    {
+        internal static TimeSpan App = TimeSpan.FromDays(1);
+    }
+
     public class CacheOperations
     {
         private static DataCache _cache;
@@ -89,7 +94,7 @@ namespace ReferEngine.Common.Data
         public static void AddApp(string packageFamilyName, App app)
         {
             String key = String.Format(CacheKeyFormat.AppPackage, packageFamilyName);
-            Cache.Put(key, app);
+            Cache.Put(key, app, CacheTimeoutValues.App);
         }
 
         public static void AddFacebookOperations(string token, FacebookOperations facebookOperations)

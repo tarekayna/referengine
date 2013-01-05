@@ -30,6 +30,9 @@ namespace ReferEngine.Web.App_Start
                                    "~/js/lib/jquery-{version}.js",
                                    "~/js/lib/jquery-validate.js",
                                    "~/js/lib/bootstrap.js"),
+                                   
+                    new BundleInfo("~/bundles/js/jquery.fitvids",
+                                   "~/js/lib/jquery.fitvids.js"),
 
                     new BundleInfo("~/js/home/index",
                                    "~/js/home/index.js"),
@@ -72,7 +75,10 @@ namespace ReferEngine.Web.App_Start
                                    "~/css/lib/jquery.aceditable.css"),
 
                     new BundleInfo("~/css/app/edit",
-                                   "~/css/app/edit.css")
+                                   "~/css/app/edit.css"),
+
+                    new BundleInfo("~/bundles/less/fb/app",
+                                   "~/less/fb/app.css")
                 };
             #endregion Style Bundles
 

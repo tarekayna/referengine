@@ -1,7 +1,9 @@
-﻿@model ReferEngine.Common.Models.App
+﻿@using ReferEngine.Common.Utilities
+@model ReferEngine.Common.Models.App
 
 @{
     ViewBag.Title = "Refer Engine Intro";
+    ViewBag.App = Model;
 }
 
 @section scripts
@@ -14,19 +16,33 @@
     @Styles.Render("~/bundles/less/recommend/win8/intro")
 }
 
-<h2>
-    Earn rewards by recommending @Model.Name to your friends! 
-</h2>
+<div class="center-content">
+    <div class="banner">
+        Earn rewards by recommending @Model.Name to your friends! 
+    </div>
 
-<ol>
-    <li>Recommend @Model.Name on Facebook
-    </li>
-    <li>Receive a $2 cash reward for every four friends who buy @Model.Name!</li>
-</ol>
-<div id="srt-btn-ctnr">
-    <a class="m-btn green big" id="re-login">Start Now!</a>
+    @Html.Image(Server.MapPath("~/img/intro-steps.png"), "Recommend Your Friends", "intro-steps")
+    
+    <div class="steps title">
+        <div class="rcmnd">Recommend</div>
+        <div class="earn">Earn</div>
+    </div>
+    <div class="steps text">
+        <div class="rcmnd">
+            <span>share with your friends on facebook.</span>
+        </div>
+        <div class="earn">
+            <span>win $2 cash for every 3 friends who buy</span>
+        </div>
+    </div>
 </div>
-<div id="not-btns-ctnr">
-    <a class="m-btn sm" id="re-not-now">Not Now</a>
-    <a class="m-btn sm" id="re-dont-ask">Don't ask me again</a>
-</div>
+
+@section footer
+{
+    <div class="chkCtnr">
+        <input type="checkbox" id="dontAsk" />
+        <label for="dontAsk">Don't ask me again</label>
+    </div>
+    <a class="m-btn no" id="re-cancel">Cancel</a>
+    <a class="m-btn go" id="re-login">Start</a>
+}

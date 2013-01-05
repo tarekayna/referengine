@@ -63,6 +63,8 @@
 
                 searchStrElem.addClass("highlighted");
             }
+        } else {
+            asContainer.css("display", "none");
         }
     });
 
@@ -100,6 +102,10 @@
     msgDiv.focusout(function() {
         removeSearchStringClass();
         viewModel.searchString("");
+    });
+
+    msgDiv.focusin(function() {
+        $(".msg-placeholder").css("display", "none");
     });
 
     msgDiv.keydown(function(event) {
@@ -205,6 +211,7 @@
             }
         });
     });
-    
+
+    asContainer.css("display", "none");
     util.HideLoading();
 });

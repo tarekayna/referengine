@@ -1,8 +1,24 @@
-﻿@using ReferLib
-@model ReferEngine.Common.Models.App
+﻿@using ReferEngine.Common.Models
+@model ReferEngine.Web.Models.Facebook.FacebookAppViewModel
 
 @{
     ViewBag.HideFooter = true;
+    ViewBag.ShowFacebookHeader = true;
+    bool isWindows8 = Model.UserAgentProperties.IsWindows8;
+    bool supportsProtocolLaunching = Model.UserAgentProperties.SupportsProtocolLaunching;
+}
+
+@section styles
+{
+    @Styles.Render("~/bundles/less/fb/app")
+}
+
+@section scripts
+{
+    @if (Model.App.VimeoLink != null || Model.App.YouTubeLink != null)
+    {
+        @Scripts.Render("~/bundles/js/jquery.fitvids")
+    }
 }
 
 @section CustomHead
@@ -10,36 +26,199 @@
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# referengine: http://ogp.me/ns/fb/referengine#">
     <meta property="fb:app_id"             content="368842109866922" /> 
     <meta property="og:type"               content="referengine:app" /> 
-    <meta property="og:url"                content="https://apps.facebook.com/referengine/app/@Model.Id" /> 
-    <meta property="og:title"              content="@Model.Name" /> 
-    <meta property="og:image"              content="@Model.ImageLink" /> 
-    <meta property="og:description"        content="@Model.Description" /> 
-    <meta property="referengine:storelink" content="@Model.AppStoreLink" /> 
+    <meta property="og:url"                content="https://apps.facebook.com/referengine/app/@Model.App.Id" /> 
+    <meta property="og:title"              content="@Model.App.Name" />
+@if (Model.App.LogoLink150 != null)
+{
+    <meta property="og:image"              content="@Model.App.LogoLink150" />
 }
-
-<div class="container">
-    <div class="row">
-        <div class="span1">
-            <img src="@Model.ImageLink" />
-        </div>
-        <h2 class="span11">@Model.Name</h2>
-    </div>
-    <div class="row">
-        <div class="span12">
-            @Html.Raw(Model.Description)
-        </div>
-    </div>
-@*    @foreach (AppScreenshot screenshot in Model.Screenshots)
-    {
+else
+{
+    <meta property="og:image"              content="@Model.App.LogoLink50" />
+}
+    <meta property="og:description"        content="@Model.App.Description" /> 
+    <meta property="referengine:storelink" content="@Model.App.AppStoreLink" /> 
+}
+        
+<div id="landing">
+    <div class="container">  
         <div class="row">
-            <div class="span12 center-content">
-                <img src="@screenshot.Link" height="@screenshot.Height" width="@screenshot.Width"/>
+            <div class="span6">
+                @if (Model.App.LogoLink150 != null)
+                {
+                    <img src="@Model.App.LogoLink150" alt="@Model.App.Name Logo" class="app-logo" />
+                }
+                else
+                {
+                    <img src="@Model.App.LogoLink50" alt="@Model.App.Name Logo" class="app-logo" />
+                }
+                <h2>@Model.App.Name</h2>	
+                <p>
+                    @Model.App.Description
+                </p>
+                <div class="center-content store-logo-ctnr">
+                    @if (isWindows8)
+                    {
+                        if (supportsProtocolLaunching)
+                        {
+                            <a href="ms-windows-store:PDP?PFN=@Model.App.PackageFamilyName">             
+                                <img src="~/img/WindowsStore_badge_green_en_med_67x208.png" alt="Download @Model.App.Name from the Windows Store" />
+                                <div>Download @Model.App.Name from the Windows Store</div>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="#cantOpenStore" role="button" data-toggle="modal">       
+                                <img src="~/img/WindowsStore_badge_green_en_med_67x208.png" alt="Download @Model.App.Name from the Windows Store" />
+                                <div>Download @Model.App.Name from the Windows Store</div>
+                            </a>                    
+                        }
+                    }
+                    else // Not Windows 8
+                    {
+                        <a href="#notWin8" role="button" data-toggle="modal">           
+                            <img src="~/img/WindowsStore_badge_green_en_med_67x208.png" alt="Download @Model.App.Name from the Windows Store" />
+                            <div>Download @Model.App.Name from the Windows Store</div>
+                        </a>                    
+                    }
+                </div>  
             </div>
-        </div>
-    }*@
-    <div class="row">
-        <div class="span12 center-content">
-            @Html.Raw(Model.Copyright)
+            @if (Model.App.VimeoLink != null)
+            {
+                <div class="span6">
+                    <div class="js-video">
+                        <iframe src="@Model.App.VimeoLink" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>
+ 
+<div class="container">
+    
+    @if (Model.App.Screenshots.Count >= 3)
+    {
+        <div class="row">
+            @for (int i = 0; i < 3; i++)
+            {
+                AppScreenshot screenshot = Model.App.Screenshots.ElementAt(i);
+                <div class="span4">
+                    <a class="thumbnail">
+                        <img alt="@screenshot.Title" src="@screenshot.Link">
+                    </a>		
+                    <h3>@screenshot.Title</h3>
+                    <p>@screenshot.Description</p>
+                </div>
+            }  
+        </div>
+    
+        if (Model.App.Screenshots.Count >= 6)
+        {
+            <hr class="dashed" />
+            <div class="row">
+                @for (int i = 3; i < 6; i++)
+                {
+                    var screenshot = Model.App.Screenshots.ElementAt(i);
+                    <div class="span4">
+                        <a class="thumbnail">
+                            <img alt="@screenshot.Title" src="@screenshot.Link">
+                        </a>		
+                        <h3>@screenshot.Title</h3>
+                        <p>@screenshot.Description</p>
+                    </div>
+                }  
+            </div>
+        }        
+    }
+</div>
+        
+<div id="copywrite">
+	<div class="container">
+	<div class="row">
+		<div class="span12">
+		<p>@Html.Raw(Model.App.Copyright)</p>
+		</div>		  
+	</div>	  
+    </div>	  
+</div>
+
+@if (isWindows8 && !supportsProtocolLaunching)
+{
+<div id="cantOpenStore" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="text-error">Oops! Browser Can't Open Windows Store</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            This browser can't open the Windows Store directly from a website. These browsers support this action: 
+            Firefox and Internet Explorer.
+        </p>
+        <h4 class="text-success">How can I get this app?</h4>
+        
+        <div class="accordion" id="accordion2">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                The Regular Way
+              </a>
+            </div>
+            <div id="collapseOne" class="accordion-body collapse in">
+              <div class="accordion-inner">
+                <ol>
+                    <li>
+                        Launch the Windows Store
+                    </li>
+                    <li>
+                        Search for "@Model.App.Name"<br />
+                        <small>Hint: You can start typing at the homepage of the Windows Store to start searching</small>
+                    </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                The Geeky Way
+              </a>
+            </div>
+            <div id="collapseTwo" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <ol>
+                    <li>
+                        Launch the Command Prompt <br/>
+                        <small>Hint: Hit WinKey + R, Type "cmd", Hit Enter</small>
+                    </li>
+                    <li>
+                        Type or Copy paste this: <br />
+                        <code>start ms-windows-store:PDP?PFN=@Model.App.PackageFamilyName</code>
+                    </li>
+                    <li>
+                        Hit Enter
+                    </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>        
+}
+else if (!isWindows8)
+{
+<div id="notWin8" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Modal header</h3>
+    </div>
+    <div class="modal-body">
+        <p>One fine body…</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary">Save changes</button>
+    </div>
+</div>      
+}

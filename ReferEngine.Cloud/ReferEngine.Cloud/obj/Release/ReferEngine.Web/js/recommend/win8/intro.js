@@ -1,20 +1,19 @@
 ﻿$(document).ready(function () {
     var util = RE.Utilities,
         loginButton = $("#re-login"),
-        notNowButton = $("#re-not-now"),
-        dontAskButton = $("#re-dont-ask");
+        cancelButton = $("#re-cancel"),
+        dontAskCheckbox = $("#dontAsk");
 
     loginButton.click(function () {
         util.PostToParent("fb-login");
     });
 
-    notNowButton.click(function () {
-        util.PostToParent("not-now");
+    cancelButton.click(function () {
+        util.PostToParent({
+            action: "cancel",
+            dontAskAgain: dontAskCheckbox[0].checked
+        });
     });
     
-    dontAskButton.click(function () {
-        util.PostToParent("dont-ask");
-    });
-
     util.HideLoading();
 });

@@ -37,14 +37,14 @@ namespace ReferEngine.Common.Migrations
                             {
                                 DeveloperId = id,
                                 Name = "Blu Graphing Calculator",
-                                Description = "Whether you're a student, a teacher or a mathematical genius in the making, Blu Graphing Calculator gives you most of the advanced functionality of a scientific calculator, with all the latest interactivity Windows 8 has to offer.",
+                                Description = "Ever looked at a graph and wished you could touch it? Specially engineered for Windows 8, Blu Graphing Calculator is far more than just a scientific and graphing calculator… it’s a completely interactive experience that lets you quickly create visual representations of mathematical functions. Designed to let you pinch, pull, zoom and more, Blu Graphing Calculator brings complex calculations and sophisticated graphing to a whole new level.",
                                 AppStoreLink =
                                     "http://apps.microsoft.com/webpdp/en-US/app/blu-graphing-calculator/764cce31-8f93-48a6-b4fc-008eb78e50d4",
                                 Copyright = "Copyright © 2012, Apexa Inc.",
                                 Publisher = "Apexa Inc.",
                                 PackageFamilyName = "Apexa.co.Calculi_pn2wyk5mfanv6",
-                                ImageLink =
-                                    "http://wscont1.apps.microsoft.com/winstore/1x/2460c09e-39d8-4e6f-a35a-e20c0cebaa79/Icon.20879.png",
+                                LogoLink50 = "https://referenginestorage.blob.core.windows.net/app-logos/blu-graphing-calculator-logo-50.png",
+                                LogoLink150 = "https://referenginestorage.blob.core.windows.net/app-logos/blu-graphing-calculator-logo-150.png",
                                 ShortDescription = "Whether you're a student, a teacher or a mathematical genius in the making, Blu Graphing Calculator gives you most of the advanced functionality of a scientific calculator, with all the latest interactivity Windows 8 has to offer.",
                                 VimeoLink = "https://player.vimeo.com/video/52197092"
                             };

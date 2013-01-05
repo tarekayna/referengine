@@ -26,10 +26,6 @@
 
     var navigateTo = function (url) {
         postToParent("show-loading");
-        //postToParent({
-        //    action: "navigating",
-        //    newUrl: url
-        //});
         window.location.href = url;
     };
 

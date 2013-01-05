@@ -1,6 +1,10 @@
 ﻿@using ReferEngine.Common.Models
 @model ReferEngine.Web.Models.Refer.Win8.RecommendViewModel
 
+@{
+    ViewBag.App = Model.App;
+}
+
 @section scripts
 {
     @Scripts.Render("~/js/recommend/win8/recommend")
@@ -8,7 +12,7 @@
 
 @section styles
 {
-    @Styles.Render("~/css/recommend/win8/recommend")
+    @Styles.Render("~/bundles/less/recommend/win8/recommend")
 }
 
 <input type="hidden" id="appId" value="@Model.App.Id" />
@@ -18,7 +22,50 @@
     window.RE.ReferEngineAuthToken = "@Model.ReferEngineAuthToken";
 </script>
 
-<div class="container">
+<div>
+    <div class="title">
+        <div>Your Message</div>
+        <div>optional</div>
+    </div>
+    <div>
+        <div contenteditable id="message" data-bind="html: msgHTML"></div>
+        <div class="msg-placeholder">enter your message here... to tag a friend just start
+            typing their name
+        </div>
+    </div>
+    <div class="title">
+        <div>Post Preview</div>
+        <div>facebook may display this post differently</div>
+    </div>
+    <div id="preview">
+        <div class="storyContent">
+            <img class="actorPhoto" src="@Model.CurrentUser.Person.PictureUrl" />
+            <div class="storyInnerContent">
+                <p class="storyTitle"><a class="userName">@Model.CurrentUser.Person.Name</a> recommended an app using <a>Refer Engine</a>.</p>
+                <p class="msg" data-bind="html: msgHTML"></p>
+                <div class="shareContainer">
+                    <div class="appImageContainer">
+                        <img src="@Model.App.LogoLink50" title="@Model.App.Name" />
+                    </div>
+                    <div class="appInfo">
+                        <a class="appTitle">@Model.App.Name</a>
+                        <p class="appDesc">@Model.App.Description</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="asContainer" data-bind="foreach: searchResult, visible: searchResult() != []">
+        <div class="asItem m-btn" data-bind="click: $parent.onClick, css: {selected: $index() == $parent.selectedIndex()}">
+            <i class="icon-user"></i>
+            <span class="firstName" data-bind="text: FirstName"></span>
+            <span class="lastName" data-bind="text: LastName"></span>
+        </div>
+    </div>
+</div>
+
+@*<div class="container">
     <div class="row">
         <h2 class="span12"><span>@Model.CurrentUser.Person.FirstName</span>, your're almost done!
         </h2>
@@ -42,7 +89,7 @@
                     <p class="msg" data-bind="html: msgHTML"></p>
                     <div class="shareContainer">
                         <div class="appImageContainer">
-                            <img src="@Model.App.ImageLink" title="@Model.App.Name" />
+                            <img src="@Model.App.LogoLink50" title="@Model.App.Name" />
                         </div>
                         <div class="appInfo">
                             <a class="appTitle">@Model.App.Name</a>
@@ -71,5 +118,14 @@
             <span class="lastName" data-bind="text: LastName"></span>
         </div>
     </div>
-</div>
+</div>*@
 
+@section footer
+{
+    <div class="chkCtnr">
+        <input type="checkbox" id="agree" checked="checked" />
+        <label for="agree">I agree to the Refer Engine terms of service</label>
+    </div>
+    <a class="m-btn no" id="re-back">Back</a>
+    <a class="m-btn go" id="re-submit">Submit</a>
+}

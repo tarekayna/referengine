@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace ReferEngine.Common.Models
 {
     [DataContract]
-    public class App
+    public sealed class App
     {
         public App()
         {
@@ -29,7 +29,10 @@ namespace ReferEngine.Common.Models
         public string Name { get; set; }
 
         [DataMember]
-        public string ImageLink { get; set; }
+        public string LogoLink50 { get; set; }
+
+        [DataMember]
+        public string LogoLink150 { get; set; }
 
         [DataMember]
         public string Description { get; set; }
@@ -54,8 +57,7 @@ namespace ReferEngine.Common.Models
 
         private ICollection<AppScreenshot> _screenshots;
 
-        [DataMember]
-        public virtual ICollection<AppScreenshot> Screenshots
+        public ICollection<AppScreenshot> Screenshots
         {
             get { return _screenshots ?? (_screenshots = new Collection<AppScreenshot>()); }
             set { _screenshots = value; }

@@ -74,4 +74,8 @@
       });
     });
   }
-})( jQuery );
+})(jQuery);
+
+$(document).ready(function () {
+    $(".js-video").fitVids();
+});

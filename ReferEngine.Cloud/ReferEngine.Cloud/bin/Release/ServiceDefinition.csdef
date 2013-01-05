@@ -9,7 +9,7 @@
   **********************************************************************************************
 -->
 <ServiceDefinition name="ReferCloud" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2012-10.1.8">
-  <WebRole name="ReferEngine.Web" vmsize="Small">
+  <WebRole name="ReferEngine.Web" vmsize="Medium">
     <Sites>
       <Site name="Web">
         <Bindings>

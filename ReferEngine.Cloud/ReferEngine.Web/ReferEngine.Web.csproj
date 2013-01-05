@@ -290,15 +290,20 @@
     <Content Include="facebook_channel.html" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\encrypted.png" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
+    <Content Include="img\intro-steps.png" />
+    <Content Include="img\logo-fb-header.png" />
     <Content Include="img\logo-mark-128.ico" />
+    <Content Include="img\logo-mark-30.png" />
     <Content Include="img\logo-mark-50.png" />
     <Content Include="img\logo-mark-white-25.png" />
     <Content Include="img\logo-powered.png" />
     <Content Include="img\logo-text.png" />
     <Content Include="img\Logo_WebHeader.png" />
     <Content Include="img\noise.png" />
+    <Content Include="img\WindowsStore_badge_green_en_med_67x208.png" />
     <Content Include="index.html" />
     <Content Include="js\app\edit.js" />
     <Content Include="js\lib\bootstrap.js" />
@@ -318,6 +323,13 @@
     <Content Include="Less\common.min.css">
       <DependentUpon>common.less</DependentUpon>
     </Content>
+    <None Include="Less\fb\app.less" />
+    <Content Include="Less\fb\app.css">
+      <DependentUpon>app.less</DependentUpon>
+    </Content>
+    <Content Include="Less\fb\common.css">
+      <DependentUpon>common.less</DependentUpon>
+    </Content>
     <Content Include="Less\recommend\win8\common.css">
       <DependentUpon>common.less</DependentUpon>
     </Content>
@@ -331,6 +343,7 @@
     </Content>
     <Content Include="Less\recommend\win8\recommend.less" />
     <Content Include="Less\common.less" />
+    <Content Include="Less\fb\common.less" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -351,6 +364,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Recommend\win8\recommend.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_LogoMark30.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

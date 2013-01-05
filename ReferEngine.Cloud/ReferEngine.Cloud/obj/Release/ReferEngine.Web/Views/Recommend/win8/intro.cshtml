@@ -1,51 +1,48 @@
-﻿@model ReferEngine.Common.Models.App
+﻿@using ReferEngine.Common.Utilities
+@model ReferEngine.Common.Models.App
 
 @{
     ViewBag.Title = "Refer Engine Intro";
+    ViewBag.App = Model;
 }
 
 @section scripts
 {
-    @Scripts.Render("~/js/recommend/win8/intro")
+    @Scripts.Render("~/bundles/js/recommend/win8/intro")
 }
 
 @section styles
 {
-    @Styles.Render("~/css/recommend/win8/intro")
+    @Styles.Render("~/bundles/less/recommend/win8/intro")
 }
 
-<div class="container">
-    <div class="row">
-        <h2 class="span12">
-            Earn rewards by recommending @Model.Name to your friends! 
-        </h2>
+<div class="center-content">
+    <div class="banner">
+        Earn rewards by recommending @Model.Name to your friends! 
     </div>
-    <div class="row">
-        <p class="span12">
-            Introducing the @Model.Name referral program!
-        </p>
-        <p class="span12">
-            It is very simple:
-        </p>
-        <ol>
-            <li>Login to Facebook and tell your friends about @Model.Name. If you would like to, 
-                you can include a custom message in the next step.
-            </li>
-            <li>Refer Engine will track your recommendation and whether any of your friends
-                purchases @Model.Name.
-            </li>
-            <li>Earn cash back for every three friends who buy @Model.Name!</li>
-        </ol>
+
+    @Html.Image(Server.MapPath("~/img/intro-steps.png"), "Recommend Your Friends", "intro-steps")
+    
+    <div class="steps title">
+        <div class="rcmnd">Recommend</div>
+        <div class="earn">Earn</div>
     </div>
-    <div class="row" id="start-row">
-        <div class="span12 center-content">
-            <a class="m-btn green big" id="re-login">Start Now!</a>
+    <div class="steps text">
+        <div class="rcmnd">
+            <span>share with your friends on facebook.</span>
         </div>
-    </div>
-    <div class="row">
-        <div class="span12 center-content">
-            <a class="m-btn sm" id="re-not-now">Not Now</a>
-            <a class="m-btn sm" id="re-dont-ask">Don't ask me again</a>
+        <div class="earn">
+            <span>win $2 cash for every 3 friends who buy</span>
         </div>
     </div>
 </div>
+
+@section footer
+{
+    <div class="chkCtnr">
+        <input type="checkbox" id="dontAsk" />
+        <label for="dontAsk">Don't ask me again</label>
+    </div>
+    <a class="m-btn no" id="re-cancel">Cancel</a>
+    <a class="m-btn go" id="re-login">Start</a>
+}

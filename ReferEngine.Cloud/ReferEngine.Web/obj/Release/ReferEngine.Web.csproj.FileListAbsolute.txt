@@ -76,3 +76,4 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\bi
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\obj\Release\ReferEngine.Web.csprojResolveAssemblyReference.cache
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\obj\Release\ReferEngine.Web.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\obj\Release\ReferEngine.Web.pdb
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\bin\dotless.Core.dll
