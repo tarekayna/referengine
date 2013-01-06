@@ -31,7 +31,7 @@ namespace ReferEngine.Web.Controllers
         }
 
         [HttpGet]
-        //[RequireHttps]
+        [RequireHttps]
         public ActionResult Index()
         {
             LandingPageVariation landingPageToUse = GetLandingPage();

@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     var parentLocation = "ms-appx://apexa.co.calculi/Blu.html",
-        baseUrl = "http://127.0.0.1:81/";
-        //baseUrl = "https://www.referengine.com/";
+        //baseUrl = "http://127.0.0.1:81/";
+        baseUrl = "https://www.referengine.com/";
 
     var postToParent = function (data) {
         var jsonData;
@@ -20,8 +20,23 @@
         return baseUrl + "recommend/win8/" + name;
     };
 
-    var hideLoading = function() {
+    var setLoadingText = function(message) {
+        postToParent({
+            action: "set-loading-text",
+            text: message
+        });
+    };
+
+    var hideLoading = function () {
         postToParent("hide-loading");
+    };
+
+    var showLoading = function (message) {
+        postToParent("show-loading");
+        
+        if (message != undefined) {
+            setLoadingText(message);
+        }
     };
 
     var navigateTo = function (url) {
@@ -55,6 +70,7 @@
         GetLink: getLink,
         PostToParent: postToParent,
         HideLoading: hideLoading,
+        ShowLoading: showLoading,
         NavigateTo: navigateTo,
         AddMessageHandler: addMessageHandler
     };

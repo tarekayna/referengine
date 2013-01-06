@@ -109,3 +109,9 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.DataWriter\ReferEngine.Workers.DataWriter.dll.config
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.DataWriter\ReferEngine.Workers.DataWriter.pdb
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.DataWriter\System.Spatial.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.Pinger\Microsoft.WindowsAzure.Configuration.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.Pinger\Microsoft.WindowsAzure.Diagnostics.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.Pinger\Microsoft.WindowsAzure.StorageClient.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.Pinger\ReferEngine.Workers.Pinger.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.Pinger\ReferEngine.Workers.Pinger.dll.config
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.Pinger\ReferEngine.Workers.Pinger.pdb

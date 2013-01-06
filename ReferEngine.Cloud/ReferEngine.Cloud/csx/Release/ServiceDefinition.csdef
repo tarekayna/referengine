@@ -49,4 +49,12 @@
     <Endpoints />
     <Certificates />
   </WorkerRole>
+  <WorkerRole name="ReferEngine.Workers.Pinger" vmsize="ExtraSmall">
+    <LocalResources>
+      <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
+    </LocalResources>
+    <ConfigurationSettings />
+    <Endpoints />
+    <Certificates />
+  </WorkerRole>
 </ServiceDefinition>

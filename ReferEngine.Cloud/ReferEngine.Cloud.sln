@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Web.Cache", "Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Workers.DataWriter", "ReferEngine.Workers.DataWriter\ReferEngine.Workers.DataWriter.csproj", "{15B3E0D2-6217-493A-A690-158C497F5318}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Workers.Pinger", "ReferEngine.Workers.Pinger\ReferEngine.Workers.Pinger.csproj", "{3374D4A7-04C1-46DF-8E53-F78023EDB6BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{15B3E0D2-6217-493A-A690-158C497F5318}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15B3E0D2-6217-493A-A690-158C497F5318}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15B3E0D2-6217-493A-A690-158C497F5318}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3374D4A7-04C1-46DF-8E53-F78023EDB6BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3374D4A7-04C1-46DF-8E53-F78023EDB6BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3374D4A7-04C1-46DF-8E53-F78023EDB6BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3374D4A7-04C1-46DF-8E53-F78023EDB6BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

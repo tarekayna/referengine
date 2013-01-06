@@ -24,7 +24,7 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" value="{&quot;caches&quot;:[{&quot;name&quot;:&quot;default&quot;,&quot;policy&quot;:{&quot;eviction&quot;:{&quot;type&quot;:0},&quot;expiration&quot;:{&quot;defaultTTL&quot;:10,&quot;isExpirable&quot;:true,&quot;type&quot;:1},&quot;serverNotification&quot;:{&quot;isEnabled&quot;:false}},&quot;secondaries&quot;:0}]}" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" value="{&quot;caches&quot;:[{&quot;name&quot;:&quot;default&quot;,&quot;policy&quot;:{&quot;eviction&quot;:{&quot;type&quot;:0},&quot;expiration&quot;:{&quot;defaultTTL&quot;:30,&quot;isExpirable&quot;:true,&quot;type&quot;:1},&quot;serverNotification&quot;:{&quot;isEnabled&quot;:false}},&quot;secondaries&quot;:0}]}" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" value="1" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" value="" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" value="DefaultEndpointsProtocol=https;AccountName=referenginecachestore;AccountKey=ISrbnq9nEdeqnFoRm9AIz4u1hNK0ULpl22CmF7tdFs5Es2WfoatIFInZv+iknDEgG11aA11mAuL1rznDsQTo6w==" />
@@ -37,5 +37,9 @@
       <Setting name="Microsoft.ServiceBus.ConnectionString" value="Endpoint=sb://referenginedatawritebus.servicebus.windows.net;SharedSecretIssuer=owner;SharedSecretValue=gyFFjJOT98wjzS77VRhZGic8YooQhQTSOcv9VSjSzW4=" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
     </ConfigurationSettings>
+  </Role>
+  <Role name="ReferEngine.Workers.Pinger">
+    <Instances count="1" />
+    <ConfigurationSettings></ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

@@ -2,8 +2,6 @@
     var util = RE.Utilities,
         submitButton = $("#submit-button"),
         msgDiv = $("#message"),
-        appId = $("#appId").val(),
-        userAccessToken = $("#userAccessToken").val(),
         asContainer = $("#asContainer"),
         searchStringStart = 0,
         searchStringEnd = 0,
@@ -87,13 +85,13 @@
         return latestTimestamp === event.timeStamp;
     };
 
-    var onDownArrow = function (event) {
+    var onDownArrow = function () {
         if (viewModel.searchResult() !== []) {
             viewModel.selectedIndex(viewModel.selectedIndex() + 1);
         }
     };
 
-    var onUpArrow = function (event) {
+    var onUpArrow = function () {
         if (viewModel.searchResult() !== []) {
             viewModel.selectedIndex(viewModel.selectedIndex() - 1);
         }
@@ -189,7 +187,17 @@
         }
     });
 
+    var onSubmitError = function (jqXhr, textStatus, errorThrown) {
+
+    };
+
+    var onSubmitSuccess = function (data, textStatus, jqXhr) {
+
+    };
+
     submitButton.click(function () {
+        util.ShowLoading("Posting to Facebook...");
+        
         var msg = msgDiv.clone();
         var tags = msg.find(".friendTag");
         if (tags.length > 0) {
@@ -208,7 +216,10 @@
             data: {
                 message: msgText,
                 re_auth_token: RE.ReferEngineAuthToken
-            }
+            },
+            dataType: "json",
+            error: onSubmitError,
+            success: onSubmitSuccess
         });
     });
 

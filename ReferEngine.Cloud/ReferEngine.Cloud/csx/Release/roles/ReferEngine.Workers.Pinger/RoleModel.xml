@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RoleModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferEngine.Workers.Pinger" version="1.8.31004.1351" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+  <Runtime>
+    <EntryPoint>
+      <NetFxEntryPoint assemblyName="ReferEngine.Workers.Pinger.dll" targetFrameworkVersion="v3.5" />
+    </EntryPoint>
+  </Runtime>
+  <Properties>
+    <Property name="TargetFrameworkVersion" value="v4.5" />
+    <Property name="RoleType" value="Worker" />
+    <Property name="RoleName" value="ReferEngine.Workers.Pinger" />
+    <Property name="ProjectName" value="ReferEngine.Workers.Pinger" />
+    <Property name="Configuration" value="Release" />
+    <Property name="Platform" value="AnyCPU" />
+    <Property name="RoleTargetFramework" value="v4.5" />
+    <Property name="OutputDir" value="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Workers.Pinger\" />
+    <Property name="EntryPoint" value="ReferEngine.Workers.Pinger.dll" />
+    <Property name="SourceDir" value="" />
+    <Property name="SitePhysicalPath" value="" />
+    <Property name="TargetRuntimeVersion" value="v4.0" />
+  </Properties>
+</RoleModel>

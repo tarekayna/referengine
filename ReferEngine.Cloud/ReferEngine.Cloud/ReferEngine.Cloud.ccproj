@@ -61,6 +61,14 @@
       <RoleName>ReferEngine.Workers.DataWriter</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
+    <ProjectReference Include="..\ReferEngine.Workers.Pinger\ReferEngine.Workers.Pinger.csproj">
+      <Name>ReferEngine.Workers.Pinger</Name>
+      <Project>{3374d4a7-04c1-46df-8e53-f78023edb6bc}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>ReferEngine.Workers.Pinger</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Profiles" />

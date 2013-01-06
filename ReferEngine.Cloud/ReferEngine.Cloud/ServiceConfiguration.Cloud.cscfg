@@ -29,4 +29,9 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
     </ConfigurationSettings>
   </Role>
+  <Role name="ReferEngine.Workers.Pinger">
+    <Instances count="1" />
+    <ConfigurationSettings>
+    </ConfigurationSettings>
+  </Role>
 </ServiceConfiguration>
