@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using ReferEngine.Common.Models;
+using ReferEngine.Common.Utilities;
 using ReferEngine.Web.DataAccess;
 
 namespace ReferEngine.Web.Controllers
 {
+    [RemoteRequireHttps]
     public class HomeController : Controller
     {
         private IReferDataReader DataReader { get; set; }
@@ -31,7 +33,6 @@ namespace ReferEngine.Web.Controllers
         }
 
         [HttpGet]
-        [RequireHttps]
         public ActionResult Index()
         {
             LandingPageVariation landingPageToUse = GetLandingPage();

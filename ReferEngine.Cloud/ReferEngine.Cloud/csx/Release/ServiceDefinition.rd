@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="1f62c0a2-a4a5-40ee-8b6e-497155aae0db" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="44775153-7199-42e4-be3c-ceae516af292" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="ReferCloudGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -438,14 +438,14 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="5e22a0d3-db0a-48cc-b228-c31ef6018772" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
+    <implementation Id="63cca564-70b9-4e65-aafa-212cc3f80a9a" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="c49697e8-025d-4b1a-ab5d-308b9a48a468" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="67c10b40-e0e6-4c12-8eb0-1f07aa53ea31" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="bcb6c10c-a06c-4ff6-aa1e-8462f2b7a176" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
+        <interfaceReference Id="22e9614a-e23a-4989-9239-e62dde344526" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:HttpsIn" />
           </inPort>

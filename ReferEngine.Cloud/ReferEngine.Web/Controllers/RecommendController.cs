@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
+using ReferEngine.Common.Utilities;
 using ReferEngine.Web.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ using ReferEngine.Web.Models.Refer.Win8;
 
 namespace ReferEngine.Web.Controllers
 {
+    [RemoteRequireHttps]
+    [OutputCache(Duration = 0)]
     public class RecommendController : Controller
     {
         private IReferDataReader DataReader { get; set; }
@@ -21,8 +24,6 @@ namespace ReferEngine.Web.Controllers
             DataWriter = dataWriter;
         }
 
-        [OutputCache(Duration=0)]
-        [RequireHttps]
         public ActionResult Intro(string platform, long id)
         {
             App app = DataReader.GetApp(id);
@@ -31,8 +32,6 @@ namespace ReferEngine.Web.Controllers
         }
 
         //TODO Remove this action
-        [OutputCache(Duration = 0)]
-        [RequireHttps]
         public async Task<ActionResult> RecommendViewOnly(string platform, long id)
         {
             App app = DataReader.GetApp(id);
@@ -55,8 +54,6 @@ namespace ReferEngine.Web.Controllers
             return View(viewName, viewModel);
         }
 
-        [OutputCache(Duration = 0)]
-        [RequireHttps]
         public async Task<ActionResult> Recommend(string platform, string re_auth_token, string fb_access_code)
         {
             AppAuthorization appAuthorization = GetAppAuthorization(re_auth_token, false);
@@ -129,7 +126,6 @@ namespace ReferEngine.Web.Controllers
         }
 
         [HttpPost]
-        [RequireHttps]
         public async Task<ActionResult> PostRecommendation(string platform, string re_auth_token, string message)
         {
             AppAuthorization appAuthorization = GetAppAuthorization(re_auth_token, true);

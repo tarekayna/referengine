@@ -55,6 +55,9 @@ namespace ReferEngine.Common.Models
         [DataMember]
         public string YouTubeLink { get; set; }
 
+        [DataMember]
+        public string Platform { get; set; }
+
         private ICollection<AppScreenshot> _screenshots;
 
         public ICollection<AppScreenshot> Screenshots

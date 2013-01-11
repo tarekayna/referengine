@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
+using ReferEngine.Common.Utilities;
 using ReferEngine.Web.DataAccess;
 
 namespace ReferEngine.Web.Controllers
 {
+    [RemoteRequireHttps]
     public class AppController : Controller
     {
         private IReferDataReader DataReader { get; set; }

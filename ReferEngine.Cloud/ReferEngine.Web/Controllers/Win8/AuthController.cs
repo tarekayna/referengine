@@ -7,10 +7,12 @@ using System.Web.Mvc;
 using System.Xml;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
+using ReferEngine.Common.Utilities;
 using ReferEngine.Web.DataAccess;
 
 namespace ReferEngine.Web.Controllers.Win8
 {
+    [RemoteRequireHttps]
     public class AuthController : ApiController
     {
         private IReferDataReader DataReader { get; set; }

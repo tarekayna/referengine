@@ -49,36 +49,40 @@ footer {
   background: #FFF;
   height: 80px;
   width: 900px;
+}
+footer > div {
+  height: 80px;
+  width: 900px;
   display: -ms-flexbox;
   -ms-flex-direction: row;
   -ms-flex-align: center;
 }
-footer .chkCtnr {
+footer > div .chkCtnr {
   -ms-flex: 1 auto;
 }
-footer input[type='checkbox'] {
+footer > div input[type='checkbox'] {
   margin: 0 0 0 31px;
   height: 15px;
   width: 15px;
 }
-footer label {
+footer > div label {
   margin: 0 0 0 12px;
   color: #646464;
   font-size: small;
 }
-footer .m-btn {
+footer > div .m-btn {
   letter-spacing: 0.05em;
   cursor: pointer;
   font-size: 16px;
 }
-footer .m-btn.go {
+footer > div .m-btn.go {
   background: -ms-linear-gradient(top, #63c372, #008414);
   border: 1px solid #009517;
   color: #FFF;
   margin: 0 30px 0 0;
   padding: 15px 30px;
 }
-footer .m-btn.no {
+footer > div .m-btn.no {
   background: -ms-linear-gradient(top, #eeeeee, #d1d1d1);
   border: 1px solid #d1d1d1;
   color: #646464;
@@ -250,4 +254,7 @@ footer .m-btn.no {
 }
 .title > div:last-child {
   font-size: x-small;
+}
+.postResult {
+  font-size: medium;
 }

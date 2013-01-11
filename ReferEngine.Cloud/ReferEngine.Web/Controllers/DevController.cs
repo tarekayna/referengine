@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using ReferEngine.Common;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
+using ReferEngine.Common.Utilities;
 
 namespace ReferEngine.Web.Controllers
 {
+    [RemoteRequireHttps]
     public class DevController : Controller
     {
         private ReferEngineDatabaseContext _db = new ReferEngineDatabaseContext();

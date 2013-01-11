@@ -197,6 +197,7 @@
 
     submitButton.click(function () {
         util.ShowLoading("Posting to Facebook...");
+        debugger;
         
         var msg = msgDiv.clone();
         var tags = msg.find(".friendTag");
