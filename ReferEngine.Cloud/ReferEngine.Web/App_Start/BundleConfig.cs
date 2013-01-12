@@ -101,51 +101,6 @@ namespace ReferEngine.Web.App_Start
                 }
                 bundles.Add(styleBundle);
             }
-
-            //bundles.Add(new ScriptBundle("~/bundles/libs").Include(
-            //            "~/js/lib/jquery-{version}.js",
-            //            "~/js/lib/jquery-validate.js",
-            //            "~/js/lib/bootstrap.js"));
-
-            //bundles.Add(new StyleBundle("~/css/bootstrap").Include(
-            //    "~/css/bootstrap.css",
-            //    "~/css/bootstrap-responsive.css",
-            //    "~/css/font-awesome.css",
-            //    "~/css/m-buttons.css",
-            //    "~/css/base.css",
-            //    "~/css/blue.css"));
-
-            //bundles.Add(new ScriptBundle("~/js/home/index").Include(
-            //    "~/js/home/index.js"));
-
-            //bundles.Add(new ScriptBundle("~/js/recommend/win8/intro").Include(
-            //    "~/js/recommend/win8/common.js",
-            //    "~/js/recommend/win8/intro.js"));
-
-            //bundles.Add(new StyleBundle("~/css/recommend/win8/intro").Include(
-            //    "~/less/recommend/win8/common.css",
-            //    "~/less/recommend/win8/intro.css"));
-
-            //bundles.Add(new ScriptBundle("~/js/recommend/win8/recommend").Include(
-            //    "~/js/lib/knockout.js",
-            //    "~/js/recommend/win8/common.js",
-            //    "~/js/recommend/win8/recommend.js"));
-
-            //bundles.Add(new StyleBundle("~/css/recommend/win8/recommend").Include(
-            //    "~/css/recommend/win8/common.css",
-            //    "~/css/recommend/win8/recommend.css"));
-
-            //bundles.Add(new ScriptBundle("~/js/lib/jquery.aceditable").Include(
-            //    "~/js/lib/jquery.aceditable.js"));
-
-            //bundles.Add(new StyleBundle("~/css/lib/jquery.aceditable").Include(
-            //    "~/css/lib/jquery.aceditable.css"));
-
-            //bundles.Add(new StyleBundle("~/css/app/edit").Include(
-            //    "~/css/app/edit.css"));
-
-            //bundles.Add(new ScriptBundle("~/js/app/edit").Include(
-            //    "~/js/app/edit.js"));
         }
     }
 }

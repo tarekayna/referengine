@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="165426e2-9961-46d0-8fa9-39bf6a8799a5" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+=======
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="0a123787-0fdd-461c-82b5-415781b84231" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+>>>>>>> Bootstrap icon fix
   <groups>
     <group name="ReferCloudGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -438,14 +442,24 @@
     </group>
   </groups>
   <implements>
+<<<<<<< HEAD
     <implementation Id="431fc96c-6a30-4b34-b1e4-f368e055a499" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
       <interfacereferences>
         <interfaceReference Id="0c77b180-7cf7-4092-877c-56e5b95f919b" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
+=======
+    <implementation Id="03232cda-052c-4683-acb3-3765ebd1fcbd" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
+      <interfacereferences>
+        <interfaceReference Id="71187799-95cd-451c-bbb2-fa1ac4654952" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
+>>>>>>> Bootstrap icon fix
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:Endpoint1" />
           </inPort>
         </interfaceReference>
+<<<<<<< HEAD
         <interfaceReference Id="f2239fee-7533-4be2-a169-17fcfc923f1f" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
+=======
+        <interfaceReference Id="c7c16ac2-6bb0-4e17-9149-8f3a5bf9154f" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
+>>>>>>> Bootstrap icon fix
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:HttpsIn" />
           </inPort>

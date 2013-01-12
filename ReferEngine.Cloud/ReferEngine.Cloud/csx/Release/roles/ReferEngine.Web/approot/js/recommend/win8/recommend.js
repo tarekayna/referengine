@@ -1,12 +1,20 @@
 ﻿$(document).ready(function () {
     var util = RE.Utilities,
         submitButton = $("#submit-button"),
+        doneButton = $("done-button"),
         msgDiv = $("#message"),
         asContainer = $("#asContainer"),
+        post = $(".post"),
+        postResult = $(".postResult"),
         searchStringStart = 0,
         searchStringEnd = 0,
         msgPrev = "",
         searchString = "";
+    
+    // TODO: REMOVE THIS
+    //post.hide();
+    //postResult.show();
+    postResult.hide();
 
     var keys = {
         enter: 13,
@@ -192,7 +200,12 @@
     };
 
     var onSubmitSuccess = function (data, textStatus, jqXhr) {
-
+        doneButton.click(function() {
+            util.PostToParent("done");
+        });
+        post.hide();
+        postResult.show();
+        util.HideLoading();
     };
 
     submitButton.click(function () {

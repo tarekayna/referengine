@@ -220,6 +220,7 @@
     <Compile Include="WebRole.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bundles\css\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -322,6 +323,9 @@
     <Content Include="Less\common.min.css">
       <DependentUpon>common.less</DependentUpon>
     </Content>
+    <Content Include="bundles\css\fonts\fontawesome-webfont.eot" />
+    <Content Include="bundles\css\fonts\fontawesome-webfont.ttf" />
+    <Content Include="bundles\css\fonts\fontawesome-webfont.woff" />
     <None Include="Less\fb\app.less" />
     <Content Include="Less\fb\app.css">
       <DependentUpon>app.less</DependentUpon>
