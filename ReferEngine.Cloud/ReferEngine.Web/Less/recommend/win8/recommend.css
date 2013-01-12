@@ -258,3 +258,6 @@ footer > div .m-btn.no {
 .postResult {
   font-size: medium;
 }
+.error {
+  color: red;
+}

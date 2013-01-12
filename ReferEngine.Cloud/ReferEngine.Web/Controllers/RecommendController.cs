@@ -31,8 +31,7 @@ namespace ReferEngine.Web.Controllers
             return View(viewName, app);
         }
 
-        //TODO Remove this action
-        public async Task<ActionResult> RecommendViewOnly(string platform, long id)
+        public ActionResult RecommendViewOnly(string platform, long id)
         {
             App app = DataReader.GetApp(id);
 
@@ -56,7 +55,8 @@ namespace ReferEngine.Web.Controllers
 
         public async Task<ActionResult> Recommend(string platform, string re_auth_token, string fb_access_code)
         {
-            AppAuthorization appAuthorization = GetAppAuthorization(re_auth_token, false);
+            bool showErrorView = false;
+            AppAuthorization appAuthorization = GetAppAuthorization(re_auth_token, shouldBeVerified: false);
             if (appAuthorization != null)
             {
                 // App is cool
@@ -79,7 +79,7 @@ namespace ReferEngine.Web.Controllers
                         if (appRecommendation != null)
                         {
                             // Person has already posted a recommendation for this app using this receipt
-                            // TODO tell the user they already recommended
+                            // It's fine, they can post again
                         }
 
                         // Person has logged in before but did not submit a recommendation
@@ -92,7 +92,7 @@ namespace ReferEngine.Web.Controllers
                         if (appRecommendation != null)
                         {
                             // Another user already posted a recommendation for this app using this receipt
-                            // TODO show error page
+                            showErrorView = true;
                         }
 
                         // Well that user logged in, but didn't submit a recommendation
@@ -100,26 +100,39 @@ namespace ReferEngine.Web.Controllers
                     }
                 }
 
-                // App + Person is cool
-
-                // AppReceipt should already be in the database
-                // Update it with the Facebook Id of the user
-                appReceipt.PersonFacebookId = me.FacebookId;
-                DataWriter.AddAppReceipt(appReceipt);
-
-                IList<Person> friends = await facebookOperations.GetFriendsAsync();
-                CurrentUser currentUser = new CurrentUser
+                if (showErrorView)
                 {
-                    Person = me,
-                    Friends = friends
-                };
+                    CurrentUser currentUser = new CurrentUser
+                                                  {
+                                                      Person = me,
+                                                      Friends = null
+                                                  };
 
-                DataWriter.AddFacebookOperations(re_auth_token, facebookOperations);
-                DataWriter.AddPersonAndFriends(currentUser);
+                    string viewName = String.Format("{0}/recommend-error", platform);
+                    var viewModel = new RecommendViewModel(currentUser, app, re_auth_token);
+                    return View(viewName, viewModel);
+                }
+                else
+                {
+                    // AppReceipt should already be in the database
+                    // Update it with the Facebook Id of the user
+                    appReceipt.PersonFacebookId = me.FacebookId;
+                    DataWriter.AddAppReceipt(appReceipt);
 
-                string viewName = String.Format("{0}/recommend", platform);
-                var viewModel = new RecommendViewModel(currentUser, app, re_auth_token);
-                return View(viewName, viewModel);
+                    IList<Person> friends = await facebookOperations.GetFriendsAsync();
+                    CurrentUser currentUser = new CurrentUser
+                                                  {
+                                                      Person = me,
+                                                      Friends = friends
+                                                  };
+
+                    DataWriter.AddFacebookOperations(re_auth_token, facebookOperations);
+                    DataWriter.AddPersonAndFriends(currentUser);
+
+                    string viewName = String.Format(showErrorView ? "{0}/recommend-error" : "{0}/recommend", platform);
+                    var viewModel = new RecommendViewModel(currentUser, app, re_auth_token);
+                    return View(viewName, viewModel);
+                }
             }
 
             throw new InvalidOperationException();
@@ -128,7 +141,7 @@ namespace ReferEngine.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> PostRecommendation(string platform, string re_auth_token, string message)
         {
-            AppAuthorization appAuthorization = GetAppAuthorization(re_auth_token, true);
+            AppAuthorization appAuthorization = GetAppAuthorization(re_auth_token, shouldBeVerified: true);
             if (appAuthorization != null)
             {
                 var facebookOperations = DataReader.GetFacebookOperations(re_auth_token);
@@ -136,25 +149,25 @@ namespace ReferEngine.Web.Controllers
                 {
                     var currentUser = await facebookOperations.GetCurrentUserAsync();
                     var recommendation = new AppRecommendation
-                        {
-                            AppId = appAuthorization.App.Id,
-                            PersonFacebookId = currentUser.FacebookId,
-                            UserMessage = message
-                        };
+                                             {
+                                                 AppId = appAuthorization.App.Id,
+                                                 PersonFacebookId = currentUser.FacebookId,
+                                                 UserMessage = message
+                                             };
 
                     var postedRecommendation = await facebookOperations.PostAppRecommendationAsync(recommendation);
                     DataWriter.AddAppRecommendation(postedRecommendation);
                     return Json(new
-                        {
-                            success = true
-                        });
+                                    {
+                                        success = true
+                                    });
                 }
             }
 
             return Json(new
             {
                 success = false
-            });
+            }); 
         }
 
         private AppAuthorization GetAppAuthorization(string referEngineAuthToken, bool shouldBeVerified)

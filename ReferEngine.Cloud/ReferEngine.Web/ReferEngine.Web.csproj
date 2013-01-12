@@ -333,10 +333,16 @@
       <DependentUpon>common.less</DependentUpon>
     </Content>
     <Content Include="Less\recommend\win8\common.less" />
+    <Content Include="Less\recommend\win8\common.min.css">
+      <DependentUpon>common.less</DependentUpon>
+    </Content>
     <Content Include="Less\recommend\win8\intro.css">
       <DependentUpon>intro.less</DependentUpon>
     </Content>
     <Content Include="Less\recommend\win8\intro.less" />
+    <Content Include="Less\recommend\win8\intro.min.css">
+      <DependentUpon>intro.less</DependentUpon>
+    </Content>
     <Content Include="Less\recommend\win8\recommend.css">
       <DependentUpon>recommend.less</DependentUpon>
     </Content>
@@ -349,6 +355,9 @@
     <None Include="Microsoft.WindowsAzure.Caching\PerformanceCounters.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Less\recommend\win8\recommend.min.css">
+      <DependentUpon>recommend.less</DependentUpon>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -364,6 +373,7 @@
     <Content Include="Views\Recommend\win8\recommend.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LogoMark30.cshtml" />
+    <Content Include="Views\Recommend\win8\recommend-error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

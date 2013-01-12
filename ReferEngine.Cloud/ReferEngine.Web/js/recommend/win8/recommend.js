@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     var util = RE.Utilities,
         submitButton = $("#submit-button"),
-        doneButton = $("done-button"),
+        doneButton = $("#done-button"),
         msgDiv = $("#message"),
         asContainer = $("#asContainer"),
         post = $(".post"),
@@ -11,10 +11,11 @@
         msgPrev = "",
         searchString = "";
     
-    // TODO: REMOVE THIS
-    //post.hide();
-    //postResult.show();
     postResult.hide();
+    
+    doneButton.click(function () {
+        util.PostToParent("done");
+    });
 
     var keys = {
         enter: 13,
@@ -105,9 +106,13 @@
         }
     };
 
-    msgDiv.focusout(function() {
-        removeSearchStringClass();
-        viewModel.searchString("");
+    msgDiv.focusout(function () {
+        // We have to do this after a delay so we don't lose the
+        // click on a friend's name which causes focus out
+        setTimeout(function() {
+            removeSearchStringClass();
+            viewModel.searchString("");
+        }, 500);
     });
 
     msgDiv.focusin(function() {
@@ -200,9 +205,6 @@
     };
 
     var onSubmitSuccess = function (data, textStatus, jqXhr) {
-        doneButton.click(function() {
-            util.PostToParent("done");
-        });
         post.hide();
         postResult.show();
         util.HideLoading();
@@ -210,7 +212,6 @@
 
     submitButton.click(function () {
         util.ShowLoading("Posting to Facebook...");
-        debugger;
         
         var msg = msgDiv.clone();
         var tags = msg.find(".friendTag");
