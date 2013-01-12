@@ -1,9 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="165426e2-9961-46d0-8fa9-39bf6a8799a5" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
-=======
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="0a123787-0fdd-461c-82b5-415781b84231" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
->>>>>>> Bootstrap icon fix
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="0368d361-4f00-443e-ab9e-3309686778cd" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="ReferCloudGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -97,6 +93,16 @@
         <aCS name="ReferEngine.Workers.PingerInstances" defaultValue="[1,1,1]">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.PingerInstances" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.WinAppsInstances" defaultValue="[1,1,1]">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.WinAppsInstances" />
           </maps>
         </aCS>
       </settings>
@@ -218,6 +224,16 @@
             <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.PingerInstances" />
           </setting>
         </map>
+        <map name="MapReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.WinAppsInstances" kind="Identity">
+          <setting>
+            <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinAppsInstances" />
+          </setting>
+        </map>
       </maps>
       <components>
         <groupHascomponents>
@@ -259,7 +275,7 @@
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
               <aCS name="StorageConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Web&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot; /&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Web&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot; /&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
@@ -322,7 +338,7 @@
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Web.Cache&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot; /&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Web.Cache&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot; /&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[20000,20000,20000]" defaultSticky="true" kind="Directory" />
@@ -368,7 +384,7 @@
               <aCS name="Microsoft.ServiceBus.ConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Workers.DataWriter&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot; /&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Workers.DataWriter&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot; /&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
@@ -411,7 +427,7 @@
               </outPort>
             </componentports>
             <settings>
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Workers.Pinger&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot; /&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Workers.Pinger&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot; /&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
@@ -424,42 +440,79 @@
             <sCSPolicyFaultDomainMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.PingerFaultDomains" />
           </sCSPolicy>
         </groupHascomponents>
+        <groupHascomponents>
+          <role name="ReferEngine.Workers.WinApps" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Debug\roles\ReferEngine.Workers.WinApps" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="7168" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
+            <componentports>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" />
+                </outToChannel>
+              </outPort>
+            </componentports>
+            <settings>
+              <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Workers.WinApps&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot; /&gt;&lt;/m&gt;" />
+            </settings>
+            <resourcereferences>
+              <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
+              <resourceReference name="EventStore" defaultAmount="[1000,1000,1000]" defaultSticky="false" kind="LogStore" />
+            </resourcereferences>
+          </role>
+          <sCSPolicy>
+            <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinAppsInstances" />
+            <sCSPolicyUpdateDomainMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinAppsUpgradeDomains" />
+            <sCSPolicyFaultDomainMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinAppsFaultDomains" />
+          </sCSPolicy>
+        </groupHascomponents>
       </components>
       <sCSPolicy>
         <sCSPolicyUpdateDomain name="ReferEngine.WebUpgradeDomains" defaultPolicy="[5,5,5]" />
         <sCSPolicyUpdateDomain name="ReferEngine.Web.CacheUpgradeDomains" defaultPolicy="[5,5,5]" />
         <sCSPolicyUpdateDomain name="ReferEngine.Workers.DataWriterUpgradeDomains" defaultPolicy="[5,5,5]" />
         <sCSPolicyUpdateDomain name="ReferEngine.Workers.PingerUpgradeDomains" defaultPolicy="[5,5,5]" />
+        <sCSPolicyUpdateDomain name="ReferEngine.Workers.WinAppsUpgradeDomains" defaultPolicy="[5,5,5]" />
         <sCSPolicyFaultDomain name="ReferEngine.WebFaultDomains" defaultPolicy="[2,2,2]" />
         <sCSPolicyFaultDomain name="ReferEngine.Web.CacheFaultDomains" defaultPolicy="[2,2,2]" />
         <sCSPolicyFaultDomain name="ReferEngine.Workers.DataWriterFaultDomains" defaultPolicy="[2,2,2]" />
         <sCSPolicyFaultDomain name="ReferEngine.Workers.PingerFaultDomains" defaultPolicy="[2,2,2]" />
+        <sCSPolicyFaultDomain name="ReferEngine.Workers.WinAppsFaultDomains" defaultPolicy="[2,2,2]" />
         <sCSPolicyID name="ReferEngine.Web.CacheInstances" defaultPolicy="[1,1,1]" />
         <sCSPolicyID name="ReferEngine.WebInstances" defaultPolicy="[1,1,1]" />
         <sCSPolicyID name="ReferEngine.Workers.DataWriterInstances" defaultPolicy="[1,1,1]" />
         <sCSPolicyID name="ReferEngine.Workers.PingerInstances" defaultPolicy="[1,1,1]" />
+        <sCSPolicyID name="ReferEngine.Workers.WinAppsInstances" defaultPolicy="[1,1,1]" />
       </sCSPolicy>
     </group>
   </groups>
   <implements>
-<<<<<<< HEAD
-    <implementation Id="431fc96c-6a30-4b34-b1e4-f368e055a499" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
+    <implementation Id="5162fb9a-b40e-48f6-b9bd-5aa808d56fef" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="0c77b180-7cf7-4092-877c-56e5b95f919b" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
-=======
-    <implementation Id="03232cda-052c-4683-acb3-3765ebd1fcbd" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
-      <interfacereferences>
-        <interfaceReference Id="71187799-95cd-451c-bbb2-fa1ac4654952" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
->>>>>>> Bootstrap icon fix
+        <interfaceReference Id="63afce53-11c0-419d-897e-6dcda602dab3" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:Endpoint1" />
           </inPort>
         </interfaceReference>
-<<<<<<< HEAD
-        <interfaceReference Id="f2239fee-7533-4be2-a169-17fcfc923f1f" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
-=======
-        <interfaceReference Id="c7c16ac2-6bb0-4e17-9149-8f3a5bf9154f" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
->>>>>>> Bootstrap icon fix
+        <interfaceReference Id="0e2e31cc-641d-45b5-a5cb-be4c4f950ef9" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:HttpsIn" />
           </inPort>

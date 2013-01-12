@@ -61,4 +61,9 @@
   <WorkerRole name="ReferEngine.Workers.Pinger" vmsize="ExtraSmall">
     <Imports></Imports>
   </WorkerRole>
+  <WorkerRole name="ReferEngine.Workers.WinApps" vmsize="Large">
+    <Imports>
+      <Import moduleName="Diagnostics" />
+    </Imports>
+  </WorkerRole>
 </ServiceDefinition>

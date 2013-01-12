@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
 using Microsoft.ServiceBus.Messaging;
 using ReferEngine.Common.Models;
 using System;
@@ -222,6 +223,34 @@ namespace ReferEngine.Common.Data
                     db.PrivateBetaSignups.Add(privateBetaSignup);
                     db.SaveChanges();   
                 }
+            }
+        }
+
+        public static void AddAppWebLink(AppWebLink appWebLink)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                if (!db.AppWebLinks.Any(l => l.Link == appWebLink.Link))
+                {
+                    db.AppWebLinks.Add(appWebLink);
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public static void AddAppWebLinks(IList<AppWebLink> appWebLinks)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                foreach (var appWebLink in appWebLinks)
+                {
+                    if (!db.AppWebLinks.Any(l => l.Link == appWebLink.Link))
+                    {
+                        db.AppWebLinks.Add(appWebLink);
+                    }
+                }
+
+                db.SaveChanges();
             }
         }
     }

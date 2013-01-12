@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Workers.DataWri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Workers.Pinger", "ReferEngine.Workers.Pinger\ReferEngine.Workers.Pinger.csproj", "{3374D4A7-04C1-46DF-8E53-F78023EDB6BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Workers.WinApps", "ReferEngine.Workers.WinApps\ReferEngine.Workers.WinApps.csproj", "{69B2A66E-16C2-4949-9DBF-3B4652BCA473}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{3374D4A7-04C1-46DF-8E53-F78023EDB6BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3374D4A7-04C1-46DF-8E53-F78023EDB6BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3374D4A7-04C1-46DF-8E53-F78023EDB6BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69B2A66E-16C2-4949-9DBF-3B4652BCA473}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69B2A66E-16C2-4949-9DBF-3B4652BCA473}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69B2A66E-16C2-4949-9DBF-3B4652BCA473}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69B2A66E-16C2-4949-9DBF-3B4652BCA473}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

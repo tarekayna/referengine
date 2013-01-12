@@ -137,6 +137,7 @@
     <Compile Include="Models\App.cs" />
     <Compile Include="Models\AppAuthorization.cs" />
     <Compile Include="Models\AppPlatform.cs" />
+    <Compile Include="Models\AppWebLink.cs" />
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\PrivateBetaSignup.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

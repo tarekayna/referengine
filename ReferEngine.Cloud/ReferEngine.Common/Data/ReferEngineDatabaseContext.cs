@@ -16,6 +16,7 @@ namespace ReferEngine.Common.Data
         public DbSet<Person> People { get; set; }
         public DbSet<AppScreenshot> AppScreenshots { get; set; }
         public DbSet<PrivateBetaSignup> PrivateBetaSignups { get; set; }
+        public DbSet<AppWebLink> AppWebLinks { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {
@@ -68,6 +69,8 @@ namespace ReferEngine.Common.Data
             mb.Entity<PrivateBetaSignup>().HasKey(s => s.Email);
             mb.Entity<PrivateBetaSignup>().Property(s => s.Email)
                         .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
+            mb.Entity<AppWebLink>().HasKey(l => l.Link);
 
             base.OnModelCreating(mb);
         }

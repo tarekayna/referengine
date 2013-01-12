@@ -69,6 +69,14 @@
       <RoleName>ReferEngine.Workers.Pinger</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
+    <ProjectReference Include="..\ReferEngine.Workers.WinApps\ReferEngine.Workers.WinApps.csproj">
+      <Name>ReferEngine.Workers.WinApps</Name>
+      <Project>{69b2a66e-16c2-4949-9dbf-3b4652bca473}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>ReferEngine.Workers.WinApps</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Profiles" />
