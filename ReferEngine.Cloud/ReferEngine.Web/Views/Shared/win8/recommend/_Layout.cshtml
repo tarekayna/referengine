@@ -1,6 +1,4 @@
-﻿@using ReferEngine.Common.Utilities
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>@ViewBag.App.Name | Refer Engine</title>
@@ -34,9 +32,9 @@
                 @RenderSection("footer")
             </footer>
         </div>
-
+        
+        @Html.Partial("_MixPanel")
         @Scripts.Render("~/bundles/libs")
         @RenderSection("scripts", required: false)
-        @Html.Partial("_MixPanel")
     </body>
 </html>

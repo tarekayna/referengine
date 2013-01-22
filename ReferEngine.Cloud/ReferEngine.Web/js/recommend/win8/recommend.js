@@ -1,17 +1,21 @@
 ﻿$(document).ready(function () {
     var util = RE.Utilities,
         submitButton = $("#submit-button"),
+        cancelButton = $("#cancel-button"),
         doneButton = $("#done-button"),
         msgDiv = $("#message"),
         asContainer = $("#asContainer"),
         post = $(".post"),
         postResult = $(".postResult"),
+        agreeCheckbox = $("#agree"),
+        errorDiv = $("#re-content .text-message"),
         searchStringStart = 0,
         searchStringEnd = 0,
         msgPrev = "",
         searchString = "";
     
     postResult.hide();
+    errorDiv.hide();
     
     doneButton.click(function () {
         util.PostToParent("done");
@@ -201,43 +205,78 @@
     });
 
     var onSubmitError = function (jqXhr, textStatus, errorThrown) {
-
+        util.ShowLoading("Error posting to Facebook. Please try again.");
+        util.MixPanelTrack("Recommend Post Error");
     };
 
     var onSubmitSuccess = function (data, textStatus, jqXhr) {
-        post.hide();
-        postResult.show();
-        util.HideLoading();
+        if (data.success === true) {
+            post.hide();
+            postResult.show();
+            util.HideLoading();
+
+            util.MixPanelTrack("Recommend Post Success");
+        } else {
+            onSubmitError();
+        }
+    };
+
+    var showMustAgree = function() {
+        errorDiv.show({
+            complete: function () {
+                setTimeout(function() {
+                    errorDiv.hide({
+                        duration: 1000
+                    });
+                }, 2000);
+            }
+        });
     };
 
     submitButton.click(function () {
-        util.ShowLoading("Posting to Facebook...");
-        
-        var msg = msgDiv.clone();
-        var tags = msg.find(".friendTag");
-        if (tags.length > 0) {
-            tags.replaceWith(function() {
-                var id = $(this).attr("data-friend-id");
-                $(this).replaceWith("@[" + id + "]");
+        if (agreeCheckbox[0].checked) {
+            util.ShowLoading("Posting to Facebook...");
+
+            var msg = msgDiv.clone();
+            var tags = msg.find(".friendTag");
+            if (tags.length > 0) {
+                tags.replaceWith(function() {
+                    var id = $(this).attr("data-friend-id");
+                    $(this).replaceWith("@[" + id + "]");
+                });
+            }
+            var msgText = msg.text();
+
+            var postUri = util.GetLink("PostRecommendation");
+
+            $.ajax({
+                type: "POST",
+                url: postUri,
+                data: {
+                    message: msgText,
+                    re_auth_token: RE.ReferEngineAuthToken
+                },
+                dataType: "json",
+                error: onSubmitError,
+                success: onSubmitSuccess
             });
+
+            util.MixPanelTrack("Recommend Post Submit", {
+                "Includes Message": msgText != "",
+                "Includes Tags": tags.length > 0
+            });
+        } else {
+            showMustAgree();
         }
-        var msgText = msg.text();
+    });
 
-        var postUri = util.GetLink("PostRecommendation");
-
-        $.ajax({
-            type: "POST",
-            url: postUri,
-            data: {
-                message: msgText,
-                re_auth_token: RE.ReferEngineAuthToken
-            },
-            dataType: "json",
-            error: onSubmitError,
-            success: onSubmitSuccess
-        });
+    cancelButton.click(function() {
+        util.PostToParent("cancel");
+        util.MixPanelTrack("Recommend Post Cancel");
     });
 
     asContainer.css("display", "none");
     util.HideLoading();
+
+    util.MixPanelTrack("Recommend Post");
 });

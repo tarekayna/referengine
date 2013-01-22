@@ -1,5 +1,5 @@
 ﻿@using ReferEngine.Common.Models
-@model ReferEngine.Web.Models.Refer.Win8.RecommendViewModel
+@model ReferEngine.Web.Models.Recommend.Win8.RecommendViewModel
 
 @{
     ViewBag.App = Model.App;
@@ -7,6 +7,15 @@
 
 @section scripts
 {
+    <script type="text/javascript">
+        var re = {};
+        re.appName = "@Model.App.Name";
+        re.appId = @Model.App.Id;
+        mixpanel.identify("@Model.CurrentUser.Person.FacebookId");
+        mixpanel.people.set({
+            "gender": "@Model.CurrentUser.Person.Gender"
+        });
+    </script>
     @Scripts.Render("~/js/recommend/win8/recommend")
 }
 
@@ -21,6 +30,10 @@
     window.RE.Friends = @Html.Raw(Person.Serialize(Model.CurrentUser.Friends));
     window.RE.ReferEngineAuthToken = "@Model.ReferEngineAuthToken";
 </script>
+
+<div class="text-message error">
+    You must agree to the terms of service
+</div>
 
 <div class="post">
     <div class="title">
@@ -41,7 +54,7 @@
         <div class="storyContent">
             <img class="actorPhoto" src="@Model.CurrentUser.Person.PictureUrl" />
             <div class="storyInnerContent">
-                <p class="storyTitle"><a class="userName">@Model.CurrentUser.Person.Name</a> recommended an app using <a>Refer Engine</a>.</p>
+                <p class="storyTitle"><a class="userName">@Model.CurrentUser.Person.Name</a> recommended an app.</p>
                 <p class="msg" data-bind="html: msgHTML"></p>
                 <div class="shareContainer">
                     <div class="appImageContainer">
@@ -55,6 +68,14 @@
             </div>
         </div>
     </div>
+    
+    @if (Model.AppReceipt != null && Model.AppReceipt.LicenseType == LicenseType.Trial)
+    {
+        <div id="warning">
+            Important: You are <strong>not eligible</strong> for a recommendation award since you are using a free trial of @Model.App.Name.
+            You can still post an app recommendation to facebook.
+        </div>
+    }
 
     <div id="asContainer" data-bind="foreach: searchResult, visible: searchResult() != []">
         <div class="asItem m-btn" data-bind="click: $parent.onClick, css: {selected: $index() == $parent.selectedIndex()}">
@@ -84,9 +105,12 @@
     <div class="post">
         <div class="chkCtnr">
             <input type="checkbox" id="agree" checked="checked" />
-            <label for="agree">I agree to the Refer Engine terms of service</label>
+            <label for="agree">
+                I agree to the @Html.RouteLink("Refer Engine terms of service", "Default", new { controller = "About", action = "Terms" },
+                new { target = "_blank" })
+            </label>
         </div>
-        <a class="m-btn no" id="re-back">Back</a>
+        <a class="m-btn no" id="cancel-button">Cancel</a>
         <a class="m-btn go" id="submit-button">Submit</a>
     </div>
     <div class="postResult" style="width: 100%">

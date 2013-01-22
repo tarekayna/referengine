@@ -31,5 +31,18 @@ namespace ReferEngine.Common.Utilities
 
             return new MvcHtmlString(tagBuilder.ToString(TagRenderMode.SelfClosing));
         }
+
+        public static MvcHtmlString NavLinkItem(this HtmlHelper helper, MvcHtmlString link, bool isActive)
+        {
+            var tagBuilder = new TagBuilder("li");
+
+            if (isActive)
+            {
+                tagBuilder.AddCssClass("active");
+            }
+
+            tagBuilder.InnerHtml = link.ToString();
+            return new MvcHtmlString(tagBuilder.ToString());
+        }
     }
 }

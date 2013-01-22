@@ -3,6 +3,11 @@
   overflow: hidden;
   margin: 0;
 }
+a:link,
+a:active,
+a:visited {
+  color: #646464;
+}
 #re-ctnr {
   width: 900px;
   height: 600px;
@@ -81,6 +86,11 @@ footer > div .m-btn.go {
   color: #FFF;
   margin: 0 30px 0 0;
   padding: 15px 30px;
+}
+footer > div .m-btn.go.disabled {
+  background: -ms-linear-gradient(top, #eeeeee, #d1d1d1);
+  border: 1px solid #d1d1d1;
+  cursor: default;
 }
 footer > div .m-btn.no {
   background: -ms-linear-gradient(top, #eeeeee, #d1d1d1);
@@ -243,7 +253,7 @@ footer > div .m-btn.no {
   display: -ms-flexbox;
   -ms-flex-direction: row;
   -ms-flex-align: center;
-  padding: 12px;
+  padding: 6px 12px 12px;
   border-bottom: 1px solid #e8e8e8;
   margin-bottom: 15px;
   font-weight: 200;
@@ -260,4 +270,24 @@ footer > div .m-btn.no {
 }
 .error {
   color: red;
+}
+#re-content .text-message {
+  position: absolute;
+  top: 520px;
+  left: 0;
+  width: 900px;
+  padding: 10px;
+  font-size: small;
+  padding: 8px 35px 8px 14px;
+  margin-bottom: 20px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  border: 1px solid #eed3d7;
+  border-radius: 4px;
+  color: #b94a48;
+  background-color: #f2dede;
+}
+#warning {
+  font-size: xx-small;
+  color: #b94a48;
+  padding-top: 6px;
 }

@@ -9,11 +9,21 @@ using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
 using ReferEngine.Common.Models;
+using Microsoft.WindowsAzure.ServiceRuntime;
 
 namespace ReferEngine.Common.Utilities
 {
     public static class Util
     {
+        public static string MixPanelProjectToken
+        {
+            get
+            {
+                bool isLocal = Convert.ToBoolean(RoleEnvironment.GetConfigurationSettingValue("IsLocal"));
+                return isLocal ? "8b975bba223e30932a1ef8cd028f1c1c" : "d76136086d701abbecf55a6de775127c";
+            }
+        }
+
         public static bool TryConvertToInt(string str, out int result)
         {
             int actualResult = 0;

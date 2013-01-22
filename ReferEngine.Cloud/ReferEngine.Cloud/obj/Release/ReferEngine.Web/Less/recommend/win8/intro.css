@@ -3,6 +3,11 @@
   overflow: hidden;
   margin: 0;
 }
+a:link,
+a:active,
+a:visited {
+  color: #646464;
+}
 #re-ctnr {
   width: 900px;
   height: 600px;
@@ -82,6 +87,11 @@ footer > div .m-btn.go {
   margin: 0 30px 0 0;
   padding: 15px 30px;
 }
+footer > div .m-btn.go.disabled {
+  background: -ms-linear-gradient(top, #eeeeee, #d1d1d1);
+  border: 1px solid #d1d1d1;
+  cursor: default;
+}
 footer > div .m-btn.no {
   background: -ms-linear-gradient(top, #eeeeee, #d1d1d1);
   border: 1px solid #d1d1d1;
@@ -124,4 +134,12 @@ footer > div .m-btn.no {
 .steps.text {
   font-size: 14px;
   color: #999;
+}
+.rules {
+  font-size: xx-small;
+  color: #999;
+  margin-top: 70px;
+}
+.rules a:link {
+  text-decoration: none;
 }

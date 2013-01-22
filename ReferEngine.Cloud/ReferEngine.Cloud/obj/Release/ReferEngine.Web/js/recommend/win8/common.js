@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     var parentLocation = "ms-appx://apexa.co.calculi/Blu.html",
-        baseUrl = "http://127.0.0.1:81/";
-        //baseUrl = "https://www.referengine.com/";
+        //baseUrl = "http://127.0.0.1:81/";
+        baseUrl = "https://www.referengine.com/";
 
     var postToParent = function (data) {
         var jsonData;

@@ -11,11 +11,8 @@ namespace ReferEngine.Web.DataAccess
             App app = CacheOperations.GetApp(packageFamilyName);
             if (app == null)
             {
-                using (var db = new ReferEngineDatabaseContext())
-                {
-                    app = db.Apps.First(a => a.PackageFamilyName == packageFamilyName);
-                    CacheOperations.AddApp(packageFamilyName, app);
-                }
+                app = DatabaseOperations.GetApp(packageFamilyName);
+                CacheOperations.AddApp(packageFamilyName, app);
             }
             return app;
         }
@@ -25,11 +22,8 @@ namespace ReferEngine.Web.DataAccess
             App app = CacheOperations.GetApp(id);
             if (app == null)
             {
-                using (var db = new ReferEngineDatabaseContext())
-                {  
-                    app = db.Apps.First(a => a.Id == id);
-                    CacheOperations.AddApp(id, app);
-                }
+                app = DatabaseOperations.GetApp(id);
+                CacheOperations.AddApp(id, app);
             }
             return app;
         }

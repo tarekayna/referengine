@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using ReferEngine.Web.Models.Refer.Win8;
+using ReferEngine.Web.Models.Recommend.Win8;
 
 namespace ReferEngine.Web.Controllers
 {
@@ -49,7 +49,7 @@ namespace ReferEngine.Web.Controllers
             };
 
             string viewName = String.Format("{0}/recommend", platform);
-            var viewModel = new RecommendViewModel(currentUser, app, "fake_auth_token");
+            var viewModel = new RecommendViewModel(currentUser, app, "fake_auth_token", null);
             return View(viewName, viewModel);
         }
 
@@ -88,7 +88,7 @@ namespace ReferEngine.Web.Controllers
                     else
                     {
                         // Another user is associated with this receipt
-                        AppRecommendation appRecommendation = DataReader.GetAppRecommendation(app.Id, me.FacebookId);
+                        AppRecommendation appRecommendation = DataReader.GetAppRecommendation(app.Id, existingReceipt.PersonFacebookId.Value);
                         if (appRecommendation != null)
                         {
                             // Another user already posted a recommendation for this app using this receipt
@@ -109,7 +109,7 @@ namespace ReferEngine.Web.Controllers
                                                   };
 
                     string viewName = String.Format("{0}/recommend-error", platform);
-                    var viewModel = new RecommendViewModel(currentUser, app, re_auth_token);
+                    var viewModel = new RecommendViewModel(currentUser, app, re_auth_token, appReceipt);
                     return View(viewName, viewModel);
                 }
                 else
@@ -129,8 +129,8 @@ namespace ReferEngine.Web.Controllers
                     DataWriter.AddFacebookOperations(re_auth_token, facebookOperations);
                     DataWriter.AddPersonAndFriends(currentUser);
 
-                    string viewName = String.Format(showErrorView ? "{0}/recommend-error" : "{0}/recommend", platform);
-                    var viewModel = new RecommendViewModel(currentUser, app, re_auth_token);
+                    string viewName = String.Format("{0}/recommend", platform);
+                    var viewModel = new RecommendViewModel(currentUser, app, re_auth_token, appReceipt);
                     return View(viewName, viewModel);
                 }
             }
@@ -174,7 +174,7 @@ namespace ReferEngine.Web.Controllers
         {
             string userHostAddress = System.Web.HttpContext.Current.Request.UserHostAddress;
             AppAuthorization appAuthorization = DataReader.GetAppAuthorization(referEngineAuthToken, userHostAddress);
-            const int maxTryCount = 10;
+            const int maxTryCount = 40;
             for (int i = 0; i < maxTryCount; i++)
             {
                 if ((appAuthorization != null) && (appAuthorization.IsVerified || !shouldBeVerified))

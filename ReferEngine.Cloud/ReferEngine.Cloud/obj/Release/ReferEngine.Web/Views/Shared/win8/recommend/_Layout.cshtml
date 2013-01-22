@@ -34,9 +34,9 @@
                 @RenderSection("footer")
             </footer>
         </div>
-
+        
+        @Scripts.Render("~/bundles/mixpanel")
         @Scripts.Render("~/bundles/libs")
         @RenderSection("scripts", required: false)
-        @Html.Partial("_MixPanel")
     </body>
 </html>

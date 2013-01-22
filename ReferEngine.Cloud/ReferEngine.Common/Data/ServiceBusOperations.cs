@@ -10,7 +10,6 @@ namespace ReferEngine.Common.Data
 {
     public static class ServiceBusOperations
     {
-        //private static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromMinutes(5);
         private static readonly IList<Queue> Queues = new List<Queue>();
 
         private static NamespaceManager CreateNamespaceManager()
@@ -23,7 +22,7 @@ namespace ReferEngine.Common.Data
             return new NamespaceManager(uri, tokenProvider);
         }
 
-        public static void Initialize()
+        public static void Initialize(bool isLocal)
         {
             ServiceBusEnvironment.SystemConnectivity.Mode = ConnectivityMode.Http;
 
@@ -36,13 +35,15 @@ namespace ReferEngine.Common.Data
             var messagingFactory = MessagingFactory.Create(namespaceManager.Address,
                                                            messagingFactorySettings);
 
+            string suffix = isLocal ? "_Local" : "_Cloud";
+
             // Add Queues by Priority
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppAuthorization", typeof(AppAuthorization)));
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "CurrentUser", typeof(CurrentUser)));
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppRecommendation", typeof(AppRecommendation)));
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppScreenshot", typeof(AppScreenshot)));
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "PrivateBetaSignup", typeof(PrivateBetaSignup)));
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppReceipt", typeof(AppReceipt)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppAuthorization" + suffix, typeof(AppAuthorization)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "CurrentUser" + suffix, typeof(CurrentUser)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppRecommendation" + suffix, typeof(AppRecommendation)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppScreenshot" + suffix, typeof(AppScreenshot)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "PrivateBetaSignup" + suffix, typeof(PrivateBetaSignup)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppReceipt" + suffix, typeof(AppReceipt)));
         }
 
         public static void AddToQueue(Object objectToQueue)

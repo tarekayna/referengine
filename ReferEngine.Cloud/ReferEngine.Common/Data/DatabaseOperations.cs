@@ -51,6 +51,7 @@ namespace ReferEngine.Common.Data
                 using (var db = new ReferEngineDatabaseContext())
                 {
                     app = db.Apps.First(a => a.Id == id);
+                    app.Screenshots = db.AppScreenshots.Where(s => s.AppId == id).ToList();
                     CacheOperations.AddApp(id, app);
                 }
             }
@@ -65,6 +66,7 @@ namespace ReferEngine.Common.Data
                 using (var db = new ReferEngineDatabaseContext())
                 {
                     app = db.Apps.First(a => a.PackageFamilyName == packageFamilyName);
+                    app.Screenshots = db.AppScreenshots.Where(s => s.AppId == app.Id).ToList();
                     CacheOperations.AddApp(packageFamilyName, app);
                 }
             }

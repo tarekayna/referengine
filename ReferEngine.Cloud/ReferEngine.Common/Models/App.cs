@@ -6,15 +6,9 @@ using System.Runtime.Serialization;
 namespace ReferEngine.Common.Models
 {
     [DataContract]
-    public sealed class App
+    public class App
     {
-        public App()
-        {
-            if (Screenshots == null)
-            {
-                Screenshots = new Collection<AppScreenshot>();
-            }
-        }
+        public App() {}
 
         [DataMember]
         public Int64 Id { get; set; }
@@ -58,12 +52,7 @@ namespace ReferEngine.Common.Models
         [DataMember]
         public string Platform { get; set; }
 
-        private ICollection<AppScreenshot> _screenshots;
-
-        public ICollection<AppScreenshot> Screenshots
-        {
-            get { return _screenshots ?? (_screenshots = new Collection<AppScreenshot>()); }
-            set { _screenshots = value; }
-        }
+        [DataMember]
+        public List<AppScreenshot> Screenshots { get; set; }
     }
 }

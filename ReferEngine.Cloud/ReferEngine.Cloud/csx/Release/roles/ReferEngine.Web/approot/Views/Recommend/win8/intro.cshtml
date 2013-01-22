@@ -25,15 +25,21 @@
     
     <div class="steps title">
         <div class="rcmnd">Recommend</div>
-        <div class="earn">Earn</div>
+        <div class="earn">Win</div>
     </div>
     <div class="steps text">
         <div class="rcmnd">
             <span>share with your friends on facebook.</span>
         </div>
         <div class="earn">
-            <span>win $2 cash for every 3 friends who buy</span>
+            <span>win $2 cash for every 3 friends who buy the app within two weeks<sup>*</sup>.</span>
         </div>
+    </div>
+    
+    <div class="rules">
+        <sup>*</sup>
+        @Html.RouteLink("Other rules apply", "Default", new { controller = "About", action = "Rules", Id = 21 },
+                new { target = "_blank" })
     </div>
 </div>
 

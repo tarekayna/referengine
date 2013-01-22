@@ -30,12 +30,15 @@ namespace ReferEngine.Web.App_Start
                                    "~/js/lib/jquery-{version}.js",
                                    "~/js/lib/jquery-validate.js",
                                    "~/js/lib/bootstrap.js"),
-                                   
+    
                     new BundleInfo("~/bundles/js/jquery.fitvids",
                                    "~/js/lib/jquery.fitvids.js"),
 
                     new BundleInfo("~/js/home/index",
                                    "~/js/home/index.js"),
+
+                    new BundleInfo("~/js/contact/index",
+                                   "~/js/contact/index.js"),
 
                     new BundleInfo("~/bundles/js/recommend/win8/intro",
                                    "~/js/recommend/win8/common.js",
@@ -64,6 +67,9 @@ namespace ReferEngine.Web.App_Start
                                    "~/css/m-buttons.css",
                                    "~/css/base.css",
                                    "~/css/blue.css"),
+
+                    new BundleInfo("~/bundles/less/web",
+                                   "~/less/web/main.css"),
 
                     new BundleInfo("~/bundles/less/recommend/win8/intro",
                                    "~/less/recommend/win8/intro.css"),

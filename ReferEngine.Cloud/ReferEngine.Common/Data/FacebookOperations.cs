@@ -86,6 +86,8 @@ namespace ReferEngine.Common.Data
             return _friends;
         }
 
+        // BUG: Do I need to change to require app token?
+
         public async Task<AppRecommendation> PostAppRecommendationAsync(AppRecommendation appRecommendation)
         {
             string appParameter = string.Format("http://apps.facebook.com/referengine/app/{0}", appRecommendation.AppId);

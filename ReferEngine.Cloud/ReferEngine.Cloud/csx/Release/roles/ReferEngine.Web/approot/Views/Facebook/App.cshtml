@@ -1,4 +1,5 @@
-﻿@using ReferEngine.Common.Models
+﻿@using ReferEngine.Common.Utilities
+@using ReferEngine.Common.Models
 @model ReferEngine.Web.Models.Facebook.FacebookAppViewModel
 
 @{
@@ -61,23 +62,23 @@ else
                     {
                         if (supportsProtocolLaunching)
                         {
-                            <a href="ms-windows-store:PDP?PFN=@Model.App.PackageFamilyName">             
-                                <img src="~/img/WindowsStore_badge_green_en_med_67x208.png" alt="Download @Model.App.Name from the Windows Store" />
+                            <a href="ms-windows-store:PDP?PFN=@Model.App.PackageFamilyName">
+                                @Html.Image(Server.MapPath("~/img/WindowsStore_badge_green_en_med_67x208.png"), "Download @Model.App.Name from the Windows Store")
                                 <div>Download @Model.App.Name from the Windows Store</div>
                             </a>
                         }
                         else
                         {
-                            <a href="#cantOpenStore" role="button" data-toggle="modal">       
-                                <img src="~/img/WindowsStore_badge_green_en_med_67x208.png" alt="Download @Model.App.Name from the Windows Store" />
+                            <a href="#cantOpenStore" role="button" data-toggle="modal">
+                                @Html.Image(Server.MapPath("~/img/WindowsStore_badge_green_en_med_67x208.png"), "Download @Model.App.Name from the Windows Store")
                                 <div>Download @Model.App.Name from the Windows Store</div>
                             </a>                    
                         }
                     }
-                    else // Not Windows 8
+                    else
                     {
-                        <a href="#notWin8" role="button" data-toggle="modal">           
-                            <img src="~/img/WindowsStore_badge_green_en_med_67x208.png" alt="Download @Model.App.Name from the Windows Store" />
+                        <a href="#notWin8" role="button" data-toggle="modal">
+                            @Html.Image(Server.MapPath("~/img/WindowsStore_badge_green_en_med_67x208.png"), "Download @Model.App.Name from the Windows Store") 
                             <div>Download @Model.App.Name from the Windows Store</div>
                         </a>                    
                     }
@@ -95,43 +96,29 @@ else
     </div>
 </div>
  
-<div class="container">
-    
-    @if (Model.App.Screenshots.Count >= 3)
-    {
-        <div class="row">
-            @for (int i = 0; i < 3; i++)
-            {
-                AppScreenshot screenshot = Model.App.Screenshots.ElementAt(i);
-                <div class="span4">
-                    <a class="thumbnail">
-                        <img alt="@screenshot.Title" src="@screenshot.Link">
-                    </a>		
-                    <h3>@screenshot.Title</h3>
-                    <p>@screenshot.Description</p>
-                </div>
-            }  
-        </div>
-    
-        if (Model.App.Screenshots.Count >= 6)
-        {
-            <hr class="dashed" />
-            <div class="row">
-                @for (int i = 3; i < 6; i++)
-                {
-                    var screenshot = Model.App.Screenshots.ElementAt(i);
-                    <div class="span4">
-                        <a class="thumbnail">
+@if (Model.App.Screenshots != null && Model.App.Screenshots.Count > 0)
+{
+	<div class="container">  
+    <div class="row">
+	    <div class="span10 offset1 txt-middle">
+            <div id="imageCarousel" class="carousel slide">
+                <div class="carousel-inner">
+                    @for (int i = 0; i < Model.App.Screenshots.Count; i++)
+                    {
+                        AppScreenshot screenshot = Model.App.Screenshots.ElementAt(i);
+                        <div class="@MvcHtmlString.Create(i == 0 ? "active" : "") item">
                             <img alt="@screenshot.Title" src="@screenshot.Link">
-                        </a>		
-                        <h3>@screenshot.Title</h3>
-                        <p>@screenshot.Description</p>
-                    </div>
-                }  
+                            <p>@screenshot.Description</p>
+                        </div>
+                    } 
+                </div>
+                    <a class="carousel-control left" href="#imageCarousel" data-slide="prev">&lsaquo;</a>
+                    <a class="carousel-control right" href="#imageCarousel" data-slide="next">&rsaquo;</a>
+                </div>
             </div>
-        }        
-    }
-</div>
+        </div>
+    </div>
+}
         
 <div id="copywrite">
 	<div class="container">
@@ -211,14 +198,13 @@ else if (!isWindows8)
     <div id="notWin8" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3>Modal header</h3>
+            <h3>Oops! Not a Windows 8 PC</h3>
         </div>
         <div class="modal-body">
-            <p>One fine body…</p>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button class="btn btn-primary">Save changes</button>
+            <p>
+                @Model.App.Name is a Windows 8 application.
+                You need to be on a Windows 8 PC to open the Windows Store and view @Model.App.Name.
+            </p>
         </div>
     </div>      
 }

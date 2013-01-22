@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.ApplicationServer.Caching;
 using ReferEngine.Common.Models;
 
@@ -46,7 +47,15 @@ namespace ReferEngine.Common.Data
 
         public static AppAuthorization GetAppAuthorization(string token, string userHostAddress)
         {
-            object cached = Cache.Get(token);
+            object cached = null;
+            try
+            {
+                cached = Cache.Get(token);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+            }
             if (cached != null)
             {
                 AppAuthorization appAuthorization = (AppAuthorization)cached;
@@ -61,7 +70,15 @@ namespace ReferEngine.Common.Data
         public static Person GetPerson(Int64 facebookId)
         {
             String key = String.Format(CacheKeyFormat.Person, facebookId);
-            object cached = Cache.Get(key);
+            object cached = null;
+            try
+            {
+                cached = Cache.Get(key);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+            }
             return cached == null ? null : (Person) cached;
         }
 
@@ -74,7 +91,16 @@ namespace ReferEngine.Common.Data
         public static App GetApp(long id)
         {
             String key = String.Format(CacheKeyFormat.AppId, id);
-            object cached = Cache.Get(key);
+            object cached = null;
+            try
+            {
+                cached = Cache.Get(key);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.Message);
+                // It's ok, just retreive from the database
+            }
             return cached == null ? null : (App)cached;
         }
 
@@ -87,7 +113,15 @@ namespace ReferEngine.Common.Data
         public static App GetApp(string packageFamilyName)
         {
             String key = String.Format(CacheKeyFormat.AppPackage, packageFamilyName);
-            object cached = Cache.Get(key);
+            object cached = null;
+            try
+            {
+                cached = Cache.Get(key);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+            }
             return cached == null ? null : (App)cached;
         }
 
@@ -106,7 +140,15 @@ namespace ReferEngine.Common.Data
         public static FacebookOperations GetFacebookOperations(string token)
         {
             string key = string.Format(CacheKeyFormat.FacebookOperations, token);
-            object cached = Cache.Get(key);
+            object cached = null;
+            try
+            {
+                cached = Cache.Get(key);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+            }
             if (cached != null)
             {
                 return (FacebookOperations)cached;

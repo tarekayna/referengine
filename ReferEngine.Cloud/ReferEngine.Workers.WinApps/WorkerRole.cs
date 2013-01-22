@@ -22,6 +22,8 @@ namespace ReferEngine.Workers.WinApps
         {
             while (true)
             {
+                DateTime startTime = DateTime.Now;
+
                 string url = "http://apps.microsoft.com/windows/sitemap/sitemap_1.xml";
                 XmlDocument xmlDocument = new XmlDocument();
                 xmlDocument.Load(url);
@@ -39,7 +41,8 @@ namespace ReferEngine.Workers.WinApps
                 }
                 DatabaseOperations.AddAppWebLinks(appWebLinks);
 
-                Thread.Sleep(TimeSpan.FromHours(23));
+                TimeSpan sleepTime = TimeSpan.FromHours(24).Subtract(DateTime.Now.Subtract(startTime));
+                Thread.Sleep(sleepTime);
             }
         }
 

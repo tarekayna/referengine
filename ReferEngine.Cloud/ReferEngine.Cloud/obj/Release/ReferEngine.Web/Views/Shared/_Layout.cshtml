@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using ReferEngine.Common.Utilities;
+
+<!DOCTYPE html>
 <html lang="en">
     @RenderSection("CustomHead", false)
     <head>
@@ -10,42 +12,66 @@
         <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     
         @Html.Partial("_FavIcon")
-        @Html.Partial("_MixPanel")
 
         @Styles.Render("~/bundles/css/bootstrap")
+        @Styles.Render("~/bundles/less/web")
         @RenderSection("styles", required: false)
     </head>
     <body>
           
         @if (!Convert.ToBoolean(ViewBag.HideHeader))
         {
-            if (Convert.ToBoolean(ViewBag.ShowFacebookHeader))
-            {
-                <div class="navbar navbar-fixed-top">
-                    <div class="navbar-inner">
-                        <div class="container">
-                            <div class="pull-right navbar-logo-ctnr">
-                                <img title="" alt="Refer Engine Logo" src="data:image/png;base64,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" />
-                                <h4>Refer Engine</h4>
-                            </div>
-                        </div>
-                    </div>
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-primary btn-dropnav" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </a>		
+                    <a class="brand" href="~/"><img src="~/img/logo-web-header.png" alt="Refer Engine Logo" /></a>
+		            <div class="nav-collapse collapse">
+		                <ul class="nav pull-right">
+		                    @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Home", "Default", new {controller = "Home"}), ViewBag.MenuActive == "Home")
+		                    @*@HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Features", "Default", new {controller = "Features"}), ViewBag.MenuActive == "Features")*@
+		                    @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Pricing", "Default", new {controller = "Pricing"}), ViewBag.MenuActive == "Pricing")
+		                    @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Contact", "Default", new {controller = "Contact"}), ViewBag.MenuActive == "Contact")
+		                </ul>
+		            </div>
                 </div>
-            }
-            else
-            {
-                <div class="navbar navbar-fixed-top">
-                    <div class="navbar-inner">
-                        <div class="container">
-                            <img src="~/img/Logo_WebHeader.png" alt="Refer Engine Logo" />
-                        </div>
-                    </div>
                 </div>
-            }
+            </div>	
         }
 
         @RenderBody()
     
+	    <div id="footer">
+	      <div class="container">
+	        <div class="row">
+		      <div class="span3">
+			    <h3>Quick Links</h3>
+			    <ul>
+			      <li><a href="~/">Home</a></li>
+			      @*<li><a href="~/features">Features</a></li>*@
+			      <li><a href="~/pricing">Pricing</a></li>
+			      <li><a href="~/contact">Contact</a></li>
+			    </ul>			
+		      </div>
+		      <div class="span3">		
+			    <h3>Company</h3>
+			    <ul>
+			      @*<li><a href="~/about">About Us</a></li>*@
+			      <li><a href="~/about/privacy">Privacy Policy</a></li>
+			      <li><a href="~/about/terms">Terms of Use</a></li>
+			      <li><a href="~/about/use">Acceptable Use Policy</a></li>
+			      <li><a href="~/about/copyright">Copyright</a></li>
+			    </ul>	
+		      </div>  
+		    </div>	  
+          </div>	  
+        </div>
+        
+
         @if (!Convert.ToBoolean(ViewBag.HideFooter))
         {
             <div id="copywrite">
@@ -55,16 +81,6 @@
                             <p>&copy; @DateTime.Now.Year <img src="~/img/logo-mark-white-25.png" /> ReferEngine.com <span id="totop" class="pull-right">Back to Top <i class="icon-arrow-up"></i></span></p>
                         </div>		  
                     </div>
-                    @*<div class="row">
-		              <div class="span3">
-			            <h3>We're Social</h3>
-		                  <ul>
-		                      <li><a href="#">Facebook</a></li>
-		                      <li><a href="#">Twitter</a></li>
-		                      <li><a href="#">Google &#43;</a></li>
-		                  </ul>
-		              </div>
-		            </div>*@
                 </div>	  
             </div>
         }
@@ -79,7 +95,8 @@
                 </div>
             </div>
         }        
-
+        
+        @Scripts.Render("~/bundles/mixpanel")
         @Scripts.Render("~/bundles/libs")
         @RenderSection("scripts", required: false)
     </body>

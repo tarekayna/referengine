@@ -6,7 +6,10 @@ namespace ReferEngine.Common.Data
 {
     public class ReferEngineDatabaseContext : DbContext
     {
-        public ReferEngineDatabaseContext() : base("name=DefaultConnection") { }
+        public ReferEngineDatabaseContext() : base("name=DefaultConnection")
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+        }
 
         public DbSet<App> Apps { get; set; }
         public DbSet<AppRecommendation> AppRecommendations { get; set; }

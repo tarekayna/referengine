@@ -5,6 +5,7 @@
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
+      <Setting name="IsLocal" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
       <Setting name="StorageConnectionString" />
@@ -17,7 +18,7 @@
       <Certificate name="ReferEngineTestCertificate" storeLocation="LocalMachine" storeName="My" />
     </Certificates>
   </WebRole>
-  <WorkerRole name="ReferEngine.Web.Cache">
+  <WorkerRole name="ReferEngine.Web.Cache" vmsize="Large">
     <LocalResources>
       <LocalStorage name="DiagnosticStore" sizeInMB="20000" cleanOnRoleRecycle="false" />
     </LocalResources>
@@ -37,11 +38,12 @@
     </Endpoints>
     <Certificates />
   </WorkerRole>
-  <WorkerRole name="ReferEngine.Workers.DataWriter">
+  <WorkerRole name="ReferEngine.Workers.DataWriter" vmsize="Large">
     <LocalResources>
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
+      <Setting name="IsLocal" />
       <Setting name="Microsoft.ServiceBus.ConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />

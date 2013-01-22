@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceConfiguration serviceName="ReferCloud" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="3" osVersion="*" schemaVersion="2012-10.1.8">
   <Role name="ReferEngine.Web">
-    <Instances count="1" />
+    <Instances count="2" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
+      <Setting name="IsLocal" value="true" />
     </ConfigurationSettings>
     <Certificates>
       <Certificate name="ReferEngineTestCertificate" thumbprint="ad6316f4e279d0684106f4a88ce38bfab0315e3a" thumbprintAlgorithm="sha1" />
@@ -27,6 +28,7 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="Microsoft.ServiceBus.ConnectionString" value="Endpoint=sb://referenginedatawritebus.servicebus.windows.net;SharedSecretIssuer=owner;SharedSecretValue=gyFFjJOT98wjzS77VRhZGic8YooQhQTSOcv9VSjSzW4=" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
+      <Setting name="IsLocal" value="true" />
     </ConfigurationSettings>
   </Role>
   <Role name="ReferEngine.Workers.Pinger">

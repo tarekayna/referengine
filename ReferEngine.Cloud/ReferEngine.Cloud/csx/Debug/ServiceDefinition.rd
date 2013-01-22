@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="0368d361-4f00-443e-ab9e-3309686778cd" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="85755278-d0a1-48a8-b08c-345314e18f8e" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="ReferCloudGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -50,6 +50,11 @@
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web.CacheInstances" />
           </maps>
         </aCS>
+        <aCS name="ReferEngine.Web:IsLocal" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:IsLocal" />
+          </maps>
+        </aCS>
         <aCS name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
@@ -68,6 +73,11 @@
         <aCS name="ReferEngine.WebInstances" defaultValue="[1,1,1]">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.WebInstances" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.DataWriter:IsLocal" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriter:IsLocal" />
           </maps>
         </aCS>
         <aCS name="ReferEngine.Workers.DataWriter:Microsoft.ServiceBus.ConnectionString" defaultValue="">
@@ -179,6 +189,11 @@
             <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.CacheInstances" />
           </setting>
         </map>
+        <map name="MapReferEngine.Web:IsLocal" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/IsLocal" />
+          </setting>
+        </map>
         <map name="MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" kind="Identity">
           <setting>
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
@@ -197,6 +212,11 @@
         <map name="MapReferEngine.WebInstances" kind="Identity">
           <setting>
             <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.WebInstances" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.DataWriter:IsLocal" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/IsLocal" />
           </setting>
         </map>
         <map name="MapReferEngine.Workers.DataWriter:Microsoft.ServiceBus.ConnectionString" kind="Identity">
@@ -272,6 +292,7 @@
               </outPort>
             </componentports>
             <settings>
+              <aCS name="IsLocal" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
               <aCS name="StorageConnectionString" defaultValue="" />
@@ -299,7 +320,7 @@
           </sCSPolicy>
         </groupHascomponents>
         <groupHascomponents>
-          <role name="ReferEngine.Web.Cache" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Debug\roles\ReferEngine.Web.Cache" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="1792" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
+          <role name="ReferEngine.Web.Cache" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Debug\roles\ReferEngine.Web.Cache" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="7168" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
             <componentports>
               <inPort name="Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp" />
               <inPort name="Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" protocol="tcp" />
@@ -352,7 +373,7 @@
           </sCSPolicy>
         </groupHascomponents>
         <groupHascomponents>
-          <role name="ReferEngine.Workers.DataWriter" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Debug\roles\ReferEngine.Workers.DataWriter" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="1792" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
+          <role name="ReferEngine.Workers.DataWriter" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Debug\roles\ReferEngine.Workers.DataWriter" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="7168" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
             <componentports>
               <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp">
                 <outToChannel>
@@ -381,6 +402,7 @@
               </outPort>
             </componentports>
             <settings>
+              <aCS name="IsLocal" defaultValue="" />
               <aCS name="Microsoft.ServiceBus.ConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
@@ -505,14 +527,14 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="5162fb9a-b40e-48f6-b9bd-5aa808d56fef" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
+    <implementation Id="f008bee2-f635-4cac-93cc-6de90a28f5fb" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="63afce53-11c0-419d-897e-6dcda602dab3" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="45575e14-585a-4934-acef-eceb4447d129" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="0e2e31cc-641d-45b5-a5cb-be4c4f950ef9" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
+        <interfaceReference Id="e67630f9-2527-4957-87b1-bf1030e89f78" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:HttpsIn" />
           </inPort>

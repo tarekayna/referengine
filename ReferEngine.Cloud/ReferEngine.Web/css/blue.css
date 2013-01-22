@@ -21,10 +21,10 @@ body {
     color: #000;
 }
 .navbar .nav > li > a {
-    color: #D6DFE5;
+    color: #394755;
 }
 .navbar .nav > li > a:hover {
-    color: #FFFFFF;	
+    color: #308CCF;	
 }
 .navbar .nav > li.active > a,
 .navbar .nav > li.active:hover > a,
@@ -33,7 +33,7 @@ body {
 .navbar .nav > .active > a:focus {
     background: none repeat scroll 0 0 transparent;
     border-bottom: 2px solid #308CCF;
-    color: #FFFFFF;
+    color: #308CCF;
 }
 
 /* Landing

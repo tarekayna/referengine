@@ -24,5 +24,14 @@ namespace ReferEngine.Web.Controllers
 
             return View(new FacebookAppViewModel(app, userAgentProperties));
         }
+
+        // TODO: For now, the facebook home of refer engine will redirect to the app page
+        public ActionResult Home()
+        {
+            UserAgentProperties userAgentProperties = new UserAgentProperties(Request.UserAgent);
+            App app = DataReader.GetApp(21);
+
+            return View("App", new FacebookAppViewModel(app, userAgentProperties));
+        }
     }
 }

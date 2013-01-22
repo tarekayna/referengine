@@ -64,5 +64,59 @@
       <Arguments>ReferEngine.Workers.DataWriter;C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\System.Web.WebPages.Razor.dll</Arguments>
       <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
     </ValidationIssue>
+    <ValidationIssue Include="ReferEngine.Workers.WinApps|Microsoft.Web.Infrastructure.dll|WAT150">
+      <ProjectName>ReferEngine.Workers.WinApps</ProjectName>
+      <FilenameWithExtension>Microsoft.Web.Infrastructure.dll</FilenameWithExtension>
+      <Code>WAT150</Code>
+      <FileFullPath>C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\Microsoft.Web.Infrastructure.dll</FileFullPath>
+      <WATMessage>True</WATMessage>
+      <Arguments>ReferEngine.Workers.WinApps;C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\Microsoft.Web.Infrastructure.dll</Arguments>
+      <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+    </ValidationIssue>
+    <ValidationIssue Include="ReferEngine.Workers.WinApps|System.Web.Mvc.dll|WAT150">
+      <ProjectName>ReferEngine.Workers.WinApps</ProjectName>
+      <FilenameWithExtension>System.Web.Mvc.dll</FilenameWithExtension>
+      <Code>WAT150</Code>
+      <FileFullPath>C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\System.Web.Mvc.dll</FileFullPath>
+      <WATMessage>True</WATMessage>
+      <Arguments>ReferEngine.Workers.WinApps;C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\System.Web.Mvc.dll</Arguments>
+      <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+    </ValidationIssue>
+    <ValidationIssue Include="ReferEngine.Workers.WinApps|System.Web.Razor.dll|WAT150">
+      <ProjectName>ReferEngine.Workers.WinApps</ProjectName>
+      <FilenameWithExtension>System.Web.Razor.dll</FilenameWithExtension>
+      <Code>WAT150</Code>
+      <FileFullPath>C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\System.Web.Razor.dll</FileFullPath>
+      <WATMessage>True</WATMessage>
+      <Arguments>ReferEngine.Workers.WinApps;C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\System.Web.Razor.dll</Arguments>
+      <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+    </ValidationIssue>
+    <ValidationIssue Include="ReferEngine.Workers.WinApps|System.Web.WebPages.Deployment.dll|WAT150">
+      <ProjectName>ReferEngine.Workers.WinApps</ProjectName>
+      <FilenameWithExtension>System.Web.WebPages.Deployment.dll</FilenameWithExtension>
+      <Code>WAT150</Code>
+      <FileFullPath>C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\System.Web.WebPages.Deployment.dll</FileFullPath>
+      <WATMessage>True</WATMessage>
+      <Arguments>ReferEngine.Workers.WinApps;C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\System.Web.WebPages.Deployment.dll</Arguments>
+      <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+    </ValidationIssue>
+    <ValidationIssue Include="ReferEngine.Workers.WinApps|System.Web.WebPages.dll|WAT150">
+      <ProjectName>ReferEngine.Workers.WinApps</ProjectName>
+      <FilenameWithExtension>System.Web.WebPages.dll</FilenameWithExtension>
+      <Code>WAT150</Code>
+      <FileFullPath>C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\System.Web.WebPages.dll</FileFullPath>
+      <WATMessage>True</WATMessage>
+      <Arguments>ReferEngine.Workers.WinApps;C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\System.Web.WebPages.dll</Arguments>
+      <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+    </ValidationIssue>
+    <ValidationIssue Include="ReferEngine.Workers.WinApps|System.Web.WebPages.Razor.dll|WAT150">
+      <ProjectName>ReferEngine.Workers.WinApps</ProjectName>
+      <FilenameWithExtension>System.Web.WebPages.Razor.dll</FilenameWithExtension>
+      <Code>WAT150</Code>
+      <FileFullPath>C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\System.Web.WebPages.Razor.dll</FileFullPath>
+      <WATMessage>True</WATMessage>
+      <Arguments>ReferEngine.Workers.WinApps;C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\System.Web.WebPages.Razor.dll</Arguments>
+      <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+    </ValidationIssue>
   </ItemGroup>
 </Project>

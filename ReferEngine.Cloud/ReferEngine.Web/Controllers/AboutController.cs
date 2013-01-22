@@ -1,0 +1,53 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using ReferEngine.Common.Models;
+using ReferEngine.Web.DataAccess;
+
+namespace ReferEngine.Web.Controllers
+{
+    public class AboutController : Controller
+    {
+        private IReferDataReader DataReader { get; set; }
+        private IReferDataWriter DataWriter { get; set; }
+
+        public AboutController(IReferDataReader dataReader, IReferDataWriter dataWriter)
+        {
+            DataReader = dataReader;
+            DataWriter = dataWriter;
+        }
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Terms()
+        {
+            return View();
+        }
+
+        public ActionResult Privacy()
+        {
+            return View();
+        }
+
+        public ActionResult Use()
+        {
+            return View();
+        }
+
+        public ActionResult Copyright()
+        {
+            return View();
+        }
+
+        public ActionResult Rules(long id)
+        {
+            App app = DataReader.GetApp(id);
+            return View(app);
+        }
+    }
+}

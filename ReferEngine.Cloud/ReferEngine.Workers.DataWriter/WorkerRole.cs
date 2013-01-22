@@ -55,6 +55,10 @@ namespace ReferEngine.Workers.DataWriter
                                 {
                                     AppRecommendation appRecommendation = message.GetBody<AppRecommendation>();
                                     DatabaseOperations.AddRecommendation(appRecommendation);
+
+                                    App app = DatabaseOperations.GetApp(appRecommendation.AppId);
+                                    Person person = DatabaseOperations.GetPerson(appRecommendation.PersonFacebookId);
+                                    ReferEmailer.SendRecommendationThankYouEmail(app, person);
                                     break;
                                 }
                             case "ReferEngine.Common.Models.AppReceipt":
@@ -109,7 +113,9 @@ namespace ReferEngine.Workers.DataWriter
         public override bool OnStart()
         {
             ServicePointManager.DefaultConnectionLimit = Environment.ProcessorCount;
-            ServiceBusOperations.Initialize();
+
+            bool isLocal = Convert.ToBoolean(RoleEnvironment.GetConfigurationSettingValue("IsLocal"));
+            ServiceBusOperations.Initialize(isLocal);
 
             IsStopped = false;
             return base.OnStart();

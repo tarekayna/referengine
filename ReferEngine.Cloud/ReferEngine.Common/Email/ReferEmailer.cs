@@ -43,7 +43,27 @@ namespace ReferEngine.Common.Email
             SendPlainTextEmail(privateBetaSignup.Email, subject, body);
         }
 
-        private static void SendPlainTextEmail(string to, string subject, string body)
+        public static void SendRecommendationThankYouEmail(App app, Person person)
+        {
+            if (!string.IsNullOrEmpty(person.Email))
+            {
+                StringBuilder body = new StringBuilder();
+                body.AppendLine(person.FirstName != null ? "Hello " + person.FirstName + "," : "Hello!");
+                body.AppendLine();
+                body.AppendLine(string.Format("Thank you for recommending {0} through Refer Engine!", app.Name));
+                body.AppendLine();
+                body.AppendLine(
+                    "Refer Engine will let you know when you earn a referral reward for this recommendation. Your recommendation will be eligible for a reward for the next 2 weeks.");
+                body.AppendLine();
+                body.AppendLine("Thanks :),");
+                body.AppendLine("Tarek from ReferEngine.com");
+
+                string subject = string.Format("{0} Recommendation", app.Name);
+                SendPlainTextEmail(person.Email, subject, body.ToString());
+            }
+        }
+
+        public static void SendPlainTextEmail(string to, string subject, string body)
         {
             var toMailAddress = new MailAddress(to);
             var mailMessage = new MailMessage(From, toMailAddress)

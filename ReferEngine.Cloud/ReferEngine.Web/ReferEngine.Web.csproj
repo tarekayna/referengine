@@ -198,10 +198,13 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\DevController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\FacebookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PricingController.cs" />
     <Compile Include="Controllers\RecommendController.cs" />
     <Compile Include="Controllers\Win8\AuthController.cs" />
     <Compile Include="DataAccess\BlobStorageOperations.cs" />
@@ -215,7 +218,7 @@
     </Compile>
     <Compile Include="Models\Error\ErrorViewModel.cs" />
     <Compile Include="Models\Facebook\FacebookAppViewModel.cs" />
-    <Compile Include="Models\Refer\Win8\RecommendViewModel.cs" />
+    <Compile Include="Models\Recommend\Win8\RecommendViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebRole.cs" />
   </ItemGroup>
@@ -295,17 +298,19 @@
     <Content Include="img\glyphicons-halflings.png" />
     <Content Include="img\intro-steps.png" />
     <Content Include="img\logo-fb-header.png" />
+    <Content Include="img\logo-fb-web-header.png" />
     <Content Include="img\logo-mark-128.ico" />
     <Content Include="img\logo-mark-30.png" />
     <Content Include="img\logo-mark-50.png" />
     <Content Include="img\logo-mark-white-25.png" />
     <Content Include="img\logo-powered.png" />
     <Content Include="img\logo-text.png" />
-    <Content Include="img\Logo_WebHeader.png" />
+    <Content Include="img\logo-web-header.png" />
     <Content Include="img\noise.png" />
     <Content Include="img\WindowsStore_badge_green_en_med_67x208.png" />
     <Content Include="index.html" />
     <Content Include="js\app\edit.js" />
+    <Content Include="js\contact\index.js" />
     <Content Include="js\lib\bootstrap.js" />
     <Content Include="js\home\index.js" />
     <Content Include="js\facebook.js" />
@@ -330,7 +335,13 @@
     <Content Include="Less\fb\app.css">
       <DependentUpon>app.less</DependentUpon>
     </Content>
+    <Content Include="Less\fb\app.min.css">
+      <DependentUpon>app.less</DependentUpon>
+    </Content>
     <Content Include="Less\fb\common.css">
+      <DependentUpon>common.less</DependentUpon>
+    </Content>
+    <Content Include="Less\fb\common.min.css">
       <DependentUpon>common.less</DependentUpon>
     </Content>
     <Content Include="Less\recommend\win8\common.css">
@@ -353,6 +364,10 @@
     <Content Include="Less\recommend\win8\recommend.less" />
     <Content Include="Less\common.less" />
     <Content Include="Less\fb\common.less" />
+    <Content Include="Less\web\main.css">
+      <DependentUpon>main.less</DependentUpon>
+    </Content>
+    <Content Include="Less\web\main.less" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -361,6 +376,12 @@
     </None>
     <Content Include="Less\recommend\win8\recommend.min.css">
       <DependentUpon>recommend.less</DependentUpon>
+    </Content>
+    <Content Include="Less\web\main.min.css">
+      <DependentUpon>main.less</DependentUpon>
+    </Content>
+    <Content Include="Views\About\Terms.cshtml">
+      <SubType>Code</SubType>
     </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -378,6 +399,15 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LogoMark30.cshtml" />
     <Content Include="Views\Recommend\win8\recommend-error.cshtml" />
+    <Content Include="Views\About\Privacy.cshtml" />
+    <Content Include="Views\About\Use.cshtml" />
+    <Content Include="Views\About\Copyright.cshtml" />
+    <Content Include="Views\Shared\fb\_Layout.cshtml" />
+    <Content Include="Views\Facebook\_ViewStart.cshtml" />
+    <Content Include="Views\Pricing\Index.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\About\Rules.cshtml" />
+    <Content Include="Views\Shared\_MixPanel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -428,9 +458,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Recommend\win8\intro.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_MixPanel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Facebook\App.cshtml" />
