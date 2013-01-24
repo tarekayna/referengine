@@ -7,6 +7,15 @@
 
 @section scripts
 {
+    <script type="text/javascript">
+        var re = {};
+        re.appName = "@Model.App.Name";
+        re.appId = @Model.App.Id;
+        mixpanel.identify("@Model.CurrentUser.Person.FacebookId");
+        mixpanel.people.set({
+            "gender": "@Model.CurrentUser.Person.Gender"
+        });
+    </script>
     @Scripts.Render("~/js/recommend/win8/recommend")
 }
 

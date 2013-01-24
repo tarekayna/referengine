@@ -4,10 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ReferEngine.Common.Models;
+using ReferEngine.Common.Utilities;
 using ReferEngine.Web.DataAccess;
 
 namespace ReferEngine.Web.Controllers
 {
+    [RemoteRequireHttps]
     public class AboutController : Controller
     {
         private IReferDataReader DataReader { get; set; }

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ReferEngine.Common.Email;
+using ReferEngine.Common.Utilities;
 
 namespace ReferEngine.Web.Controllers
 {
+    [RemoteRequireHttps]
     public class ContactController : Controller
     {
         [HttpGet]

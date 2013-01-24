@@ -44,6 +44,56 @@
         window.location.href = url;
     };
 
+    var getMixPanelDateTime = function (currentTime) {
+        var year = currentTime.getFullYear();
+        var month = currentTime.getMonth() + 1;
+        var date = currentTime.getDate();
+        var hour = currentTime.getHours();
+        var minutes = currentTime.getMinutes();
+        var seconds = currentTime.getSeconds();
+        return year + "-" + month + "-" + date + "T" + hour + ":" + minutes + ":" + seconds;
+    };
+
+    var getMixPanelDay = function (currentTime) {
+        var day = currentTime.getDay();
+        switch (day) {
+            case 0:
+                return "Sun";
+            case 1:
+                return "Mon";
+            case 2:
+                return "Tue";
+            case 3:
+                return "Wed";
+            case 4:
+                return "Thu";
+            case 5:
+                return "Fri";
+            case 6:
+                return "Sat";
+        }
+    };
+    
+    var mixPanelTrack = function (actionName, data) {
+        var currentTime = new Date();
+        var properties = {
+            AppName: re.appName,
+            AppId: re.appId,
+            Timestamp: getMixPanelDateTime(currentTime),
+            Day: getMixPanelDay(currentTime)
+        };
+        
+        if (data) {
+            for (prop in data) {
+                if (data.hasOwnProperty(prop)) {
+                    properties[prop] = data[prop];
+                }
+            }
+        }
+
+        mixpanel.track(actionName, properties);
+    };
+
     var messageHandlers = [];
     var addMessageHandler = function (message, handler) {
         messageHandlers.push({
@@ -72,6 +122,7 @@
         HideLoading: hideLoading,
         ShowLoading: showLoading,
         NavigateTo: navigateTo,
-        AddMessageHandler: addMessageHandler
+        AddMessageHandler: addMessageHandler,
+        MixPanelTrack: mixPanelTrack
     };
 });

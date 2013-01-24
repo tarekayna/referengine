@@ -24,3 +24,6 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Worker
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.WinApps\obj\Debug\ReferEngine.Workers.WinApps.pdb
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.WinApps\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.WinApps\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.WinApps\bin\Debug\HtmlAgilityPack.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.WinApps\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.WinApps\bin\Debug\HtmlAgilityPack.xml

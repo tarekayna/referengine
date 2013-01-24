@@ -8,6 +8,11 @@
 
 @section scripts
 {
+    <script type="text/javascript">
+        var re = {};
+        re.appName = "@Model.Name";
+        re.appId = @Model.Id
+    </script>
     @Scripts.Render("~/bundles/js/recommend/win8/intro")
 }
 

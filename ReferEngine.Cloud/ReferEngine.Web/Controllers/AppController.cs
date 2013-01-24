@@ -19,46 +19,46 @@ namespace ReferEngine.Web.Controllers
             DataWriter = dataWriter;
         }
 
-        public ActionResult Details(long id)
-        {
-            App app = DataReader.GetApp(id);
-            return View(app);
-        }
+        //public ActionResult Details(long id)
+        //{
+        //    App app = DataReader.GetApp(id);
+        //    return View(app);
+        //}
 
-        public ActionResult Edit(long id)
-        {
-            App app = DataReader.GetApp(id);
-            return View(app);
-        }
+        //public ActionResult Edit(long id)
+        //{
+        //    App app = DataReader.GetApp(id);
+        //    return View(app);
+        //}
 
-        [HttpPost]
-        public ActionResult Edit(long id, FormCollection collection)
-        {
-            App app = DataReader.GetApp(id);
-            return View(app);
-        }
+        //[HttpPost]
+        //public ActionResult Edit(long id, FormCollection collection)
+        //{
+        //    App app = DataReader.GetApp(id);
+        //    return View(app);
+        //}
 
-        [HttpPost]
-        public ActionResult UploadScreenshots(int id, string description)
-        {
-            var screenshots = new List<AppScreenshot>();
-            foreach (string file in Request.Files)
-            {
-                HttpPostedFileBase fileBase = Request.Files[file];
-                if (fileBase != null)
-                {
-                    var screenshot = AppScreenshot.Create(fileBase, id);
-                    //var addedScreenshot = DataWriter.AddAppScreenshot(screenshot);
-                    DataWriter.AddAppScreenshot(screenshot);
+        //[HttpPost]
+        //public ActionResult UploadScreenshots(int id, string description)
+        //{
+        //    var screenshots = new List<AppScreenshot>();
+        //    foreach (string file in Request.Files)
+        //    {
+        //        HttpPostedFileBase fileBase = Request.Files[file];
+        //        if (fileBase != null)
+        //        {
+        //            var screenshot = AppScreenshot.Create(fileBase, id);
+        //            //var addedScreenshot = DataWriter.AddAppScreenshot(screenshot);
+        //            DataWriter.AddAppScreenshot(screenshot);
 
-                    var addedScreenshot = DataReader.GetAppScreenshot(id, description);
-                    fileBase.InputStream.Position = 0;
-                    BlobStorageOperations.UploadAppScreenshot(addedScreenshot, fileBase.InputStream);
-                    screenshots.Add(addedScreenshot);
-                }
-            }
+        //            var addedScreenshot = DataReader.GetAppScreenshot(id, description);
+        //            fileBase.InputStream.Position = 0;
+        //            BlobStorageOperations.UploadAppScreenshot(addedScreenshot, fileBase.InputStream);
+        //            screenshots.Add(addedScreenshot);
+        //        }
+        //    }
 
-            return View(screenshots);
-        }
+        //    return View(screenshots);
+        //}
     }
 }

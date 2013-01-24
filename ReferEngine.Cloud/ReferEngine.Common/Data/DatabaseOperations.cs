@@ -240,16 +240,61 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static void AddAppWebLinks(IList<AppWebLink> appWebLinks)
+        public static void AddOrUpdateAppWebLinks(IList<AppWebLink> appWebLinks)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
-                foreach (var appWebLink in appWebLinks)
+                const int take = 1000;
+                int skip = 0;
+
+                while (true)
                 {
-                    if (!db.AppWebLinks.Any(l => l.Link == appWebLink.Link))
+                    var currentSet = appWebLinks.Skip(skip).Take(take);
+                    skip += take;
+                    foreach (var appWebLink in currentSet)
                     {
-                        db.AppWebLinks.Add(appWebLink);
+                        AppWebLink existing = db.AppWebLinks.FirstOrDefault(l => l.Link == appWebLink.Link);
+                        if (existing == null)
+                        {
+                            db.AppWebLinks.Add(appWebLink);
+                        }
+                        else
+                        {
+                            existing.LastUpdated = DateTime.Now;
+                        }
                     }
+
+                    db.SaveChanges();
+
+                    if (currentSet.Count() < take)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        public static IList<AppWebLink> GetAppWebLinks()
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                return db.AppWebLinks.ToList();
+            }
+        }
+
+        public static void AddStoreAppInfo(StoreAppInfo storeAppInfo)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                StoreAppInfo existing = db.StoreAppInfos.FirstOrDefault(i => i.MsAppId.Equals(storeAppInfo.MsAppId));
+                if (existing == null)
+                {
+                    db.StoreAppInfos.Add(storeAppInfo);
+                }
+                else if (!existing.IsIdentical(storeAppInfo))
+                {
+                    db.StoreAppInfos.Remove(existing);
+                    db.StoreAppInfos.Add(storeAppInfo);
                 }
 
                 db.SaveChanges();

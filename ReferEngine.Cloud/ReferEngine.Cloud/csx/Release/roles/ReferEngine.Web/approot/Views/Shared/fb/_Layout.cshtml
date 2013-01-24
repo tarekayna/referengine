@@ -67,7 +67,7 @@
             </div>
         }        
         
-        @Scripts.Render("~/bundles/mixpanel")
+        @Html.Partial("_MixPanel")
         @Scripts.Render("~/bundles/libs")
         @RenderSection("scripts", required: false)
     </body>

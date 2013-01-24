@@ -20,6 +20,7 @@ namespace ReferEngine.Common.Data
         public DbSet<AppScreenshot> AppScreenshots { get; set; }
         public DbSet<PrivateBetaSignup> PrivateBetaSignups { get; set; }
         public DbSet<AppWebLink> AppWebLinks { get; set; }
+        public DbSet<StoreAppInfo> StoreAppInfos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {
@@ -74,6 +75,8 @@ namespace ReferEngine.Common.Data
                         .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             mb.Entity<AppWebLink>().HasKey(l => l.Link);
+
+            mb.Entity<StoreAppInfo>().HasKey(i => i.MsAppId);
 
             base.OnModelCreating(mb);
         }

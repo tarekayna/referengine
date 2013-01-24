@@ -206,6 +206,7 @@
 
     var onSubmitError = function (jqXhr, textStatus, errorThrown) {
         util.ShowLoading("Error posting to Facebook. Please try again.");
+        util.MixPanelTrack("Recommend Post Error");
     };
 
     var onSubmitSuccess = function (data, textStatus, jqXhr) {
@@ -213,6 +214,8 @@
             post.hide();
             postResult.show();
             util.HideLoading();
+
+            util.MixPanelTrack("Recommend Post Success");
         } else {
             onSubmitError();
         }
@@ -257,6 +260,11 @@
                 error: onSubmitError,
                 success: onSubmitSuccess
             });
+
+            util.MixPanelTrack("Recommend Post Submit", {
+                "Includes Message": msgText != "",
+                "Includes Tags": tags.length > 0
+            });
         } else {
             showMustAgree();
         }
@@ -264,8 +272,11 @@
 
     cancelButton.click(function() {
         util.PostToParent("cancel");
+        util.MixPanelTrack("Recommend Post Cancel");
     });
 
     asContainer.css("display", "none");
     util.HideLoading();
+
+    util.MixPanelTrack("Recommend Post");
 });

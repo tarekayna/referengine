@@ -141,6 +141,7 @@
     <Compile Include="Models\AppWebLink.cs" />
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\PrivateBetaSignup.cs" />
+    <Compile Include="Models\StoreAppInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

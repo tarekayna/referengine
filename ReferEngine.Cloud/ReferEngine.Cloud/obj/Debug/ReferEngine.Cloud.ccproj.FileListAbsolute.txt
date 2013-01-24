@@ -131,3 +131,5 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.WinApps\ReferEngine.Workers.WinApps.dll.config
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.WinApps\ReferEngine.Workers.WinApps.pdb
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.WinApps\EntityFramework.SqlServer.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.WinApps\HtmlAgilityPack.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.WinApps\HtmlAgilityPack.pdb
