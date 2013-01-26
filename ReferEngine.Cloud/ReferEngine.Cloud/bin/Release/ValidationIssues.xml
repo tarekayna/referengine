@@ -10,6 +10,15 @@
       <Arguments>StorageConnectionString;ReferEngine.Web;ServiceConfiguration.Cloud.cscfg</Arguments>
       <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
     </ValidationIssue>
+    <ValidationIssue Include="ReferEngine.Web|System.Data.SqlServerCe.dll|WAT150">
+      <ProjectName>ReferEngine.Web</ProjectName>
+      <FilenameWithExtension>System.Data.SqlServerCe.dll</FilenameWithExtension>
+      <Code>WAT150</Code>
+      <FileFullPath>C:\Program Files (x86)\Microsoft SQL Server Compact Edition\v4.0\Desktop\System.Data.SqlServerCe.dll</FileFullPath>
+      <WATMessage>True</WATMessage>
+      <Arguments>ReferEngine.Web;C:\Program Files (x86)\Microsoft SQL Server Compact Edition\v4.0\Desktop\System.Data.SqlServerCe.dll</Arguments>
+      <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+    </ValidationIssue>
     <ValidationIssue Include="ReferEngine.Workers.DataWriter|Microsoft.Web.Infrastructure.dll|WAT150">
       <ProjectName>ReferEngine.Workers.DataWriter</ProjectName>
       <FilenameWithExtension>Microsoft.Web.Infrastructure.dll</FilenameWithExtension>

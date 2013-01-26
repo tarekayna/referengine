@@ -30,10 +30,17 @@ namespace ReferEngine.Common.Models
 
         public void SetRating(string starRatingText)
         {
-            int end = starRatingText.IndexOf("out", StringComparison.OrdinalIgnoreCase) - 1;
-            int start = "Rating: ".Length;
-            string rating = starRatingText.Substring(start, end - start);
-            Rating = Convert.ToDouble(rating);
+            if (string.IsNullOrEmpty(starRatingText))
+            {
+                Rating = 0;
+            }
+            else
+            {
+                int end = starRatingText.IndexOf("out", StringComparison.OrdinalIgnoreCase) - 1;
+                int start = "Rating: ".Length;
+                string rating = starRatingText.Substring(start, end - start);
+                Rating = Convert.ToDouble(rating);
+            }
         }
 
         public void SetNumberOfRatings(string text)
@@ -52,9 +59,16 @@ namespace ReferEngine.Common.Models
 
         public void SetPrice(string priceText)
         {
-            Price = priceText.IndexOf("Free", StringComparison.OrdinalIgnoreCase) != -1
-                        ? 0
-                        : Convert.ToDouble(priceText.Substring(priceText.IndexOf("$") + 1));
+            if (string.IsNullOrEmpty(priceText))
+            {
+                Price = 0;
+            }
+            else
+            {
+                Price = priceText.IndexOf("Free", StringComparison.OrdinalIgnoreCase) != -1
+                            ? 0
+                            : Convert.ToDouble(priceText.Substring(priceText.IndexOf("$") + 1));
+            }
         }
 
         public bool IsIdentical(StoreAppInfo storeAppInfo)

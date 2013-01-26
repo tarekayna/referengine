@@ -133,3 +133,5 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.WinApps\EntityFramework.SqlServer.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.WinApps\HtmlAgilityPack.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Workers.WinApps\HtmlAgilityPack.pdb
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Web\bin\Elmah.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Web\bin\Elmah.Mvc.dll

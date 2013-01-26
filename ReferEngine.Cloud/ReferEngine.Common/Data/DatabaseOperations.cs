@@ -290,14 +290,14 @@ namespace ReferEngine.Common.Data
                 if (existing == null)
                 {
                     db.StoreAppInfos.Add(storeAppInfo);
+                    db.SaveChanges();
                 }
                 else if (!existing.IsIdentical(storeAppInfo))
                 {
                     db.StoreAppInfos.Remove(existing);
                     db.StoreAppInfos.Add(storeAppInfo);
+                    db.SaveChanges();
                 }
-
-                db.SaveChanges();
             }
         }
     }

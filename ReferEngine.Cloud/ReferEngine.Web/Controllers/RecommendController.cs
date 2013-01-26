@@ -141,7 +141,7 @@ namespace ReferEngine.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> PostRecommendation(string platform, string re_auth_token, string message)
         {
-            AppAuthorization appAuthorization = GetAppAuthorization(re_auth_token, shouldBeVerified: true);
+            AppAuthorization appAuthorization = GetAppAuthorization(re_auth_token, shouldBeVerified: false);
             if (appAuthorization != null)
             {
                 var facebookOperations = DataReader.GetFacebookOperations(re_auth_token);

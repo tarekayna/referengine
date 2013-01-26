@@ -24,3 +24,6 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Worker
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.WinApps\obj\Release\ReferEngine.Workers.WinApps.csprojResolveAssemblyReference.cache
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.WinApps\obj\Release\ReferEngine.Workers.WinApps.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.WinApps\obj\Release\ReferEngine.Workers.WinApps.pdb
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.WinApps\bin\Release\HtmlAgilityPack.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.WinApps\bin\Release\HtmlAgilityPack.pdb
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.WinApps\bin\Release\HtmlAgilityPack.xml
