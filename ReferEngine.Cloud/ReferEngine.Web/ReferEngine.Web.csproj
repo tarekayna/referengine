@@ -397,7 +397,7 @@
     <Content Include="img\encrypted.png" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
-    <Content Include="img\intro-steps.png" />
+    <Content Include="img\recommend\win8\intro-steps.png" />
     <Content Include="img\logo-fb-header.png" />
     <Content Include="img\logo-fb-web-header.png" />
     <Content Include="img\logo-mark-128.ico" />
@@ -408,6 +408,7 @@
     <Content Include="img\logo-text.png" />
     <Content Include="img\logo-web-header.png" />
     <Content Include="img\noise.png" />
+    <Content Include="img\recommend\win8\start-arrow.png" />
     <Content Include="img\WindowsStore_badge_green_en_med_67x208.png" />
     <Content Include="index.html" />
     <Content Include="js\app\edit.js" />

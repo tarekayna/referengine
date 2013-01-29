@@ -146,3 +146,8 @@ footer > div .m-btn.no {
 .login {
   cursor: pointer;
 }
+.start-arrow {
+  position: absolute;
+  left: 700px;
+  top: 435px;
+}
