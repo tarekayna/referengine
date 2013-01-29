@@ -155,7 +155,6 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\img\encrypted.png
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\img\glyphicons-halflings-white.png
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\img\glyphicons-halflings.png
-C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\img\intro-steps.png
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\img\logo-fb-header.png
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\img\logo-fb-web-header.png
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\img\logo-mark-128.ico
@@ -166,6 +165,8 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\img\logo-text.png
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\img\logo-web-header.png
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\img\noise.png
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\img\recommend\win8\intro-steps.png
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\img\recommend\win8\start-arrow.png
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\img\WindowsStore_badge_green_en_med_67x208.png
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\index.html
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\js\app\edit.js
