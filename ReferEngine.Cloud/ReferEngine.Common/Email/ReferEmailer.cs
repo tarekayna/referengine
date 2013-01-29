@@ -48,7 +48,7 @@ namespace ReferEngine.Common.Email
             if (!string.IsNullOrEmpty(person.Email))
             {
                 StringBuilder body = new StringBuilder();
-                body.AppendLine(person.FirstName != null ? "Hello " + person.FirstName + "," : "Hello!");
+                body.AppendLine(person.FirstName != null ? "Hi " + person.FirstName + "," : "Hello!");
                 body.AppendLine();
                 body.AppendLine(string.Format("Thank you for recommending {0} through Refer Engine!", app.Name));
                 body.AppendLine();
@@ -61,6 +61,30 @@ namespace ReferEngine.Common.Email
                 string subject = string.Format("{0} Recommendation", app.Name);
                 SendPlainTextEmail(person.Email, subject, body.ToString());
             }
+        }
+
+        public static void SendConfirmationCodeEmail(ConfirmationCodeModel model)
+        {
+            if (model == null) return;
+
+            StringBuilder body = new StringBuilder();
+            body.AppendLine("Hi " + model.FirstName + ",");
+            body.AppendLine();
+            body.AppendLine(string.Format("Thank you for registering at ReferEngine.com!"));
+            body.AppendLine();
+            body.AppendLine(
+                "Before you get started, you need to confirm your email account. You either use the link below or enter your confirmation" +
+                "code after you login.");
+            body.AppendLine();
+            body.AppendLine(string.Format("Confirmation Code: {0}", model.ConfirmationCode));
+            body.AppendLine();
+            body.AppendLine(string.Format("https://www.referengine.com/account/confirm?email={0}&code={1}", model.Email, model.ConfirmationCode));
+            body.AppendLine();
+            body.AppendLine("Thanks :),");
+            body.AppendLine("Tarek from ReferEngine.com");
+
+            string subject = string.Format("ReferEngine: Please Confirm Registration");
+            SendPlainTextEmail(model.Email, subject, body.ToString());
         }
 
         public static void SendPlainTextEmail(string to, string subject, string body)

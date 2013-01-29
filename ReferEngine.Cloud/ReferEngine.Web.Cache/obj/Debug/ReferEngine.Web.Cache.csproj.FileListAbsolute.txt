@@ -22,7 +22,6 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Ca
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Debug\EntityFramework.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Debug\Microsoft.WindowsAzure.Diagnostics.xml
-C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\obj\Debug\ReferEngine.Web.Cache.csprojResolveAssemblyReference.cache
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\obj\Debug\ReferEngine.Web.Cache.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\obj\Debug\ReferEngine.Web.Cache.pdb
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Debug\Microsoft.WindowsAzure.StorageClient.xml

@@ -19,6 +19,12 @@ namespace ReferEngine.Web.Controllers
             DataWriter = dataWriter;
         }
 
+        [Authorize]
+        public ActionResult New()
+        {
+            return View();
+        }
+
         //public ActionResult Details(long id)
         //{
         //    App app = DataReader.GetApp(id);

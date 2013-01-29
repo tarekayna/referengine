@@ -125,6 +125,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\CacheOperations.cs" />
@@ -139,9 +141,15 @@
     <Compile Include="Models\AppAuthorization.cs" />
     <Compile Include="Models\AppPlatform.cs" />
     <Compile Include="Models\AppWebLink.cs" />
+    <Compile Include="Models\UserInRole.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\UserMembership.cs" />
     <Compile Include="Models\CurrentUser.cs" />
+    <Compile Include="Models\Membership.cs" />
     <Compile Include="Models\PrivateBetaSignup.cs" />
     <Compile Include="Models\StoreAppInfo.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ConfirmationCodeModel.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

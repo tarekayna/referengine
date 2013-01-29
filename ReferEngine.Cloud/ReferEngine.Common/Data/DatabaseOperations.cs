@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Web.Security;
 using Microsoft.ServiceBus.Messaging;
 using ReferEngine.Common.Models;
 using System;
@@ -7,6 +9,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using ReferEngine.Common.Properties;
+using WebMatrix.WebData;
+using Membership = ReferEngine.Common.Models.Membership;
 
 namespace ReferEngine.Common.Data
 {
@@ -298,6 +302,77 @@ namespace ReferEngine.Common.Data
                     db.StoreAppInfos.Add(storeAppInfo);
                     db.SaveChanges();
                 }
+            }
+        }
+
+        public static ConfirmationCodeModel GetConfirmationCodeModel(string email)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                var tokens = from m in db.Memberships
+                             join u in db.Users on m.UserId equals u.Id
+                             select new {u.Email, u.FirstName, m.ConfirmationToken};
+                var token = tokens.FirstOrDefault(i => i.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+                if (token == null) return null;
+                var confirmationCodeModel = new ConfirmationCodeModel
+                                                {
+                                                    Email = token.Email,
+                                                    ConfirmationCode = token.ConfirmationToken,
+                                                    FirstName = token.FirstName
+                                                };
+                return confirmationCodeModel;
+            }
+        }
+
+        public static User GetUser(string email)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                var existing = db.Users.FirstOrDefault(c => c.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+                return existing ?? null;
+            }
+        }
+
+        public static Membership GetMembership(string email)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+                if (user != null)
+                {
+                    var membership = db.Memberships.First(m => m.UserId == user.Id);
+                    if (membership != null)
+                    {
+                        return membership;
+                    }
+                }
+
+                return null;
+            }
+        }
+
+        public static string GetRole(int userId)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                var userInRole = db.UsersInRoles.First(u => u.UserId == userId);
+                var role = db.Roles.First(r => r.RoleId == userInRole.RoleId);
+                return role.RoleName;
+            }
+        }
+
+        public static IList<UserMembership> GetUserMemberships()
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                IList<UserMembership> result = new List<UserMembership>();
+                foreach (var user in db.Users)
+                {
+                    var membership = db.Memberships.First(m => m.UserId == user.Id);
+                    string role = GetRole(user.Id);
+                    result.Add(new UserMembership(user, membership, role));
+                }
+                return result;
             }
         }
     }

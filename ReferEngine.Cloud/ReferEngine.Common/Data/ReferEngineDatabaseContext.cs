@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 using ReferEngine.Common.Models;
 using System.Data.Entity;
 
@@ -21,6 +22,10 @@ namespace ReferEngine.Common.Data
         public DbSet<PrivateBetaSignup> PrivateBetaSignups { get; set; }
         public DbSet<AppWebLink> AppWebLinks { get; set; }
         public DbSet<StoreAppInfo> StoreAppInfos { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Membership> Memberships { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserInRole> UsersInRoles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {
@@ -78,7 +83,101 @@ namespace ReferEngine.Common.Data
 
             mb.Entity<StoreAppInfo>().HasKey(i => i.MsAppId);
 
+            mb.Configurations.Add(new UserConfiguration());
+            mb.Configurations.Add(new MembershipConfiguration());
+            mb.Configurations.Add(new RoleConfiguration());
+            mb.Configurations.Add(new UserInRoleConfiguration());
+
             base.OnModelCreating(mb);
+        }
+
+        public class UserConfiguration : EntityTypeConfiguration<User>
+        {
+            public UserConfiguration()
+                : base()
+            {
+                ToTable("Users");
+                HasKey(u => u.Id);
+                Property(u => u.Id)
+                    .HasColumnName("Id")
+                    .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
+                    .IsRequired();
+                Property(u => u.Email)
+                    .HasColumnName("Email")
+                    .IsRequired();
+                Property(u => u.FirstName)
+                    .HasColumnName("FirstName")
+                    .IsRequired();
+                Property(u => u.LastName)
+                    .HasColumnName("LastName");
+                Property(u => u.TimeStamp)
+                    .HasColumnName("Timestamp")
+                    .IsRequired();
+            }
+        }
+
+        public class MembershipConfiguration : EntityTypeConfiguration<Membership>
+        {
+            public MembershipConfiguration()
+                : base()
+            {
+                ToTable("webpages_Membership");
+                HasKey(u => u.UserId);
+                Property(u => u.UserId)
+                    .HasColumnName("UserId")
+                    .IsRequired();
+                Property(m => m.CreateDate)
+                    .HasColumnName("CreateDate");
+                Property(m => m.ConfirmationToken)
+                    .HasColumnName("ConfirmationToken");
+                Property(m => m.IsConfirmed)
+                    .HasColumnName("IsConfirmed");
+                Property(m => m.LastPasswordFailureDate)
+                    .HasColumnName("LastPasswordFailureDate");
+                Property(m => m.PasswordFailuresSinceLastSuccess)
+                    .HasColumnName("PasswordFailuresSinceLastSuccess");
+                Property(m => m.Password)
+                    .HasColumnName("Password");
+                Property(m => m.PasswordChangedDate)
+                    .HasColumnName("PasswordChangedDate");
+                Property(m => m.PasswordSalt)
+                    .HasColumnName("PasswordSalt");
+                Property(m => m.PasswordVerificationToken)
+                    .HasColumnName("PasswordVerificationToken");
+                Property(m => m.PasswordVerificationTokenExpirationDate)
+                    .HasColumnName("PasswordVerificationTokenExpirationDate")
+                    .IsOptional();
+            }
+        }
+
+        public class RoleConfiguration : EntityTypeConfiguration<Role>
+        {
+            public RoleConfiguration()
+            {
+                ToTable("webpages_Roles");
+                HasKey(u => u.RoleId);
+                Property(u => u.RoleId)
+                    .HasColumnName("RoleId")
+                    .IsRequired();
+                Property(u => u.RoleName)
+                    .HasColumnName("RoleName")
+                    .IsRequired();
+            }
+        }
+
+        public class UserInRoleConfiguration : EntityTypeConfiguration<UserInRole>
+        {
+            public UserInRoleConfiguration()
+            {
+                ToTable("webpages_UsersInRoles");
+                HasKey(u => new { u.RoleId, u.UserId });
+                Property(u => u.RoleId)
+                    .HasColumnName("RoleId")
+                    .IsRequired();
+                Property(u => u.UserId)
+                    .HasColumnName("UserId")
+                    .IsRequired();
+            }
         }
     }
 }

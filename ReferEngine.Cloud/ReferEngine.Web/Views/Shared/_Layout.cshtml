@@ -18,29 +18,65 @@
         @RenderSection("styles", required: false)
     </head>
     <body>
-          
-        @if (!Convert.ToBoolean(ViewBag.HideHeader))
+         
+        @if (Request.IsAuthenticated)
         {
             <div class="navbar navbar-fixed-top">
                 <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-primary btn-dropnav" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    </a>		
-                    <a class="brand" href="~/"><img src="~/img/logo-web-header.png" alt="Refer Engine Logo" /></a>
-		            <div class="nav-collapse collapse">
-		                <ul class="nav pull-right">
-		                    @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Home", "Default", new {controller = "Home"}), ViewBag.MenuActive == "Home")
-		                    @*@HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Features", "Default", new {controller = "Features"}), ViewBag.MenuActive == "Features")*@
-		                    @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Pricing", "Default", new {controller = "Pricing"}), ViewBag.MenuActive == "Pricing")
-		                    @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Contact", "Default", new {controller = "Contact"}), ViewBag.MenuActive == "Contact")
-		                </ul>
-		            </div>
+                    <div class="container">
+                        <a class="btn btn-primary btn-dropnav" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>		
+                        
+                        <ul class="nav pull-left">
+                            <a class="btn" href="~/app/new"><i class="icon-plus-sign"></i> Add New App</a>
+                        </ul>
+
+                        <div class="nav-collapse collapse">
+                            <ul class="nav pull-right">
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li><a href="~/admin/errors" target="_blank">Server Errors</a></li>
+                                    <li><a href="~/admin/admin">Admin Panel</a></li>
+                                }
+                                @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink(User.Identity.Name, "Default", new {controller = "account", action = "manage"}), ViewBag.MenuActive == "Account")
+                                <li>
+                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+                                        @Html.AntiForgeryToken()
+                                        <a href="javascript:document.getElementById('logoutForm').submit()">(sign out)</a>
+                                    }
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        }
+        else if (!Convert.ToBoolean(ViewBag.HideHeader))
+        {
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="btn btn-primary btn-dropnav" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>		
+                        <a class="brand" href="~/"><img src="~/img/logo-web-header.png" alt="Refer Engine Logo" /></a>
+                        <div class="nav-collapse collapse">
+                            <ul class="nav pull-right">
+                                @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Home", "Default", new {controller = "home"}), ViewBag.MenuActive == "Home")
+                                @*@HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Features", "Default", new {controller = "Features"}), ViewBag.MenuActive == "Features")*@
+                                @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Pricing", "Default", new {controller = "pricing"}), ViewBag.MenuActive == "Pricing")
+                                @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Contact", "Default", new {controller = "contact"}), ViewBag.MenuActive == "Contact")
+                                @*@HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Log In", "Default", new {controller = "account", action = "login"}), ViewBag.MenuActive == "Login")*@
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>	
+            </div>
         }
 
         @RenderBody()

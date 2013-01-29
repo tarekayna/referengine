@@ -1,0 +1,54 @@
+﻿@model ReferEngine.Common.Models.ConfirmationCodeModel
+
+@{
+    ViewBag.Title = "Confirm Your Account";
+}
+<div id="content">
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary()
+                    <div class="modal modal-flat">
+                        <div class="modal-header">
+                            <h3>@Model.FirstName, Confirm Your Email Address</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                We sent you an email to @Model.Email with your confirmation code. Please enter your confirmation
+                                code to log in.
+                            </p>
+                            <fieldset>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label for="Email">Email</label>
+                                        <input id="Email" name="Email" type="text" value="@Model.Email" disabled="disabled"/>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label for="Password">Password</label>
+                                        <input data-val="true" data-val-length="The Password must be at least 6 characters long." data-val-length-max="100" data-val-length-min="6" data-val-required="The Password field is required." id="Password" name="Password" type="password" placeholder="password" />
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label for="ConfirmationCode">Confirmation Code</label>
+                                        <input id="ConfirmationCode" name="ConfirmationCode" type="text" value="" placeholder="Confirmation Code"/>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <p>Did not receive the email? We can  <a href="~/Account/ResendConfirmationCode?email=@Model.Email">send it again</a></p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" value="Confirm" class="btn btn-primary" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
