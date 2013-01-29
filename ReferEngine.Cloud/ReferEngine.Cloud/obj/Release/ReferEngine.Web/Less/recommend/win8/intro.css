@@ -143,3 +143,6 @@ footer > div .m-btn.no {
 .rules a:link {
   text-decoration: none;
 }
+.login {
+  cursor: pointer;
+}

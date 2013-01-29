@@ -1,12 +1,11 @@
 ﻿$(document).ready(function () {
     var util = RE.Utilities,
-        loginButton = $("#re-login"),
+        loginButton = $(".login"),
         cancelButton = $("#re-cancel"),
         dontAskCheckbox = $("#dontAsk");
 
     loginButton.click(function () {
         util.PostToParent("fb-login");
-
         util.MixPanelTrack("Recommend Intro Start");
     });
 

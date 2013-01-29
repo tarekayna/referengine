@@ -235,6 +235,7 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Shared\Error.cshtml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Shared\fb\_Layout.cshtml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Shared\win8\recommend\_Layout.cshtml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Shared\_CrazyEgg.cshtml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Shared\_FavIcon.cshtml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Shared\_Layout.cshtml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Shared\_LoginPartial.cshtml

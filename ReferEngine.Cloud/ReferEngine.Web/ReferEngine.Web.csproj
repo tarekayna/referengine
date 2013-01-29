@@ -524,6 +524,7 @@
     <Content Include="Views\Account\Confirm.cshtml" />
     <Content Include="Views\Shared\_Messaging.cshtml" />
     <Content Include="Views\Admin\Admin.cshtml" />
+    <Content Include="Views\Shared\_CrazyEgg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
