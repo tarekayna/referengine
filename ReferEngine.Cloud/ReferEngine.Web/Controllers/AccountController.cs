@@ -3,6 +3,7 @@ using Microsoft.Web.WebPages.OAuth;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Email;
 using ReferEngine.Common.Models;
+using ReferEngine.Common.Utilities;
 using ReferEngine.Web.Filters;
 using ReferEngine.Web.Models.Account;
 using System;
@@ -18,6 +19,7 @@ namespace ReferEngine.Web.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
+    [RemoteRequireHttps]
     public class AccountController : Controller
     {
         [AllowAnonymous]

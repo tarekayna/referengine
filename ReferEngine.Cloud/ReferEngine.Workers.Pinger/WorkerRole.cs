@@ -11,7 +11,7 @@ namespace ReferEngine.Workers.Pinger
         private static IList<string> _websitesToPing;
         private const long BluGraphingCalculatorAppId = 21;
         private readonly TimeSpan _sleepTimeBetweenIterations = TimeSpan.FromMinutes(5);
-        private readonly TimeSpan _sleepTimeBetweenSites = TimeSpan.FromMinutes(1);
+        private readonly TimeSpan _sleepTimeBetweenSites = TimeSpan.FromSeconds(1);
 
         public override void Run()
         {
@@ -45,6 +45,9 @@ namespace ReferEngine.Workers.Pinger
             _websitesToPing = new List<string>
                 {
                     "https://www.referengine.com",
+                    "https://www.referengine.com/account/login",
+                    "https://www.referengine.com/pricing",
+                    "https://www.referengine.com/contact",
                     string.Format("https://www.referengine.com/fb/app/{0}", BluGraphingCalculatorAppId),
                     string.Format("https://www.referengine.com/recommend/win8/intro/{0}", BluGraphingCalculatorAppId)
                 };

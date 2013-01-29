@@ -7,3 +7,4 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Worker
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.Pinger\bin\Debug\Microsoft.WindowsAzure.Diagnostics.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.Pinger\obj\Debug\ReferEngine.Workers.Pinger.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.Pinger\obj\Debug\ReferEngine.Workers.Pinger.pdb
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Workers.Pinger\obj\Debug\ReferEngine.Workers.Pinger.csprojResolveAssemblyReference.cache

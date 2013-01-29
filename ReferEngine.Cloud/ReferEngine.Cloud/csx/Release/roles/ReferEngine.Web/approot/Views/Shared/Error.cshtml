@@ -2,15 +2,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <h2>
-        Sorry, an error occurred while processing your request.
-    </h2>
-</body>
-</html>
+    <div id="content" class="txt-middle">
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                    <div class="modal modal-flat">
+                        <div class="modal-header">
+                            <h3>Sorry, an error occurred while processing your request.
+                            </h3>
+                        </div>
+                        <div class="modal-body">
+                            We receive an automatic report for errors that land on this page.
+                            You an also <a href="~/contact">contact us</a> with details about the operation
+                            you were trying to attempt.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

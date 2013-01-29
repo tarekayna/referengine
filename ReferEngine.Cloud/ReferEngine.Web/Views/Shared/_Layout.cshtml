@@ -67,7 +67,6 @@
                         <a class="brand" href="~/"><img src="~/img/logo-web-header.png" alt="Refer Engine Logo" /></a>
                         <div class="nav-collapse collapse">
                             <ul class="nav pull-right">
-                                @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Home", "Default", new {controller = "home"}), ViewBag.MenuActive == "Home")
                                 @*@HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Features", "Default", new {controller = "Features"}), ViewBag.MenuActive == "Features")*@
                                 @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Pricing", "Default", new {controller = "pricing"}), ViewBag.MenuActive == "Pricing")
                                 @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Contact", "Default", new {controller = "contact"}), ViewBag.MenuActive == "Contact")
@@ -135,5 +134,7 @@
         @Html.Partial("_MixPanel")
         @Scripts.Render("~/bundles/libs")
         @RenderSection("scripts", required: false)
+        
+        @StackExchange.Profiling.MiniProfiler.RenderIncludes() 
     </body>
 </html>

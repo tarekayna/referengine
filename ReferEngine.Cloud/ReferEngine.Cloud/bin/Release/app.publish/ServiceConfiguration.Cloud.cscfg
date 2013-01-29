@@ -16,6 +16,8 @@
       <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
       <Setting name="IsLocal" value="false" />
+      <Setting name="IntelliTrace.IntelliTraceConnectionString" value="BaseEndpoint=core.windows.net;Protocol=https;AccountName=portalvhds17w2tr90fnj0p;AccountKey=sDF+/oEIIJH+ZwR/pb3oy1hkGd3nGaX/9HKa44GS0W+RaAfpoeEIlZH7YxRZEVKyTgP2U1GKVMiqnq1lmqbPxg==" />
+      <Setting name="CloudToolsDiagnosticAgentVersion" value="1.8" />
     </ConfigurationSettings>
     <Certificates>
       <Certificate name="ReferEngineTestCertificate" thumbprint="8557BE533016DBF4850D0CB577ADBACF1C8E56D0" thumbprintAlgorithm="sha1" />
@@ -29,6 +31,8 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" value="1" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" value="" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" value="DefaultEndpointsProtocol=https;AccountName=referenginecachestore;AccountKey=ISrbnq9nEdeqnFoRm9AIz4u1hNK0ULpl22CmF7tdFs5Es2WfoatIFInZv+iknDEgG11aA11mAuL1rznDsQTo6w==" />
+      <Setting name="IntelliTrace.IntelliTraceConnectionString" value="BaseEndpoint=core.windows.net;Protocol=https;AccountName=portalvhds17w2tr90fnj0p;AccountKey=sDF+/oEIIJH+ZwR/pb3oy1hkGd3nGaX/9HKa44GS0W+RaAfpoeEIlZH7YxRZEVKyTgP2U1GKVMiqnq1lmqbPxg==" />
+      <Setting name="CloudToolsDiagnosticAgentVersion" value="1.8" />
     </ConfigurationSettings>
   </Role>
   <Role name="ReferEngine.Workers.DataWriter">
@@ -38,16 +42,23 @@
       <Setting name="Microsoft.ServiceBus.ConnectionString" value="Endpoint=sb://referenginedatawritebus.servicebus.windows.net;SharedSecretIssuer=owner;SharedSecretValue=gyFFjJOT98wjzS77VRhZGic8YooQhQTSOcv9VSjSzW4=" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
       <Setting name="IsLocal" value="false" />
+      <Setting name="IntelliTrace.IntelliTraceConnectionString" value="BaseEndpoint=core.windows.net;Protocol=https;AccountName=portalvhds17w2tr90fnj0p;AccountKey=sDF+/oEIIJH+ZwR/pb3oy1hkGd3nGaX/9HKa44GS0W+RaAfpoeEIlZH7YxRZEVKyTgP2U1GKVMiqnq1lmqbPxg==" />
+      <Setting name="CloudToolsDiagnosticAgentVersion" value="1.8" />
     </ConfigurationSettings>
   </Role>
   <Role name="ReferEngine.Workers.Pinger">
     <Instances count="1" />
-    <ConfigurationSettings></ConfigurationSettings>
+    <ConfigurationSettings>
+      <Setting name="IntelliTrace.IntelliTraceConnectionString" value="BaseEndpoint=core.windows.net;Protocol=https;AccountName=portalvhds17w2tr90fnj0p;AccountKey=sDF+/oEIIJH+ZwR/pb3oy1hkGd3nGaX/9HKa44GS0W+RaAfpoeEIlZH7YxRZEVKyTgP2U1GKVMiqnq1lmqbPxg==" />
+      <Setting name="CloudToolsDiagnosticAgentVersion" value="1.8" />
+    </ConfigurationSettings>
   </Role>
   <Role name="ReferEngine.Workers.WinApps">
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=portalvhds17w2tr90fnj0p;AccountKey=sDF+/oEIIJH+ZwR/pb3oy1hkGd3nGaX/9HKa44GS0W+RaAfpoeEIlZH7YxRZEVKyTgP2U1GKVMiqnq1lmqbPxg==" />
+      <Setting name="IntelliTrace.IntelliTraceConnectionString" value="BaseEndpoint=core.windows.net;Protocol=https;AccountName=portalvhds17w2tr90fnj0p;AccountKey=sDF+/oEIIJH+ZwR/pb3oy1hkGd3nGaX/9HKa44GS0W+RaAfpoeEIlZH7YxRZEVKyTgP2U1GKVMiqnq1lmqbPxg==" />
+      <Setting name="CloudToolsDiagnosticAgentVersion" value="1.8" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

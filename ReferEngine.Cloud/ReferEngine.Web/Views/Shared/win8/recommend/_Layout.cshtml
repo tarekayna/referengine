@@ -36,5 +36,7 @@
         @Html.Partial("_MixPanel")
         @Scripts.Render("~/bundles/libs")
         @RenderSection("scripts", required: false)
+        
+        @StackExchange.Profiling.MiniProfiler.RenderIncludes() 
     </body>
 </html>
