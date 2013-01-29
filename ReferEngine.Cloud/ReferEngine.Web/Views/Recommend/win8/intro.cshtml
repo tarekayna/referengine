@@ -15,13 +15,6 @@
     </script>
 
     @Scripts.Render("~/bundles/js/recommend/win8/intro")
-
-    <script type="text/javascript">
-        setTimeout(function(){var a=document.createElement("script");
-            var b=document.getElementsByTagName("script")[0];
-            a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0013/9490.js?"+Math.floor(new Date().getTime()/3600000);
-            a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
-    </script>
 }
 
 @section styles
@@ -30,22 +23,22 @@
 }
 
 <div class="center-content">
-    <div class="banner">
-        Earn rewards by recommending @Model.Name to your friends! 
+    <div class="banner login">
+        Win cash by recommending @Model.Name to your friends! 
     </div>
-
-    @Html.Image(Server.MapPath("~/img/intro-steps.png"), "Recommend Your Friends", "intro-steps")
+    
+    @Html.Image(Server.MapPath("~/img/intro-steps.png"), "Recommend Your Friends", "intro-steps login")
     
     <div class="steps title">
-        <div class="rcmnd">Recommend</div>
-        <div class="earn">Win</div>
+        <div class="rcmnd login">Recommend</div>
+        <div class="earn login">Win</div>
     </div>
     <div class="steps text">
         <div class="rcmnd">
             <span>share with your friends on facebook.</span>
         </div>
         <div class="earn">
-            <span>win $2 cash for every 3 friends who buy the app within two weeks<sup>*</sup>.</span>
+            <span>win $2 cash for every 3 friends who buy the app<sup>*</sup></span>
         </div>
     </div>
     
@@ -64,6 +57,6 @@
             <label for="dontAsk">Don't ask me again</label>
         </div>
         <a class="m-btn no" id="re-cancel">Cancel</a>
-        <a class="m-btn go" id="re-login">Log In to Facebook</a>
+        <a class="m-btn go" class="login">Log In to Facebook</a>
     </div>
 }
