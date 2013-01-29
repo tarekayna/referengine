@@ -6,7 +6,7 @@ using System.Collections;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.ServiceRuntime;
 
-namespace ReferEngine.Web.Elmah
+namespace ReferEngine.Web.App_Start
 {
         public class ErrorEntity : TableServiceEntity
         {

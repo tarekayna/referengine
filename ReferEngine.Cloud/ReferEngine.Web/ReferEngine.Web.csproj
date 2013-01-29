@@ -302,7 +302,7 @@
     <Compile Include="DataAccess\IReferDataReader.cs" />
     <Compile Include="DataAccess\IReferDataWriter.cs" />
     <Compile Include="DataAccess\ReferDataWriter.cs" />
-    <Compile Include="Elmah\ErrorEntity.cs" />
+    <Compile Include="App_Start\ErrorEntity.cs" />
     <Compile Include="Filters\LogAttribute.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -493,7 +493,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Recommend\win8\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Recommend\win8\recommend.cshtml" />
