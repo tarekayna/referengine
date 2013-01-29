@@ -13,7 +13,15 @@
         re.appName = "@Model.Name";
         re.appId = @Model.Id
     </script>
+
     @Scripts.Render("~/bundles/js/recommend/win8/intro")
+
+    <script type="text/javascript">
+        setTimeout(function(){var a=document.createElement("script");
+            var b=document.getElementsByTagName("script")[0];
+            a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0013/9490.js?"+Math.floor(new Date().getTime()/3600000);
+            a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+    </script>
 }
 
 @section styles
@@ -56,6 +64,6 @@
             <label for="dontAsk">Don't ask me again</label>
         </div>
         <a class="m-btn no" id="re-cancel">Cancel</a>
-        <a class="m-btn go" id="re-login">Start</a>
+        <a class="m-btn go" id="re-login">Log In to Facebook</a>
     </div>
 }
