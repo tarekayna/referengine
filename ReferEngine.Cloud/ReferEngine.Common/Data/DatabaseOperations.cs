@@ -328,8 +328,15 @@ namespace ReferEngine.Common.Data
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
-                var existing = db.Users.FirstOrDefault(c => c.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
-                return existing ?? null;
+                return db.Users.FirstOrDefault(c => c.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+            }
+        }
+
+        public static User GetUser(int id)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                return db.Users.FirstOrDefault(c => c.Id == id);
             }
         }
 
@@ -373,6 +380,18 @@ namespace ReferEngine.Common.Data
                     result.Add(new UserMembership(user, membership, role));
                 }
                 return result;
+            }
+        }
+
+        public static IList<AppRecommendation> GetAppRecommdations(App app, int count = -1)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                var result = from r in db.AppRecommendations
+                             orderby r.DateTime descending
+                             select r;
+
+                return count > -1 ? result.Take(count).ToList() : result.ToList();
             }
         }
     }

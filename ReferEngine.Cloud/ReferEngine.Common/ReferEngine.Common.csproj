@@ -137,6 +137,14 @@
     <Compile Include="Migrations\201212282027508_AppLogoLinks.Designer.cs">
       <DependentUpon>201212282027508_AppLogoLinks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201301300330137_RemoveDeveloper.cs" />
+    <Compile Include="Migrations\201301300330137_RemoveDeveloper.Designer.cs">
+      <DependentUpon>201301300330137_RemoveDeveloper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201301300429171_AppsToUser.cs" />
+    <Compile Include="Migrations\201301300429171_AppsToUser.Designer.cs">
+      <DependentUpon>201301300429171_AppsToUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\App.cs" />
     <Compile Include="Models\AppAuthorization.cs" />
     <Compile Include="Models\AppPlatform.cs" />
@@ -161,7 +169,6 @@
     <Compile Include="Utilities\UserAgentProperties.cs" />
     <Compile Include="Utilities\RSAPKCS1SHA256SignatureDescription.cs" />
     <Compile Include="Models\AppReceipt.cs" />
-    <Compile Include="Models\Developer.cs" />
     <Compile Include="Models\Friendship.cs" />
     <Compile Include="Models\AppScreenshot.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -189,6 +196,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201212282027508_AppLogoLinks.resx">
       <DependentUpon>201212282027508_AppLogoLinks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301300330137_RemoveDeveloper.resx">
+      <DependentUpon>201301300330137_RemoveDeveloper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301300429171_AppsToUser.resx">
+      <DependentUpon>201301300429171_AppsToUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

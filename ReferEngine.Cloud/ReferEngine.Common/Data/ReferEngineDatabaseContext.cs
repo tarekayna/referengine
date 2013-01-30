@@ -15,7 +15,6 @@ namespace ReferEngine.Common.Data
         public DbSet<App> Apps { get; set; }
         public DbSet<AppRecommendation> AppRecommendations { get; set; }
         public DbSet<AppReceipt> AppReceipts { get; set; }
-        public DbSet<Developer> Developers { get; set; }
         public DbSet<Friendship> Friendships { get; set; }
         public DbSet<Person> People { get; set; }
         public DbSet<AppScreenshot> AppScreenshots { get; set; }
@@ -31,7 +30,7 @@ namespace ReferEngine.Common.Data
         {
             mb.Entity<App>().Property(a => a.AppStoreLink).IsRequired();
             mb.Entity<App>().Property(a => a.Description).IsRequired();
-            mb.Entity<App>().Property(a => a.DeveloperId).IsRequired();
+            mb.Entity<App>().Property(a => a.UserId).IsRequired();
             mb.Entity<App>().Property(a => a.LogoLink50).IsRequired();
             mb.Entity<App>().Property(a => a.Name).IsRequired();
             mb.Entity<App>().Property(a => a.PackageFamilyName).IsRequired();
@@ -45,14 +44,6 @@ namespace ReferEngine.Common.Data
             mb.Entity<AppReceipt>().Property(r => r.AppPackageFamilyName).IsRequired();
             mb.Entity<AppReceipt>().Property(r => r.LicenseType).IsRequired();
             mb.Entity<AppReceipt>().Property(r => r.PurchaseDate).IsRequired();
-
-            mb.Entity<Developer>().Property(d => d.City).IsRequired();
-            mb.Entity<Developer>().Property(d => d.Country).IsRequired();
-            mb.Entity<Developer>().Property(d => d.Email).IsRequired();
-            mb.Entity<Developer>().Property(d => d.FirstName).IsRequired();
-            mb.Entity<Developer>().Property(d => d.LastName).IsRequired();
-            mb.Entity<Developer>().Property(d => d.State).IsRequired();
-            mb.Entity<Developer>().Property(d => d.ZipCode).IsRequired();
 
             mb.Entity<Friendship>().Property(f => f.Person1FacebookId).IsRequired();
             mb.Entity<Friendship>().Property(f => f.Person2FacebookId).IsRequired();

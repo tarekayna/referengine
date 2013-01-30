@@ -36,7 +36,7 @@ namespace ReferEngine.Common.Models
 
         private string ComputeToken()
         {
-            string str = String.Format("{0}{1}{2}{3}{4}", _privateKey, AppReceipt.Id, App.Id, App.DeveloperId,
+            string str = String.Format("{0}{1}{2}{3}{4}", _privateKey, AppReceipt.Id, App.Id, App.UserId,
                                        AppReceipt.PurchaseDate);
             byte[] bytes = Encoding.UTF8.GetBytes(str);
             using (HMACSHA256 sha = new HMACSHA256())

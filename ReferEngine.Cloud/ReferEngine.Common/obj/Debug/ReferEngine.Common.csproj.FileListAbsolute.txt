@@ -61,4 +61,6 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Debug\System.Web.WebPages.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\obj\Debug\ReferEngine.Common.Migrations.RemoveDeveloper.resources
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\obj\Debug\ReferEngine.Common.csprojResolveAssemblyReference.cache
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\obj\Debug\ReferEngine.Common.Migrations.AppsToUser.resources

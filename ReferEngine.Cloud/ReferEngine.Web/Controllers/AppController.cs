@@ -1,13 +1,19 @@
-﻿using ReferEngine.Common.Models;
+﻿using System.Web.Security;
+using System.Web.WebPages;
+using ReferEngine.Common.Data;
+using ReferEngine.Common.Models;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Web.DataAccess;
+using ReferEngine.Web.Models.AppModels;
+using WebMatrix.WebData;
 
 namespace ReferEngine.Web.Controllers
 {
     [RemoteRequireHttps]
+    [Authorize(Roles="Admin, Dev")]
     public class AppController : Controller
     {
         private IReferDataReader DataReader { get; set; }
@@ -19,17 +25,29 @@ namespace ReferEngine.Web.Controllers
             DataWriter = dataWriter;
         }
 
-        [Authorize]
         public ActionResult New()
         {
             return View();
         }
 
-        //public ActionResult Details(long id)
-        //{
-        //    App app = DataReader.GetApp(id);
-        //    return View(app);
-        //}
+        public ActionResult Dashboard(long id)
+        {
+            App app = DataReader.GetApp(id);
+            
+            if (app != null &&
+               (Roles.IsUserInRole("Admin") || app.UserId == WebSecurity.CurrentUserId))
+            {
+                var viewModel = new AppDashboardViewModel(app);
+                return View(viewModel);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Index()
+        {
+            return View();
+        }
 
         //public ActionResult Edit(long id)
         //{

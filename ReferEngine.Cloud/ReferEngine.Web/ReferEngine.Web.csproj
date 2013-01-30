@@ -316,6 +316,7 @@
     <Compile Include="Models\Account\RegisterModel.cs" />
     <Compile Include="Models\Account\UserProfile.cs" />
     <Compile Include="Models\Admin\AdminViewModel.cs" />
+    <Compile Include="Models\AppModels\AppDashboardViewModel.cs" />
     <Compile Include="Models\Error\ErrorViewModel.cs" />
     <Compile Include="Models\Facebook\FacebookAppViewModel.cs" />
     <Compile Include="Models\Recommend\Win8\RecommendViewModel.cs" />
@@ -526,6 +527,7 @@
     <Content Include="Views\Shared\_Messaging.cshtml" />
     <Content Include="Views\Admin\Admin.cshtml" />
     <Content Include="Views\Shared\_CrazyEgg.cshtml" />
+    <Content Include="Views\App\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

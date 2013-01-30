@@ -12,7 +12,7 @@ namespace ReferEngine.Common.Models
 
         [DataMember]
         public Int64 Id { get; set; }
-
+        
         [DataMember]
         public string PackageFamilyName { get; set; }
 
@@ -35,7 +35,7 @@ namespace ReferEngine.Common.Models
         public string ShortDescription { get; set; }
 
         [DataMember]
-        public Int64 DeveloperId { get; set; }
+        public int UserId { get; set; }
 
         [DataMember]
         public string Publisher { get; set; }
