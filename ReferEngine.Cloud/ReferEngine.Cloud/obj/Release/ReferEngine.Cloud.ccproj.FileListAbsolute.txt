@@ -219,6 +219,7 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Account\_RemoveExternalLoginsPartial.cshtml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Account\_SetPasswordPartial.cshtml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Admin\Admin.cshtml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\App\Dashboard.cshtml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\App\Details.cshtml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\App\Edit.cshtml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\App\New.cshtml

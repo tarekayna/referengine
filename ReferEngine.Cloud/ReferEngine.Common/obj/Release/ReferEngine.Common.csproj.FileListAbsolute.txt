@@ -50,3 +50,5 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\System.Web.WebPages.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\System.Web.WebPages.Deployment.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\bin\Release\System.Web.WebPages.Razor.xml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\obj\Release\ReferEngine.Common.Migrations.RemoveDeveloper.resources
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Common\obj\Release\ReferEngine.Common.Migrations.AppsToUser.resources
