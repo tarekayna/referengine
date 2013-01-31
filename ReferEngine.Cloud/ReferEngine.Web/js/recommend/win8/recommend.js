@@ -47,7 +47,7 @@
                 var str = thisViewModel.searchString().toLowerCase();
                 var firstNameResult = [];
                 var lastNameResult = [];
-                if (str != undefined && str !== "") {
+                if (str !== undefined && str !== "") {
                     for (var i = 0; i < thisViewModel.friends.length; i++) {
                         var friend = thisViewModel.friends[i];
                         var firstName = friend.FirstName.toLowerCase();
@@ -129,7 +129,7 @@
         msgDiv.keydown(function (event) {
             if (event.which === keys.enter) {
                 var selectedIndex = viewModel.selectedIndex();
-                if (viewModel.searchResult() !== [] && selectedIndex != -1) {
+                if (viewModel.searchResult() !== [] && selectedIndex !== -1) {
                     tagFriend(viewModel.searchResult()[selectedIndex]);
                     msgDiv.find("p").last().remove();
                 }
@@ -278,7 +278,7 @@
             });
 
             util.MixPanelTrack("Recommend Post Submit", {
-                "Includes Message": msgText != "",
+                "Includes Message": msgText !== "",
                 "Includes Tags": tags.length > 0
             });
         } else {

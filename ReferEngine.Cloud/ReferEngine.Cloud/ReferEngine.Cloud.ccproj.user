@@ -4,5 +4,6 @@
     <ActivePublishProfile>referengineProduction</ActivePublishProfile>
     <DeploymentProfilingMode>Instrumentation</DeploymentProfilingMode>
     <DeploymentEnableTierInteractionProfiling>False</DeploymentEnableTierInteractionProfiling>
+    <WebRoleHttpsSkipLaunchInBrowser>ReferEngine.Web</WebRoleHttpsSkipLaunchInBrowser>
   </PropertyGroup>
 </Project>
