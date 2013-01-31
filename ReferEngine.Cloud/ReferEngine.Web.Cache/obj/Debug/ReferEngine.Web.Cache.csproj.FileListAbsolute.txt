@@ -25,3 +25,4 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Ca
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\obj\Debug\ReferEngine.Web.Cache.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\obj\Debug\ReferEngine.Web.Cache.pdb
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\bin\Debug\Microsoft.WindowsAzure.StorageClient.xml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web.Cache\obj\Debug\ReferEngine.Web.Cache.csprojResolveAssemblyReference.cache

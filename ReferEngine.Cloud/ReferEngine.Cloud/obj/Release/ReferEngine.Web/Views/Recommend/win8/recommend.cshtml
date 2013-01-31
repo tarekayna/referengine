@@ -23,8 +23,8 @@
 <input type="hidden" id="appId" value="@Model.App.Id" />
 <script type="text/javascript">
     window.RE = window.RE == undefined ? {} : window.RE;
-    window.RE.Friends = @Html.Raw(Person.Serialize(Model.CurrentUser.Friends));
     window.RE.ReferEngineAuthToken = "@Model.ReferEngineAuthToken";
+    @*window.RE.Friends = @Html.Raw(Person.Serialize(Model.CurrentUser.Friends));*@
 </script>
 
 <div class="text-message error">
@@ -48,9 +48,9 @@
     </div>
     <div id="preview">
         <div class="storyContent">
-            <img class="actorPhoto" src="@Model.CurrentUser.Person.PictureUrl" />
+            <img class="actorPhoto" src="@Model.Person.PictureUrl" />
             <div class="storyInnerContent">
-                <p class="storyTitle"><a class="userName">@Model.CurrentUser.Person.Name</a> recommended an app.</p>
+                <p class="storyTitle"><a class="userName">@Model.Person.Name</a> recommended an app.</p>
                 <p class="msg" data-bind="html: msgHTML"></p>
                 <div class="shareContainer">
                     <div class="appImageContainer">
@@ -75,7 +75,7 @@
 
     <div id="asContainer" data-bind="foreach: searchResult, visible: searchResult() != []">
         <div class="asItem m-btn" data-bind="click: $parent.onClick, css: {selected: $index() == $parent.selectedIndex()}">
-            <i class="icon-user"></i>
+            <img data-bind="attr: { src: PictureUrl }" />
             <span class="firstName" data-bind="text: FirstName"></span>
             <span class="lastName" data-bind="text: LastName"></span>
         </div>
@@ -99,6 +99,7 @@
 @section footer
 {
     <div class="post">
+        <a class="m-btn no" id="cancel-button">Cancel</a>
         <div class="chkCtnr">
             <input type="checkbox" id="agree" checked="checked" />
             <label for="agree">
@@ -106,7 +107,6 @@
                 new { target = "_blank" })
             </label>
         </div>
-        <a class="m-btn no" id="cancel-button">Cancel</a>
         <a class="m-btn go" id="submit-button">Submit</a>
     </div>
     <div class="postResult" style="width: 100%">

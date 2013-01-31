@@ -66,14 +66,13 @@ footer > div .chkCtnr {
   -ms-flex: 1 auto;
 }
 footer > div input[type='checkbox'] {
-  margin: 0 0 0 31px;
-  height: 15px;
-  width: 15px;
+  margin: 0 0 0 15px;
+  vertical-align: middle;
 }
 footer > div label {
-  margin: 0 0 0 12px;
+  margin-left: 5px;
   color: #646464;
-  font-size: small;
+  font-size: x-small;
 }
 footer > div .m-btn {
   letter-spacing: 0.05em;
@@ -86,6 +85,7 @@ footer > div .m-btn.go {
   color: #FFF;
   margin: 0 30px 0 0;
   padding: 15px 30px;
+  font-size: 18px;
 }
 footer > div .m-btn.go.disabled {
   background: -ms-linear-gradient(top, #eeeeee, #d1d1d1);
@@ -95,8 +95,8 @@ footer > div .m-btn.go.disabled {
 footer > div .m-btn.no {
   background: -ms-linear-gradient(top, #eeeeee, #d1d1d1);
   border: 1px solid #d1d1d1;
-  color: #646464;
-  margin: 0 8px 0 0;
+  color: #999;
+  margin: 0 0 0 30px;
   padding: 15px 15px;
 }
 .center-content {

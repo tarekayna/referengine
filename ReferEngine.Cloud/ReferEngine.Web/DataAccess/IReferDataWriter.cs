@@ -7,7 +7,6 @@ namespace ReferEngine.Web.DataAccess
     public interface IReferDataWriter
     {
         void AddFacebookOperations(string referEngineAuthToken, FacebookOperations facebookOperations);
-        void AddPersonAndFriends(CurrentUser currentUser);
         void AddAppRecommendation(AppRecommendation appRecommendation);
         void AddAppAuthorization(AppAuthorization appAuthorization);
         void AddAppScreenshot(AppScreenshot appScreenshot);

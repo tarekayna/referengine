@@ -88,6 +88,11 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Web\bin\Microsoft.WindowsAzure.StorageClient.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Web\bin\Microsoft.WindowsFabric.Common.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Web\bin\Microsoft.WindowsFabric.Data.Common.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Web\bin\MiniProfiler.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Web\bin\MiniProfiler.EntityFramework.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Web\bin\MiniProfiler.EntityFramework.pdb
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Web\bin\MiniProfiler.pdb
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Web\bin\MiniProfiler.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Web\bin\Mono.Math.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Web\bin\Mono.Math.xml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Debug\ReferEngine.Web\bin\Newtonsoft.Json.dll

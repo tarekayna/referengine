@@ -1,4 +1,5 @@
-﻿using Microsoft.ServiceBus.Messaging;
+﻿using System.Collections.Generic;
+using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Email;
@@ -45,10 +46,11 @@ namespace ReferEngine.Workers.DataWriter
                                     DatabaseOperations.AddAppReceipt(appAuthorization.AppReceipt);
                                     break;
                                 }
-                            case "ReferEngine.Common.Models.CurrentUser":
+                            case "ReferEngine.Common.Data.FacebookOperations":
                                 {
-                                    CurrentUser currentUser = message.GetBody<CurrentUser>();
-                                    DatabaseOperations.AddCurrentUser(currentUser, message);
+                                    FacebookOperations facebookOperations = message.GetBody<FacebookOperations>();
+                                    IList<Person> friends = facebookOperations.GetFriends();
+                                    DatabaseOperations.AddPersonAndFriends(facebookOperations.GetCurrentUser(), friends, message);
                                     break;
                                 }
                             case "ReferEngine.Common.Models.AppRecommendation":

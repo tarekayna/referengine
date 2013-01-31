@@ -187,18 +187,18 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static void AddCurrentUser(CurrentUser currentUser, BrokeredMessage message)
+        public static void AddPersonAndFriends(Person person, IList<Person> friends, BrokeredMessage message)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
-                AddOrUpdatePerson(currentUser.Person, db);
+                AddOrUpdatePerson(person, db);
 
-                foreach (var friend in currentUser.Friends)
+                foreach (var friend in friends)
                 {
                     AddOrUpdatePerson(friend, db);
 
                     // Even if friendship exists, add it again so we track
-                    db.Friendships.Add(new Friendship(currentUser.Person, friend));
+                    db.Friendships.Add(new Friendship(person, friend));
 
                     TimeSpan renewLockDelta = Settings.Default.RenewLockDelta;
                     if (message.LockedUntilUtc.Subtract(renewLockDelta).CompareTo(DateTime.UtcNow) < 0)

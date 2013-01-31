@@ -46,14 +46,18 @@ namespace ReferEngine.Common.Data
         }
 
         [DataMember]
+        public string ReferEngineAuthToken { get; set; }
+
+        [DataMember]
         private FacebookAccessToken AccessToken { get; set; }
 
         [DataMember]
         private DateTime AccessTokenExpiresAt { get; set; }
 
-        public FacebookOperations(FacebookAccessToken accessToken)
+        public FacebookOperations(FacebookAccessToken accessToken, string referEngineAuthToken)
         {
             AccessToken = accessToken;
+            ReferEngineAuthToken = referEngineAuthToken;
         }
 
         [DataMember]
@@ -69,6 +73,17 @@ namespace ReferEngine.Common.Data
             return _currentUser;
         }
 
+        public Person GetCurrentUser()
+        {
+            if (_currentUser == null)
+            {
+                string path = string.Format("me?{0}", RequestQuery);
+                dynamic me = FacebookClient.Get(path);
+                _currentUser = new Person(me);
+            }
+            return _currentUser;
+        }
+
         [DataMember]
         private IList<Person> _friends;
         public async Task<IList<Person>> GetFriendsAsync()
@@ -78,6 +93,21 @@ namespace ReferEngine.Common.Data
                 _friends = new List<Person>();
                 string path = string.Format("me/friends?{0}", RequestQuery);
                 dynamic friends = await FacebookClient.GetTaskAsync(path);
+                for (int i = 0; i < friends.data.Count; i++)
+                {
+                    _friends.Add(new Person(friends.data[i]));
+                }
+            }
+            return _friends;
+        }
+
+        public IList<Person> GetFriends()
+        {
+            if (_friends == null)
+            {
+                _friends = new List<Person>();
+                string path = string.Format("me/friends?{0}", RequestQuery);
+                dynamic friends = FacebookClient.Get(path);
                 for (int i = 0; i < friends.data.Count; i++)
                 {
                     _friends.Add(new Person(friends.data[i]));
@@ -108,10 +138,10 @@ namespace ReferEngine.Common.Data
         }
 
         #region Static Methods
-        public static async Task<FacebookOperations> CreateAsync(string accessCode)
+        public static async Task<FacebookOperations> CreateAsync(string accessCode, string referEngineAuthToken)
         {
             FacebookAccessToken accessToken = await ExchangeCodeForTokenAsync(accessCode);
-            return new FacebookOperations(accessToken);
+            return new FacebookOperations(accessToken, referEngineAuthToken);
         }
 
         public static async Task<FacebookAccessToken> ExchangeCodeForTokenAsync(string accessCode)

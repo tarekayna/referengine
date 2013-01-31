@@ -52,6 +52,8 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\bin\Microsoft.WindowsAzure.StorageClient.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\bin\Microsoft.WindowsFabric.Common.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\bin\Microsoft.WindowsFabric.Data.Common.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\bin\MiniProfiler.dll
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\bin\MiniProfiler.EntityFramework.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\bin\Mono.Math.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\bin\Newtonsoft.Json.dll
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\bin\Ninject.dll
@@ -243,6 +245,7 @@ C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Shared\_LoginPartial.cshtml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Shared\_LogoMark30.cshtml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Shared\_Messaging.cshtml
+C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Shared\_MINIPROFILER UPDATED Layout.cshtml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Shared\_MixPanel.cshtml
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\Web.config
 C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\obj\Release\ReferEngine.Web\Views\_ViewStart.cshtml

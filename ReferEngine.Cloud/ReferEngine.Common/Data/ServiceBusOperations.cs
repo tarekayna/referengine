@@ -39,7 +39,7 @@ namespace ReferEngine.Common.Data
 
             // Add Queues by Priority
             Queues.Add(new Queue(namespaceManager, messagingFactory, "AppAuthorization" + suffix, typeof(AppAuthorization)));
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "CurrentUser" + suffix, typeof(CurrentUser)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "FacebookOperations" + suffix, typeof(FacebookOperations)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "AppRecommendation" + suffix, typeof(AppRecommendation)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "AppScreenshot" + suffix, typeof(AppScreenshot)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "PrivateBetaSignup" + suffix, typeof(PrivateBetaSignup)));

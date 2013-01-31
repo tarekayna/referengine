@@ -152,7 +152,6 @@
     <Compile Include="Models\UserInRole.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\UserMembership.cs" />
-    <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\Membership.cs" />
     <Compile Include="Models\PrivateBetaSignup.cs" />
     <Compile Include="Models\StoreAppInfo.cs" />
