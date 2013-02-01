@@ -181,6 +181,7 @@
     <Compile Include="Data\ReferEngineDatabaseContext.cs" />
     <Compile Include="Data\ServiceBusOperations.cs" />
     <Compile Include="Utilities\Utilities.cs" />
+    <Compile Include="Utilities\Verifier.cs" />
     <Compile Include="ViewModels\AppDashboardViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
