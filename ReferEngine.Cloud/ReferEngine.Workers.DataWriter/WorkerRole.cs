@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
 using Microsoft.ServiceBus.Messaging;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Email;
@@ -10,6 +13,7 @@ using System.Net;
 using System.Threading;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Workers.DataWriter.Properties;
+using CloudStorageAccount = Microsoft.WindowsAzure.Storage.CloudStorageAccount;
 
 namespace ReferEngine.Workers.DataWriter
 {
@@ -49,8 +53,8 @@ namespace ReferEngine.Workers.DataWriter
                             case "ReferEngine.Common.Data.FacebookOperations":
                                 {
                                     FacebookOperations facebookOperations = message.GetBody<FacebookOperations>();
-                                    IList<Person> friends = facebookOperations.GetFriends();
-                                    DatabaseOperations.AddPersonAndFriends(facebookOperations.GetCurrentUser(), friends, message);
+                                    DatabaseOperations.AddOrUpdatePerson(facebookOperations.GetCurrentUser());
+                                    DatabaseOperations.AddPersonAndFriends(facebookOperations.GetCurrentUser(), facebookOperations.GetFriends(), message);
                                     break;
                                 }
                             case "ReferEngine.Common.Models.AppRecommendation":
@@ -85,7 +89,7 @@ namespace ReferEngine.Workers.DataWriter
                 {
                     // What to do? Message took too long.
                     // It's ok, process it again.
-                    Trace.WriteLine(e.Message);
+                    Trace.WriteLine("MessageLockLostException: " + e.Message);
                 }
                 catch (MessagingException e)
                 {
@@ -107,7 +111,7 @@ namespace ReferEngine.Workers.DataWriter
                 }
                 catch (Exception e)
                 {
-                    Trace.WriteLine(e.Message);
+                    Trace.TraceError(e.Message, e);
                 }
             }
         }
@@ -118,6 +122,11 @@ namespace ReferEngine.Workers.DataWriter
 
             bool isLocal = Convert.ToBoolean(RoleEnvironment.GetConfigurationSettingValue("IsLocal"));
             ServiceBusOperations.Initialize(isLocal);
+
+            DiagnosticMonitorConfiguration diagnosticMonitorConfiguration = DiagnosticMonitor.GetDefaultInitialConfiguration();
+            diagnosticMonitorConfiguration.Logs.ScheduledTransferPeriod = TimeSpan.FromMinutes(5);
+            diagnosticMonitorConfiguration.Logs.ScheduledTransferLogLevelFilter = LogLevel.Verbose;
+            var diagnosticMonitor = DiagnosticMonitor.Start("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString", diagnosticMonitorConfiguration);
 
             IsStopped = false;
             return base.OnStart();
