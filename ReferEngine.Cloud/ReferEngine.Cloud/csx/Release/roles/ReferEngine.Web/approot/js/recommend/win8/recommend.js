@@ -47,7 +47,7 @@
                 var str = thisViewModel.searchString().toLowerCase();
                 var firstNameResult = [];
                 var lastNameResult = [];
-                if (str != undefined && str !== "") {
+                if (str !== undefined && str !== "") {
                     for (var i = 0; i < thisViewModel.friends.length; i++) {
                         var friend = thisViewModel.friends[i];
                         var firstName = friend.FirstName.toLowerCase();
@@ -129,7 +129,7 @@
         msgDiv.keydown(function (event) {
             if (event.which === keys.enter) {
                 var selectedIndex = viewModel.selectedIndex();
-                if (viewModel.searchResult() !== [] && selectedIndex != -1) {
+                if (viewModel.searchResult() !== [] && selectedIndex !== -1) {
                     tagFriend(viewModel.searchResult()[selectedIndex]);
                     msgDiv.find("p").last().remove();
                 }
@@ -211,7 +211,6 @@
     var getFriendsUri = util.GetLink("GetFriends");
     $.ajax(getFriendsUri, {
         type: "POST",
-        //url: getFriendsUri,
         data: {
             re_auth_token: RE.ReferEngineAuthToken
         },
@@ -226,15 +225,10 @@
     };
 
     var onSubmitSuccess = function (data, textStatus, jqXhr) {
-        if (data.success === true) {
-            post.hide();
-            postResult.show();
-            util.HideLoading();
-
-            util.MixPanelTrack("Recommend Post Success");
-        } else {
-            onSubmitError();
-        }
+        post.hide();
+        postResult.show();
+        util.HideLoading();
+        util.MixPanelTrack("Recommend Post Success");
     };
 
     var showMustAgree = function() {
@@ -264,7 +258,6 @@
             var msgText = msg.text();
 
             var postUri = util.GetLink("PostRecommendation");
-
             $.ajax({
                 type: "POST",
                 url: postUri,
@@ -278,7 +271,7 @@
             });
 
             util.MixPanelTrack("Recommend Post Submit", {
-                "Includes Message": msgText != "",
+                "Includes Message": msgText !== "",
                 "Includes Tags": tags.length > 0
             });
         } else {

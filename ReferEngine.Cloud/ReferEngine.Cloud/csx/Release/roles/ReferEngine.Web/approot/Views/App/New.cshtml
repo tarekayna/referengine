@@ -1,12 +1,69 @@
 ﻿@model ReferEngine.Common.Models.App
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.JQueryUI = true;
 }
 
-<h2>Create</h2>
+@section Styles
+{
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css">
+}
 
-@using (Html.BeginForm()) {
+@section Scripts 
+{
+    <script type="text/javascript">
+        $("#app-name").autocomplete({
+            minLength: 3,
+            source: function(request, response) {
+                $.ajax("http://127.0.0.1:81/app/FindStoreApps", {
+                    type: "POST",
+                    data: {
+                        term: request.term
+                    },
+                    dataType: "json",
+                    error: function() {
+                        response();
+                    },
+                    success: function(res) {
+                        response(res);
+                    }
+                });
+            }
+        });
+    </script>
+}
+
+@using (Html.BeginForm(new {ReturnUrl = ViewBag.ReturnUrl}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div id="content">
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                    
+                    @Html.Partial("_Messaging")
+
+                    <div class="modal modal-flat">
+                        <div class="modal-header">
+                            <h3>
+                                @ViewBag.User.FirstName, Enter the Name of Your Application
+                            </h3>
+                        </div>
+                        <div class="modal-body txt-middle">
+                            <input type="text" id="app-name" placeholder="e.g. Blu Graphing Calculator">
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" value="Find Your App By Name" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@*@using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
 
     <fieldset>
@@ -29,14 +86,6 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.ImageLink)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ImageLink)
-            @Html.ValidationMessageFor(model => model.ImageLink)
-        </div>
-
-        <div class="editor-label">
             @Html.LabelFor(model => model.Description)
         </div>
         <div class="editor-field">
@@ -50,12 +99,5 @@
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-
+*@

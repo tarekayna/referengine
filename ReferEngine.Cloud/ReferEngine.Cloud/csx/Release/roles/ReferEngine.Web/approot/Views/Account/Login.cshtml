@@ -1,10 +1,5 @@
 ﻿@model ReferEngine.Web.Models.Account.LoginModel
 
-@{
-    ViewBag.Title = "Log in";
-    ViewBag.MenuActive = "Login";
-}
-
 @using (Html.BeginForm(new {ReturnUrl = ViewBag.ReturnUrl}))
 {
     @Html.AntiForgeryToken()

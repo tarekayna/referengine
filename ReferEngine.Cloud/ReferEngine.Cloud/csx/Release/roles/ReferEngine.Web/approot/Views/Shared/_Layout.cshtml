@@ -29,9 +29,36 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </a>		
-                        
+
                         <ul class="nav pull-left">
-                            <a class="btn" href="~/app/new"><i class="icon-plus-sign"></i> Add New App</a>
+                            @if (ViewBag.User.Apps.Count > 0)
+                            {
+                                <div class="btn-group">
+                                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                        @if (ViewBag.CurrentApp == null)
+                                        {
+                                            <span>My Apps</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@ViewBag.CurrentApp.Name</span>
+                                        }
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @for (int i = 0; i < ViewBag.User.Apps.Count; i++)
+                                        {
+                                            <li><a tabindex="-1" href="~/app/dashboard/@ViewBag.User.Apps[i].Id">@ViewBag.User.Apps[i].Name</a></li>
+                                        }
+                                        <li class="divider"></li>
+                                        <li><a href="~/app/new"><i class="icon-plus-sign"></i> Add New App</a></li>
+                                    </ul>
+                                </div>
+                            }
+                            else
+                            {
+                                <a href="~/app/new" class="btn"><i class="icon-plus-sign"></i> Add New App</a>
+                            }                           
                         </ul>
 
                         <div class="nav-collapse collapse">
@@ -41,7 +68,7 @@
                                     <li><a href="~/admin/errors" target="_blank">Server Errors</a></li>
                                     <li><a href="~/admin/admin">Admin Panel</a></li>
                                 }
-                                @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink(User.Identity.Name, "Default", new {controller = "account", action = "manage"}), ViewBag.MenuActive == "Account")
+                                <li><a href="~/account/manage">@ViewBag.User.FirstName @ViewBag.User.LastName</a></li>
                                 <li>
                                     @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
                                         @Html.AntiForgeryToken()
@@ -106,7 +133,6 @@
           </div>	  
         </div>
         
-
         @if (!Convert.ToBoolean(ViewBag.HideFooter))
         {
             <div id="copywrite">
@@ -132,7 +158,19 @@
         }        
         
         @Html.Partial("_MixPanel")
-        @Scripts.Render("~/bundles/libs")
+
+        @Scripts.Render("~/bundles/libs/base")
+        
+        @if (Convert.ToBoolean(ViewBag.JQueryValidate))
+        {
+            @Scripts.Render("~/bundles/libs/jquery-validate")
+        }
+        
+        @if (Convert.ToBoolean(ViewBag.JQueryUI))
+        {
+            @Scripts.Render("~/bundles/libs/jquery-ui")
+        }
+
         @RenderSection("scripts", required: false)
         @StackExchange.Profiling.MiniProfiler.RenderIncludes()
     </body>

@@ -68,7 +68,17 @@
         }        
         
         @Html.Partial("_MixPanel")
-        @Scripts.Render("~/bundles/libs")
+        @Scripts.Render("~/bundles/libs/base")
+        
+        @if (!Convert.ToBoolean(ViewBag.JQueryValidate))
+        {
+            @Scripts.Render("~/bundles/libs/jquery-validate")
+        }
+        
+        @if (!Convert.ToBoolean(ViewBag.JQueryUI))
+        {
+            @Scripts.Render("~/bundles/libs/jquery-ui")
+        }
         @RenderSection("scripts", required: false)
         @StackExchange.Profiling.MiniProfiler.RenderIncludes()
     </body>

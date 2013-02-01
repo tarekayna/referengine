@@ -1,32 +1,4 @@
-﻿@model ReferEngine.Web.Models.AppModels.AppDashboardViewModel
-
-@{
-    ViewBag.Title = "Dashboard";
-}
-
-
-@*@if (Model.User.Apps.Any())
-{
-    if (Model.User.Apps.Count == 1)
-    {
-        <div class="btn-group">
-            <button class="btn dropdown-toggle" data-toggle="dropdown">
-                @Model.User.Apps.First().Name
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                @for (int i = 1; i < Model.User.Apps.Count; i++)
-                {
-                    <li><a tabindex="-1" href="#">@Model.User.Apps.ElementAt(i).Name</a></li>
-                }
-            </ul>
-        </div>
-    }
-    else
-    {
-        
-    }
-}*@
+﻿@model ReferEngine.Common.ViewModels.AppDashboardViewModel
 
 <div id="content">
     <div class="container">
@@ -35,7 +7,7 @@
                 
                 <h2>@Model.App.Name</h2>
 
-                <p>Total Recommendations: @Model.AppRecommendations.Count()</p>
+                <p>Total Recommendations: @Model.TotalNumberOfRecommendations</p>
                 
                 <table class="table table-bordered">
                     <caption>Last @Model.NumberOfRecommendationsToShow Recommendations</caption>
