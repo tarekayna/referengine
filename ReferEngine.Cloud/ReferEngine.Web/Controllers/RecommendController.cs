@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Net;
+using System.Threading;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
@@ -14,16 +15,9 @@ namespace ReferEngine.Web.Controllers
 {
     [RemoteRequireHttps]
     [OutputCache(Duration = 0)]
-    public class RecommendController : Controller
+    public class RecommendController : BaseController
     {
-        private IReferDataReader DataReader { get; set; }
-        private IReferDataWriter DataWriter { get; set; }
-
-        public RecommendController(IReferDataReader dataReader, IReferDataWriter dataWriter)
-        {
-            DataReader = dataReader;
-            DataWriter = dataWriter;
-        }
+        public RecommendController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
 
         public ActionResult Intro(string platform, long id)
         {
@@ -164,17 +158,11 @@ namespace ReferEngine.Web.Controllers
 
                     var postedRecommendation = await facebookOperations.PostAppRecommendationAsync(recommendation);
                     DataWriter.AddAppRecommendation(postedRecommendation);
-                    return Json(new
-                                    {
-                                        success = true
-                                    });
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
                 }
             }
 
-            return Json(new
-            {
-                success = false
-            }); 
+            throw new InvalidOperationException();
         }
 
         [HttpPost]
@@ -187,6 +175,10 @@ namespace ReferEngine.Web.Controllers
                 if (facebookOperations != null)
                 {
                     var friends = await facebookOperations.GetFriendsAsync();
+
+                    // Add this here so we don't have to request the friends 
+                    // from the Worker. The token might have expired.
+                    ServiceBusOperations.AddToQueue(facebookOperations);
                     
                     return Json(new {friends = Person.Serialize(friends)});
                 }

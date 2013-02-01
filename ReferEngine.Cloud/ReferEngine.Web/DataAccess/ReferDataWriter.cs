@@ -9,7 +9,6 @@ namespace ReferEngine.Web.DataAccess
         public void AddFacebookOperations(string referEngineAuthToken, FacebookOperations facebookOperations)
         {
             CacheOperations.AddFacebookOperations(referEngineAuthToken, facebookOperations);
-            ServiceBusOperations.AddToQueue(facebookOperations);
         }
 
         public void AddAppAuthorization(AppAuthorization appAuthorization)
@@ -36,6 +35,11 @@ namespace ReferEngine.Web.DataAccess
         public void AddPrivateBetaSignup(PrivateBetaSignup privateBetaSignup)
         {
             ServiceBusOperations.AddToQueue(privateBetaSignup);
+        }
+
+        public void AddUserRole(User user, string role)
+        {
+            DatabaseOperations.AddUserRole(user, role);
         }
     }
 }

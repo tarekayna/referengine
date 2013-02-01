@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -28,68 +27,64 @@ namespace ReferEngine.Web.Controllers.Win8
         // POST api/win8/auth
         public async Task<JsonResult> Post([FromBody]string value)
         {
-            try
+            string requestContent = await Request.Content.ReadAsStringAsync();
+            if (requestContent != null && requestContent.Length > 1)
             {
-                string requestContent = await Request.Content.ReadAsStringAsync();
-                if (requestContent != null && requestContent.Length > 1)
+                string streamStr = requestContent.Replace("\0", "");
+
+                int start = streamStr.IndexOf("<Receipt", 0, StringComparison.OrdinalIgnoreCase);
+                int end = streamStr.IndexOf("</Receipt>", 0, StringComparison.OrdinalIgnoreCase) + 10;
+                string appReceiptXmlStr = streamStr.Substring(start, end - start);
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(appReceiptXmlStr);
+                XmlNode node = xmlDoc.DocumentElement;
+                if (node != null && node.Attributes != null)
                 {
-                    string streamStr = requestContent.Replace("\0", "");
-
-                    int start = streamStr.IndexOf("<Receipt", 0, StringComparison.OrdinalIgnoreCase);
-                    int end = streamStr.IndexOf("</Receipt>", 0, StringComparison.OrdinalIgnoreCase) + 10;
-                    string appReceiptXmlStr = streamStr.Substring(start, end - start);
-
-                    XmlDocument xmlDoc = new XmlDocument();
-                    xmlDoc.LoadXml(appReceiptXmlStr);
-                    XmlNode node = xmlDoc.DocumentElement;
-                    if (node != null && node.Attributes != null)
+                    string certificateId = node.Attributes["CertificateId"].Value;
+                    XmlNode appReceiptNode = node.SelectSingleNode("descendant::AppReceipt");
+                    if (appReceiptNode != null && appReceiptNode.Attributes != null)
                     {
-                        string certificateId = node.Attributes["CertificateId"].Value;
-                        XmlNode appReceiptNode = node.SelectSingleNode("descendant::AppReceipt");
-                        if (appReceiptNode != null && appReceiptNode.Attributes != null)
-                        {
-                            string receiptId = appReceiptNode.Attributes.GetNamedItem("Id").Value;
-                            string packageFamilyName = appReceiptNode.Attributes.GetNamedItem("AppId").Value;
-                            string licenseTypeStr = appReceiptNode.Attributes.GetNamedItem("LicenseType").Value;
-                            LicenseType licenseType = AppReceipt.GetLicenseType(licenseTypeStr);
-                            DateTime purchaseDate =
-                                Convert.ToDateTime(appReceiptNode.Attributes.GetNamedItem("PurchaseDate").Value);
-                            App app = DatabaseOperations.GetApp(packageFamilyName);
+                        string receiptId = appReceiptNode.Attributes.GetNamedItem("Id").Value;
+                        string packageFamilyName = appReceiptNode.Attributes.GetNamedItem("AppId").Value;
+                        string licenseTypeStr = appReceiptNode.Attributes.GetNamedItem("LicenseType").Value;
+                        LicenseType licenseType = AppReceipt.GetLicenseType(licenseTypeStr);
+                        DateTime purchaseDate =
+                            Convert.ToDateTime(appReceiptNode.Attributes.GetNamedItem("PurchaseDate").Value);
+                        App app = DatabaseOperations.GetApp(packageFamilyName);
 
-                            AppReceipt appReceipt = new AppReceipt
-                            {
-                                Id = receiptId,
-                                AppPackageFamilyName = packageFamilyName,
-                                LicenseType = licenseType,
-                                PurchaseDate = purchaseDate,
-                                AppId = app.Id,
-                                XmlContent = appReceiptXmlStr,
-                                CertificateId = certificateId
-                            };
+                        AppReceipt appReceipt = new AppReceipt
+                                                    {
+                                                        Id = receiptId,
+                                                        AppPackageFamilyName = packageFamilyName,
+                                                        LicenseType = licenseType,
+                                                        PurchaseDate = purchaseDate,
+                                                        AppId = app.Id,
+                                                        XmlContent = appReceiptXmlStr,
+                                                        CertificateId = certificateId
+                                                    };
 
-                             string userHostAddress = HttpContext.Current.Request.UserHostAddress;
-                             AppAuthorization appAuthorization = new AppAuthorization(app, appReceipt, userHostAddress);
-                             DataWriter.AddAppAuthorization(appAuthorization);
+                        string userHostAddress = HttpContext.Current.Request.UserHostAddress;
+                        AppAuthorization appAuthorization = new AppAuthorization(app, appReceipt, userHostAddress);
+                        DataWriter.AddAppAuthorization(appAuthorization);
 
-                             return new JsonResult
-                             {
-                                 Data = new {
-                                                success = true,
-                                                token = appAuthorization.Token,
-                                                expiresIn = TokenExpiresIn.TotalSeconds
-                                            }
-                             };
-                        }
+                        return new JsonResult
+                                   {
+                                       Data = new
+                                                  {
+                                                      token = appAuthorization.Token,
+                                                      expiresIn = TokenExpiresIn.TotalSeconds
+                                                  }
+                                   };
                     }
+                    
+                    throw new InvalidOperationException("Invalid AppReceiptNode");
                 }
-            }
-            catch (Exception e)
-            {
-                //TODO Exception handling
-                Trace.WriteLine(e.Message);
+
+                throw new InvalidOperationException("Invalid XmlNode");
             }
 
-            return new JsonResult { Data = new { success = false } };
+            throw new InvalidOperationException("Invalid Request.Content");
         }
     }
 }

@@ -10,16 +10,9 @@ using ReferEngine.Web.DataAccess;
 namespace ReferEngine.Web.Controllers
 {
     [RemoteRequireHttps]
-    public class AboutController : Controller
+    public class AboutController : BaseController
     {
-        private IReferDataReader DataReader { get; set; }
-        private IReferDataWriter DataWriter { get; set; }
-
-        public AboutController(IReferDataReader dataReader, IReferDataWriter dataWriter)
-        {
-            DataReader = dataReader;
-            DataWriter = dataWriter;
-        }
+        public AboutController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) {}
 
         public ActionResult Index()
         {

@@ -211,7 +211,6 @@
     var getFriendsUri = util.GetLink("GetFriends");
     $.ajax(getFriendsUri, {
         type: "POST",
-        //url: getFriendsUri,
         data: {
             re_auth_token: RE.ReferEngineAuthToken
         },
@@ -226,15 +225,10 @@
     };
 
     var onSubmitSuccess = function (data, textStatus, jqXhr) {
-        if (data.success === true) {
-            post.hide();
-            postResult.show();
-            util.HideLoading();
-
-            util.MixPanelTrack("Recommend Post Success");
-        } else {
-            onSubmitError();
-        }
+        post.hide();
+        postResult.show();
+        util.HideLoading();
+        util.MixPanelTrack("Recommend Post Success");
     };
 
     var showMustAgree = function() {
@@ -264,7 +258,6 @@
             var msgText = msg.text();
 
             var postUri = util.GetLink("PostRecommendation");
-
             $.ajax({
                 type: "POST",
                 url: postUri,

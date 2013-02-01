@@ -12,5 +12,6 @@ namespace ReferEngine.Web.DataAccess
         void AddAppScreenshot(AppScreenshot appScreenshot);
         void AddAppReceipt(AppReceipt appReceipt);
         void AddPrivateBetaSignup(PrivateBetaSignup privateBetaSignup);
+        void AddUserRole(User user, string role);
     }
 }

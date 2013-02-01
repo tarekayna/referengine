@@ -8,16 +8,9 @@ using ReferEngine.Web.DataAccess;
 namespace ReferEngine.Web.Controllers
 {
     [RemoteRequireHttps]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private IReferDataReader DataReader { get; set; }
-        private IReferDataWriter DataWriter { get; set; }
-
-        public HomeController(IReferDataReader dataReader, IReferDataWriter dataWriter)
-        {
-            DataReader = dataReader;
-            DataWriter = dataWriter;
-        }
+        public HomeController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
 
         [HttpPost]
         public ActionResult Index(string email)

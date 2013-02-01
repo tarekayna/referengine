@@ -11,7 +11,8 @@ namespace ReferEngine.Common.Data
         internal const string FacebookOperations = "fb-operations-{0}";
         internal const string AppPackage = "app-package-{0}";
         internal const string AppId = "app-id-{0}";
-        internal const string AppScreenshotIdDesc= "appscreenshot-id-desc-{0}{1}";
+        internal const string AppScreenshotIdDesc = "appscreenshot-id-desc-{0}{1}";
+        internal const string UserId = "user-id-{0}"; 
     }
 
     public static class CacheTimeoutValues
@@ -169,6 +170,29 @@ namespace ReferEngine.Common.Data
             AppScreenshot screenshot = DatabaseOperations.GetAppScreenshot(appId, description);
             Cache.Put(key, screenshot);
             return screenshot;
+        }
+
+        public static User GetUser(int id)
+        {
+            String key = String.Format(CacheKeyFormat.UserId, id);
+            object cached = null;
+            try
+            {
+                cached = Cache.Get(key);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.Message);
+                // It's ok, just retreive from the database
+            }
+            return cached == null ? null : (User)cached;
+        }
+
+        public static void AddUser(User user)
+        {
+            if (user == null) return;
+            String key = String.Format(CacheKeyFormat.UserId, user.Id);
+            Cache.Put(key, user);
         }
     }
 }

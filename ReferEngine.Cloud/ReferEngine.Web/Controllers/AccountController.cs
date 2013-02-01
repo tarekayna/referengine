@@ -4,6 +4,7 @@ using ReferEngine.Common.Data;
 using ReferEngine.Common.Email;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
+using ReferEngine.Web.DataAccess;
 using ReferEngine.Web.Filters;
 using ReferEngine.Web.Models.Account;
 using System;
@@ -13,15 +14,16 @@ using System.Transactions;
 using System.Web.Mvc;
 using System.Web.Security;
 using WebMatrix.WebData;
-using Membership = ReferEngine.Common.Models.Membership;
 
 namespace ReferEngine.Web.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
     [RemoteRequireHttps]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
+        public AccountController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
+
         [AllowAnonymous]
         public ActionResult Login(string returnUrl, string successMessage)
         {
@@ -55,7 +57,8 @@ namespace ReferEngine.Web.Controllers
                                 FirstName = user.FirstName,
                             };
 
-                            return View("Confirm", confirmModel);
+                            TempData.Add("ConfirmationCodeModel", confirmModel);
+                            return RedirectToAction("ConfirmYourAccount", new { SuccessMessage = "Your account has been confirmed! Please log in to start.", });
                         }
                     }
                 }
@@ -63,6 +66,13 @@ namespace ReferEngine.Web.Controllers
 
             ViewBag.ErrorMessage = "The email/password combination is incorrect.";
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult ConfirmYourAccount()
+        {
+            var confirmModel = (ConfirmationCodeModel) TempData["ConfirmationCodeModel"];
+            return View(confirmModel);
         }
 
         [AllowAnonymous]
@@ -111,7 +121,7 @@ namespace ReferEngine.Web.Controllers
         }
 
         // TODO: Remove when you enable registration
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -119,7 +129,7 @@ namespace ReferEngine.Web.Controllers
 
         [HttpPost]
         // TODO: Remove when you enable registration
-        //[AllowAnonymous]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
@@ -130,6 +140,9 @@ namespace ReferEngine.Web.Controllers
                     object propertyValues = new { model.FirstName, model.LastName, Timestamp = DateTime.Now };
                     string confirmationCode = WebSecurity.CreateUserAndAccount(model.Email, model.Password, propertyValues, requireConfirmationToken: true);
 
+                    User user = DataReader.GetUserFromConfirmationCode(confirmationCode);
+                    DataWriter.AddUserRole(user, "Dev");
+
                     var confirmationCodeModel = new ConfirmationCodeModel
                                                     {
                                                         Email = model.Email,
@@ -138,7 +151,8 @@ namespace ReferEngine.Web.Controllers
                                                     };
                     ReferEmailer.SendConfirmationCodeEmail(confirmationCodeModel);
 
-                    return View("Confirm", confirmationCodeModel);
+                    TempData.Add("ConfirmationCodeModel", confirmationCodeModel);
+                    return RedirectToAction("ConfirmYourAccount", new { SuccessMessage = "Your account has been confirmed! Please log in to start.", });
                 }
                 catch (MembershipCreateUserException e)
                 {

@@ -9,6 +9,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using ReferEngine.Common.Properties;
+using ReferEngine.Common.ViewModels;
 using WebMatrix.WebData;
 using Membership = ReferEngine.Common.Models.Membership;
 
@@ -130,7 +131,8 @@ namespace ReferEngine.Common.Data
         {
             using (var db = new ReferEngineDatabaseContext())
             {
-                return db.AppRecommendations.FirstOrDefault(r => r.AppId == appId && r.PersonFacebookId == personFacebookId);
+                return
+                    db.AppRecommendations.FirstOrDefault(r => r.AppId == appId && r.PersonFacebookId == personFacebookId);
             }
         }
 
@@ -215,6 +217,9 @@ namespace ReferEngine.Common.Data
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
+                var existing =
+                    db.AppRecommendations.FirstOrDefault(r => r.FacebookPostId == recommendation.FacebookPostId);
+                if (existing != null) return;
                 db.AppRecommendations.Add(recommendation);
                 db.SaveChanges();
             }
@@ -227,7 +232,7 @@ namespace ReferEngine.Common.Data
                 if (!db.PrivateBetaSignups.Any(s => s.Email == privateBetaSignup.Email))
                 {
                     db.PrivateBetaSignups.Add(privateBetaSignup);
-                    db.SaveChanges();   
+                    db.SaveChanges();
                 }
             }
         }
@@ -328,7 +333,9 @@ namespace ReferEngine.Common.Data
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
-                return db.Users.FirstOrDefault(c => c.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+                User user = db.Users.First(c => c.Email == email);
+                user.Apps = db.Apps.Where(a => a.UserId == user.Id).ToList();
+                return user;
             }
         }
 
@@ -336,7 +343,21 @@ namespace ReferEngine.Common.Data
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
-                return db.Users.FirstOrDefault(c => c.Id == id);
+                User user = db.Users.First(c => c.Id == id);
+                user.Apps = db.Apps.Where(a => a.UserId == user.Id).ToList();
+                return user;
+            }
+        }
+
+        public static User GetUserFromConfirmationCode(string code)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                Membership membership =
+                    db.Memberships.First(m => m.ConfirmationToken.Equals(code, StringComparison.OrdinalIgnoreCase));
+                User user = db.Users.First(u => u.Id == membership.UserId);
+                user.Apps = db.Apps.Where(a => a.UserId == user.Id).ToList();
+                return user;
             }
         }
 
@@ -383,15 +404,67 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static IList<AppRecommendation> GetAppRecommdations(App app, int count = -1)
+        public static IList<AppRecommendation> GetAppRecommdations(long appId, int count = -1)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
                 var result = from r in db.AppRecommendations
+                             where r.AppId == appId
                              orderby r.DateTime descending
                              select r;
 
                 return count > -1 ? result.Take(count).ToList() : result.ToList();
+            }
+        }
+
+        public static void AddUserRole(User user, string roleName)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                Role role = db.Roles.First(r => r.RoleName.Equals(roleName, StringComparison.OrdinalIgnoreCase));
+                db.UsersInRoles.Add(new UserInRole { RoleId = role.RoleId, UserId = user.Id });
+                db.SaveChanges();
+            }
+        }
+
+        public static AppDashboardViewModel GetAppDashboardViewModel(App app)
+        {
+            AppDashboardViewModel viewModel = new AppDashboardViewModel {App = app};
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                var recommendations = from r in db.AppRecommendations
+                                      where r.AppId == app.Id
+                                      orderby r.DateTime descending
+                                      select r;
+
+                viewModel.AppRecommendations = recommendations.Take(viewModel.NumberOfRecommendationsToShow).ToList();
+                viewModel.TotalNumberOfRecommendations = recommendations.Count();
+            }
+            return viewModel;
+        }
+
+        public static IList<StoreAppInfo> FindStoreApps(string term, int count)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                var lowercaseTerm = term.ToLower();
+
+                var matches = from a in db.StoreAppInfos
+                                   where a.Name.ToLower().StartsWith(lowercaseTerm)
+                                   select a;
+
+                if (matches.Count() >= count)
+                {
+                    return matches.Take(count).ToList();
+                }
+
+                var containsMatches = from a in db.StoreAppInfos
+                                      where a.Name.ToLower().Contains(lowercaseTerm)
+                                      select a;
+
+                matches.ToList().AddRange(containsMatches);
+
+                return matches.Count() <= count ? matches.ToList() : matches.Take(count).ToList();
             }
         }
     }

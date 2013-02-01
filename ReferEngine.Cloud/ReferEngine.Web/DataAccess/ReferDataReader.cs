@@ -1,6 +1,8 @@
-﻿using ReferEngine.Common.Data;
+﻿using System.Collections.Generic;
+using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using System.Linq;
+using ReferEngine.Common.ViewModels;
 
 namespace ReferEngine.Web.DataAccess
 {
@@ -47,10 +49,36 @@ namespace ReferEngine.Web.DataAccess
         {
             return DatabaseOperations.GetAppReceipt(id);
         }
-    
+
         public AppRecommendation GetAppRecommendation(long appId, long personFacebookId)
         {
             return DatabaseOperations.GetAppRecommdation(appId, personFacebookId);
+        }
+
+        public User GetUser(int id)
+        {
+            User user = CacheOperations.GetUser(id);
+            if (user == null)
+            {
+                user = DatabaseOperations.GetUser(id);
+                CacheOperations.AddUser(user);
+            }
+            return user;
+        }
+
+        public User GetUserFromConfirmationCode(string code)
+        {
+            return DatabaseOperations.GetUserFromConfirmationCode(code);
+        }
+
+        public AppDashboardViewModel GetAppDashboardViewModel(App app)
+        {
+            return DatabaseOperations.GetAppDashboardViewModel(app);
+        }
+
+        public IList<StoreAppInfo> FindStoreApps(string term, int count)
+        {
+            return DatabaseOperations.FindStoreApps(term, count);
         }
     }
 }

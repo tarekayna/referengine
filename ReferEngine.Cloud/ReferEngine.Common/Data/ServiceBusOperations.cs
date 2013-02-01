@@ -73,6 +73,7 @@ namespace ReferEngine.Common.Data
             private MessagingFactory MessagingFactory { get; set; }
             public Type SupportedType { get; private set; }
             private QueueClient Client { get; set; }
+            private QueueClient DeadLetterClient { get; set; }
 
             public Queue(NamespaceManager namespaceManager, MessagingFactory messagingFactory, string queueName, Type supportedType)
             {
@@ -82,6 +83,7 @@ namespace ReferEngine.Common.Data
                 SupportedType = supportedType;
                 CreateIfNeeded();
                 Client = messagingFactory.CreateQueueClient(Name);
+                DeadLetterClient = messagingFactory.CreateQueueClient(Name + "/$DeadLetterQueue");
             }
 
             public void Enqueue(Object obj)
@@ -96,6 +98,7 @@ namespace ReferEngine.Common.Data
             {
                 TimeSpan timeSpan = TimeSpan.FromMinutes(0);
                 BrokeredMessage message = Client.Receive(timeSpan);
+                //BrokeredMessage message = Client.Receive(timeSpan) ?? DeadLetterClient.Receive(timeSpan);
 
                 if (message != null)
                 {

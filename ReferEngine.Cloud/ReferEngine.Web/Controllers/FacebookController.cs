@@ -7,14 +7,9 @@ using ReferEngine.Web.Models.Facebook;
 namespace ReferEngine.Web.Controllers
 {
     [RemoteRequireHttps]
-    public class FacebookController : Controller
+    public class FacebookController : BaseController
     {
-        private IReferDataReader DataReader { get; set; }
-
-        public FacebookController(IReferDataReader dataReader)
-        {
-            DataReader = dataReader;
-        }
+        public FacebookController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
 
         public ActionResult App(long id, string fb_action_ids, string fb_source, string action_object_map,
             string action_type_map, string action_ref_map)

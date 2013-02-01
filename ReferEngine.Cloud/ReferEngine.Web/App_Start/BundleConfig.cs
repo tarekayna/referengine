@@ -26,10 +26,15 @@ namespace ReferEngine.Web.App_Start
             #region Script Bundles
             List<BundleInfo> scriptBundles = new List<BundleInfo>
                 {
-                    new BundleInfo("~/bundles/libs",
-                                   "~/js/lib/jquery-{version}.js",
-                                   "~/js/lib/jquery-validate.js",
+                    new BundleInfo("~/bundles/libs/base",
+                                   "~/js/lib/jquery-1.8.3.js",
                                    "~/js/lib/bootstrap.js"),
+                                   
+                    new BundleInfo("~/bundles/libs/jquery-validate",
+                                   "~/js/lib/jquery-validate.js"),
+                                   
+                    new BundleInfo("~/bundles/libs/jquery-ui",
+                                   "~/js/lib/jquery-ui-1.10.0.custom.js"),
     
                     new BundleInfo("~/bundles/js/jquery.fitvids",
                                    "~/js/lib/jquery.fitvids.js"),

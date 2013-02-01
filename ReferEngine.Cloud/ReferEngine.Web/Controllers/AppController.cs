@@ -1,29 +1,20 @@
-﻿using System.Web.Security;
-using System.Web.WebPages;
-using ReferEngine.Common.Data;
+﻿using System.Linq;
+using System.Web.Security;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ReferEngine.Common.Models;
-using System.Collections.Generic;
-using System.Web;
 using System.Web.Mvc;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Web.DataAccess;
-using ReferEngine.Web.Models.AppModels;
 using WebMatrix.WebData;
 
 namespace ReferEngine.Web.Controllers
 {
     [RemoteRequireHttps]
     [Authorize(Roles="Admin, Dev")]
-    public class AppController : Controller
+    public class AppController : BaseController
     {
-        private IReferDataReader DataReader { get; set; }
-        private IReferDataWriter DataWriter { get; set; }
-
-        public AppController(IReferDataReader dataReader, IReferDataWriter dataWriter)
-        {
-            DataReader = dataReader;
-            DataWriter = dataWriter;
-        }
+        public AppController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
 
         public ActionResult New()
         {
@@ -35,18 +26,24 @@ namespace ReferEngine.Web.Controllers
             App app = DataReader.GetApp(id);
             
             if (app != null &&
-               (Roles.IsUserInRole("Admin") || app.UserId == WebSecurity.CurrentUserId))
+               (app.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
             {
-                var viewModel = new AppDashboardViewModel(app);
+                var viewModel = DataReader.GetAppDashboardViewModel(app);
+
+                ViewBag.CurrentApp = app;
                 return View(viewModel);
             }
 
             return RedirectToAction("Index");
         }
 
-        public ActionResult Index()
+        [HttpPost]
+        public JsonResult FindStoreApps(string term)
         {
-            return View();
+            var infos = DataReader.FindStoreApps(term, 10);
+            var data = from i in infos
+                       select i.Name;
+            return Json(data);
         }
 
         //public ActionResult Edit(long id)

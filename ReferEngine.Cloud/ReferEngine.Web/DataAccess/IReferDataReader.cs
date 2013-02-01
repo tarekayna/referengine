@@ -1,5 +1,7 @@
-﻿using ReferEngine.Common.Data;
+﻿using System.Collections.Generic;
+using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
+using ReferEngine.Common.ViewModels;
 
 namespace ReferEngine.Web.DataAccess
 {
@@ -12,5 +14,9 @@ namespace ReferEngine.Web.DataAccess
         AppScreenshot GetAppScreenshot(long id, string description);
         AppReceipt GetAppReceipt(string id);
         AppRecommendation GetAppRecommendation(long appId, long personFacebookId);
+        User GetUser(int id);
+        User GetUserFromConfirmationCode(string code);
+        AppDashboardViewModel GetAppDashboardViewModel(App app);
+        IList<StoreAppInfo> FindStoreApps(string term, int count);
     }
 }

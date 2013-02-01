@@ -1,16 +1,15 @@
-using System.Collections;
-using System.IO;
-using System.Text;
+using HtmlAgilityPack;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Xml;
-using System.Linq;
-using HtmlAgilityPack;
 
 namespace ReferEngine.Workers.WinApps
 {

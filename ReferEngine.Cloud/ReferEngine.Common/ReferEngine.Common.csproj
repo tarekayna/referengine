@@ -145,6 +145,10 @@
     <Compile Include="Migrations\201301300429171_AppsToUser.Designer.cs">
       <DependentUpon>201301300429171_AppsToUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302010725541_test.cs" />
+    <Compile Include="Migrations\201302010725541_test.Designer.cs">
+      <DependentUpon>201302010725541_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\App.cs" />
     <Compile Include="Models\AppAuthorization.cs" />
     <Compile Include="Models\AppPlatform.cs" />
@@ -177,6 +181,7 @@
     <Compile Include="Data\ReferEngineDatabaseContext.cs" />
     <Compile Include="Data\ServiceBusOperations.cs" />
     <Compile Include="Utilities\Utilities.cs" />
+    <Compile Include="ViewModels\AppDashboardViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -201,6 +206,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201301300429171_AppsToUser.resx">
       <DependentUpon>201301300429171_AppsToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302010725541_test.resx">
+      <DependentUpon>201302010725541_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

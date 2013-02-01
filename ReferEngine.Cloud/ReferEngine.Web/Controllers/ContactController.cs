@@ -5,12 +5,15 @@ using System.Web;
 using System.Web.Mvc;
 using ReferEngine.Common.Email;
 using ReferEngine.Common.Utilities;
+using ReferEngine.Web.DataAccess;
 
 namespace ReferEngine.Web.Controllers
 {
     [RemoteRequireHttps]
-    public class ContactController : Controller
+    public class ContactController : BaseController
     {
+        public ContactController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
+
         [HttpGet]
         public ActionResult Index()
         {
