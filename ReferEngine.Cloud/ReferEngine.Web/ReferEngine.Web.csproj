@@ -304,6 +304,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PricingController.cs" />
     <Compile Include="Controllers\RecommendController.cs" />
+    <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="Controllers\Win8\AuthController.cs" />
     <Compile Include="DataAccess\BlobStorageOperations.cs" />
     <Compile Include="DataAccess\ReferDataReader.cs" />
@@ -539,6 +540,8 @@
     <Content Include="Views\Shared\_CrazyEgg.cshtml" />
     <Content Include="Views\App\Dashboard.cshtml" />
     <Content Include="Views\Shared\_MINIPROFILER UPDATED Layout.cshtml" />
+    <Content Include="Views\Video\TeamVideo.cshtml" />
+    <Content Include="Views\Video\ProductVideo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

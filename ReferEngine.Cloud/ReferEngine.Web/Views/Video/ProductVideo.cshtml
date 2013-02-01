@@ -1,0 +1,20 @@
+﻿<div id="content">
+    <div class="container">
+        <div class="row">
+            <div class="span12 js-video txt-middle">
+                <iframe src="http://player.vimeo.com/video/58735872" width="700" height="394" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/js/jquery.fitvids")
+
+    <script>
+    $(document).ready(function(){
+	    $(".js-video").fitVids();
+    });
+    </script>	
+}
+
