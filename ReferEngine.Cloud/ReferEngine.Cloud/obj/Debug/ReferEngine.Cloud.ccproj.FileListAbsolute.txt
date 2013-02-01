@@ -1,2 +1,0 @@
-C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\bin\Debug\ServiceConfiguration.cscfg
-C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\bin\Debug\ServiceDefinition.csdef
