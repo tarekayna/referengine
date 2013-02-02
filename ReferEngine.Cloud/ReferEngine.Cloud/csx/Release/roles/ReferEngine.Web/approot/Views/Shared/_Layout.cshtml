@@ -19,7 +19,7 @@
     </head>
     <body>
          
-        @if (Request.IsAuthenticated)
+        @if (Request.IsAuthenticated && ViewBag.User != null)
         {
             <div class="navbar navbar-fixed-top">
                 <div class="navbar-inner">
@@ -31,7 +31,7 @@
                         </a>		
 
                         <ul class="nav pull-left">
-                            @if (ViewBag.User.Apps.Count > 0)
+                            @if (ViewBag.User.Apps != null && ViewBag.User.Apps.Count > 0)
                             {
                                 <div class="btn-group">
                                     <button class="btn dropdown-toggle" data-toggle="dropdown">

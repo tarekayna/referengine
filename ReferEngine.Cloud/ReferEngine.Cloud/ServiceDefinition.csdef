@@ -29,7 +29,7 @@
       <Task commandLine="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe install" executionContext="elevated" taskType="simple" />
     </Startup>
   </WebRole>
-  <WorkerRole name="ReferEngine.Web.Cache" vmsize="Large">
+  <WorkerRole name="ReferEngine.Web.Cache" vmsize="Small">
     <Imports>
       <Import moduleName="Diagnostics" />
       <Import moduleName="Caching" />
@@ -38,7 +38,7 @@
       <LocalStorage name="DiagnosticStore" sizeInMB="20000" cleanOnRoleRecycle="false" />
     </LocalResources>
   </WorkerRole>
-  <WorkerRole name="ReferEngine.Workers.DataWriter" vmsize="Large">
+  <WorkerRole name="ReferEngine.Workers.DataWriter" vmsize="Medium">
     <Imports>
       <Import moduleName="Diagnostics" />
     </Imports>
@@ -55,7 +55,7 @@
     <Imports>
     </Imports>
   </WorkerRole>
-  <WorkerRole name="ReferEngine.Workers.WinApps" vmsize="Large">
+  <WorkerRole name="ReferEngine.Workers.WinApps" vmsize="Medium">
     <Imports>
       <Import moduleName="Diagnostics" />
     </Imports>

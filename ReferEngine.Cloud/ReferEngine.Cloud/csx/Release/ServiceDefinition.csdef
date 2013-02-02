@@ -20,7 +20,7 @@
       <Certificate name="ReferEngineTestCertificate" storeLocation="LocalMachine" storeName="My" />
     </Certificates>
   </WebRole>
-  <WorkerRole name="ReferEngine.Web.Cache" vmsize="Large">
+  <WorkerRole name="ReferEngine.Web.Cache">
     <LocalResources>
       <LocalStorage name="DiagnosticStore" sizeInMB="20000" cleanOnRoleRecycle="false" />
     </LocalResources>
@@ -42,7 +42,7 @@
     </Endpoints>
     <Certificates />
   </WorkerRole>
-  <WorkerRole name="ReferEngine.Workers.DataWriter" vmsize="Large">
+  <WorkerRole name="ReferEngine.Workers.DataWriter" vmsize="Medium">
     <LocalResources>
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
@@ -68,7 +68,7 @@
     <Endpoints />
     <Certificates />
   </WorkerRole>
-  <WorkerRole name="ReferEngine.Workers.WinApps" vmsize="Large">
+  <WorkerRole name="ReferEngine.Workers.WinApps" vmsize="Medium">
     <LocalResources>
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
