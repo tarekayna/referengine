@@ -5,15 +5,15 @@
     <AzureDeleteDeploymentOnFailure>False</AzureDeleteDeploymentOnFailure>
     <AzureDeploymentLabel>ReferCloud</AzureDeploymentLabel>
     <AzureDeploymentReplacementMethod>AutomaticUpgrade</AzureDeploymentReplacementMethod>
-    <AzureSlot>Staging</AzureSlot>
+    <AzureSlot>Production</AzureSlot>
     <AzureEnableRemoteDesktop>True</AzureEnableRemoteDesktop>
     <AzureEnableWebDeploy>False</AzureEnableWebDeploy>
     <AzureFallbackToDeleteAndRecreateIfUpgradeFails>False</AzureFallbackToDeleteAndRecreateIfUpgradeFails>
-    <AzureHostedServiceLabel>ReferEngineWest</AzureHostedServiceLabel>
-    <AzureHostedServiceName>referenginewest</AzureHostedServiceName>
+    <AzureHostedServiceLabel>referengine-test</AzureHostedServiceLabel>
+    <AzureHostedServiceName>referengine-test</AzureHostedServiceName>
     <AzureEnableIntelliTrace>True</AzureEnableIntelliTrace>
     <AzureEnableProfiling>False</AzureEnableProfiling>
-    <AzureServiceConfiguration>Cloud</AzureServiceConfiguration>
+    <AzureServiceConfiguration>TestCloud</AzureServiceConfiguration>
     <AzureSolutionConfiguration>Release</AzureSolutionConfiguration>
     <AzureStorageAccountLabel>portalvhds17w2tr90fnj0p</AzureStorageAccountLabel>
     <AzureStorageAccountName>portalvhds17w2tr90fnj0p</AzureStorageAccountName>
