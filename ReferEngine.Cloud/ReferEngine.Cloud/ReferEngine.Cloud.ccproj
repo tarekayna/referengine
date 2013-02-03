@@ -38,14 +38,6 @@
     <ServiceConfiguration Include="ServiceConfiguration.ProductionCloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ReferEngine.Web.Cache\ReferEngine.Web.Cache.csproj">
-      <Name>ReferEngine.Web.Cache</Name>
-      <Project>{1d50bf68-f8f5-418a-87d7-4f2fc0aa4398}</Project>
-      <Private>True</Private>
-      <RoleType>Worker</RoleType>
-      <RoleName>ReferEngine.Web.Cache</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
     <ProjectReference Include="..\ReferEngine.Web\ReferEngine.Web.csproj">
       <Name>ReferEngine.Web</Name>
       <Project>{8b12746f-826a-4ffc-a877-1119a0474c68}</Project>

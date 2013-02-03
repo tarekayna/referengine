@@ -16,6 +16,7 @@
     <Imports>
       <Import moduleName="Diagnostics" />
       <Import moduleName="RemoteAccess" />
+      <Import moduleName="Caching" />
     </Imports>
     <ConfigurationSettings>
       <Setting name="StorageConnectionString" />
@@ -29,25 +30,15 @@
       <Task commandLine="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe install" executionContext="elevated" taskType="simple" />
       <Task commandLine="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe install" executionContext="elevated" taskType="simple" />
     </Startup>
-  </WebRole>
-  <WorkerRole name="ReferEngine.Web.Cache" vmsize="Small">
-    <Imports>
-      <Import moduleName="Diagnostics" />
-      <Import moduleName="Caching" />
-      <Import moduleName="RemoteAccess" />
-      <Import moduleName="RemoteForwarder" />
-    </Imports>
     <LocalResources>
       <LocalStorage name="DiagnosticStore" sizeInMB="20000" cleanOnRoleRecycle="false" />
     </LocalResources>
-    <ConfigurationSettings>
-      <Setting name="CurrentServiceConfiguration" />
-    </ConfigurationSettings>
-  </WorkerRole>
-  <WorkerRole name="ReferEngine.Workers.DataWriter" vmsize="Small">
+  </WebRole>
+  <WorkerRole name="ReferEngine.Workers.DataWriter" vmsize="ExtraSmall">
     <Imports>
       <Import moduleName="Diagnostics" />
       <Import moduleName="RemoteAccess" />
+      <Import moduleName="RemoteForwarder" />
     </Imports>
     <ConfigurationSettings>
       <Setting name="Microsoft.ServiceBus.ConnectionString" />
@@ -66,7 +57,7 @@
       <Setting name="CurrentServiceConfiguration" />
     </ConfigurationSettings>
   </WorkerRole>
-  <WorkerRole name="ReferEngine.Workers.WinApps" vmsize="Medium">
+  <WorkerRole name="ReferEngine.Workers.WinApps" vmsize="ExtraSmall">
     <Imports>
       <Import moduleName="Diagnostics" />
       <Import moduleName="RemoteAccess" />

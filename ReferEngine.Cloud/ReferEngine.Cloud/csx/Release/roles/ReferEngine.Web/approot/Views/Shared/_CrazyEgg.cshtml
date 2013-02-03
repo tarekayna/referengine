@@ -1,4 +1,4 @@
-﻿@if (!Request.IsLocal)
+﻿@if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.ProductionCloud)
 {
     <script type="text/javascript">
         setTimeout(function () {

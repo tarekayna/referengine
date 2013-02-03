@@ -6,9 +6,8 @@
     </LocalResources>
     <ConfigurationSettings>
       <Setting name="CloudToolsDiagnosticAgentVersion" />
+      <Setting name="CurrentServiceConfiguration" />
       <Setting name="IntelliTrace.IntelliTraceConnectionString" />
-      <Setting name="IsLocal" />
-      <Setting name="IsReferEngineTest" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
@@ -35,6 +34,7 @@
     </LocalResources>
     <ConfigurationSettings>
       <Setting name="CloudToolsDiagnosticAgentVersion" />
+      <Setting name="CurrentServiceConfiguration" />
       <Setting name="IntelliTrace.IntelliTraceConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" />
@@ -68,8 +68,8 @@
     </LocalResources>
     <ConfigurationSettings>
       <Setting name="CloudToolsDiagnosticAgentVersion" />
+      <Setting name="CurrentServiceConfiguration" />
       <Setting name="IntelliTrace.IntelliTraceConnectionString" />
-      <Setting name="IsLocal" />
       <Setting name="Microsoft.ServiceBus.ConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
@@ -93,8 +93,8 @@
     </LocalResources>
     <ConfigurationSettings>
       <Setting name="CloudToolsDiagnosticAgentVersion" />
+      <Setting name="CurrentServiceConfiguration" />
       <Setting name="IntelliTrace.IntelliTraceConnectionString" />
-      <Setting name="IsReferEngineTest" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
@@ -109,14 +109,14 @@
       <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" storeLocation="LocalMachine" storeName="My" />
     </Certificates>
   </WorkerRole>
-  <WorkerRole name="ReferEngine.Workers.WinApps" vmsize="Medium">
+  <WorkerRole name="ReferEngine.Workers.WinApps" vmsize="ExtraSmall">
     <LocalResources>
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
       <Setting name="CloudToolsDiagnosticAgentVersion" />
+      <Setting name="CurrentServiceConfiguration" />
       <Setting name="IntelliTrace.IntelliTraceConnectionString" />
-      <Setting name="IsReferEngineTest" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
