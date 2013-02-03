@@ -75,9 +75,9 @@
     <Folder Include="Profiles" />
   </ItemGroup>
   <ItemGroup>
-    <PublishProfile Include="Profiles\referengine staging.azurePubxml" />
-    <PublishProfile Include="Profiles\referengine prod.azurePubxml" />
-    <PublishProfile Include="Profiles\referengine-test.azurePubxml" />
+    <PublishProfile Include="Profiles\referengine.com staging.azurePubxml" />
+    <PublishProfile Include="Profiles\referengine.com production.azurePubxml" />
+    <PublishProfile Include="Profiles\referengine-test.com.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
