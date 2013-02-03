@@ -15,26 +15,98 @@ namespace ReferEngine.Common.Utilities
 {
     public static class Util
     {
+        public enum ReferEngineServiceConfiguration
+        {
+            ProductionCloud = 0,
+            TestCloud,
+            Local
+        }
+
+        public static ReferEngineServiceConfiguration CurrentServiceConfiguration
+        {
+            get
+            {
+                string currentServiceConfiguration = RoleEnvironment.GetConfigurationSettingValue("CurrentServiceConfiguration");
+                switch (currentServiceConfiguration)
+                {
+                    case "ProductionCloud":
+                        return ReferEngineServiceConfiguration.ProductionCloud;
+
+                    case "TestCloud":
+                        return ReferEngineServiceConfiguration.TestCloud;
+
+                    case "Local":
+                        return ReferEngineServiceConfiguration.Local;
+                }
+
+                throw new InvalidDataException(string.Format("Invalid currentServiceConfiguration: {0}",
+                                                             currentServiceConfiguration));
+            }
+        }
+
+        public static string CurrentServiceConfigurationString 
+        {
+            get
+            {
+                switch (CurrentServiceConfiguration)
+                {
+                    case ReferEngineServiceConfiguration.ProductionCloud:
+                        return "ProductionCloud";
+                    case ReferEngineServiceConfiguration.TestCloud:
+                        return "TestCloud";
+                    case ReferEngineServiceConfiguration.Local:
+                        return "Local";
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+        public static string DatabaseConnectionString
+        {
+            get
+            {
+                const string connectionFormat =
+                    "Server=tcp:fnx5xvuqzn.database.windows.net,1433;Database={0};User ID=tarek990@fnx5xvuqzn;Password=r6g4d2hA..;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;MultipleActiveResultSets=True";
+                switch (CurrentServiceConfiguration)
+                {
+                    case ReferEngineServiceConfiguration.ProductionCloud:
+                        return string.Format(connectionFormat, "referengine_db");
+                    case ReferEngineServiceConfiguration.TestCloud:
+                        return string.Format(connectionFormat, "referengine_db_test");
+                    case ReferEngineServiceConfiguration.Local:
+                        return string.Format(connectionFormat, "referengine_db_local");
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+        public static string DatabaseConnectionStringName
+        {
+            get
+            {
+                string format = CurrentServiceConfigurationString + "{0}";
+                return string.Format(format, "ConnectionString");
+            }
+        }
+
         public static string MixPanelProjectToken
         {
             get
             {
-                bool isLocal = Convert.ToBoolean(RoleEnvironment.GetConfigurationSettingValue("IsLocal"));
-                return isLocal ? "8b975bba223e30932a1ef8cd028f1c1c" : "d76136086d701abbecf55a6de775127c";
-            }
-        }
-
-        private static bool? _isReferEngineTest;
-        public static bool IsReferEngineTest 
-        {
-            get
-            {
-                if (!_isReferEngineTest.HasValue)
+                switch (CurrentServiceConfiguration)
                 {
-                    _isReferEngineTest = Convert.ToBoolean(RoleEnvironment.GetConfigurationSettingValue("IsReferEngineTest"));
+                    case ReferEngineServiceConfiguration.ProductionCloud:
+                        return "d76136086d701abbecf55a6de775127c";
+                    case ReferEngineServiceConfiguration.TestCloud:
+                        return "8b975bba223e30932a1ef8cd028f1c1c";
+                    case ReferEngineServiceConfiguration.Local:
+                        return "6a8d387692d3e39d9b7851edbfcc9b8d";
+                    default:
+                        throw new ArgumentOutOfRangeException("CurrentServiceConfiguration");
                 }
-                return _isReferEngineTest.Value;
-            } 
+            }
         }
 
         public static bool TryConvertToInt(string str, out int result)

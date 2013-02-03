@@ -5,6 +5,7 @@ using Microsoft.ServiceBus.Messaging;
 using ReferEngine.Common.Models;
 using System.Linq;
 using ReferEngine.Common.Properties;
+using ReferEngine.Common.Utilities;
 
 namespace ReferEngine.Common.Data
 {
@@ -22,7 +23,7 @@ namespace ReferEngine.Common.Data
             return new NamespaceManager(uri, tokenProvider);
         }
 
-        public static void Initialize(bool isLocal)
+        public static void Initialize()
         {
             ServiceBusEnvironment.SystemConnectivity.Mode = ConnectivityMode.Http;
 
@@ -35,7 +36,7 @@ namespace ReferEngine.Common.Data
             var messagingFactory = MessagingFactory.Create(namespaceManager.Address,
                                                            messagingFactorySettings);
 
-            string suffix = isLocal ? "_Local" : "_Cloud";
+            string suffix = "_" + Util.CurrentServiceConfigurationString;
 
             // Add Queues by Priority
             Queues.Add(new Queue(namespaceManager, messagingFactory, "AppAuthorization" + suffix, typeof(AppAuthorization)));

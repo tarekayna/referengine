@@ -2,6 +2,7 @@ using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Linq;
+using ReferEngine.Common.Utilities;
 using StackExchange.Profiling;
 using StackExchange.Profiling.MVCHelpers;
 using Microsoft.Web.Infrastructure;
@@ -82,9 +83,10 @@ namespace ReferEngine.Web.App_Start
             context.BeginRequest += (sender, e) =>
             {
                 var request = ((HttpApplication)sender).Request;
-                //TODO: By default only local requests are profiled, optionally you can set it up
-                //  so authenticated users are always profiled
-                if (request.IsLocal) { MiniProfiler.Start(); }
+
+                if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local ||
+                    Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.TestCloud) 
+                { MiniProfiler.Start(); }
             };
 
 

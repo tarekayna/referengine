@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
+using ReferEngine.Common.Utilities;
 using ReferEngine.Web.Models.Account;
 using WebMatrix.WebData;
 
@@ -38,7 +39,7 @@ namespace ReferEngine.Web.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "Email", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection(Util.DatabaseConnectionStringName, "Users", "Id", "Email", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

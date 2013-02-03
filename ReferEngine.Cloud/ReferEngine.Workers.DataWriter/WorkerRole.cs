@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Configuration;
-using Microsoft.ServiceBus.Messaging;
-using Microsoft.WindowsAzure;
+﻿using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using ReferEngine.Common.Data;
@@ -13,7 +10,6 @@ using System.Net;
 using System.Threading;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Workers.DataWriter.Properties;
-using CloudStorageAccount = Microsoft.WindowsAzure.Storage.CloudStorageAccount;
 
 namespace ReferEngine.Workers.DataWriter
 {
@@ -120,8 +116,7 @@ namespace ReferEngine.Workers.DataWriter
         {
             ServicePointManager.DefaultConnectionLimit = Environment.ProcessorCount;
 
-            bool isLocal = Convert.ToBoolean(RoleEnvironment.GetConfigurationSettingValue("IsLocal"));
-            ServiceBusOperations.Initialize(isLocal);
+            ServiceBusOperations.Initialize();
 
             DiagnosticMonitorConfiguration diagnosticMonitorConfiguration = DiagnosticMonitor.GetDefaultInitialConfiguration();
             diagnosticMonitorConfiguration.Logs.ScheduledTransferPeriod = TimeSpan.FromMinutes(5);

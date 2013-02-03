@@ -20,8 +20,7 @@ namespace ReferEngine.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            bool isLocal = Convert.ToBoolean(RoleEnvironment.GetConfigurationSettingValue("IsLocal"));
-            ServiceBusOperations.Initialize(isLocal);
+            ServiceBusOperations.Initialize();
         }
     }
 }

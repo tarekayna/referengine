@@ -3,13 +3,13 @@ using Microsoft.WindowsAzure.ServiceRuntime;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Xml;
+using ReferEngine.Common.Utilities;
 
 namespace ReferEngine.Workers.WinApps
 {
@@ -17,40 +17,37 @@ namespace ReferEngine.Workers.WinApps
     {
         private static bool ProcessStoreSitemap(string url)
         {
+            XmlDocument xmlDocument = new XmlDocument();
+            
             try
             {
-                XmlDocument xmlDocument = new XmlDocument();
                 xmlDocument.Load(url);
-                XmlNodeList xmlNodeList = xmlDocument.GetElementsByTagName("loc");
-                List<AppWebLink> appWebLinks = new List<AppWebLink>();
-                for (int i = 0; i < xmlNodeList.Count; i++)
-                {
-                    XmlNode xmlNode = xmlNodeList.Item(i);
-                    if (xmlNode != null)
-                    {
-                        string link = xmlNode.InnerText;
-                        if (link.Contains("en-us") && !appWebLinks.Any(a => a.Link.Equals(link, StringComparison.OrdinalIgnoreCase)))
-                        {
-                            AppWebLink appWebLink = new AppWebLink
-                                                        {
-                                                            Link = xmlNode.InnerText,
-                                                            LastUpdated = DateTime.Now
-                                                        };
-                            appWebLinks.Add(appWebLink);
-                        }
-                    }
-                }
-                DatabaseOperations.AddOrUpdateAppWebLinks(appWebLinks);
-                return true;
             }
-            catch (WebException e)
+            catch (WebException)
             {
                 return false;
             }
-            catch (Exception e)
+
+            XmlNodeList xmlNodeList = xmlDocument.GetElementsByTagName("loc");
+            List<AppWebLink> appWebLinks = new List<AppWebLink>();
+            for (int i = 0; i < xmlNodeList.Count; i++)
             {
-                return true;
+                XmlNode xmlNode = xmlNodeList.Item(i);
+                if (xmlNode == null) continue;
+                string link = xmlNode.InnerText;
+                if (link.Contains("en-us") && !appWebLinks.Any(a => a.Link.Equals(link, StringComparison.OrdinalIgnoreCase)))
+                {
+                    AppWebLink appWebLink = new AppWebLink
+                                                {
+                                                    Link = xmlNode.InnerText,
+                                                    LastUpdated = DateTime.Now
+                                                };
+                    appWebLinks.Add(appWebLink);
+                }
             }
+
+            DatabaseOperations.AddOrUpdateAppWebLinks(appWebLinks);
+            return true;
         }
 
         private static string GetInnerTextFromId(HtmlDocument doc, string id)
@@ -106,6 +103,7 @@ namespace ReferEngine.Workers.WinApps
                 {
                     sitemapIndex++;
                     url = string.Format(appStoreSiteMap, sitemapIndex);
+                    if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local) break;
                 }
 
                 // Now that we got all the links, time to scrape

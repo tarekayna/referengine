@@ -13,7 +13,7 @@
     <AzureHostedServiceName>referengine-test</AzureHostedServiceName>
     <AzureEnableIntelliTrace>True</AzureEnableIntelliTrace>
     <AzureEnableProfiling>False</AzureEnableProfiling>
-    <AzureServiceConfiguration>Cloud-Test</AzureServiceConfiguration>
+    <AzureServiceConfiguration>TestCloud</AzureServiceConfiguration>
     <AzureSolutionConfiguration>Release</AzureSolutionConfiguration>
     <AzureStorageAccountLabel>portalvhds17w2tr90fnj0p</AzureStorageAccountLabel>
     <AzureStorageAccountName>portalvhds17w2tr90fnj0p</AzureStorageAccountName>

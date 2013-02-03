@@ -2,12 +2,13 @@
 using System.Data.Entity.ModelConfiguration;
 using ReferEngine.Common.Models;
 using System.Data.Entity;
+using ReferEngine.Common.Utilities;
 
 namespace ReferEngine.Common.Data
 {
     public class ReferEngineDatabaseContext : DbContext
     {
-        public ReferEngineDatabaseContext() : base("name=DefaultConnection")
+        public ReferEngineDatabaseContext() : base(Util.DatabaseConnectionStringName)
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
