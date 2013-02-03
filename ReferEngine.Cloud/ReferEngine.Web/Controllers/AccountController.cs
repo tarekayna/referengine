@@ -18,7 +18,6 @@ using WebMatrix.WebData;
 namespace ReferEngine.Web.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
     [RemoteRequireHttps]
     public class AccountController : BaseController
     {
