@@ -25,6 +25,15 @@
         <Variable name="WaRoleType" value="WorkerRole" />
       </Environment>
     </Task>
+    <Task commandLine="install.cmd" executionContext="elevated" relativePath="plugins\RemoteForwarder">
+      <Environment>
+        <Variable name="IsEmulated">
+          <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+        </Variable>
+        <Variable name="RdModuleName" value="RemoteForwarder" />
+        <Variable name="WaRoleType" value="WorkerRole" />
+      </Environment>
+    </Task>
     <Task commandLine="WindowsAzureDiagnosticsStartup.exe" executionContext="elevated" relativePath="plugins\IntelliTrace">
       <Environment>
         <Variable name="RdModuleName" value="IntelliTrace" />
@@ -65,6 +74,7 @@
     <Setting name="AccountUsername" nameSpace="Microsoft.WindowsAzure.Plugins.RemoteAccess" />
     <Setting name="AccountEncryptedPassword" nameSpace="Microsoft.WindowsAzure.Plugins.RemoteAccess" />
     <Setting name="AccountExpiration" nameSpace="Microsoft.WindowsAzure.Plugins.RemoteAccess" />
+    <Setting name="Enabled" nameSpace="Microsoft.WindowsAzure.Plugins.RemoteForwarder" />
   </ConfigurationSettings>
   <Properties>
     <Property name="TargetFrameworkVersion" value="v4.5" />
