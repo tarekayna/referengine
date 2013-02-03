@@ -10,7 +10,7 @@ namespace ReferEngine.Workers.Pinger
     {
         private static IList<string> _websitesToPing;
         private const long BluGraphingCalculatorAppId = 21;
-        private readonly TimeSpan _sleepTimeBetweenIterations = TimeSpan.FromMinutes(5);
+        private readonly TimeSpan _sleepTimeBetweenIterations = TimeSpan.FromMinutes(15);
         private readonly TimeSpan _sleepTimeBetweenSites = TimeSpan.FromSeconds(1);
 
         public override void Run()

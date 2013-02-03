@@ -9,11 +9,11 @@
     <AzureEnableRemoteDesktop>True</AzureEnableRemoteDesktop>
     <AzureEnableWebDeploy>False</AzureEnableWebDeploy>
     <AzureFallbackToDeleteAndRecreateIfUpgradeFails>False</AzureFallbackToDeleteAndRecreateIfUpgradeFails>
-    <AzureHostedServiceLabel>referengine-test</AzureHostedServiceLabel>
-    <AzureHostedServiceName>referengine-test</AzureHostedServiceName>
+    <AzureHostedServiceLabel>ReferEngineWest</AzureHostedServiceLabel>
+    <AzureHostedServiceName>referenginewest</AzureHostedServiceName>
     <AzureEnableIntelliTrace>True</AzureEnableIntelliTrace>
     <AzureEnableProfiling>False</AzureEnableProfiling>
-    <AzureServiceConfiguration>Cloud-Test</AzureServiceConfiguration>
+    <AzureServiceConfiguration>Cloud</AzureServiceConfiguration>
     <AzureSolutionConfiguration>Release</AzureSolutionConfiguration>
     <AzureStorageAccountLabel>portalvhds17w2tr90fnj0p</AzureStorageAccountLabel>
     <AzureStorageAccountName>portalvhds17w2tr90fnj0p</AzureStorageAccountName>

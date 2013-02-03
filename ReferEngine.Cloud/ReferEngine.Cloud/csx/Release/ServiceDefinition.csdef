@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" schemaVersion="2012-10.1.8" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
-  <WebRole name="ReferEngine.Web" vmsize="Medium">
+  <WebRole name="ReferEngine.Web">
     <LocalResources>
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
@@ -8,6 +8,7 @@
       <Setting name="CloudToolsDiagnosticAgentVersion" />
       <Setting name="IntelliTrace.IntelliTraceConnectionString" />
       <Setting name="IsLocal" />
+      <Setting name="IsReferEngineTest" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
@@ -61,7 +62,7 @@
       <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" storeLocation="LocalMachine" storeName="My" />
     </Certificates>
   </WorkerRole>
-  <WorkerRole name="ReferEngine.Workers.DataWriter" vmsize="Medium">
+  <WorkerRole name="ReferEngine.Workers.DataWriter">
     <LocalResources>
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
@@ -93,6 +94,7 @@
     <ConfigurationSettings>
       <Setting name="CloudToolsDiagnosticAgentVersion" />
       <Setting name="IntelliTrace.IntelliTraceConnectionString" />
+      <Setting name="IsReferEngineTest" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
@@ -114,6 +116,7 @@
     <ConfigurationSettings>
       <Setting name="CloudToolsDiagnosticAgentVersion" />
       <Setting name="IntelliTrace.IntelliTraceConnectionString" />
+      <Setting name="IsReferEngineTest" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />

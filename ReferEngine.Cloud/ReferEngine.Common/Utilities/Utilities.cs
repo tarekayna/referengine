@@ -24,6 +24,19 @@ namespace ReferEngine.Common.Utilities
             }
         }
 
+        private static bool? _isReferEngineTest;
+        public static bool IsReferEngineTest 
+        {
+            get
+            {
+                if (!_isReferEngineTest.HasValue)
+                {
+                    _isReferEngineTest = Convert.ToBoolean(RoleEnvironment.GetConfigurationSettingValue("IsReferEngineTest"));
+                }
+                return _isReferEngineTest.Value;
+            } 
+        }
+
         public static bool TryConvertToInt(string str, out int result)
         {
             int actualResult = 0;

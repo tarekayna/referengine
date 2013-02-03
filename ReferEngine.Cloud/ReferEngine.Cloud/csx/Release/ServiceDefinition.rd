@@ -1,8 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="47032f1f-3936-4a68-863e-55ff758c17f1" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="87d155d4-073d-4bd5-b57f-d5129e643a64" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="ReferCloudGroup" generation="1" functional="0" release="0">
       <componentports>
+        <inPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" protocol="tcp">
+          <inToChannel>
+            <lBChannelMoniker name="/ReferCloud/ReferCloudGroup/LB:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" />
+          </inToChannel>
+        </inPort>
         <inPort name="ReferEngine.Web:Endpoint1" protocol="http">
           <inToChannel>
             <lBChannelMoniker name="/ReferCloud/ReferCloudGroup/LB:ReferEngine.Web:Endpoint1" />
@@ -15,9 +20,34 @@
         </inPort>
       </componentports>
       <settings>
+        <aCS name="Certificate|ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapCertificate|ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+          </maps>
+        </aCS>
+        <aCS name="Certificate|ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapCertificate|ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+          </maps>
+        </aCS>
         <aCS name="Certificate|ReferEngine.Web:ReferEngineTestCertificate" defaultValue="">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapCertificate|ReferEngine.Web:ReferEngineTestCertificate" />
+          </maps>
+        </aCS>
+        <aCS name="Certificate|ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapCertificate|ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+          </maps>
+        </aCS>
+        <aCS name="Certificate|ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapCertificate|ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+          </maps>
+        </aCS>
+        <aCS name="Certificate|ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapCertificate|ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
           </maps>
         </aCS>
         <aCS name="ReferEngine.Web.Cache:CloudToolsDiagnosticAgentVersion" defaultValue="">
@@ -55,6 +85,31 @@
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
           </maps>
         </aCS>
+        <aCS name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" />
+          </maps>
+        </aCS>
         <aCS name="ReferEngine.Web.CacheInstances" defaultValue="[1,1,1]">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web.CacheInstances" />
@@ -75,6 +130,11 @@
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:IsLocal" />
           </maps>
         </aCS>
+        <aCS name="ReferEngine.Web:IsReferEngineTest" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:IsReferEngineTest" />
+          </maps>
+        </aCS>
         <aCS name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
@@ -83,6 +143,26 @@
         <aCS name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
           </maps>
         </aCS>
         <aCS name="ReferEngine.Web:StorageConnectionString" defaultValue="">
@@ -125,6 +205,26 @@
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
           </maps>
         </aCS>
+        <aCS name="ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
+          </maps>
+        </aCS>
         <aCS name="ReferEngine.Workers.DataWriterInstances" defaultValue="[1,1,1]">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriterInstances" />
@@ -138,6 +238,31 @@
         <aCS name="ReferEngine.Workers.Pinger:IntelliTrace.IntelliTraceConnectionString" defaultValue="">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.Pinger:IntelliTrace.IntelliTraceConnectionString" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.Pinger:IsReferEngineTest" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.Pinger:IsReferEngineTest" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
           </maps>
         </aCS>
         <aCS name="ReferEngine.Workers.PingerInstances" defaultValue="[1,1,1]">
@@ -155,9 +280,34 @@
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.WinApps:IntelliTrace.IntelliTraceConnectionString" />
           </maps>
         </aCS>
+        <aCS name="ReferEngine.Workers.WinApps:IsReferEngineTest" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.WinApps:IsReferEngineTest" />
+          </maps>
+        </aCS>
         <aCS name="ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
           </maps>
         </aCS>
         <aCS name="ReferEngine.Workers.WinAppsInstances" defaultValue="[1,1,1]">
@@ -167,6 +317,11 @@
         </aCS>
       </settings>
       <channels>
+        <lBChannel name="LB:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput">
+          <toPorts>
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" />
+          </toPorts>
+        </lBChannel>
         <lBChannel name="LB:ReferEngine.Web:Endpoint1">
           <toPorts>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/Endpoint1" />
@@ -202,11 +357,61 @@
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" />
           </toPorts>
         </sFSwitchChannel>
+        <sFSwitchChannel name="SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp">
+          <toPorts>
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+          </toPorts>
+        </sFSwitchChannel>
+        <sFSwitchChannel name="SW:ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp">
+          <toPorts>
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+          </toPorts>
+        </sFSwitchChannel>
+        <sFSwitchChannel name="SW:ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp">
+          <toPorts>
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+          </toPorts>
+        </sFSwitchChannel>
+        <sFSwitchChannel name="SW:ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp">
+          <toPorts>
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.Pinger/Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+          </toPorts>
+        </sFSwitchChannel>
+        <sFSwitchChannel name="SW:ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp">
+          <toPorts>
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+          </toPorts>
+        </sFSwitchChannel>
       </channels>
       <maps>
+        <map name="MapCertificate|ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" kind="Identity">
+          <certificate>
+            <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+          </certificate>
+        </map>
+        <map name="MapCertificate|ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" kind="Identity">
+          <certificate>
+            <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+          </certificate>
+        </map>
         <map name="MapCertificate|ReferEngine.Web:ReferEngineTestCertificate" kind="Identity">
           <certificate>
             <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/ReferEngineTestCertificate" />
+          </certificate>
+        </map>
+        <map name="MapCertificate|ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" kind="Identity">
+          <certificate>
+            <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+          </certificate>
+        </map>
+        <map name="MapCertificate|ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" kind="Identity">
+          <certificate>
+            <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.Pinger/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+          </certificate>
+        </map>
+        <map name="MapCertificate|ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" kind="Identity">
+          <certificate>
+            <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
           </certificate>
         </map>
         <map name="MapReferEngine.Web.Cache:CloudToolsDiagnosticAgentVersion" kind="Identity">
@@ -244,6 +449,31 @@
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
           </setting>
         </map>
+        <map name="MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" />
+          </setting>
+        </map>
         <map name="MapReferEngine.Web.CacheInstances" kind="Identity">
           <setting>
             <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.CacheInstances" />
@@ -264,6 +494,11 @@
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/IsLocal" />
           </setting>
         </map>
+        <map name="MapReferEngine.Web:IsReferEngineTest" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/IsReferEngineTest" />
+          </setting>
+        </map>
         <map name="MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" kind="Identity">
           <setting>
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
@@ -272,6 +507,26 @@
         <map name="MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
           <setting>
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
           </setting>
         </map>
         <map name="MapReferEngine.Web:StorageConnectionString" kind="Identity">
@@ -314,6 +569,26 @@
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
           </setting>
         </map>
+        <map name="MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
+          </setting>
+        </map>
         <map name="MapReferEngine.Workers.DataWriterInstances" kind="Identity">
           <setting>
             <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriterInstances" />
@@ -327,6 +602,31 @@
         <map name="MapReferEngine.Workers.Pinger:IntelliTrace.IntelliTraceConnectionString" kind="Identity">
           <setting>
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.Pinger/IntelliTrace.IntelliTraceConnectionString" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.Pinger:IsReferEngineTest" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.Pinger/IsReferEngineTest" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.Pinger/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.Pinger/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.Pinger/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.Pinger/Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
           </setting>
         </map>
         <map name="MapReferEngine.Workers.PingerInstances" kind="Identity">
@@ -344,9 +644,34 @@
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/IntelliTrace.IntelliTraceConnectionString" />
           </setting>
         </map>
+        <map name="MapReferEngine.Workers.WinApps:IsReferEngineTest" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/IsReferEngineTest" />
+          </setting>
+        </map>
         <map name="MapReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
           <setting>
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
           </setting>
         </map>
         <map name="MapReferEngine.Workers.WinAppsInstances" kind="Identity">
@@ -357,7 +682,7 @@
       </maps>
       <components>
         <groupHascomponents>
-          <role name="ReferEngine.Web" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Release\roles\ReferEngine.Web" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaIISHost.exe " memIndex="3584" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
+          <role name="ReferEngine.Web" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Release\roles\ReferEngine.Web" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaIISHost.exe " memIndex="1792" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
             <componentports>
               <inPort name="Endpoint1" protocol="http" portRanges="80" />
               <inPort name="HttpsIn" protocol="https" portRanges="443">
@@ -365,6 +690,7 @@
                   <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/ReferEngineTestCertificate" />
                 </certificate>
               </inPort>
+              <inPort name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp" portRanges="3389" />
               <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp">
                 <outToChannel>
                   <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" />
@@ -390,28 +716,64 @@
                   <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" />
                 </outToChannel>
               </outPort>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
             </componentports>
             <settings>
               <aCS name="CloudToolsDiagnosticAgentVersion" defaultValue="" />
               <aCS name="IntelliTrace.IntelliTraceConnectionString" defaultValue="" />
               <aCS name="IsLocal" defaultValue="" />
+              <aCS name="IsReferEngineTest" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="" />
               <aCS name="StorageConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Web&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot; /&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Web&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
               <resourceReference name="EventStore" defaultAmount="[1000,1000,1000]" defaultSticky="false" kind="LogStore" />
             </resourcereferences>
             <storedcertificates>
-              <storedCertificate name="Stored0ReferEngineTestCertificate" certificateStore="My" certificateLocation="System">
+              <storedCertificate name="Stored0Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" certificateStore="My" certificateLocation="System">
+                <certificate>
+                  <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+                </certificate>
+              </storedCertificate>
+              <storedCertificate name="Stored1ReferEngineTestCertificate" certificateStore="My" certificateLocation="System">
                 <certificate>
                   <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/ReferEngineTestCertificate" />
                 </certificate>
               </storedCertificate>
             </storedcertificates>
             <certificates>
+              <certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
               <certificate name="ReferEngineTestCertificate" />
             </certificates>
           </role>
@@ -424,11 +786,13 @@
         <groupHascomponents>
           <role name="ReferEngine.Web.Cache" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Release\roles\ReferEngine.Web.Cache" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="1792" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
             <componentports>
+              <inPort name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" protocol="tcp" />
               <inPort name="Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp" />
               <inPort name="Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort" protocol="tcp" />
               <inPort name="Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort" protocol="tcp" />
               <inPort name="Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal" protocol="tcp" />
               <inPort name="Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" protocol="tcp" />
+              <inPort name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp" portRanges="3389" />
               <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp">
                 <outToChannel>
                   <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" />
@@ -452,6 +816,31 @@
               <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" protocol="tcp">
                 <outToChannel>
                   <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
                 </outToChannel>
               </outPort>
             </componentports>
@@ -463,12 +852,27 @@
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Web.Cache&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot; /&gt;&lt;/m&gt;" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" defaultValue="" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Web.Cache&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[20000,20000,20000]" defaultSticky="true" kind="Directory" />
               <resourceReference name="EventStore" defaultAmount="[1000,1000,1000]" defaultSticky="false" kind="LogStore" />
             </resourcereferences>
+            <storedcertificates>
+              <storedCertificate name="Stored0Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" certificateStore="My" certificateLocation="System">
+                <certificate>
+                  <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+                </certificate>
+              </storedCertificate>
+            </storedcertificates>
+            <certificates>
+              <certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+            </certificates>
           </role>
           <sCSPolicy>
             <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.CacheInstances" />
@@ -477,8 +881,9 @@
           </sCSPolicy>
         </groupHascomponents>
         <groupHascomponents>
-          <role name="ReferEngine.Workers.DataWriter" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Release\roles\ReferEngine.Workers.DataWriter" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="3584" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
+          <role name="ReferEngine.Workers.DataWriter" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Release\roles\ReferEngine.Workers.DataWriter" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="1792" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
             <componentports>
+              <inPort name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp" portRanges="3389" />
               <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp">
                 <outToChannel>
                   <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" />
@@ -502,6 +907,31 @@
               <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" protocol="tcp">
                 <outToChannel>
                   <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
                 </outToChannel>
               </outPort>
             </componentports>
@@ -512,12 +942,26 @@
               <aCS name="Microsoft.ServiceBus.ConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Workers.DataWriter&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot; /&gt;&lt;/m&gt;" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Workers.DataWriter&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
               <resourceReference name="EventStore" defaultAmount="[1000,1000,1000]" defaultSticky="false" kind="LogStore" />
             </resourcereferences>
+            <storedcertificates>
+              <storedCertificate name="Stored0Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" certificateStore="My" certificateLocation="System">
+                <certificate>
+                  <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+                </certificate>
+              </storedCertificate>
+            </storedcertificates>
+            <certificates>
+              <certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+            </certificates>
           </role>
           <sCSPolicy>
             <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriterInstances" />
@@ -528,6 +972,7 @@
         <groupHascomponents>
           <role name="ReferEngine.Workers.Pinger" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Release\roles\ReferEngine.Workers.Pinger" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="768" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
             <componentports>
+              <inPort name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp" portRanges="3389" />
               <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp">
                 <outToChannel>
                   <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" />
@@ -553,16 +998,56 @@
                   <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" />
                 </outToChannel>
               </outPort>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
             </componentports>
             <settings>
               <aCS name="CloudToolsDiagnosticAgentVersion" defaultValue="" />
               <aCS name="IntelliTrace.IntelliTraceConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Workers.Pinger&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot; /&gt;&lt;/m&gt;" />
+              <aCS name="IsReferEngineTest" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Workers.Pinger&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
               <resourceReference name="EventStore" defaultAmount="[1000,1000,1000]" defaultSticky="false" kind="LogStore" />
             </resourcereferences>
+            <storedcertificates>
+              <storedCertificate name="Stored0Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" certificateStore="My" certificateLocation="System">
+                <certificate>
+                  <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.Pinger/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+                </certificate>
+              </storedCertificate>
+            </storedcertificates>
+            <certificates>
+              <certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+            </certificates>
           </role>
           <sCSPolicy>
             <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.PingerInstances" />
@@ -573,6 +1058,7 @@
         <groupHascomponents>
           <role name="ReferEngine.Workers.WinApps" generation="1" functional="0" release="0" software="C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Cloud\csx\Release\roles\ReferEngine.Workers.WinApps" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="3584" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
             <componentports>
+              <inPort name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp" portRanges="3389" />
               <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" protocol="tcp">
                 <outToChannel>
                   <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort" />
@@ -598,17 +1084,57 @@
                   <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort" />
                 </outToChannel>
               </outPort>
+              <outPort name="ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Web:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
+              <outPort name="ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/ReferCloud/ReferCloudGroup/SW:ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
+                </outToChannel>
+              </outPort>
             </componentports>
             <settings>
               <aCS name="CloudToolsDiagnosticAgentVersion" defaultValue="" />
               <aCS name="IntelliTrace.IntelliTraceConnectionString" defaultValue="" />
+              <aCS name="IsReferEngineTest" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Workers.WinApps&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot; /&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot; /&gt;&lt;/m&gt;" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;ReferEngine.Workers.WinApps&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;ReferEngine.Web&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;HttpsIn&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Web.Cache&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheArbitrationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheClusterPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheReplicationPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheServicePortInternal&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.Caching.cacheSocketPort&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.DataWriter&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.Pinger&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;ReferEngine.Workers.WinApps&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
               <resourceReference name="EventStore" defaultAmount="[1000,1000,1000]" defaultSticky="false" kind="LogStore" />
             </resourcereferences>
+            <storedcertificates>
+              <storedCertificate name="Stored0Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" certificateStore="My" certificateLocation="System">
+                <certificate>
+                  <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+                </certificate>
+              </storedCertificate>
+            </storedcertificates>
+            <certificates>
+              <certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+            </certificates>
           </role>
           <sCSPolicy>
             <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinAppsInstances" />
@@ -637,14 +1163,19 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="57f18518-589b-40a0-a8d3-c2200da38156" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
+    <implementation Id="356f60fd-0297-4918-b3d8-80627e7eec86" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="f3b9a530-db7c-42fc-b593-7594327f8237" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="c8ad8ea2-77cc-405c-8a23-7ccef01d04e9" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput@ServiceDefinition">
+          <inPort>
+            <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web.Cache:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" />
+          </inPort>
+        </interfaceReference>
+        <interfaceReference Id="fc4ae53e-7ae4-44ab-9688-548141e96fd2" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="3190896a-9ab5-4402-b218-2dd4677d2193" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
+        <interfaceReference Id="107ba48b-f8fa-45ac-b647-0ce6f9aa1510" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:HttpsIn" />
           </inPort>
