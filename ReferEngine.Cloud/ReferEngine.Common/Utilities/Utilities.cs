@@ -71,6 +71,24 @@ namespace ReferEngine.Common.Utilities
             }
         }
 
+        public static string ElmahConnectionString 
+        {
+            get { 
+                string format = "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}";
+                switch (CurrentServiceConfiguration)
+                {
+                    case ReferEngineServiceConfiguration.ProductionCloud:
+                        return string.Format(format, "referengineelmah", "1pMOMS7/z4OfTpO3/DJd6MCfH8NkxQac02Sdis+RPYYNO1puLTQvOA8LIMZDIrygVzqI40RAjw72cdOw4574pA==");
+                    case ReferEngineServiceConfiguration.TestCloud:
+                        return string.Format(format, "referengineelmahtest", "5eZciKKweFBSB1POEoQJLKfbGXOhXnYG9tn0FQrst2A3aeQATvAM1LOSlAYwzuSyPyXL1dSyLIRzfSAA70oZdQ==");
+                    case ReferEngineServiceConfiguration.Local:
+                        return string.Format(format, "referengineelmahlocal", "oDE32DOEW6k3ckzjdY8Hge0bXvKDVoekRkvIaWzAYugib4ZHONF7y2CZtBO8udhHuhghVj1H9IA8zEkSPQs/TA==");
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         public static string MixPanelProjectToken
         {
             get

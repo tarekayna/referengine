@@ -5,6 +5,7 @@ using Elmah;
 using System.Collections;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using ReferEngine.Common.Utilities;
 
 namespace ReferEngine.Web.App_Start
 {
@@ -51,7 +52,7 @@ namespace ReferEngine.Web.App_Start
 
             public TableErrorLog(IDictionary config)
             {
-                connectionString = (string)config["connectionString"] ?? RoleEnvironment.GetConfigurationSettingValue((string)config["connectionStringName"]);
+                connectionString = Util.ElmahConnectionString;
                 Initialize();
             }
 
