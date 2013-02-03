@@ -62,26 +62,6 @@ namespace ReferEngine.Common.Utilities
             }
         }
 
-        public static string DatabaseConnectionString
-        {
-            get
-            {
-                const string connectionFormat =
-                    "Server=tcp:fnx5xvuqzn.database.windows.net,1433;Database={0};User ID=tarek990@fnx5xvuqzn;Password=r6g4d2hA..;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;MultipleActiveResultSets=True";
-                switch (CurrentServiceConfiguration)
-                {
-                    case ReferEngineServiceConfiguration.ProductionCloud:
-                        return string.Format(connectionFormat, "referengine_db");
-                    case ReferEngineServiceConfiguration.TestCloud:
-                        return string.Format(connectionFormat, "referengine_db_test");
-                    case ReferEngineServiceConfiguration.Local:
-                        return string.Format(connectionFormat, "referengine_db_local");
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-        }
-
         public static string DatabaseConnectionStringName
         {
             get
