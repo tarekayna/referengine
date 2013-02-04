@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using ReferEngine.Common.Utilities;
 
 namespace ReferEngine.Workers.Pinger
 {
@@ -42,14 +43,31 @@ namespace ReferEngine.Workers.Pinger
         {
             ServicePointManager.DefaultConnectionLimit = 12;
 
+            string baseUrl = "https://www.referengine.com";
+            switch (Util.CurrentServiceConfiguration)
+            {
+                case Util.ReferEngineServiceConfiguration.Local:
+                    baseUrl = "http://127.0.0.1:81";
+                    break;
+                case Util.ReferEngineServiceConfiguration.TestCloud:
+                    baseUrl = "https://www.referengine-test.com";
+                    break;
+            }
+
             _websitesToPing = new List<string>
                 {
-                    "https://www.referengine.com",
-                    "https://www.referengine.com/account/login",
-                    "https://www.referengine.com/pricing",
-                    "https://www.referengine.com/contact",
-                    string.Format("https://www.referengine.com/fb/app/{0}", BluGraphingCalculatorAppId),
-                    string.Format("https://www.referengine.com/recommend/win8/intro/{0}", BluGraphingCalculatorAppId)
+                    string.Format("{0}/", baseUrl),
+                    string.Format("{0}/fb/app/{1}", baseUrl, BluGraphingCalculatorAppId),
+                    string.Format("{0}/recommend/win8/intro/{1}", baseUrl, BluGraphingCalculatorAppId),
+                    string.Format("{0}/pricing", baseUrl),
+                    string.Format("{0}/contact", baseUrl),
+                    string.Format("{0}/account/login", baseUrl),
+                    string.Format("{0}/account/register", baseUrl),
+                    string.Format("{0}/about/privacy", baseUrl),
+                    string.Format("{0}/about/terms", baseUrl),
+                    string.Format("{0}/about/use", baseUrl),
+                    string.Format("{0}/about/copyright", baseUrl),
+                    string.Format("{0}/about/rules/{1}", baseUrl, BluGraphingCalculatorAppId),
                 };
 
             return base.OnStart();
