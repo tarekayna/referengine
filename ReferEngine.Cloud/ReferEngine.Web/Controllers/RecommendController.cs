@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using ReferEngine.Web.Models.Common;
 using ReferEngine.Web.Models.Recommend.Win8;
 using StackExchange.Profiling;
 
@@ -24,9 +25,9 @@ namespace ReferEngine.Web.Controllers
             Verifier.IsNotNullOrEmpty(platform, "platform");
             Verifier.IsNotNullOrEmpty(id, "id");
 
-            App app = DataReader.GetApp(id);
+            ViewProperties.CurrentApp = DataReader.GetApp(id);
             string viewName = String.Format("{0}/intro", platform);
-            return View(viewName, app);
+            return View(viewName, ViewProperties.CurrentApp);
         }
 
         public ActionResult RecommendViewOnly(string platform, long id)
@@ -34,7 +35,7 @@ namespace ReferEngine.Web.Controllers
             Verifier.IsNotNullOrEmpty(platform, "platform");
             Verifier.IsNotNullOrEmpty(id, "id");
 
-            App app = DataReader.GetApp(id);
+            ViewProperties.CurrentApp = DataReader.GetApp(id);
 
             // Facebook is cool
             Person me = DatabaseOperations.GetPerson(509572882);
@@ -45,7 +46,7 @@ namespace ReferEngine.Web.Controllers
             friends.Add(DatabaseOperations.GetPerson(1488075933));
 
             string viewName = String.Format("{0}/recommend", platform);
-            var viewModel = new RecommendViewModel(me, app, "fake_auth_token", null);
+            var viewModel = new RecommendViewModel(me, ViewProperties.CurrentApp, "fake_auth_token", null);
             return View(viewName, viewModel);
         }
 
@@ -64,7 +65,7 @@ namespace ReferEngine.Web.Controllers
                 Verifier.IsNotNullOrEmpty(appAuthorization, "appAuthorization");
 
                 // App is cool
-                App app = appAuthorization.App;
+                ViewProperties.CurrentApp = appAuthorization.App;
                 string accessCode = fb_access_code.Replace("%23", "#");
                 FacebookOperations facebookOperations = await FacebookOperations.CreateAsync(accessCode, re_auth_token);
 
@@ -79,10 +80,8 @@ namespace ReferEngine.Web.Controllers
                     if (existingReceipt.PersonFacebookId != me.FacebookId)
                     {
                         // Another user is associated with this receipt
-                        AppRecommendation appRecommendation = DataReader.GetAppRecommendation(app.Id,
-                                                                                                existingReceipt
-                                                                                                    .PersonFacebookId
-                                                                                                    .Value);
+                        AppRecommendation appRecommendation = DataReader.GetAppRecommendation(ViewProperties.CurrentApp.Id,
+                                                                                              existingReceipt.PersonFacebookId.Value);
                         if (appRecommendation != null)
                         {
                             // Another user already posted a recommendation for this app using this receipt
@@ -108,7 +107,7 @@ namespace ReferEngine.Web.Controllers
                 if (showErrorView)
                 {
                     string viewName = String.Format("{0}/recommend-error", platform);
-                    var viewModel = new RecommendViewModel(me, app, re_auth_token, appReceipt);
+                    var viewModel = new RecommendViewModel(me, ViewProperties.CurrentApp, re_auth_token, appReceipt);
                     return View(viewName, viewModel);
                 }
                 else
@@ -124,7 +123,7 @@ namespace ReferEngine.Web.Controllers
                     }
 
                     string viewName = String.Format("{0}/recommend", platform);
-                    var viewModel = new RecommendViewModel(me, app, re_auth_token, appReceipt);
+                    var viewModel = new RecommendViewModel(me, ViewProperties.CurrentApp, re_auth_token, appReceipt);
                     return View(viewName, viewModel);
                 }
             }

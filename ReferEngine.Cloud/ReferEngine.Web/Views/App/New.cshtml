@@ -1,7 +1,7 @@
 ﻿@model ReferEngine.Common.Models.App
 
 @{
-    ViewBag.JQueryUI = true;
+    ViewProperties.UseJQueryUi = true;
 }
 
 @section Styles
@@ -33,7 +33,7 @@
     </script>
 }
 
-@using (Html.BeginForm(new {ReturnUrl = ViewBag.ReturnUrl}))
+@using (Html.BeginForm(new { ViewProperties.ReturnUrl }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -47,7 +47,7 @@
                     <div class="modal modal-flat">
                         <div class="modal-header">
                             <h3>
-                                @ViewBag.User.FirstName, Enter the Name of Your Application
+                                @ViewProperties.CurrentUser.FirstName, Enter the Name of Your Application
                             </h3>
                         </div>
                         <div class="modal-body txt-middle">

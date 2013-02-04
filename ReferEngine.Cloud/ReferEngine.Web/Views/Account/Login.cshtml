@@ -1,6 +1,6 @@
 ﻿@model ReferEngine.Web.Models.Account.LoginModel
 
-@using (Html.BeginForm(new {ReturnUrl = ViewBag.ReturnUrl}))
+@using (Html.BeginForm(new { ViewProperties.ReturnUrl }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -64,7 +64,7 @@
 
 @*<section id="loginForm">
 <h2>Use a local account to log in.</h2>
-@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+@using (Html.BeginForm(new { ViewProperties.ReturnUrl })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -96,6 +96,6 @@
 
 @*<section class="social" id="socialLoginForm">
     <h2>Use another service to log in.</h2>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+    @Html.Action("ExternalLoginsList", new { ViewProperties.ReturnUrl })
 </section>*@
 

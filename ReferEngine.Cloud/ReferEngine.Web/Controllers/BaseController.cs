@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using ReferEngine.Web.DataAccess;
 using ReferEngine.Web.Filters;
+using ReferEngine.Web.Models.Common;
 using WebMatrix.WebData;
 
 namespace ReferEngine.Web.Controllers
@@ -21,7 +22,7 @@ namespace ReferEngine.Web.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                ViewBag.User = DataReader.GetUser(WebSecurity.CurrentUserId);
+                ViewProperties.CurrentUser = DataReader.GetUser(WebSecurity.CurrentUserId);
             }
 
             base.OnActionExecuting(filterContext);

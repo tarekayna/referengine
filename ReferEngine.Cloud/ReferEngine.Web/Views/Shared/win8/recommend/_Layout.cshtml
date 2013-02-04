@@ -1,7 +1,9 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>@ViewBag.App.Name | Refer Engine</title>
+    <title>
+        @ViewProperties.CurrentApp.Name | Refer Engine
+    </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -10,14 +12,14 @@
     <link href='https://fonts.googleapis.com/css?family=Duru+Sans' rel='stylesheet' type='text/css'>
 
     @Html.Partial("_FavIcon")
-
+    @Html.Partial("_SetJavaScriptGlobalVariables")
     @RenderSection("styles", required: false)
 </head>
     <body>
         <div id="re-ctnr">
             <header>
-                @HtmlHelperExtensions.Image(Html, ViewBag.App.LogoLink50, ViewBag.App.Name, "app-logo")
-                <div class="app-name">@ViewBag.App.Name</div>
+                @HtmlHelperExtensions.Image(Html, ViewProperties.CurrentApp.LogoLink50, ViewProperties.CurrentApp.Name, "app-logo")
+                <div class="app-name">@ViewProperties.CurrentApp.Name</div>
                 @Html.Partial("_LogoMark30")
                 <h4 class="logo-text">Refer Engine</h4>
             </header>
@@ -36,18 +38,19 @@
 
         @Scripts.Render("~/bundles/libs/base")
         
-        @if (!Convert.ToBoolean(ViewBag.JQueryValidate))
+        @if (ViewProperties.UseJQueryValidate)
         {
             @Scripts.Render("~/bundles/libs/jquery-validate")
         }
         
-        @if (!Convert.ToBoolean(ViewBag.JQueryUI))
+        @if (ViewProperties.UseJQueryUi)
         {
             @Scripts.Render("~/bundles/libs/jquery-ui")
         }
 
         @RenderSection("scripts", required: false)
         @Html.Partial("_CrazyEgg")
+        @Html.Partial("_LiveChat")
         @StackExchange.Profiling.MiniProfiler.RenderIncludes()
     </body>
 </html>

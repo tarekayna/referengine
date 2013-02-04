@@ -1,0 +1,12 @@
+﻿<script type="text/javascript">
+    window.ReferEngine = {};
+
+    @if (ViewProperties.JavaScriptGlobalVariables != null)
+    {
+        for (int i = 0; i < ViewProperties.JavaScriptGlobalVariables.Count; i++)
+        {
+            IJavaScriptGlobalVariable globalVariable = @ViewProperties.JavaScriptGlobalVariables.ElementAt(i);
+            <text>window.ReferEngine.</text>@globalVariable.Name<text> = '</text>@globalVariable.Value<text>';</text>
+        }
+    }    
+</script>

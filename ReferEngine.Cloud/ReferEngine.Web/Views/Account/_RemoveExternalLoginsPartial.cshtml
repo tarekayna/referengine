@@ -5,12 +5,12 @@
     <h3>Registered external logins</h3>
     <table>
         <tbody>
-        @foreach (MvcApplication1.Models.ExternalLogin externalLogin in Model)
+        @foreach (ReferEngine.Web.Models.Account.ExternalLogin externalLogin in Model)
         {
             <tr>
                 <td>@externalLogin.ProviderDisplayName</td>
                 <td>
-                    @if (ViewBag.ShowRemoveButton)
+                    @if (ViewProperties.ShowRemoveButton)
                     {
                         using (Html.BeginForm("Disassociate", "Account"))
                         {

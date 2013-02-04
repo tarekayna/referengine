@@ -1,11 +1,9 @@
 ﻿using System.Linq;
 using System.Web.Security;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using ReferEngine.Common.Models;
 using System.Web.Mvc;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Web.DataAccess;
+using ReferEngine.Web.Models.Common;
 using WebMatrix.WebData;
 
 namespace ReferEngine.Web.Controllers
@@ -23,14 +21,12 @@ namespace ReferEngine.Web.Controllers
 
         public ActionResult Dashboard(long id)
         {
-            App app = DataReader.GetApp(id);
+            ViewProperties.CurrentApp = DataReader.GetApp(id);
             
-            if (app != null &&
-               (app.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
+            if (ViewProperties.CurrentApp != null &&
+               (ViewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
             {
-                var viewModel = DataReader.GetAppDashboardViewModel(app);
-
-                ViewBag.CurrentApp = app;
+                var viewModel = DataReader.GetAppDashboardViewModel(ViewProperties.CurrentApp);
                 return View(viewModel);
             }
 

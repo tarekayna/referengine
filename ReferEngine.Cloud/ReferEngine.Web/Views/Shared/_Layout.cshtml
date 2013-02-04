@@ -1,6 +1,4 @@
-﻿@using ReferEngine.Common.Utilities;
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
     @RenderSection("CustomHead", false)
     <head>
@@ -12,6 +10,7 @@
         <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     
         @Html.Partial("_FavIcon")
+        @Html.Partial("_SetJavaScriptGlobalVariables")
 
         @Styles.Render("~/bundles/css/bootstrap")
         @Styles.Render("~/bundles/less/web")
@@ -19,7 +18,7 @@
     </head>
     <body>
          
-        @if (Request.IsAuthenticated && ViewBag.User != null)
+        @if (Request.IsAuthenticated && ViewProperties.CurrentUser != null)
         {
             <div class="navbar navbar-fixed-top">
                 <div class="navbar-inner">
@@ -31,24 +30,24 @@
                         </a>		
 
                         <ul class="nav pull-left">
-                            @if (ViewBag.User.Apps != null && ViewBag.User.Apps.Count > 0)
+                            @if (ViewProperties.CurrentUser.Apps != null && ViewProperties.CurrentUser.Apps.Count > 0)
                             {
                                 <div class="btn-group">
                                     <button class="btn dropdown-toggle" data-toggle="dropdown">
-                                        @if (ViewBag.CurrentApp == null)
+                                        @if (ViewProperties.CurrentApp == null)
                                         {
                                             <span>My Apps</span>
                                         }
                                         else
                                         {
-                                            <span>@ViewBag.CurrentApp.Name</span>
+                                            <span>@ViewProperties.CurrentApp.Name</span>
                                         }
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        @for (int i = 0; i < ViewBag.User.Apps.Count; i++)
+                                        @for (int i = 0; i < ViewProperties.CurrentUser.Apps.Count; i++)
                                         {
-                                            <li><a tabindex="-1" href="~/app/dashboard/@ViewBag.User.Apps[i].Id">@ViewBag.User.Apps[i].Name</a></li>
+                                            <li><a tabindex="-1" href="~/app/dashboard/@ViewProperties.CurrentUser.Apps[i].Id">@ViewProperties.CurrentUser.Apps[i].Name</a></li>
                                         }
                                         <li class="divider"></li>
                                         <li><a href="~/app/new"><i class="icon-plus-sign"></i> Add New App</a></li>
@@ -68,7 +67,7 @@
                                     <li><a href="~/admin/errors" target="_blank">Server Errors</a></li>
                                     <li><a href="~/admin/admin">Admin Panel</a></li>
                                 }
-                                <li><a href="~/account/manage">@ViewBag.User.FirstName @ViewBag.User.LastName</a></li>
+                                <li><a href="~/account/manage">@ViewProperties.CurrentUser.FirstName @ViewProperties.CurrentUser.LastName</a></li>
                                 <li>
                                     @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
                                         @Html.AntiForgeryToken()
@@ -81,7 +80,7 @@
                 </div>
             </div>
         }
-        else if (!Convert.ToBoolean(ViewBag.HideHeader))
+        else
         {
             <div class="navbar navbar-fixed-top">
                 <div class="navbar-inner">
@@ -94,10 +93,10 @@
                         <a class="brand" href="~/"><img src="~/img/logo-web-header.png" alt="Refer Engine Logo" /></a>
                         <div class="nav-collapse collapse">
                             <ul class="nav pull-right">
-                                @*@HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Features", "Default", new {controller = "Features"}), ViewBag.MenuActive == "Features")*@
-                                @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Pricing", "Default", new {controller = "pricing"}), ViewBag.MenuActive == "Pricing")
-                                @HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Contact", "Default", new {controller = "contact"}), ViewBag.MenuActive == "Contact")
-                                @*@HtmlHelperExtensions.NavLinkItem(Html, Html.RouteLink("Log In", "Default", new {controller = "account", action = "login"}), ViewBag.MenuActive == "Login")*@
+                                @*<li><a href="~/features">Features</a></li>*@
+                                <li><a href="~/pricing">Pricing</a></li>
+                                <li><a href="~/contact">Contact</a></li>
+                                @*<li><a href="~/account/login">Login</a></li>*@
                             </ul>
                         </div>
                     </div>
@@ -133,40 +132,26 @@
           </div>	  
         </div>
         
-        @if (!Convert.ToBoolean(ViewBag.HideFooter))
-        {
-            <div id="copywrite">
-                <div class="container">
-                    <div class="row">
-                        <div class="span12">
-                            <p>&copy; @DateTime.Now.Year <img src="~/img/logo-mark-white-25.png" /> ReferEngine.com <span id="totop" class="pull-right">Back to Top <i class="icon-arrow-up"></i></span></p>
-                        </div>		  
-                    </div>
-                </div>	  
-            </div>
-        }
-    
-        @if (Convert.ToBoolean(ViewBag.ShowPowered))
-        {
-            <div class="container" style="text-align: right">
+        <div id="copywrite">
+            <div class="container">
                 <div class="row">
                     <div class="span12">
-                        <img src="~/img/logo-powered.png" />
+                        <p>&copy; @DateTime.Now.Year <img src="~/img/logo-mark-white-25.png" /> ReferEngine.com <span id="totop" class="pull-right">Back to Top <i class="icon-arrow-up"></i></span></p>
                     </div>		  
                 </div>
-            </div>
-        }        
-        
+            </div>	  
+        </div>
+    
         @Html.Partial("_MixPanel")
 
         @Scripts.Render("~/bundles/libs/base")
         
-        @if (Convert.ToBoolean(ViewBag.JQueryValidate))
+        @if (ViewProperties.UseJQueryValidate)
         {
             @Scripts.Render("~/bundles/libs/jquery-validate")
         }
         
-        @if (Convert.ToBoolean(ViewBag.JQueryUI))
+        @if (ViewProperties.UseJQueryUi)
         {
             @Scripts.Render("~/bundles/libs/jquery-ui")
         }

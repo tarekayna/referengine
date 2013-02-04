@@ -2,11 +2,6 @@
 @using ReferLib
 @model IList<ReferEngine.Common.Models.AppScreenshot>
 
-@{
-    ViewBag.HideHeader = true;
-    ViewBag.HideFooter = true;
-}
-
 <div id="screenshots">
     @foreach (AppScreenshot appScreenshot in Model)
     {

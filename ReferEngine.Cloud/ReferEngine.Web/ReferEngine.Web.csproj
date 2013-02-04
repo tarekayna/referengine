@@ -274,6 +274,9 @@
     <Compile Include="Models\Account\RegisterModel.cs" />
     <Compile Include="Models\Account\UserProfile.cs" />
     <Compile Include="Models\Admin\AdminViewModel.cs" />
+    <Compile Include="Models\Common\BaseUrlJavaScriptGlobalVariable.cs" />
+    <Compile Include="Models\Common\IJavaScriptGlobalVariable.cs" />
+    <Compile Include="Models\Common\ViewProperties.cs" />
     <Compile Include="Models\Error\ErrorViewModel.cs" />
     <Compile Include="Models\Facebook\FacebookAppViewModel.cs" />
     <Compile Include="Models\Recommend\Win8\RecommendViewModel.cs" />
@@ -491,6 +494,8 @@
     <Content Include="Views\Shared\_MINIPROFILER UPDATED Layout.cshtml" />
     <Content Include="Views\Video\TeamVideo.cshtml" />
     <Content Include="Views\Video\ProductVideo.cshtml" />
+    <Content Include="Views\Shared\_SetJavaScriptGlobalVariables.cshtml" />
+    <Content Include="Views\Shared\_LiveChat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

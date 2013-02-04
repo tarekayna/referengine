@@ -6,6 +6,7 @@ using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Web.DataAccess;
 using ReferEngine.Web.Filters;
+using ReferEngine.Web.Models.Common;
 using ReferEngine.Web.Models.Account;
 using System;
 using System.Collections.Generic;
@@ -26,8 +27,8 @@ namespace ReferEngine.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl, string successMessage)
         {
-            ViewBag.SuccessMessage = successMessage;
-            ViewBag.ReturnUrl = returnUrl;
+            ViewProperties.SuccessMessage = successMessage;
+            ViewProperties.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -63,7 +64,7 @@ namespace ReferEngine.Web.Controllers
                 }
             }
 
-            ViewBag.ErrorMessage = "The email/password combination is incorrect.";
+            ViewProperties.ErrorMessage = "The email/password combination is incorrect.";
             return View(model);
         }
 
@@ -194,13 +195,20 @@ namespace ReferEngine.Web.Controllers
 
         public ActionResult Manage(ManageMessageId? message)
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : "";
-            ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-            ViewBag.ReturnUrl = Url.Action("Manage");
+            switch (message)
+            {
+                case ManageMessageId.ChangePasswordSuccess:
+                    ViewProperties.StatusMessage = "Your password has been changed.";
+                    break;
+                case ManageMessageId.RemoveLoginSuccess:
+                    ViewProperties.StatusMessage = "The external login was removed.";
+                    break;
+                case ManageMessageId.SetPasswordSuccess:
+                    ViewProperties.StatusMessage = "Your password has been set.";
+                    break;
+            }
+            ViewProperties.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            ViewProperties.ReturnUrl = Url.Action("Manage");
             return View();
         }
 
@@ -212,8 +220,8 @@ namespace ReferEngine.Web.Controllers
         public ActionResult Manage(LocalPasswordModel model)
         {
             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-            ViewBag.HasLocalPassword = hasLocalAccount;
-            ViewBag.ReturnUrl = Url.Action("Manage");
+            ViewProperties.HasLocalPassword = hasLocalAccount;
+            ViewProperties.ReturnUrl = Url.Action("Manage");
             if (hasLocalAccount)
             {
                 if (ModelState.IsValid)
@@ -305,8 +313,8 @@ namespace ReferEngine.Web.Controllers
             {
                 // User is new, ask for their desired membership name
                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
-                ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
-                ViewBag.ReturnUrl = returnUrl;
+                ViewProperties.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
+                ViewProperties.ReturnUrl = returnUrl;
                 return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });
             }
         }
@@ -350,8 +358,8 @@ namespace ReferEngine.Web.Controllers
                 }
             }
 
-            ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
-            ViewBag.ReturnUrl = returnUrl;
+            ViewProperties.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
+            ViewProperties.ReturnUrl = returnUrl;
             return View(model);
         }
 
@@ -368,7 +376,7 @@ namespace ReferEngine.Web.Controllers
         [ChildActionOnly]
         public ActionResult ExternalLoginsList(string returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl;
+            ViewProperties.ReturnUrl = returnUrl;
             return PartialView("_ExternalLoginsListPartial", OAuthWebSecurity.RegisteredClientData);
         }
 
@@ -389,7 +397,7 @@ namespace ReferEngine.Web.Controllers
                 });
             }
 
-            ViewBag.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            ViewProperties.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
         }
 
