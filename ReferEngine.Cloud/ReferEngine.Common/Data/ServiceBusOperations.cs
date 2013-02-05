@@ -29,20 +29,17 @@ namespace ReferEngine.Common.Data
             MessagingFactorySettings messagingFactorySettings = new MessagingFactorySettings
                 {
                     TokenProvider = namespaceManager.Settings.TokenProvider,
-                    //OperationTimeout = DefaultOperationTimeout
                 };
             var messagingFactory = MessagingFactory.Create(namespaceManager.Address,
                                                            messagingFactorySettings);
 
-            string suffix = "_" + Util.CurrentServiceConfigurationString;
-
             // Add Queues by Priority
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppAuthorization" + suffix, typeof(AppAuthorization)));
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "FacebookOperations" + suffix, typeof(FacebookOperations)));
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppRecommendation" + suffix, typeof(AppRecommendation)));
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppScreenshot" + suffix, typeof(AppScreenshot)));
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "PrivateBetaSignup" + suffix, typeof(PrivateBetaSignup)));
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppReceipt" + suffix, typeof(AppReceipt)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppAuthorization", typeof(AppAuthorization)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "FacebookOperations", typeof(FacebookOperations)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppRecommendation", typeof(AppRecommendation)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppScreenshot", typeof(AppScreenshot)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "PrivateBetaSignup", typeof(PrivateBetaSignup)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppReceipt", typeof(AppReceipt)));
         }
 
         public static void AddToQueue(Object objectToQueue)
