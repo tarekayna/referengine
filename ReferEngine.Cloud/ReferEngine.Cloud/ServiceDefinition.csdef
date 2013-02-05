@@ -52,6 +52,7 @@
   <WorkerRole name="ReferEngine.Workers.Pinger" vmsize="ExtraSmall">
     <Imports>
       <Import moduleName="RemoteAccess" />
+      <Import moduleName="Diagnostics" />
     </Imports>
     <ConfigurationSettings>
       <Setting name="CurrentServiceConfiguration" />
