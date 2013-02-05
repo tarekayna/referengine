@@ -4,15 +4,15 @@
     <AzureCredentials>BizSpark</AzureCredentials>
     <AzureDeleteDeploymentOnFailure>False</AzureDeleteDeploymentOnFailure>
     <AzureDeploymentLabel>ReferCloud</AzureDeploymentLabel>
-    <AzureDeploymentReplacementMethod>DeleteAndCreate</AzureDeploymentReplacementMethod>
-    <AzureSlot>Production</AzureSlot>
+    <AzureDeploymentReplacementMethod>AutomaticUpgrade</AzureDeploymentReplacementMethod>
+    <AzureSlot>Staging</AzureSlot>
     <AzureEnableRemoteDesktop>True</AzureEnableRemoteDesktop>
     <AzureEnableWebDeploy>False</AzureEnableWebDeploy>
     <AzureFallbackToDeleteAndRecreateIfUpgradeFails>False</AzureFallbackToDeleteAndRecreateIfUpgradeFails>
     <AzureHostedServiceLabel>referengine-test</AzureHostedServiceLabel>
     <AzureHostedServiceName>referengine-test</AzureHostedServiceName>
-    <AzureEnableIntelliTrace>True</AzureEnableIntelliTrace>
-    <AzureEnableProfiling>False</AzureEnableProfiling>
+    <AzureEnableIntelliTrace>False</AzureEnableIntelliTrace>
+    <AzureEnableProfiling>True</AzureEnableProfiling>
     <AzureServiceConfiguration>TestCloud</AzureServiceConfiguration>
     <AzureSolutionConfiguration>Release</AzureSolutionConfiguration>
     <AzureStorageAccountLabel>portalvhds17w2tr90fnj0p</AzureStorageAccountLabel>

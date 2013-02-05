@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="b97d10b5-8162-436a-aff5-c87878739a62" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="f27d1c1b-96a3-4f47-a9ad-3efd9e6c3744" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="ReferCloudGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -959,19 +959,19 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="2fa4607e-c5d9-4db6-9918-c05a8b7f3fa4" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
+    <implementation Id="47483056-855d-4513-8bf7-42a44c328e8a" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="c5743fa4-93b7-4ba6-b609-957ed9eedb1f" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="08dd6849-7b24-4ef3-8327-d746586def9e" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="f445bb03-40a1-491d-9cf5-5b1c11d2c2ea" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
+        <interfaceReference Id="d8c61acc-ff1f-4edf-b84d-58a026087d56" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:HttpsIn" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="8cb7ea56-fd79-4279-b892-0383bc564b29" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput@ServiceDefinition">
+        <interfaceReference Id="55949019-5d64-4af1-acdc-24e653133c3f" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" />
           </inPort>
