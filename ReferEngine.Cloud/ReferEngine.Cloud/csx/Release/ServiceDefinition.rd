@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="bf145ca0-7d3c-4d58-8509-3bf39052c60c" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="b97d10b5-8162-436a-aff5-c87878739a62" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="ReferCloudGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -193,6 +193,11 @@
         <aCS name="ReferEngine.Workers.Pinger:IntelliTrace.IntelliTraceConnectionString" defaultValue="">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.Pinger:IntelliTrace.IntelliTraceConnectionString" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
           </maps>
         </aCS>
         <aCS name="ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="">
@@ -502,6 +507,11 @@
         <map name="MapReferEngine.Workers.Pinger:IntelliTrace.IntelliTraceConnectionString" kind="Identity">
           <setting>
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.Pinger/IntelliTrace.IntelliTraceConnectionString" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.Pinger/Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
           </setting>
         </map>
         <map name="MapReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" kind="Identity">
@@ -821,6 +831,7 @@
               <aCS name="CloudToolsDiagnosticAgentVersion" defaultValue="" />
               <aCS name="CurrentServiceConfiguration" defaultValue="" />
               <aCS name="IntelliTrace.IntelliTraceConnectionString" defaultValue="" />
+              <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="" />
@@ -948,19 +959,19 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="d7948eb2-e60b-4d7a-962d-4cd9d1f25e20" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
+    <implementation Id="2fa4607e-c5d9-4db6-9918-c05a8b7f3fa4" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="c42b1605-4db9-4e40-9299-d0daa21f09e6" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="c5743fa4-93b7-4ba6-b609-957ed9eedb1f" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="7d7c1e84-8535-413a-9c4d-0f3d5da0f146" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
+        <interfaceReference Id="f445bb03-40a1-491d-9cf5-5b1c11d2c2ea" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:HttpsIn" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="0f735445-aa08-4d57-be43-71f88561fc33" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput@ServiceDefinition">
+        <interfaceReference Id="8cb7ea56-fd79-4279-b892-0383bc564b29" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" />
           </inPort>

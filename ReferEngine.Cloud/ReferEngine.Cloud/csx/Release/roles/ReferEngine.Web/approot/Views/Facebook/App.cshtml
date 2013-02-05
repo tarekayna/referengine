@@ -3,8 +3,6 @@
 @model ReferEngine.Web.Models.Facebook.FacebookAppViewModel
 
 @{
-    ViewBag.HideFooter = true;
-    ViewBag.ShowFacebookHeader = true;
     bool isWindows8 = Model.UserAgentProperties.IsWindows8;
     bool supportsProtocolLaunching = Model.UserAgentProperties.SupportsProtocolLaunching;
 }

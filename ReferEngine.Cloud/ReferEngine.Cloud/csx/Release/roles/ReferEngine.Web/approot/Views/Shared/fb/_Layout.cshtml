@@ -11,71 +11,35 @@
         <meta name="author" content="Apexa Inc.">
         <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     
+        
+        @Html.Partial("_SetJavaScriptGlobalVariables")
         @Html.Partial("_FavIcon")
-
         @Styles.Render("~/bundles/css/bootstrap")
         @RenderSection("styles", required: false)
     </head>
     <body>
-          
-        @if (!Convert.ToBoolean(ViewBag.HideHeader))
-        {
-            <div class="navbar navbar-fixed-top">
-                <div class="navbar-inner">
-                    <div class="container">
-                        <div class="pull-right navbar-logo-ctnr">
-                            @Html.Image(Server.MapPath("~/img/logo-fb-web-header.png"), "Refer Engine - Real Customers Only!")
-                        </div>
+         
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <div class="pull-right navbar-logo-ctnr">
+                        @Html.Image(Server.MapPath("~/img/logo-fb-web-header.png"), "Refer Engine - Real Customers Only!")
                     </div>
                 </div>
             </div>
-        }
+        </div>
 
         @RenderBody()
-    
-        @if (!Convert.ToBoolean(ViewBag.HideFooter))
-        {
-            <div id="copywrite">
-                <div class="container">
-                    <div class="row">
-                        <div class="span12">
-                            <p>&copy; @DateTime.Now.Year <img src="~/img/logo-mark-white-25.png" /> ReferEngine.com <span id="totop" class="pull-right">Back to Top <i class="icon-arrow-up"></i></span></p>
-                        </div>		  
-                    </div>
-                    @*<div class="row">
-		              <div class="span3">
-			            <h3>We're Social</h3>
-		                  <ul>
-		                      <li><a href="#">Facebook</a></li>
-		                      <li><a href="#">Twitter</a></li>
-		                      <li><a href="#">Google &#43;</a></li>
-		                  </ul>
-		              </div>
-		            </div>*@
-                </div>	  
-            </div>
-        }
-    
-        @if (Convert.ToBoolean(ViewBag.ShowPowered))
-        {
-            <div class="container" style="text-align: right">
-                <div class="row">
-                    <div class="span12">
-                        <img src="~/img/logo-powered.png" />
-                    </div>		  
-                </div>
-            </div>
-        }        
-        
+
         @Html.Partial("_MixPanel")
         @Scripts.Render("~/bundles/libs/base")
         
-        @if (!Convert.ToBoolean(ViewBag.JQueryValidate))
+        @if (ViewProperties.UseJQueryValidate)
         {
             @Scripts.Render("~/bundles/libs/jquery-validate")
         }
         
-        @if (!Convert.ToBoolean(ViewBag.JQueryUI))
+        @if (ViewProperties.UseJQueryUi)
         {
             @Scripts.Render("~/bundles/libs/jquery-ui")
         }

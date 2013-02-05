@@ -1,31 +1,31 @@
-﻿@if (!string.IsNullOrEmpty(ViewBag.WarningMessage))
+﻿@if (!string.IsNullOrEmpty(ViewProperties.WarningMessage))
 {
     <div class="alert">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        @ViewBag.WarningMessage
+        @ViewProperties.WarningMessage
     </div>
 }
         
-@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+@if (!string.IsNullOrEmpty(ViewProperties.ErrorMessage))
 {
     <div class="alert alert-error">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        @ViewBag.ErrorMessage
+        @ViewProperties.ErrorMessage
     </div>
 }
         
-@if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+@if (!string.IsNullOrEmpty(ViewProperties.SuccessMessage))
 {
     <div class="alert alert-success">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        @ViewBag.SuccessMessage
+        @ViewProperties.SuccessMessage
     </div>
 }
         
-@if (!string.IsNullOrEmpty(ViewBag.InfoMessage))
+@if (!string.IsNullOrEmpty(ViewProperties.InfoMessage))
 {
     <div class="alert alert-info">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        @ViewBag.InfoMessage
+        @ViewProperties.InfoMessage
     </div>
 }
