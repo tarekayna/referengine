@@ -10,10 +10,10 @@
 *.pdb
 *.cache
 obj/
+csx/
 [Bb]in*/
 [Dd]ebug*/
 [Rr]elease*/
-csx/
 
 #Tooling
 _ReSharper*/
