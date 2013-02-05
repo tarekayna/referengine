@@ -15,11 +15,9 @@ namespace ReferEngine.Common.Data
 
         private static NamespaceManager CreateNamespaceManager()
         {
-            string dataWriteNamespace = Settings.Default.DataWriteBusNamespace;
-            string issuerName = Settings.Default.DataWriteBusIssuerName;
-            string issuerKey = Settings.Default.DataWriteBusIssuerKey;
-            Uri uri = ServiceBusEnvironment.CreateServiceUri("sb", dataWriteNamespace, String.Empty);
-            TokenProvider tokenProvider = TokenProvider.CreateSharedSecretTokenProvider(issuerName, issuerKey);
+            ServiceBusAccessInfo accessInfo = GetAccessInfo();
+            Uri uri = ServiceBusEnvironment.CreateServiceUri("sb", accessInfo.Namespace, String.Empty);
+            TokenProvider tokenProvider = TokenProvider.CreateSharedSecretTokenProvider(accessInfo.Issuer, accessInfo.Key);
             return new NamespaceManager(uri, tokenProvider);
         }
 
@@ -123,6 +121,41 @@ namespace ReferEngine.Common.Data
                     // already exists, good
                 }
             }
+        }
+
+        private static ServiceBusAccessInfo GetAccessInfo()
+        {
+            ServiceBusAccessInfo accessInfo = new ServiceBusAccessInfo();
+
+            switch (Util.CurrentServiceConfiguration)
+            {
+                case Util.ReferEngineServiceConfiguration.ProductionCloud:
+                    accessInfo.Namespace = "referengine-datawritebus-productioncloud";
+                    accessInfo.Issuer = "owner";
+                    accessInfo.Key = "Lp1ZoMkeuG7loEYQjtYCSm5ZJL0aYXXWMSOlYwJCYjs=";
+                    break;
+                case Util.ReferEngineServiceConfiguration.TestCloud:
+                    accessInfo.Namespace = "referengine-datawritebus-testcloud";
+                    accessInfo.Issuer = "owner";
+                    accessInfo.Key = "kXwOKEJmpUa+A2I6LJE/qf75W2Q2z+05iCh0EkGknnI=";
+                    break;
+                case Util.ReferEngineServiceConfiguration.Local:
+                    accessInfo.Namespace = "referengine-datawritebus-local";
+                    accessInfo.Issuer = "owner";
+                    accessInfo.Key = "ogH9iy3krr+Bc6oM64xdq0Vu4YTBKUYx4RSAQ/kOSMI=";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return accessInfo;
+        }
+
+        private class ServiceBusAccessInfo
+        {
+            public string Issuer { get; set; }
+            public string Namespace { get; set; }
+            public string Key { get; set; }
         }
     }
 }
