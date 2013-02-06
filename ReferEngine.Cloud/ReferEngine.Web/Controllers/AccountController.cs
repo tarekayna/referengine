@@ -137,7 +137,7 @@ namespace ReferEngine.Web.Controllers
             {
                 try
                 {
-                    object propertyValues = new { model.FirstName, model.LastName, Timestamp = DateTime.Now };
+                    object propertyValues = new { model.FirstName, model.LastName, Timestamp = DateTime.UtcNow };
                     string confirmationCode = WebSecurity.CreateUserAndAccount(model.Email, model.Password, propertyValues, requireConfirmationToken: true);
 
                     User user = DataReader.GetUserFromConfirmationCode(confirmationCode);

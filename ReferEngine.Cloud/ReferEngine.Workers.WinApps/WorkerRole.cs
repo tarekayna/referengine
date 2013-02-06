@@ -40,7 +40,7 @@ namespace ReferEngine.Workers.WinApps
                     AppWebLink appWebLink = new AppWebLink
                                                 {
                                                     Link = xmlNode.InnerText,
-                                                    LastUpdated = DateTime.Now
+                                                    LastUpdated = DateTime.UtcNow
                                                 };
                     appWebLinks.Add(appWebLink);
                 }

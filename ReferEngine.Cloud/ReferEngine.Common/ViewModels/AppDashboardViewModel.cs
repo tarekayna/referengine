@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ReferEngine.Common.Models;
 
 namespace ReferEngine.Common.ViewModels
@@ -13,5 +9,6 @@ namespace ReferEngine.Common.ViewModels
         public int TotalNumberOfRecommendations { get; set; }
         public App App { get; set; }
         public IList<AppRecommendation> AppRecommendations { get; set; }
+        public IList<RecommendationPageView> RecommendationPageViews { get; set; }
     }
 }

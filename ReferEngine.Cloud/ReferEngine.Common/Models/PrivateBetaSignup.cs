@@ -15,7 +15,7 @@ namespace ReferEngine.Common.Models
         public PrivateBetaSignup(string email)
         {
             Email = email;
-            RegistrationDateTime = DateTime.Now;
+            RegistrationDateTime = DateTime.UtcNow;
         }
     }
 }

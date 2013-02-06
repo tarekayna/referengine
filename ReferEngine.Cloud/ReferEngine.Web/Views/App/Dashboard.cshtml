@@ -1,4 +1,5 @@
-﻿@model ReferEngine.Common.ViewModels.AppDashboardViewModel
+﻿@using ReferEngine.Common.Models
+@model ReferEngine.Common.ViewModels.AppDashboardViewModel
 
 <div id="content">
     <div class="container">
@@ -27,6 +28,42 @@
                                 <td>@Model.AppRecommendations.ElementAt(i).DateTime.ToShortTimeString()</td>
                                 <td>@Model.AppRecommendations.ElementAt(i).PersonFacebookId</td>
                                 <td>@Model.AppRecommendations.ElementAt(i).UserMessage</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                
+
+                <p>Total Views: @Model.RecommendationPageViews.Count(r => r.RecommendationPage == RecommendationPage.Intro)</p>
+                
+                <table class="table table-bordered">
+                    <caption>Views Last 5 Days</caption>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th># Views</th>
+                            <th># Unique Views</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Today</td>
+                            <td>@Model.RecommendationPageViews.Count(v => v.RecommendationPage == RecommendationPage.Intro && v.TimeStamp.IsToday())</td>
+                            <td>@Model.RecommendationPageViews.Where(v => v.RecommendationPage == RecommendationPage.Intro && v.TimeStamp.IsToday()).GroupBy( v => v.AppReceiptId ).Count()</td>
+                        </tr>
+                        @for (int i = 1; i < 5; i++)
+                        {
+                            DateTime dateTime = DateTime.UtcNow.Subtract(TimeSpan.FromDays(i));
+                            <tr>
+                                <td>
+                                    @dateTime.Date.ToShortDateString()
+                                </td>
+                                <td>
+                                    @Model.RecommendationPageViews.Count(v => v.RecommendationPage == RecommendationPage.Intro && v.TimeStamp.IsSameDate(dateTime))
+                                </td>
+                                <td>
+                                    @Model.RecommendationPageViews.Where(v => v.RecommendationPage == RecommendationPage.Intro && v.TimeStamp.IsSameDate(dateTime)).GroupBy( v => v.AppReceiptId ).Count()
+                                </td>
                             </tr>
                         }
                     </tbody>

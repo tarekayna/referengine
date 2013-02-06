@@ -44,6 +44,15 @@ namespace ReferEngine.Workers.DataWriter
                                         CacheOperations.AddAppAuthorization(appAuthorization, TimeSpan.FromMinutes(20));
                                     }
                                     DatabaseOperations.AddAppReceipt(appAuthorization.AppReceipt);
+
+                                    RecommendationPageView pageView = new RecommendationPageView
+                                    {
+                                        AppReceiptId = appAuthorization.AppReceipt.Id,
+                                        TimeStamp = DateTime.UtcNow,
+                                        RecommendationPage = RecommendationPage.Intro,
+                                        AppId = appAuthorization.App.Id
+                                    };
+                                    DatabaseOperations.RecommendationPageView(pageView);
                                     break;
                                 }
                             case "ReferEngine.Common.Data.FacebookOperations":

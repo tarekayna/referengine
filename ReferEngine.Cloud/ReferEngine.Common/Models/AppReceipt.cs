@@ -12,6 +12,12 @@ namespace ReferEngine.Common.Models
     [DataContract]
     public class AppReceipt
     {
+        public AppReceipt()
+        {
+            PersonFacebookId = null;
+            Timestamp = DateTime.UtcNow;
+        }
+
         [DataMember]
         public string Id { get; set; }
 
@@ -39,10 +45,8 @@ namespace ReferEngine.Common.Models
         [DataMember]
         public bool Verified { get; set; }
 
-        public AppReceipt()
-        {
-            PersonFacebookId = null;
-        }
+        [DataMember]
+        public DateTime Timestamp { get; set; }
 
         public static LicenseType GetLicenseType(string licenseTypeStr)
         {

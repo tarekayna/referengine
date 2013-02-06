@@ -13,7 +13,7 @@ namespace ReferEngine.Common.Models
         {
             Person1FacebookId = person1.FacebookId;
             Person2FacebookId = person2.FacebookId;
-            UpdatedDateTime = DateTime.Now;
+            UpdatedDateTime = DateTime.UtcNow;
         }
     }
 }

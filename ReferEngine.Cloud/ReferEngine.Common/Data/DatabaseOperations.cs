@@ -1,16 +1,13 @@
-﻿using System.Collections;
+﻿using Microsoft.ServiceBus.Messaging;
+using ReferEngine.Common.Models;
+using ReferEngine.Common.Properties;
+using ReferEngine.Common.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Web.Security;
-using Microsoft.ServiceBus.Messaging;
-using ReferEngine.Common.Models;
-using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using ReferEngine.Common.Properties;
-using ReferEngine.Common.ViewModels;
-using WebMatrix.WebData;
 using Membership = ReferEngine.Common.Models.Membership;
 
 namespace ReferEngine.Common.Data
@@ -269,7 +266,7 @@ namespace ReferEngine.Common.Data
                         }
                         else
                         {
-                            existing.LastUpdated = DateTime.Now;
+                            existing.LastUpdated = DateTime.UtcNow;
                         }
                     }
 
@@ -439,6 +436,12 @@ namespace ReferEngine.Common.Data
 
                 viewModel.AppRecommendations = recommendations.Take(viewModel.NumberOfRecommendationsToShow).ToList();
                 viewModel.TotalNumberOfRecommendations = recommendations.Count();
+
+                var views = from v in db.RecommendationPageViews
+                            where app.Id == v.AppId
+                            orderby v.TimeStamp descending
+                            select v;
+                viewModel.RecommendationPageViews = views.ToList();
             }
             return viewModel;
         }
@@ -465,6 +468,15 @@ namespace ReferEngine.Common.Data
                 matches.ToList().AddRange(containsMatches);
 
                 return matches.Count() <= count ? matches.ToList() : matches.Take(count).ToList();
+            }
+        }
+
+        public static void RecommendationPageView(RecommendationPageView recommendationPageView)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                db.RecommendationPageViews.Add(recommendationPageView);
+                db.SaveChanges();
             }
         }
     }

@@ -12,7 +12,7 @@ namespace ReferEngine.Common.Models
 
         public AppRecommendation()
         {
-            DateTime = DateTime.Now;
+            DateTime = DateTime.UtcNow;
         }
     }
 }

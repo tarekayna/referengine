@@ -152,8 +152,17 @@
     <Compile Include="Migrations\201302010725541_test.Designer.cs">
       <DependentUpon>201302010725541_test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302061841356_TimestampForReceipt.cs" />
+    <Compile Include="Migrations\201302061841356_TimestampForReceipt.Designer.cs">
+      <DependentUpon>201302061841356_TimestampForReceipt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302062023484_AddingRecommendationPageView.cs" />
+    <Compile Include="Migrations\201302062023484_AddingRecommendationPageView.Designer.cs">
+      <DependentUpon>201302062023484_AddingRecommendationPageView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\App.cs" />
     <Compile Include="Models\AppAuthorization.cs" />
+    <Compile Include="Models\RecommendationPageView.cs" />
     <Compile Include="Models\AppPlatform.cs" />
     <Compile Include="Models\AppWebLink.cs" />
     <Compile Include="Models\UserInRole.cs" />
@@ -170,6 +179,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="Utilities\DateTimeExtensions.cs" />
     <Compile Include="Utilities\HtmlHelperExtensions.cs" />
     <Compile Include="Utilities\RemoteRequireHttps.cs" />
     <Compile Include="Utilities\UserAgentProperties.cs" />
@@ -213,6 +223,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302010725541_test.resx">
       <DependentUpon>201302010725541_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302061841356_TimestampForReceipt.resx">
+      <DependentUpon>201302061841356_TimestampForReceipt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302062023484_AddingRecommendationPageView.resx">
+      <DependentUpon>201302062023484_AddingRecommendationPageView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

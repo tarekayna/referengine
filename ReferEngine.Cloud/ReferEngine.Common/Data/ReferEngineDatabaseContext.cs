@@ -8,7 +8,8 @@ namespace ReferEngine.Common.Data
 {
     public class ReferEngineDatabaseContext : DbContext
     {
-        public ReferEngineDatabaseContext() : base(Util.DatabaseConnectionStringName)
+        //public ReferEngineDatabaseContext() : base(Util.DatabaseConnectionStringName)
+        public ReferEngineDatabaseContext() : base("TestCloudConnectionString")
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
@@ -16,6 +17,7 @@ namespace ReferEngine.Common.Data
         public DbSet<App> Apps { get; set; }
         public DbSet<AppRecommendation> AppRecommendations { get; set; }
         public DbSet<AppReceipt> AppReceipts { get; set; }
+        public DbSet<RecommendationPageView> RecommendationPageViews { get; set; }
         public DbSet<Friendship> Friendships { get; set; }
         public DbSet<Person> People { get; set; }
         public DbSet<AppScreenshot> AppScreenshots { get; set; }
@@ -45,6 +47,7 @@ namespace ReferEngine.Common.Data
             mb.Entity<AppReceipt>().Property(r => r.AppPackageFamilyName).IsRequired();
             mb.Entity<AppReceipt>().Property(r => r.LicenseType).IsRequired();
             mb.Entity<AppReceipt>().Property(r => r.PurchaseDate).IsRequired();
+            mb.Entity<AppReceipt>().Property(r => r.Timestamp).IsRequired();
 
             mb.Entity<Friendship>().Property(f => f.Person1FacebookId).IsRequired();
             mb.Entity<Friendship>().Property(f => f.Person2FacebookId).IsRequired();
