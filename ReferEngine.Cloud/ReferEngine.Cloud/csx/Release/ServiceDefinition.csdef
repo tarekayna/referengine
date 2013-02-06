@@ -5,9 +5,7 @@
       <LocalStorage name="DiagnosticStore" sizeInMB="20000" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
-      <Setting name="CloudToolsDiagnosticAgentVersion" />
       <Setting name="CurrentServiceConfiguration" />
-      <Setting name="IntelliTrace.IntelliTraceConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" />
@@ -42,9 +40,7 @@
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
-      <Setting name="CloudToolsDiagnosticAgentVersion" />
       <Setting name="CurrentServiceConfiguration" />
-      <Setting name="IntelliTrace.IntelliTraceConnectionString" />
       <Setting name="Microsoft.ServiceBus.ConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
@@ -69,9 +65,7 @@
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
-      <Setting name="CloudToolsDiagnosticAgentVersion" />
       <Setting name="CurrentServiceConfiguration" />
-      <Setting name="IntelliTrace.IntelliTraceConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
@@ -92,9 +86,7 @@
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
-      <Setting name="CloudToolsDiagnosticAgentVersion" />
       <Setting name="CurrentServiceConfiguration" />
-      <Setting name="IntelliTrace.IntelliTraceConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
