@@ -12,6 +12,7 @@
                 IsWindows8 = userAgent.Contains("Windows NT 6.2");
                 SupportsProtocolLaunching = !userAgent.Contains("Chrome") && !userAgent.Contains("Opera");
             }
+            else
             {
                 IsWindows8 = false;
                 SupportsProtocolLaunching = false;
