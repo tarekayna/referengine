@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="8bbbcac3-862f-4f28-b574-2effe9e4d447" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferCloud" generation="1" functional="0" release="0" Id="97347858-489f-4602-8c02-ad07c14b1f4c" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="ReferCloudGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -45,9 +45,19 @@
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapCertificate|ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
           </maps>
         </aCS>
+        <aCS name="ReferEngine.Web:CloudToolsDiagnosticAgentVersion" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:CloudToolsDiagnosticAgentVersion" />
+          </maps>
+        </aCS>
         <aCS name="ReferEngine.Web:CurrentServiceConfiguration" defaultValue="">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:CurrentServiceConfiguration" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Web:IntelliTrace.IntelliTraceConnectionString" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Web:IntelliTrace.IntelliTraceConnectionString" />
           </maps>
         </aCS>
         <aCS name="ReferEngine.Web:Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" defaultValue="">
@@ -110,9 +120,19 @@
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.WebInstances" />
           </maps>
         </aCS>
+        <aCS name="ReferEngine.Workers.DataWriter:CloudToolsDiagnosticAgentVersion" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriter:CloudToolsDiagnosticAgentVersion" />
+          </maps>
+        </aCS>
         <aCS name="ReferEngine.Workers.DataWriter:CurrentServiceConfiguration" defaultValue="">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriter:CurrentServiceConfiguration" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.DataWriter:IntelliTrace.IntelliTraceConnectionString" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriter:IntelliTrace.IntelliTraceConnectionString" />
           </maps>
         </aCS>
         <aCS name="ReferEngine.Workers.DataWriter:Microsoft.ServiceBus.ConnectionString" defaultValue="">
@@ -160,9 +180,19 @@
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.DataWriterInstances" />
           </maps>
         </aCS>
+        <aCS name="ReferEngine.Workers.Pinger:CloudToolsDiagnosticAgentVersion" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.Pinger:CloudToolsDiagnosticAgentVersion" />
+          </maps>
+        </aCS>
         <aCS name="ReferEngine.Workers.Pinger:CurrentServiceConfiguration" defaultValue="">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.Pinger:CurrentServiceConfiguration" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.Pinger:IntelliTrace.IntelliTraceConnectionString" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.Pinger:IntelliTrace.IntelliTraceConnectionString" />
           </maps>
         </aCS>
         <aCS name="ReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
@@ -195,9 +225,19 @@
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.PingerInstances" />
           </maps>
         </aCS>
+        <aCS name="ReferEngine.Workers.WinApps:CloudToolsDiagnosticAgentVersion" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.WinApps:CloudToolsDiagnosticAgentVersion" />
+          </maps>
+        </aCS>
         <aCS name="ReferEngine.Workers.WinApps:CurrentServiceConfiguration" defaultValue="">
           <maps>
             <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.WinApps:CurrentServiceConfiguration" />
+          </maps>
+        </aCS>
+        <aCS name="ReferEngine.Workers.WinApps:IntelliTrace.IntelliTraceConnectionString" defaultValue="">
+          <maps>
+            <mapMoniker name="/ReferCloud/ReferCloudGroup/MapReferEngine.Workers.WinApps:IntelliTrace.IntelliTraceConnectionString" />
           </maps>
         </aCS>
         <aCS name="ReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
@@ -319,9 +359,19 @@
             <certificateMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
           </certificate>
         </map>
+        <map name="MapReferEngine.Web:CloudToolsDiagnosticAgentVersion" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/CloudToolsDiagnosticAgentVersion" />
+          </setting>
+        </map>
         <map name="MapReferEngine.Web:CurrentServiceConfiguration" kind="Identity">
           <setting>
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/CurrentServiceConfiguration" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Web:IntelliTrace.IntelliTraceConnectionString" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web/IntelliTrace.IntelliTraceConnectionString" />
           </setting>
         </map>
         <map name="MapReferEngine.Web:Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" kind="Identity">
@@ -384,9 +434,19 @@
             <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.WebInstances" />
           </setting>
         </map>
+        <map name="MapReferEngine.Workers.DataWriter:CloudToolsDiagnosticAgentVersion" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/CloudToolsDiagnosticAgentVersion" />
+          </setting>
+        </map>
         <map name="MapReferEngine.Workers.DataWriter:CurrentServiceConfiguration" kind="Identity">
           <setting>
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/CurrentServiceConfiguration" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.DataWriter:IntelliTrace.IntelliTraceConnectionString" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter/IntelliTrace.IntelliTraceConnectionString" />
           </setting>
         </map>
         <map name="MapReferEngine.Workers.DataWriter:Microsoft.ServiceBus.ConnectionString" kind="Identity">
@@ -434,9 +494,19 @@
             <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriterInstances" />
           </setting>
         </map>
+        <map name="MapReferEngine.Workers.Pinger:CloudToolsDiagnosticAgentVersion" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.Pinger/CloudToolsDiagnosticAgentVersion" />
+          </setting>
+        </map>
         <map name="MapReferEngine.Workers.Pinger:CurrentServiceConfiguration" kind="Identity">
           <setting>
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.Pinger/CurrentServiceConfiguration" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.Pinger:IntelliTrace.IntelliTraceConnectionString" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.Pinger/IntelliTrace.IntelliTraceConnectionString" />
           </setting>
         </map>
         <map name="MapReferEngine.Workers.Pinger:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
@@ -469,9 +539,19 @@
             <sCSPolicyIDMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.PingerInstances" />
           </setting>
         </map>
+        <map name="MapReferEngine.Workers.WinApps:CloudToolsDiagnosticAgentVersion" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/CloudToolsDiagnosticAgentVersion" />
+          </setting>
+        </map>
         <map name="MapReferEngine.Workers.WinApps:CurrentServiceConfiguration" kind="Identity">
           <setting>
             <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/CurrentServiceConfiguration" />
+          </setting>
+        </map>
+        <map name="MapReferEngine.Workers.WinApps:IntelliTrace.IntelliTraceConnectionString" kind="Identity">
+          <setting>
+            <aCSMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.WinApps/IntelliTrace.IntelliTraceConnectionString" />
           </setting>
         </map>
         <map name="MapReferEngine.Workers.WinApps:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
@@ -568,7 +648,9 @@
               </outPort>
             </componentports>
             <settings>
+              <aCS name="CloudToolsDiagnosticAgentVersion" defaultValue="" />
               <aCS name="CurrentServiceConfiguration" defaultValue="" />
+              <aCS name="IntelliTrace.IntelliTraceConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" defaultValue="" />
@@ -661,7 +743,9 @@
               </outPort>
             </componentports>
             <settings>
+              <aCS name="CloudToolsDiagnosticAgentVersion" defaultValue="" />
               <aCS name="CurrentServiceConfiguration" defaultValue="" />
+              <aCS name="IntelliTrace.IntelliTraceConnectionString" defaultValue="" />
               <aCS name="Microsoft.ServiceBus.ConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
@@ -744,7 +828,9 @@
               </outPort>
             </componentports>
             <settings>
+              <aCS name="CloudToolsDiagnosticAgentVersion" defaultValue="" />
               <aCS name="CurrentServiceConfiguration" defaultValue="" />
+              <aCS name="IntelliTrace.IntelliTraceConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="" />
@@ -824,7 +910,9 @@
               </outPort>
             </componentports>
             <settings>
+              <aCS name="CloudToolsDiagnosticAgentVersion" defaultValue="" />
               <aCS name="CurrentServiceConfiguration" defaultValue="" />
+              <aCS name="IntelliTrace.IntelliTraceConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="" />
@@ -871,19 +959,19 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="71a66918-0e53-4ebe-86b2-6ac819ebb08c" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
+    <implementation Id="9ee747eb-eb09-4c3e-b451-eb6f20d8dfdf" ref="Microsoft.RedDog.Contract\ServiceContract\ReferCloudContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="618ec4f4-7082-4d1b-a0b2-e6a77b1e000e" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="719a920e-829f-4ddb-a779-efe20f99e136" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="0473f680-e2d9-4236-94c1-7dac477d85cb" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
+        <interfaceReference Id="c41ba2a8-407b-48d2-895f-10d7a9702ea2" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Web:HttpsIn@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Web:HttpsIn" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="6a4b8d9c-5b4e-40c0-a4a2-ae4df28560aa" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput@ServiceDefinition">
+        <interfaceReference Id="01d8cbcd-d82f-496f-9e7f-c5f7c483f6fc" ref="Microsoft.RedDog.Contract\Interface\ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ReferCloud/ReferCloudGroup/ReferEngine.Workers.DataWriter:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" />
           </inPort>
