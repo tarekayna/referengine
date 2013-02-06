@@ -127,19 +127,19 @@ namespace ReferEngine.Common.Data
             switch (Util.CurrentServiceConfiguration)
             {
                 case Util.ReferEngineServiceConfiguration.ProductionCloud:
-                    accessInfo.Namespace = "referengine-datawritebus-productioncloud";
+                    accessInfo.Namespace = "datawrite-production";
                     accessInfo.Issuer = "owner";
-                    accessInfo.Key = "Lp1ZoMkeuG7loEYQjtYCSm5ZJL0aYXXWMSOlYwJCYjs=";
+                    accessInfo.Key = "HTrzqkC+7jWm35xqW/OM7wuFdfMUYfPQ8AZ60Jrjk20=";
                     break;
                 case Util.ReferEngineServiceConfiguration.TestCloud:
-                    accessInfo.Namespace = "referengine-datawritebus-testcloud";
+                    accessInfo.Namespace = "datawrite-test";
                     accessInfo.Issuer = "owner";
-                    accessInfo.Key = "kXwOKEJmpUa+A2I6LJE/qf75W2Q2z+05iCh0EkGknnI=";
+                    accessInfo.Key = "z2R6UQcSxeJFy29u/WE6sLy+XPiGpvjPBzFZEULgGjU=";
                     break;
                 case Util.ReferEngineServiceConfiguration.Local:
-                    accessInfo.Namespace = "referengine-datawritebus-local";
+                    accessInfo.Namespace = "datawrite-local";
                     accessInfo.Issuer = "owner";
-                    accessInfo.Key = "ogH9iy3krr+Bc6oM64xdq0Vu4YTBKUYx4RSAQ/kOSMI=";
+                    accessInfo.Key = "fGFQ+s3q85Wesyey4p1RD+TTnyY0dXBsoifBmOHuTvY=";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
