@@ -17,16 +17,28 @@
 
 .steps {
 	letter-spacing: 0.02em;
-	.flexbox-row;
-	-ms-flex-pack: center;
 	margin-top: 20px;
 
 	> div {
 		width: 213px;
 	}
+    
+	.rcmnd {
+        position: absolute;
+        left: 237px;
+	}
+
+	.earn {
+        position: absolute;
+        left: 450px;
+	}
 
 	&.title {
 		font-size: 18px;
+
+        div {
+            top: 337px;
+        }
 
 		.rcmnd {
 			color: #b56cfc;
@@ -40,12 +52,18 @@
 	&.text {
 		font-size: 14px;
 		color: #999;
+        
+	    div {
+            top: 380px;
+	    }
 	}
 } 
 
 .rules {
     font-size: xx-small;
-    margin-top: 85px;
+    position: absolute;
+    top: 503px;
+    left: 407px;
 
     a:link {
         text-decoration: none;
@@ -67,8 +85,8 @@
     width: 110px;
     font-size: x-small;
     text-align: center;
-    margin-right: 15px;
 	color: #777;
+    margin: 21px 0 0 230px;
 }
 
 .underline {

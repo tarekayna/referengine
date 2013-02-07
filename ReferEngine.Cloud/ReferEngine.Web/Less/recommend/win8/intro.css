@@ -24,26 +24,30 @@ a:visited {
 header {
   height: 95px;
   border-bottom: 1px dashed #e0e0e0;
-  display: -ms-flexbox;
-  -ms-flex-direction: row;
-  -ms-flex-align: center;
 }
 header .app-logo {
-  margin-left: 32px;
+  position: absolute;
+  top: 23px;
+  left: 32px;
 }
 header .app-name {
-  margin-left: 20px;
-  -ms-flex: 1 auto;
   color: #333;
   font-size: x-large;
+  position: absolute;
+  top: 32px;
+  left: 102px;
 }
 header .logo-mark {
-  margin-right: 13px;
+  position: absolute;
+  top: 32px;
+  left: 733px;
 }
 header .logo-text {
   font-family: "Open Sans";
-  margin-right: 30px;
   font-weight: 500 !important;
+  position: absolute;
+  top: 16px;
+  left: 776px;
 }
 #re-content {
   font-size: large;
@@ -58,21 +62,21 @@ footer {
 footer > div {
   height: 80px;
   width: 900px;
-  display: -ms-flexbox;
-  -ms-flex-direction: row;
-  -ms-flex-align: center;
+}
+footer > div > * {
+  float: left;
 }
 footer > div .chkCtnr {
-  -ms-flex: 1 auto;
+  margin-top: 29px;
 }
 footer > div input[type='checkbox'] {
   margin: 0 0 0 15px;
   vertical-align: middle;
 }
 footer > div label {
-  margin-left: 5px;
   color: #646464;
   font-size: x-small;
+  margin-left: 5px;
 }
 footer > div .m-btn {
   letter-spacing: 0.05em;
@@ -83,9 +87,9 @@ footer > div .m-btn.go {
   background: -ms-linear-gradient(top, #63c372, #008414);
   border: 1px solid #009517;
   color: #FFF;
-  margin: 0 30px 0 0;
   padding: 15px 30px;
   font-size: 18px;
+  margin: 13px 0 0 15px;
 }
 footer > div .m-btn.go.disabled {
   background: -ms-linear-gradient(top, #eeeeee, #d1d1d1);
@@ -96,7 +100,7 @@ footer > div .m-btn.no {
   background: -ms-linear-gradient(top, #eeeeee, #d1d1d1);
   border: 1px solid #d1d1d1;
   color: #999;
-  margin: 0 0 0 30px;
+  margin: 14px 0 0 30px;
   padding: 15px 15px;
 }
 .center-content {
@@ -114,16 +118,24 @@ footer > div .m-btn.no {
 }
 .steps {
   letter-spacing: 0.02em;
-  display: -ms-flexbox;
-  -ms-flex-direction: row;
-  -ms-flex-pack: center;
   margin-top: 20px;
 }
 .steps > div {
   width: 213px;
 }
+.steps .rcmnd {
+  position: absolute;
+  left: 237px;
+}
+.steps .earn {
+  position: absolute;
+  left: 450px;
+}
 .steps.title {
   font-size: 18px;
+}
+.steps.title div {
+  top: 337px;
 }
 .steps.title .rcmnd {
   color: #b56cfc;
@@ -135,9 +147,14 @@ footer > div .m-btn.no {
   font-size: 14px;
   color: #999;
 }
+.steps.text div {
+  top: 380px;
+}
 .rules {
   font-size: xx-small;
-  margin-top: 85px;
+  position: absolute;
+  top: 503px;
+  left: 407px;
 }
 .rules a:link {
   text-decoration: none;
@@ -155,8 +172,8 @@ footer > div .m-btn.no {
   width: 110px;
   font-size: x-small;
   text-align: center;
-  margin-right: 15px;
   color: #777;
+  margin: 21px 0 0 230px;
 }
 .underline {
   text-decoration: underline;
