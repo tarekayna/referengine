@@ -12,7 +12,8 @@ namespace ReferEngine.Common.Data
         internal const string AppPackage = "app-package-{0}";
         internal const string AppId = "app-id-{0}";
         internal const string AppScreenshotIdDesc = "appscreenshot-id-desc-{0}{1}";
-        internal const string UserId = "user-id-{0}"; 
+        internal const string UserId = "user-id-{0}";
+        internal const string IpAddress = "ip-{0}";
     }
 
     public static class CacheTimeoutValues
@@ -193,6 +194,29 @@ namespace ReferEngine.Common.Data
             if (user == null) return;
             String key = String.Format(CacheKeyFormat.UserId, user.Id);
             Cache.Put(key, user);
+        }
+
+        public static IpAddressLocation GetIpAddressLocation(string ipAddress)
+        {
+            String key = String.Format(CacheKeyFormat.IpAddress, ipAddress);
+            object cached = null;
+            try
+            {
+                cached = Cache.Get(key);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.Message);
+                // It's ok, just retreive from the database
+            }
+            return cached == null ? null : (IpAddressLocation)cached;
+        }
+
+        public static void SetIpAddressLocation(IpAddressLocation ipAddressLocation)
+        {
+            if (ipAddressLocation == null) return;
+            String key = String.Format(CacheKeyFormat.IpAddress, ipAddressLocation.IpAddress);
+            Cache.Put(key, ipAddressLocation);
         }
     }
 }

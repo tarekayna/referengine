@@ -48,6 +48,9 @@ namespace ReferEngine.Common.Models
         [DataMember]
         public DateTime Timestamp { get; set; }
 
+        [DataMember]
+        public string IpAddress { get; set; }
+
         public static LicenseType GetLicenseType(string licenseTypeStr)
         {
             if (licenseTypeStr.Equals("Full", StringComparison.OrdinalIgnoreCase))

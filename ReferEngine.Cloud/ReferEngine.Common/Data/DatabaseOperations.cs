@@ -479,5 +479,29 @@ namespace ReferEngine.Common.Data
                 db.SaveChanges();
             }
         }
+
+        public static IpAddressLocation GetIpAddressLocation(string ipAddress)
+        {
+            IpAddressLocation ipAddressLocation = CacheOperations.GetIpAddressLocation(ipAddress);
+            if (ipAddressLocation == null)
+            {
+                using (var db = new ReferEngineDatabaseContext())
+                {
+                    ipAddressLocation = db.IpAddressLocations.SingleOrDefault(l => l.IpAddress.Equals(ipAddress, StringComparison.OrdinalIgnoreCase));
+                    if (ipAddressLocation == null)
+                    {
+                        ipAddressLocation = IpCheckOperations.CheckIpAddress(ipAddress);
+                        if (ipAddressLocation != null)
+                        {
+                            db.IpAddressLocations.Add(ipAddressLocation);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+
+                CacheOperations.SetIpAddressLocation(ipAddressLocation);
+            }
+            return ipAddressLocation;
+        }
     }
 }

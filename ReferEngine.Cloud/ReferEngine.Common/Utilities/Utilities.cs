@@ -26,21 +26,29 @@ namespace ReferEngine.Common.Utilities
         {
             get
             {
-                string currentServiceConfiguration = RoleEnvironment.GetConfigurationSettingValue("CurrentServiceConfiguration");
-                switch (currentServiceConfiguration)
+                if (RoleEnvironment.IsAvailable)
                 {
-                    case "ProductionCloud":
-                        return ReferEngineServiceConfiguration.ProductionCloud;
+                    string currentServiceConfiguration =
+                        RoleEnvironment.GetConfigurationSettingValue("CurrentServiceConfiguration");
+                    switch (currentServiceConfiguration)
+                    {
+                        case "ProductionCloud":
+                            return ReferEngineServiceConfiguration.ProductionCloud;
 
-                    case "TestCloud":
-                        return ReferEngineServiceConfiguration.TestCloud;
+                        case "TestCloud":
+                            return ReferEngineServiceConfiguration.TestCloud;
 
-                    case "Local":
-                        return ReferEngineServiceConfiguration.Local;
+                        case "Local":
+                            return ReferEngineServiceConfiguration.Local;
+                    }
+
+                    throw new InvalidDataException(string.Format("Invalid currentServiceConfiguration: {0}",
+                                                                 currentServiceConfiguration));
                 }
-
-                throw new InvalidDataException(string.Format("Invalid currentServiceConfiguration: {0}",
-                                                             currentServiceConfiguration));
+                else
+                {
+                    return ReferEngineServiceConfiguration.Local;
+                }
             }
         }
 
@@ -85,24 +93,6 @@ namespace ReferEngine.Common.Utilities
                         return string.Format(format, "referengineelmahlocal", "oDE32DOEW6k3ckzjdY8Hge0bXvKDVoekRkvIaWzAYugib4ZHONF7y2CZtBO8udhHuhghVj1H9IA8zEkSPQs/TA==");
                     default:
                         throw new ArgumentOutOfRangeException();
-                }
-            }
-        }
-
-        public static string MixPanelProjectToken
-        {
-            get
-            {
-                switch (CurrentServiceConfiguration)
-                {
-                    case ReferEngineServiceConfiguration.ProductionCloud:
-                        return "d76136086d701abbecf55a6de775127c";
-                    case ReferEngineServiceConfiguration.TestCloud:
-                        return "8b975bba223e30932a1ef8cd028f1c1c";
-                    case ReferEngineServiceConfiguration.Local:
-                        return "6a8d387692d3e39d9b7851edbfcc9b8d";
-                    default:
-                        throw new ArgumentOutOfRangeException("CurrentServiceConfiguration");
                 }
             }
         }
@@ -217,6 +207,20 @@ namespace ReferEngine.Common.Utilities
                 return Convert.ToBase64String(bytes);
             }
             return null;
+        }
+
+        public static string GetMd5Hash(string source)
+        {
+            StringBuilder hashBuilder = new StringBuilder();
+            using (MD5 md5Hash = MD5.Create())
+            {
+                byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(source.ToString()));
+                for (int i = 0; i < data.Length; i++)
+                {
+                    hashBuilder.Append(data[i].ToString("x2"));
+                }
+            }
+            return hashBuilder.ToString();
         }
     }
 }

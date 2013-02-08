@@ -135,6 +135,20 @@
     <Compile Include="Data\CacheOperations.cs" />
     <Compile Include="Data\DatabaseOperations.cs" />
     <Compile Include="Data\FacebookOperations.cs" />
+    <Compile Include="Data\IpCheckOperations.cs" />
+    <Compile Include="Migrations\201302071841012_IpAddressLocation.cs" />
+    <Compile Include="Migrations\201302071841012_IpAddressLocation.Designer.cs">
+      <DependentUpon>201302071841012_IpAddressLocation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IpAddressLocation.cs" />
+    <Compile Include="Data\MixPanel\AnalysisType.cs" />
+    <Compile Include="Data\MixPanel\MixPanelBaseUri.cs" />
+    <Compile Include="Data\MixPanel\ReturnFormat.cs" />
+    <Compile Include="Data\MixPanel\EventUnit.cs" />
+    <Compile Include="Data\MixPanel\Event.cs" />
+    <Compile Include="Data\MixPanel\MixPanelOperations.cs" />
+    <Compile Include="Data\MixPanel\MixPanelProjectAccessInfo.cs" />
+    <Compile Include="Data\MixPanel\MixPanelRequestInfo.cs" />
     <Compile Include="Email\ReferEmailer.cs" />
     <Compile Include="Migrations\201212282027508_AppLogoLinks.cs" />
     <Compile Include="Migrations\201212282027508_AppLogoLinks.Designer.cs">
@@ -180,8 +194,10 @@
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Utilities\DateTimeExtensions.cs" />
+    <Compile Include="Utilities\EnumExtensions.cs" />
     <Compile Include="Utilities\HtmlHelperExtensions.cs" />
     <Compile Include="Utilities\RemoteRequireHttps.cs" />
+    <Compile Include="Utilities\StringValueAttribute.cs" />
     <Compile Include="Utilities\UserAgentProperties.cs" />
     <Compile Include="Utilities\RSAPKCS1SHA256SignatureDescription.cs" />
     <Compile Include="Models\AppReceipt.cs" />
@@ -229,6 +245,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302062023484_AddingRecommendationPageView.resx">
       <DependentUpon>201302062023484_AddingRecommendationPageView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302071841012_IpAddressLocation.resx">
+      <DependentUpon>201302071841012_IpAddressLocation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

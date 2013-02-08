@@ -61,7 +61,8 @@ namespace ReferEngine.Web.Controllers.Win8
                                                         PurchaseDate = purchaseDate,
                                                         AppId = app.Id,
                                                         XmlContent = appReceiptXmlStr,
-                                                        CertificateId = certificateId
+                                                        CertificateId = certificateId,
+                                                        IpAddress = HttpContext.Current.Request.UserHostAddress
                                                     };
 
                         string userHostAddress = HttpContext.Current.Request.UserHostAddress;

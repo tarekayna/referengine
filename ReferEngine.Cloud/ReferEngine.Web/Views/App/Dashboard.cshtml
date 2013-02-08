@@ -1,5 +1,15 @@
-﻿@using ReferEngine.Common.Models
+﻿@using ReferEngine.Common.Data.MixPanel
+@using ReferEngine.Common.Models
 @model ReferEngine.Common.ViewModels.AppDashboardViewModel
+
+<script type="text/javascript">
+    @{ var data = Html.Raw(MixPanelOperations.GetData(new MixPanelRequestInfo(Event.RecommendIntro)
+                                                          {
+                                                              PropertyName = "AppId",
+                                                              PropertyValues = new List<string> {ViewProperties.CurrentApp.Id.ToString()}
+                                                          })); }
+    var data = @data;
+</script>
 
 <div id="content">
     <div class="container">

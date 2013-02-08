@@ -44,6 +44,11 @@ namespace ReferEngine.Workers.DataWriter
                                         CacheOperations.AddAppAuthorization(appAuthorization, TimeSpan.FromMinutes(20));
                                     }
                                     DatabaseOperations.AddAppReceipt(appAuthorization.AppReceipt);
+                                    
+                                    if (Util.CurrentServiceConfiguration != Util.ReferEngineServiceConfiguration.Local)
+                                    {
+                                        DatabaseOperations.GetIpAddressLocation(appAuthorization.AppReceipt.IpAddress);
+                                    }
 
                                     RecommendationPageView pageView = new RecommendationPageView
                                     {

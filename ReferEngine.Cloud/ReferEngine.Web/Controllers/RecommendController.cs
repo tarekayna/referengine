@@ -40,11 +40,6 @@ namespace ReferEngine.Web.Controllers
             // Facebook is cool
             Person me = DatabaseOperations.GetPerson(509572882);
 
-            IList<Person> friends = new List<Person>();
-            friends.Add(DatabaseOperations.GetPerson(12625308));
-            friends.Add(DatabaseOperations.GetPerson(100002179707322));
-            friends.Add(DatabaseOperations.GetPerson(1488075933));
-
             string viewName = String.Format("{0}/recommend", platform);
             var viewModel = new RecommendViewModel(me, ViewProperties.CurrentApp, "fake_auth_token", null);
             return View(viewName, viewModel);
@@ -146,7 +141,8 @@ namespace ReferEngine.Web.Controllers
                                         {
                                             AppId = appAuthorization.App.Id,
                                             PersonFacebookId = me.FacebookId,
-                                            UserMessage = message
+                                            UserMessage = message,
+                                            IpAddress = System.Web.HttpContext.Current.Request.UserHostAddress
                                         };
 
             var postedRecommendation = await facebookOperations.PostAppRecommendationAsync(recommendation);

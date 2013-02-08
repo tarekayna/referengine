@@ -9,6 +9,7 @@ namespace ReferEngine.Common.Models
         public Int64 FacebookPostId { get; set; }
         public Int64 PersonFacebookId { get; set; }
         public string UserMessage { get; set; }
+        public string IpAddress { get; set; }
 
         public AppRecommendation()
         {

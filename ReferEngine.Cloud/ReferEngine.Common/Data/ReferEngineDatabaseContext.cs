@@ -8,8 +8,9 @@ namespace ReferEngine.Common.Data
 {
     public class ReferEngineDatabaseContext : DbContext
     {
-        //public ReferEngineDatabaseContext() : base(Util.DatabaseConnectionStringName)
-        public ReferEngineDatabaseContext() : base("TestCloudConnectionString")
+        public ReferEngineDatabaseContext() : base(Util.DatabaseConnectionStringName)
+        //public ReferEngineDatabaseContext() : base("TestCloudConnectionString")
+        //public ReferEngineDatabaseContext() : base("LocalConnectionString")
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
@@ -28,6 +29,7 @@ namespace ReferEngine.Common.Data
         public DbSet<Membership> Memberships { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserInRole> UsersInRoles { get; set; }
+        public DbSet<IpAddressLocation> IpAddressLocations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {
@@ -82,6 +84,7 @@ namespace ReferEngine.Common.Data
             mb.Configurations.Add(new MembershipConfiguration());
             mb.Configurations.Add(new RoleConfiguration());
             mb.Configurations.Add(new UserInRoleConfiguration());
+            mb.Configurations.Add(new IpAddressLocationConfiguration());
 
             base.OnModelCreating(mb);
         }
@@ -172,6 +175,16 @@ namespace ReferEngine.Common.Data
                 Property(u => u.UserId)
                     .HasColumnName("UserId")
                     .IsRequired();
+            }
+        }
+
+        public class IpAddressLocationConfiguration : EntityTypeConfiguration<IpAddressLocation>
+        {
+            public IpAddressLocationConfiguration()
+            {
+                HasKey(i => i.IpAddress);
+                Property(i => i.IpAddress)
+                    .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             }
         }
     }
