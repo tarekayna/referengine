@@ -1,4 +1,7 @@
-﻿<script type="text/javascript">
+﻿@using ReferEngine.Common.Data
+@using ReferEngine.Common.Data.MixPanel
+
+<script type="text/javascript">
     (function (c, a) {
         window.mixpanel = a; var b, d, h, e; b = c.createElement("script");
         b.type = "text/javascript"; b.async = !0; b.src = ("https:" === c.location.protocol ? "https:" : "http:") +
@@ -16,5 +19,5 @@
             for (e = 0; e < h.length; e++) d(g, h[e]); a._i.push([b, c, f])
         }; a.__SV = 1.2;
     })(document, window.mixpanel || []);
-    mixpanel.init("@Util.MixPanelProjectToken");
+    mixpanel.init("@MixPanelProjectAccessInfo.Token");
 </script>    
