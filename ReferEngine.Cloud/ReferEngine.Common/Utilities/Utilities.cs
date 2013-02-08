@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
@@ -15,6 +14,9 @@ namespace ReferEngine.Common.Utilities
 {
     public static class Util
     {
+        private const bool SimulateTestCloud = false;
+        private const bool SimulateProductionCloud = false;
+
         public enum ReferEngineServiceConfiguration
         {
             ProductionCloud = 0,
@@ -28,6 +30,7 @@ namespace ReferEngine.Common.Utilities
             {
                 if (RoleEnvironment.IsAvailable)
                 {
+
                     string currentServiceConfiguration =
                         RoleEnvironment.GetConfigurationSettingValue("CurrentServiceConfiguration");
                     switch (currentServiceConfiguration)
@@ -39,7 +42,17 @@ namespace ReferEngine.Common.Utilities
                             return ReferEngineServiceConfiguration.TestCloud;
 
                         case "Local":
-                            return ReferEngineServiceConfiguration.Local;
+                            {
+                                // ReSharper disable ConditionIsAlwaysTrueOrFalse
+                                // ReSharper disable HeuristicUnreachableCode
+#pragma warning disable 162
+                                if (SimulateTestCloud) return ReferEngineServiceConfiguration.TestCloud;
+                                if (SimulateProductionCloud) return ReferEngineServiceConfiguration.ProductionCloud;
+#pragma warning restore 162
+                                // ReSharper restore HeuristicUnreachableCode
+                                // ReSharper restore ConditionIsAlwaysTrueOrFalse
+                                return ReferEngineServiceConfiguration.Local;
+                            }
                     }
 
                     throw new InvalidDataException(string.Format("Invalid currentServiceConfiguration: {0}",
@@ -81,8 +94,9 @@ namespace ReferEngine.Common.Utilities
 
         public static string ElmahConnectionString 
         {
-            get { 
-                string format = "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}";
+            get
+            {
+                const string format = "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}";
                 switch (CurrentServiceConfiguration)
                 {
                     case ReferEngineServiceConfiguration.ProductionCloud:
@@ -214,7 +228,7 @@ namespace ReferEngine.Common.Utilities
             StringBuilder hashBuilder = new StringBuilder();
             using (MD5 md5Hash = MD5.Create())
             {
-                byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(source.ToString()));
+                byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(source));
                 for (int i = 0; i < data.Length; i++)
                 {
                     hashBuilder.Append(data[i].ToString("x2"));

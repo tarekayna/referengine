@@ -493,6 +493,7 @@ namespace ReferEngine.Common.Data
                         ipAddressLocation = IpCheckOperations.CheckIpAddress(ipAddress);
                         if (ipAddressLocation != null)
                         {
+                            ipAddressLocation.IpAddress = ipAddress;
                             db.IpAddressLocations.Add(ipAddressLocation);
                             db.SaveChanges();
                         }
