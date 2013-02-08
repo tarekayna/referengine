@@ -8,8 +8,8 @@ namespace ReferEngine.Common.Data
 {
     public class ReferEngineDatabaseContext : DbContext
     {
-        public ReferEngineDatabaseContext() : base(Util.DatabaseConnectionStringName)
-        //public ReferEngineDatabaseContext() : base("ProductionCloudConnectionString")
+        //public ReferEngineDatabaseContext() : base(Util.DatabaseConnectionStringName)
+        public ReferEngineDatabaseContext() : base("ProductionCloudConnectionString")
         //public ReferEngineDatabaseContext() : base("TestCloudConnectionString")
         //public ReferEngineDatabaseContext() : base("LocalConnectionString")
         {
