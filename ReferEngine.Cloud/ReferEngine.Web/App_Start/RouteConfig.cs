@@ -21,11 +21,8 @@ namespace ReferEngine.Web.App_Start
                 defaults: new { controller = "Facebook", action = "Home", id = UrlParameter.Optional }
             );
 
-            routes.MapRoute(
-                name: "Recommend",
-                url: "recommend/{platform}/{action}/{id}",
-                defaults: new { controller = "Recommend", platform = "Win8", action = "Intro", id = UrlParameter.Optional }
-            );
+            routes.MapRoute("Recommend", "recommend/{platform}/{action}/{id}", new { controller = "Recommend" });
+            routes.MapRoute("InAppScript", "inappscript/{platform}/{action}", new { controller = "InAppScript" });
 
             routes.MapRoute(
                 name: "Default",

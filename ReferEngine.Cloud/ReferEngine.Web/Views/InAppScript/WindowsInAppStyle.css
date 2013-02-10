@@ -1,0 +1,75 @@
+﻿.re-container {
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 9999999;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.re-logo-text {
+    margin-left: 5px;
+}
+
+.re-container iframe,
+.re-container .re-loading-container {
+    position: absolute;
+    height: 600px;
+    width: 900px;
+    top: calc((100% - 600px) / 2);
+    left: calc((100% - 900px) / 2);
+}
+
+.re-loading-container {
+    display: -ms-flexbox;
+    -ms-flex-pack: center;
+    -ms-flex-align: center;
+    background-color: #fff;
+    color: #000;
+}
+
+.re-loading-container > div:not(.re-close) {
+    width: 300px; 
+    height: auto; 
+    display: -ms-flexbox; 
+    -ms-flex-wrap: wrap; 
+    -ms-flex-pack: center;
+}
+
+.re-loading-container img.re-logo-mark {
+    height: 50px;
+    width: 50px;
+}
+
+.re-loading-container .re-loading-text {
+    text-align: center;
+    width: 300px;
+}
+
+.re-loading-container progress.win-ring {
+    height: 40px;
+    width: 40px;
+    margin: 15px 0;
+    color: rgb(56, 176, 230);
+}
+
+.re-hidden {
+    display: none !important;
+}
+
+.re-close {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    padding-top: 9px;
+    top: 0;
+    right: 0;
+    font-size: x-large;
+    font-family: 'Segoe UI Symbol';
+    vertical-align: middle;
+    text-align: center;
+    color: #CCC;
+    cursor: pointer;
+}

@@ -247,6 +247,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Views\InAppScript\WindowsInAppScript.js" />
     <None Include="ConfigureIIS.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -258,6 +259,7 @@
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\FacebookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InAppScriptController.cs" />
     <Compile Include="Controllers\PricingController.cs" />
     <Compile Include="Controllers\RecommendController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
@@ -456,6 +458,7 @@
     <Content Include="Views\About\Terms.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\InAppScript\WindowsInAppStyle.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -506,6 +509,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\InAppScript\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

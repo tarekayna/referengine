@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Xml;
@@ -34,6 +36,14 @@ namespace ReferEngine.Web.Controllers.Win8
 
                 int start = streamStr.IndexOf("<Receipt", 0, StringComparison.OrdinalIgnoreCase);
                 int end = streamStr.IndexOf("</Receipt>", 0, StringComparison.OrdinalIgnoreCase) + 10;
+
+                if (start == -1 || end == -1)
+                {
+                    streamStr = Encoding.UTF8.GetString(Convert.FromBase64String(streamStr));
+                    start = streamStr.IndexOf("<Receipt", 0, StringComparison.OrdinalIgnoreCase);
+                    end = streamStr.IndexOf("</Receipt>", 0, StringComparison.OrdinalIgnoreCase) + 10;
+                }
+
                 string appReceiptXmlStr = streamStr.Substring(start, end - start);
 
                 XmlDocument xmlDoc = new XmlDocument();
