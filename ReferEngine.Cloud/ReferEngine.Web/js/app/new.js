@@ -1,10 +1,10 @@
 ﻿$(document).ready(function () {
-    var baseUrl = "http://127.0.0.1:81/";
+    var baseUrl = ReferEngine.BaseUrl;
     var img01 = $(".img01");
     var appId = $("#appId").val();
     var file = $(".hidden-file");
     var button = $(".btn");
-    var postUrl = baseUrl + "app/UploadScreenshots/" + appId;
+    var postUrl = baseUrl + "/app/UploadScreenshots/" + appId;
 
     var uploadFile = function (form) {
         var feedbackDiv = form.getElementsByClassName("upload-feedback")[0];

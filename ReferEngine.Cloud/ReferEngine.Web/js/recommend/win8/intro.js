@@ -20,7 +20,7 @@
             "Dont Ask Again": dontAskAgain
         });
     });
-    
+
     util.HideLoading();
     util.PostToParent("intro-page-loaded");
     util.MixPanelTrack("Recommend Intro");

@@ -16,7 +16,7 @@
     };
     
     var getLink = function(name) {
-        return baseUrl + "recommend/win8/" + name;
+        return baseUrl + "/recommend/win8/" + name;
     };
 
     var setLoadingText = function(message) {

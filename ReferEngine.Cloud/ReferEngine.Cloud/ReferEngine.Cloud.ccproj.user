@@ -7,6 +7,8 @@
     <WebRoleHttpsSkipLaunchInBrowser>
     </WebRoleHttpsSkipLaunchInBrowser>
     <RemoteDesktopMoreOptions>True</RemoteDesktopMoreOptions>
-    <PackageProfile>ProductionCloud</PackageProfile>
+    <PackageProfile>TestCloud</PackageProfile>
+    <PackageSolutionConfiguration>Release</PackageSolutionConfiguration>
+    <PackageEnableRemoteDesktop>True</PackageEnableRemoteDesktop>
   </PropertyGroup>
 </Project>

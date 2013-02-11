@@ -247,7 +247,54 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="Views\InAppScript\WindowsInAppScript.js" />
+    <Content Include="TypeScript\External\winjs.d.js" />
+    <Content Include="TypeScript\External\winjs.d.ts" />
+    <Content Include="TypeScript\External\winrt.d.js" />
+    <Content Include="TypeScript\External\winrt.d.ts" />
+    <Content Include="TypeScript\InAppScript\Windows\ReferEngine2.min.js.map">
+      <DependentUpon>ReferEngine2.js</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="TypeScript\InAppScript\Windows\authorization.ts" />
+    <Content Include="TypeScript\InAppScript\Windows\authorization.js">
+      <DependentUpon>authorization.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\InAppScript\Windows\authorization.min.js">
+      <DependentUpon>authorization.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\InAppScript\Windows\ReferEngine2.js">
+      <DependentUpon>ReferEngine2.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\InAppScript\Windows\ReferEngine2.min.js">
+      <DependentUpon>ReferEngine2.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\InAppScript\Windows\ReferEngine2.ts" />
+    <TypeScriptCompile Include="TypeScript\InAppScript\Windows\DomElements.ts" />
+    <Content Include="TypeScript\InAppScript\Windows\DomElements.js">
+      <DependentUpon>DomElements.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\InAppScript\Windows\DomElements.min.js">
+      <DependentUpon>DomElements.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\InAppScript\Windows\Main.ts" />
+    <Content Include="TypeScript\InAppScript\Windows\ReferEngine.External.ts" />
+    <Content Include="TypeScript\InAppScript\Windows\ReferEngine.js">
+      <DependentUpon>ReferEngine.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\InAppScript\Windows\ReferEngine.min.js">
+      <DependentUpon>ReferEngine.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\InAppScript\Windows\ReferEngine.ts" />
+    <Content Include="TypeScript\InAppScript\Windows\script.js" />
+    <TypeScriptCompile Include="TypeScript\InAppScript\Windows\url.ts" />
+    <Content Include="TypeScript\InAppScript\Windows\url.js">
+      <DependentUpon>url.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\InAppScript\Windows\url.min.js">
+      <DependentUpon>url.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\InAppScript\Windows\WindowsInAppStyle.css" />
+    <Content Include="TypeScript\InAppScript\Windows\WindowsInAppStyle.min.css" />
+    <Content Include="TypeScript\InAppScript\Windows\WindowsInAppStyle.less" />
     <None Include="ConfigureIIS.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -458,7 +505,6 @@
     <Content Include="Views\About\Terms.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\InAppScript\WindowsInAppStyle.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
