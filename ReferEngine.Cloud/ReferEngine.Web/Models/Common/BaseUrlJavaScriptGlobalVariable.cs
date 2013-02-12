@@ -3,10 +3,14 @@ using ReferEngine.Common.Utilities;
 
 namespace ReferEngine.Web.Models.Common
 {
-    public class BaseUrlJavaScriptGlobalVariable : IJavaScriptGlobalVariable
+    public class BaseUrlJavaScriptGlobalVariable : JavaScriptGlobalVariable
     {
-        public string Name { get { return "BaseUrl"; } }
-        public string Value
+        public override string Name
+        {
+            get { return "baseUrl"; }
+        }
+
+        public override string Value
         {
             get
             {

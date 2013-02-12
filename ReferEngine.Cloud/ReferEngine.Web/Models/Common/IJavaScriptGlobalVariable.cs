@@ -3,6 +3,7 @@
     public interface IJavaScriptGlobalVariable
     {
         string Name { get; }
-        string Value { get; }
+        string Value { get; set; }
+        string GetJsSetterString();
     }
 }

@@ -27,7 +27,9 @@ namespace ReferEngine.Web.App_Start
             List<BundleInfo> scriptBundles = new List<BundleInfo>
                 {
                     new BundleInfo("~/bundles/libs/base",
+                                   //"~/js/lib/require.js",
                                    "~/js/lib/jquery-1.8.3.js",
+                                   //"~/js/lib/require-jquery.js",
                                    "~/js/lib/bootstrap.js"),
                                    
                     new BundleInfo("~/bundles/libs/jquery-validate",
@@ -45,14 +47,14 @@ namespace ReferEngine.Web.App_Start
                     new BundleInfo("~/js/contact/index",
                                    "~/js/contact/index.js"),
 
-                    new BundleInfo("~/bundles/js/recommend/win8/intro",
-                                   "~/js/recommend/win8/common.js",
-                                   "~/js/recommend/win8/intro.js"),
+                    new BundleInfo("~/bundles/ts/recommend/windows/intro",
+                                   "~/typescript/recommend/windows/common.js",
+                                   "~/typescript/recommend/windows/intro.js"),
                                    
-                    new BundleInfo("~/js/recommend/win8/recommend",
+                    new BundleInfo("~/bundles/ts/recommend/windows/recommend",
                                    "~/js/lib/knockout.js",
-                                   "~/js/recommend/win8/common.js",
-                                   "~/js/recommend/win8/recommend.js"),
+                                   "~/typescript/recommend/windows/common.js",
+                                   "~/typescript/recommend/windows/recommend.js"),
 
                     new BundleInfo("~/js/lib/jquery.aceditable",
                                    "~/js/lib/jquery.aceditable.js"),

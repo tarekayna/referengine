@@ -3,13 +3,7 @@
 
 @section scripts
 {
-    <script type="text/javascript">
-        var re = {};
-        re.appName = "@Model.Name";
-        re.appId = @Model.Id
-    </script>
-
-    @Scripts.Render("~/bundles/js/recommend/win8/intro")
+    <script data-main="/typescript/recommend/windows/intro.js" type="text/javascript" src="~/typescript/lib/require.js"></script>
 }
 
 @section styles

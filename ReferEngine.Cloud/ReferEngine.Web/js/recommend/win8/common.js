@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     var parentLocation = "ms-appx://apexa.co.calculi/Blu.html",
-        baseUrl = window.ReferEngine.BaseUrl;
+        baseUrl = window.ReferEngineGlobals.baseUrl;
 
     var postToParent = function (data) {
         var jsonData;
@@ -36,11 +36,6 @@
         if (message != undefined) {
             setLoadingText(message);
         }
-    };
-
-    var navigateTo = function (url) {
-        postToParent("show-loading");
-        window.location.href = url;
     };
 
     var getMixPanelDateTime = function (currentTime) {
@@ -120,7 +115,6 @@
         PostToParent: postToParent,
         HideLoading: hideLoading,
         ShowLoading: showLoading,
-        NavigateTo: navigateTo,
         AddMessageHandler: addMessageHandler,
         MixPanelTrack: mixPanelTrack
     };

@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    var baseUrl = ReferEngine.BaseUrl;
+    var baseUrl = ReferEngineGlobals.baseUrl;
     var img01 = $(".img01");
     var appId = $("#appId").val();
     var file = $(".hidden-file");

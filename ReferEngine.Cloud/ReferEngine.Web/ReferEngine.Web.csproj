@@ -247,54 +247,30 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="TypeScript\External\winjs.d.js" />
-    <Content Include="TypeScript\External\winjs.d.ts" />
-    <Content Include="TypeScript\External\winrt.d.js" />
-    <Content Include="TypeScript\External\winrt.d.ts" />
-    <Content Include="TypeScript\InAppScript\Windows\ReferEngine2.min.js.map">
-      <DependentUpon>ReferEngine2.js</DependentUpon>
+    <Content Include="js\lib\require-jquery.js" />
+    <Content Include="js\lib\require.js" />
+    <Content Include="TypeScript\external\winjs.d.ts" />
+    <Content Include="TypeScript\external\winrt.d.ts" />
+    <TypeScriptCompile Include="TypeScript\globals.ts" />
+    <Content Include="TypeScript\globals.js">
+      <DependentUpon>globals.ts</DependentUpon>
     </Content>
-    <TypeScriptCompile Include="TypeScript\InAppScript\Windows\authorization.ts" />
-    <Content Include="TypeScript\InAppScript\Windows\authorization.js">
-      <DependentUpon>authorization.ts</DependentUpon>
+    <Content Include="TypeScript\globals.min.js">
+      <DependentUpon>globals.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\InAppScript\Windows\authorization.min.js">
-      <DependentUpon>authorization.ts</DependentUpon>
+    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppScript.js">
+      <DependentUpon>WindowsInAppScript.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\InAppScript\Windows\ReferEngine2.js">
-      <DependentUpon>ReferEngine2.ts</DependentUpon>
+    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppScript.min.js">
+      <DependentUpon>WindowsInAppScript.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\InAppScript\Windows\ReferEngine2.min.js">
-      <DependentUpon>ReferEngine2.ts</DependentUpon>
+    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppScript.ts" />
+    <Content Include="TypeScript\inAppScript\Windows\ReferEngine.External.ts" />
+    <Content Include="TypeScript\inAppScript\Windows\old_script.js" />
+    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppStyle.css">
+      <DependentUpon>WindowsInAppStyle.less</DependentUpon>
     </Content>
-    <Content Include="TypeScript\InAppScript\Windows\ReferEngine2.ts" />
-    <TypeScriptCompile Include="TypeScript\InAppScript\Windows\DomElements.ts" />
-    <Content Include="TypeScript\InAppScript\Windows\DomElements.js">
-      <DependentUpon>DomElements.ts</DependentUpon>
-    </Content>
-    <Content Include="TypeScript\InAppScript\Windows\DomElements.min.js">
-      <DependentUpon>DomElements.ts</DependentUpon>
-    </Content>
-    <Content Include="TypeScript\InAppScript\Windows\Main.ts" />
-    <Content Include="TypeScript\InAppScript\Windows\ReferEngine.External.ts" />
-    <Content Include="TypeScript\InAppScript\Windows\ReferEngine.js">
-      <DependentUpon>ReferEngine.ts</DependentUpon>
-    </Content>
-    <Content Include="TypeScript\InAppScript\Windows\ReferEngine.min.js">
-      <DependentUpon>ReferEngine.ts</DependentUpon>
-    </Content>
-    <Content Include="TypeScript\InAppScript\Windows\ReferEngine.ts" />
-    <Content Include="TypeScript\InAppScript\Windows\script.js" />
-    <TypeScriptCompile Include="TypeScript\InAppScript\Windows\url.ts" />
-    <Content Include="TypeScript\InAppScript\Windows\url.js">
-      <DependentUpon>url.ts</DependentUpon>
-    </Content>
-    <Content Include="TypeScript\InAppScript\Windows\url.min.js">
-      <DependentUpon>url.ts</DependentUpon>
-    </Content>
-    <Content Include="TypeScript\InAppScript\Windows\WindowsInAppStyle.css" />
-    <Content Include="TypeScript\InAppScript\Windows\WindowsInAppStyle.min.css" />
-    <Content Include="TypeScript\InAppScript\Windows\WindowsInAppStyle.less" />
+    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppStyle.less" />
     <None Include="ConfigureIIS.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -331,6 +307,10 @@
     <Compile Include="Models\Account\UserProfile.cs" />
     <Compile Include="Models\Admin\AdminViewModel.cs" />
     <Compile Include="Models\Common\BaseUrlJavaScriptGlobalVariable.cs" />
+    <Compile Include="Models\Common\AppNameJavaScriptGlobalVariable.cs" />
+    <Compile Include="Models\Common\AppIdJavaScriptGlobalVariable.cs" />
+    <Compile Include="Models\Common\JavaScriptGlobalVariable.cs" />
+    <Compile Include="Models\Common\ReferEngineAuthTokenJavaScriptGlobalVariable.cs" />
     <Compile Include="Models\Common\IJavaScriptGlobalVariable.cs" />
     <Compile Include="Models\Common\ViewProperties.cs" />
     <Compile Include="Models\Error\ErrorViewModel.cs" />
@@ -501,6 +481,48 @@
     </Content>
     <Content Include="Less\web\main.min.css">
       <DependentUpon>main.less</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppStyle.min.css">
+      <DependentUpon>WindowsInAppStyle.less</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="TypeScript\recommend\windows\common.ts" />
+    <Content Include="TypeScript\lib\bootstrap.js" />
+    <Content Include="TypeScript\lib\jquery-1.8.3.js" />
+    <Content Include="TypeScript\lib\jquery-1.9.0.js" />
+    <Content Include="TypeScript\lib\jquery-ui-1.10.0.custom.js" />
+    <Content Include="TypeScript\lib\jquery-validate.js" />
+    <Content Include="TypeScript\lib\jquery.aceditable.js" />
+    <TypeScriptCompile Include="TypeScript\lib\jquery.d.ts" />
+    <Content Include="TypeScript\lib\jquery.d.js">
+      <DependentUpon>jquery.d.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\lib\jquery.fitvids.js" />
+    <Content Include="TypeScript\lib\knockout.js" />
+    <Content Include="TypeScript\lib\require-jquery.js" />
+    <TypeScriptCompile Include="TypeScript\lib\require.d.ts" />
+    <Content Include="TypeScript\lib\require.d.js">
+      <DependentUpon>require.d.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\lib\require.js" />
+    <Content Include="TypeScript\recommend\windows\common.js">
+      <DependentUpon>common.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="TypeScript\recommend\windows\intro.ts" />
+    <Content Include="TypeScript\recommend\windows\common.min.js">
+      <DependentUpon>common.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="TypeScript\recommend\windows\recommend.ts" />
+    <Content Include="TypeScript\recommend\windows\intro.js">
+      <DependentUpon>intro.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\intro.min.js">
+      <DependentUpon>intro.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\recommend.js">
+      <DependentUpon>recommend.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\recommend.min.js">
+      <DependentUpon>recommend.ts</DependentUpon>
     </Content>
     <Content Include="Views\About\Terms.cshtml">
       <SubType>Code</SubType>

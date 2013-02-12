@@ -3,12 +3,7 @@
 
 @section scripts
 {
-    <script type="text/javascript">
-        var re = {};
-        re.appName = "@Model.App.Name";
-        re.appId = @Model.App.Id;
-    </script>
-    @Scripts.Render("~/js/recommend/win8/recommend")
+    <script data-main="/typescript/recommend/windows/recommend.js" type="text/javascript" src="~/typescript/lib/require.js"></script>
 }
 
 @section styles
@@ -16,12 +11,11 @@
     @Styles.Render("~/bundles/less/recommend/win8/recommend")
 }
 
+@{
+    ViewProperties.JavaScriptGlobalVariables.Single(p => p.Name.Equals("referEngineAuthToken")).Value = Model.ReferEngineAuthToken;
+}
+
 <input type="hidden" id="appId" value="@Model.App.Id" />
-<script type="text/javascript">
-    window.RE = window.RE == undefined ? {} : window.RE;
-    window.RE.ReferEngineAuthToken = "@Model.ReferEngineAuthToken";
-    @*window.RE.Friends = @Html.Raw(Person.Serialize(Model.CurrentUser.Friends));*@
-</script>
 
 <div class="text-message error">
     You must agree to the terms of service

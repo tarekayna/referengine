@@ -9,7 +9,10 @@ namespace ReferEngine.Web.Models.Common
         {
             JavaScriptGlobalVariables = new List<IJavaScriptGlobalVariable>
                                             {
-                                                new BaseUrlJavaScriptGlobalVariable()
+                                                new BaseUrlJavaScriptGlobalVariable(),
+                                                new AppNameJavaScriptGlobalVariable(),
+                                                new AppIdJavaScriptGlobalVariable(),
+                                                new ReferEngineAuthTokenJavaScriptGlobalVariable()
                                             };
         }
 
