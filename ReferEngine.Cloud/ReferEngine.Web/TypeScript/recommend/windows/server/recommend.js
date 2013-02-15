@@ -1,15 +1,21 @@
-define(["require", "exports", "common"], function(require, exports, __common__) {
+define(["require", "exports", "common", "../common/Functions"], function(require, exports, __common__, __Functions__) {
     var common = __common__;
 
+    
+    var Functions = __Functions__;
+
     require([
-        "/typescript/lib/knockout.js"
-    ], function () {
+        "./../../lib/knockout"
+    ], function (ko) {
         $(document).ready(function () {
-            var clientMessaging = common.ClientMessaging, mp = common.MixPanel, submitButton = $("#submit-button"), cancelButton = $("#cancel-button"), doneButton = $("#done-button"), msgDiv = $("#message"), asContainer = $("#asContainer"), post = $(".post"), postResult = $(".postResult"), agreeCheckbox = $("#agree"), errorDiv = $("#re-content .text-message"), searchStringStart = 0, searchStringEnd = 0, msgPrev = "", searchString = "";
+            var mp = common.MixPanel, submitButton = $("#submit-button"), cancelButton = $("#cancel-button"), doneButton = $("#done-button"), msgDiv = $("#message"), asContainer = $("#asContainer"), post = $(".post"), postResult = $(".postResult"), agreeCheckbox = $("#agree"), errorDiv = $("#re-content .text-message"), searchStringStart = 0, searchStringEnd = 0, msgPrev = "", messenger = common.messenger, clientFunction = Functions.ClientFunction, searchString = "";
             postResult.hide();
             errorDiv.hide();
             doneButton.click(function () {
-                clientMessaging.postAction("done");
+                messenger.call(clientFunction.setAutoAsk, {
+                    askAgain: false
+                });
+                messenger.call(clientFunction.hide);
             });
             var keys = {
                 enter: 13,
@@ -179,14 +185,17 @@ define(["require", "exports", "common"], function(require, exports, __common__) 
                 success: onGetFriendsSuccess
             });
             var onSubmitError = function (jqXhr, textStatus, errorThrown) {
-                clientMessaging.showLoading("Error posting to Facebook. Please try again.");
-                mp.track("Recommend Post Error", null);
+                messenger.call(clientFunction.setLoadingText, {
+                    text: "Error posting to Facebook. Please try again."
+                });
+                messenger.call(clientFunction.showLoading);
+                mp.track("Rcmnd Post Error", null);
             };
             var onSubmitSuccess = function (data, textStatus, jqXhr) {
                 post.hide();
                 postResult.show();
-                clientMessaging.hideLoading();
-                mp.track("Recommend Post Success", null);
+                messenger.call(clientFunction.hideLoading);
+                mp.track("Rcmnd Post Success", null);
             };
             var showMustAgree = function () {
                 errorDiv.show({
@@ -201,7 +210,10 @@ define(["require", "exports", "common"], function(require, exports, __common__) 
             };
             submitButton.click(function () {
                 if(agreeCheckbox[0].checked) {
-                    clientMessaging.showLoading("Posting to Facebook...");
+                    messenger.call(clientFunction.setLoadingText, {
+                        text: "Posting to Facebook..."
+                    });
+                    messenger.call(clientFunction.showLoading);
                     var msg = msgDiv.clone();
                     var tags = msg.find(".friendTag");
                     if(tags.length > 0) {
@@ -222,7 +234,7 @@ define(["require", "exports", "common"], function(require, exports, __common__) 
                         error: onSubmitError,
                         success: onSubmitSuccess
                     });
-                    mp.track("Recommend Post Submit", {
+                    mp.track("Rcmnd Post Submit", {
                         "Includes Message": msgText !== "",
                         "Includes Tags": tags.length > 0
                     });
@@ -231,12 +243,12 @@ define(["require", "exports", "common"], function(require, exports, __common__) 
                 }
             });
             cancelButton.click(function () {
-                clientMessaging.postAction("cancel");
-                mp.track("Recommend Post Cancel", null);
+                messenger.call(clientFunction.hide);
+                mp.track("Rcmnd Post Cancel", null);
             });
             asContainer.css("display", "none");
-            clientMessaging.hideLoading();
-            mp.track("Recommend Post", null);
+            messenger.call(clientFunction.hideLoading);
+            mp.track("Rcmnd Post", null);
         });
     });
 })

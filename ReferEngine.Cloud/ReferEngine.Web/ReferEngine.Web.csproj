@@ -249,28 +249,54 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="js\lib\require-jquery.js" />
     <Content Include="js\lib\require.js" />
-    <Content Include="TypeScript\external\winjs.d.ts" />
-    <Content Include="TypeScript\external\winrt.d.ts" />
-    <TypeScriptCompile Include="TypeScript\globals.ts" />
-    <Content Include="TypeScript\globals.js">
+    <Content Include="TypeScript\recommend\windows\client\build-and-deploy.bat" />
+    <TypeScriptCompile Include="TypeScript\recommend\windows\common\Messaging.ts" />
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientScript.js">
+      <DependentUpon>WindowsClientScript.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientScript.min.js">
+      <DependentUpon>WindowsClientScript.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="TypeScript\recommend\windows\common\Functions.ts" />
+    <Content Include="TypeScript\recommend\windows\common\Functions.js">
+      <DependentUpon>Functions.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\common\Functions.min.js">
+      <DependentUpon>Functions.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\common\Messaging.js">
+      <DependentUpon>Messaging.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\common\Messaging.min.js">
+      <DependentUpon>Messaging.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\common\winjs.d.ts" />
+    <Content Include="TypeScript\recommend\windows\common\winrt.d.ts" />
+    <Content Include="TypeScript\recommend\windows\client\build-and-deploy.js" />
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientScript-built.js" />
+    <Content Include="TypeScript\recommend\windows\client\WindowsInAppScript.min.js.map">
+      <DependentUpon>WindowsInAppScript.js</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="TypeScript\recommend\windows\server\globals.ts" />
+    <Content Include="TypeScript\recommend\windows\server\globals.js">
       <DependentUpon>globals.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\globals.min.js">
+    <Content Include="TypeScript\recommend\windows\server\globals.min.js">
       <DependentUpon>globals.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppScript.js">
-      <DependentUpon>WindowsInAppScript.ts</DependentUpon>
+    <Content Include="TypeScript\recommend\windows\client\WindowsInAppScript.js">
+      <DependentUpon>WindowsClientScript.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppScript.min.js">
-      <DependentUpon>WindowsInAppScript.ts</DependentUpon>
+    <Content Include="TypeScript\recommend\windows\client\WindowsInAppScript.min.js">
+      <DependentUpon>WindowsClientScript.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppScript.ts" />
-    <Content Include="TypeScript\inAppScript\Windows\ReferEngine.External.ts" />
-    <Content Include="TypeScript\inAppScript\Windows\old_script.js" />
-    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppStyle.css">
-      <DependentUpon>WindowsInAppStyle.less</DependentUpon>
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientScript.ts" />
+    <Content Include="TypeScript\recommend\windows\client\ReferEngineClient.ts" />
+    <Content Include="TypeScript\recommend\windows\client\__old_script.js" />
+    <Content Include="TypeScript\recommend\windows\client\WindowsInAppStyle.css">
+      <DependentUpon>WindowsClientStyle.less</DependentUpon>
     </Content>
-    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppStyle.less" />
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientStyle.less" />
     <None Include="ConfigureIIS.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -482,10 +508,10 @@
     <Content Include="Less\web\main.min.css">
       <DependentUpon>main.less</DependentUpon>
     </Content>
-    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppStyle.min.css">
-      <DependentUpon>WindowsInAppStyle.less</DependentUpon>
+    <Content Include="TypeScript\recommend\windows\client\WindowsInAppStyle.min.css">
+      <DependentUpon>WindowsClientStyle.less</DependentUpon>
     </Content>
-    <TypeScriptCompile Include="TypeScript\recommend\windows\common.ts" />
+    <TypeScriptCompile Include="TypeScript\recommend\windows\server\common.ts" />
     <Content Include="TypeScript\lib\bootstrap.js" />
     <Content Include="TypeScript\lib\jquery-1.8.3.js" />
     <Content Include="TypeScript\lib\jquery-1.9.0.js" />
@@ -504,24 +530,25 @@
       <DependentUpon>require.d.ts</DependentUpon>
     </Content>
     <Content Include="TypeScript\lib\require.js" />
-    <Content Include="TypeScript\recommend\windows\common.js">
+    <Content Include="TypeScript\r.js" />
+    <Content Include="TypeScript\recommend\windows\server\common.js">
       <DependentUpon>common.ts</DependentUpon>
     </Content>
-    <TypeScriptCompile Include="TypeScript\recommend\windows\intro.ts" />
-    <Content Include="TypeScript\recommend\windows\common.min.js">
+    <TypeScriptCompile Include="TypeScript\recommend\windows\server\intro.ts" />
+    <Content Include="TypeScript\recommend\windows\server\common.min.js">
       <DependentUpon>common.ts</DependentUpon>
     </Content>
-    <TypeScriptCompile Include="TypeScript\recommend\windows\recommend.ts" />
-    <Content Include="TypeScript\recommend\windows\intro.js">
+    <TypeScriptCompile Include="TypeScript\recommend\windows\server\recommend.ts" />
+    <Content Include="TypeScript\recommend\windows\server\intro.js">
       <DependentUpon>intro.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\recommend\windows\intro.min.js">
+    <Content Include="TypeScript\recommend\windows\server\intro.min.js">
       <DependentUpon>intro.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\recommend\windows\recommend.js">
+    <Content Include="TypeScript\recommend\windows\server\recommend.js">
       <DependentUpon>recommend.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\recommend\windows\recommend.min.js">
+    <Content Include="TypeScript\recommend\windows\server\recommend.min.js">
       <DependentUpon>recommend.ts</DependentUpon>
     </Content>
     <Content Include="Views\About\Terms.cshtml">
@@ -662,6 +689,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>call ""C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\TypeScript\recommend\windows\client\build-and-deploy.bat""</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 Other similar extension points exist, see Microsoft.Common.targets.
 <Target Name="BeforeBuild">

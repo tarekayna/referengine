@@ -1,11 +1,13 @@
-/// <reference path="../../lib/require.d.ts" static="true" />
+/// <reference path="../../../lib/require.d.ts" static="true" />
 declare var $;
 declare var ko;
 import common = module("common");
-require(["/typescript/lib/knockout.js"], function () {
+import Messaging = module("../common/Messaging");
+import Functions = module("../common/Functions");
+
+require(["./../../lib/knockout"], function (ko) {
     $(document).ready(function () {
-        var clientMessaging = common.ClientMessaging,
-            mp = common.MixPanel,
+        var mp = common.MixPanel,
             submitButton = $("#submit-button"),
             cancelButton = $("#cancel-button"),
             doneButton = $("#done-button"),
@@ -18,13 +20,16 @@ require(["/typescript/lib/knockout.js"], function () {
             searchStringStart = 0,
             searchStringEnd = 0,
             msgPrev = "",
+            messenger = common.messenger,
+            clientFunction = Functions.ClientFunction,
             searchString = "";
 
         postResult.hide();
         errorDiv.hide();
 
         doneButton.click(function () {
-            clientMessaging.postAction("done");
+            messenger.call(clientFunction.setAutoAsk, { askAgain: false });
+            messenger.call(clientFunction.hide);
         });
 
         var keys = {
@@ -225,15 +230,16 @@ require(["/typescript/lib/knockout.js"], function () {
         });
 
         var onSubmitError = function (jqXhr, textStatus, errorThrown) {
-            clientMessaging.showLoading("Error posting to Facebook. Please try again.");
-            mp.track("Recommend Post Error", null);
+            messenger.call(clientFunction.setLoadingText, { text: "Error posting to Facebook. Please try again." });
+            messenger.call(clientFunction.showLoading);
+            mp.track("Rcmnd Post Error", null);
         };
 
         var onSubmitSuccess = function (data, textStatus, jqXhr) {
             post.hide();
             postResult.show();
-            clientMessaging.hideLoading();
-            mp.track("Recommend Post Success", null);
+            messenger.call(clientFunction.hideLoading);
+            mp.track("Rcmnd Post Success", null);
         };
 
         var showMustAgree = function () {
@@ -250,7 +256,8 @@ require(["/typescript/lib/knockout.js"], function () {
 
         submitButton.click(function () {
             if (agreeCheckbox[0].checked) {
-                clientMessaging.showLoading("Posting to Facebook...");
+                messenger.call(clientFunction.setLoadingText, { text: "Posting to Facebook..." });
+                messenger.call(clientFunction.showLoading);
 
                 var msg = msgDiv.clone();
                 var tags = msg.find(".friendTag");
@@ -274,7 +281,7 @@ require(["/typescript/lib/knockout.js"], function () {
                     success: onSubmitSuccess
                 });
 
-                mp.track("Recommend Post Submit", {
+                mp.track("Rcmnd Post Submit", {
                     "Includes Message": msgText !== "",
                     "Includes Tags": tags.length > 0
                 });
@@ -284,13 +291,13 @@ require(["/typescript/lib/knockout.js"], function () {
         });
 
         cancelButton.click(function () {
-            clientMessaging.postAction("cancel");
-            mp.track("Recommend Post Cancel", null);
+            messenger.call(clientFunction.hide);
+            mp.track("Rcmnd Post Cancel", null);
         });
 
         asContainer.css("display", "none");
-        clientMessaging.hideLoading();
+        messenger.call(clientFunction.hideLoading);
 
-        mp.track("Recommend Post", null);
+        mp.track("Rcmnd Post", null);
     });
 });
