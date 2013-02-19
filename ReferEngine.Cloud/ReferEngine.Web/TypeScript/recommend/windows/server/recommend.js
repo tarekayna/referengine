@@ -5,7 +5,7 @@ define(["require", "exports", "common", "../common/Functions"], function(require
     var Functions = __Functions__;
 
     require([
-        "./../../lib/knockout"
+        "../../../lib/knockout"
     ], function (ko) {
         $(document).ready(function () {
             var mp = common.MixPanel, submitButton = $("#submit-button"), cancelButton = $("#cancel-button"), doneButton = $("#done-button"), msgDiv = $("#message"), asContainer = $("#asContainer"), post = $(".post"), postResult = $(".postResult"), agreeCheckbox = $("#agree"), errorDiv = $("#re-content .text-message"), searchStringStart = 0, searchStringEnd = 0, msgPrev = "", messenger = common.messenger, clientFunction = Functions.ClientFunction, searchString = "";
@@ -178,7 +178,7 @@ define(["require", "exports", "common", "../common/Functions"], function(require
             $.ajax(common.Url.getFriends, {
                 type: "POST",
                 data: {
-                    re_auth_token: ReferEngineGlobals.referEngineAuthToken
+                    authToken: ReferEngineGlobals.referEngineAuthToken
                 },
                 dataType: "json",
                 error: onGetFriendsError,
@@ -228,7 +228,7 @@ define(["require", "exports", "common", "../common/Functions"], function(require
                         url: common.Url.postRecommendation,
                         data: {
                             message: msgText,
-                            re_auth_token: ReferEngineGlobals.referEngineAuthToken
+                            authToken: ReferEngineGlobals.referEngineAuthToken
                         },
                         dataType: "json",
                         error: onSubmitError,

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>ReferEngine.Windows.Javascript</id>
+    <version>1.0.1</version>
+    <title>ReferEngine Windows Javascript</title>
+    <authors>ReferEngine.com</authors>
+    <owners>ReferEngine.com</owners>
+    <projectUrl>http://www.referengine.com/</projectUrl>
+    <iconUrl>https://www.referengine.com/img/logo-mark-50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ReferEngine.com is a facebook integration service for Windows Store Apps. Refer Engine offers app customers the ability to recommend the
+      Windows app and earn rewards for the successful recommendations. You can register your all at www.referengine.com.</description>
+    <summary>ReferEngine.com is a facebook integration service for Windows Store Apps. www.ReferEngine.com for more information.</summary>
+    <releaseNotes />
+    <copyright>Copyright Apexa Inc. 2013</copyright>
+    <language>en-US</language>
+    <tags>ReferEngine Refer Engine Apexa</tags>
+    <references />
+  </metadata>
+</package>

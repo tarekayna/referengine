@@ -258,6 +258,12 @@
       <DependentUpon>WindowsClientScript.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="TypeScript\recommend\windows\common\Functions.ts" />
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientStyle.css">
+      <DependentUpon>WindowsClientStyle.less</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientStyle.min.css">
+      <DependentUpon>WindowsClientStyle.less</DependentUpon>
+    </Content>
     <Content Include="TypeScript\recommend\windows\common\Functions.js">
       <DependentUpon>Functions.ts</DependentUpon>
     </Content>
@@ -274,9 +280,6 @@
     <Content Include="TypeScript\recommend\windows\common\winrt.d.ts" />
     <Content Include="TypeScript\recommend\windows\client\build-and-deploy.js" />
     <Content Include="TypeScript\recommend\windows\client\WindowsClientScript-built.js" />
-    <Content Include="TypeScript\recommend\windows\client\WindowsInAppScript.min.js.map">
-      <DependentUpon>WindowsInAppScript.js</DependentUpon>
-    </Content>
     <TypeScriptCompile Include="TypeScript\recommend\windows\server\globals.ts" />
     <Content Include="TypeScript\recommend\windows\server\globals.js">
       <DependentUpon>globals.ts</DependentUpon>
@@ -284,18 +287,9 @@
     <Content Include="TypeScript\recommend\windows\server\globals.min.js">
       <DependentUpon>globals.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\recommend\windows\client\WindowsInAppScript.js">
-      <DependentUpon>WindowsClientScript.ts</DependentUpon>
-    </Content>
-    <Content Include="TypeScript\recommend\windows\client\WindowsInAppScript.min.js">
-      <DependentUpon>WindowsClientScript.ts</DependentUpon>
-    </Content>
     <Content Include="TypeScript\recommend\windows\client\WindowsClientScript.ts" />
     <Content Include="TypeScript\recommend\windows\client\ReferEngineClient.ts" />
     <Content Include="TypeScript\recommend\windows\client\__old_script.js" />
-    <Content Include="TypeScript\recommend\windows\client\WindowsInAppStyle.css">
-      <DependentUpon>WindowsClientStyle.less</DependentUpon>
-    </Content>
     <Content Include="TypeScript\recommend\windows\client\WindowsClientStyle.less" />
     <None Include="ConfigureIIS.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -312,7 +306,6 @@
     <Compile Include="Controllers\PricingController.cs" />
     <Compile Include="Controllers\RecommendController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
-    <Compile Include="Controllers\Win8\AuthController.cs" />
     <Compile Include="DataAccess\BlobStorageOperations.cs" />
     <Compile Include="DataAccess\ReferDataReader.cs" />
     <Compile Include="DataAccess\IReferDataReader.cs" />
@@ -507,9 +500,6 @@
     </Content>
     <Content Include="Less\web\main.min.css">
       <DependentUpon>main.less</DependentUpon>
-    </Content>
-    <Content Include="TypeScript\recommend\windows\client\WindowsInAppStyle.min.css">
-      <DependentUpon>WindowsClientStyle.less</DependentUpon>
     </Content>
     <TypeScriptCompile Include="TypeScript\recommend\windows\server\common.ts" />
     <Content Include="TypeScript\lib\bootstrap.js" />

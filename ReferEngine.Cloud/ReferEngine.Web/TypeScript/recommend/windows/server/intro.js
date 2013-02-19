@@ -5,9 +5,9 @@ define(["require", "exports", "common", "../common/Functions"], function(require
     var Functions = __Functions__;
 
     $(document).ready(function () {
-        var loginButton = $(".login"), cancelButton = $("#re-cancel"), dontAskCheckbox = $("#dontAsk"), messenger = common.messenger, clientFunction = Functions.ClientFunction, referEngineAuthorizationToken = null, facebookAuthorizationCode = null, mp = common.MixPanel;
+        var loginButton = $(".login"), cancelButton = $("#re-cancel"), dontAskCheckbox = $("#dontAsk"), messenger = common.messenger, functionRange, clientFunction = Functions.ClientFunction, severFunction = Functions.ServerFunction, facebookAuthorizationCode = null, mp = common.MixPanel;
         function getRecommendUrl() {
-            var query = "fb_access_code=" + facebookAuthorizationCode + "&re_auth_token=" + referEngineAuthorizationToken;
+            var query = "facebookCode=" + facebookAuthorizationCode;
             query = query.replace("#", "%23");
             return common.Url.base + "/recommend/win8/recommend?" + query;
         }
@@ -30,42 +30,36 @@ define(["require", "exports", "common", "../common/Functions"], function(require
                 "Dont Ask Again": dontAskAgain
             });
         });
-        messenger.addMessageHandler("loading-closed", function () {
-            mp.track("Rcmnd Intro Loading Closed");
-        });
-        messenger.addMessageHandler("intro-page-visible", function () {
-            mp.track("Rcmnd Intro");
-        });
-        messenger.addMessageHandler("auth-facebook-result", function (details) {
-            var authResult = details.authResult;
-            if(authResult.success) {
-                facebookAuthorizationCode = authResult.code;
-                if(referEngineAuthorizationToken) {
+        var closedWhileLoading = false;
+        var functions = [
+            new Functions.Function(severFunction.closedWhileLoading, function (details) {
+                mp.track("Rcmnd Intro Closed While Loading");
+                closedWhileLoading = true;
+            }), 
+            new Functions.Function(severFunction.introVisible, function (details) {
+                if(!closedWhileLoading) {
+                    mp.track("Rcmnd Intro");
+                }
+            }), 
+            new Functions.Function(severFunction.authFacebookResult, function (details) {
+                var authResult = details.authResult;
+                if(authResult.success) {
+                    facebookAuthorizationCode = authResult.code;
                     messenger.call(clientFunction.navigate, {
                         url: getRecommendUrl()
                     });
-                }
-            } else {
-                messenger.call(clientFunction.setLoadingText, {
-                    text: "Error: You must authorize Refer Engine to use your Facebook information."
-                });
-                messenger.call(clientFunction.showLoading);
-            }
-        });
-        messenger.addMessageHandler("auth-app-result", function (details) {
-            var authResult = details.authResult;
-            if(authResult.success) {
-                referEngineAuthorizationToken = authResult.code;
-                if(facebookAuthorizationCode) {
-                    messenger.call(clientFunction.navigate, {
-                        url: getRecommendUrl()
+                } else {
+                    messenger.call(clientFunction.setLoadingText, {
+                        text: "Error: You must authorize Refer Engine to use your Facebook information."
                     });
+                    messenger.call(clientFunction.showLoading);
                 }
-            } else {
-            }
-        });
+            }), 
+            
+        ];
+        functionRange = new Functions.FunctionRange(messenger);
+        functionRange.addRange(functions);
         messenger.call(clientFunction.hideLoading);
         messenger.call(clientFunction.setIntroPageLoaded);
-        messenger.call(clientFunction.authApp);
     });
 })

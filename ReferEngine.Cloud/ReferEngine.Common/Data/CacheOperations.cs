@@ -14,6 +14,7 @@ namespace ReferEngine.Common.Data
         internal const string AppScreenshotIdDesc = "appscreenshot-id-desc-{0}{1}";
         internal const string UserId = "user-id-{0}";
         internal const string IpAddress = "ip-{0}";
+        internal const string AppAutoShowOptions = "app-auto-show-{0}";
     }
 
     public static class CacheTimeoutValues
@@ -47,7 +48,7 @@ namespace ReferEngine.Common.Data
             Cache.Put(appAuthorization.Token, appAuthorization, expiresIn);
         }
 
-        public static AppAuthorization GetAppAuthorization(string token, string userHostAddress)
+        public static AppAuthorization GetAppAuthorization(string token)
         {
             object cached = null;
             try
@@ -58,15 +59,7 @@ namespace ReferEngine.Common.Data
             {
                 Trace.TraceError(e.Message);
             }
-            if (cached != null)
-            {
-                AppAuthorization appAuthorization = (AppAuthorization)cached;
-                if (appAuthorization.UserHostAddress.Equals(userHostAddress, StringComparison.OrdinalIgnoreCase))
-                {
-                    return appAuthorization;
-                }
-            }
-            return null;
+            return cached != null ? (AppAuthorization) cached : null;
         }
 
         public static Person GetPerson(Int64 facebookId)
@@ -217,6 +210,29 @@ namespace ReferEngine.Common.Data
             if (ipAddressLocation == null) return;
             String key = String.Format(CacheKeyFormat.IpAddress, ipAddressLocation.IpAddress);
             Cache.Put(key, ipAddressLocation);
+        }
+
+        public static AppAutoShowOptions GetAppAutoShowOptions(long appId)
+        {
+            String key = String.Format(CacheKeyFormat.AppAutoShowOptions, appId);
+            object cached = null;
+            try
+            {
+                cached = Cache.Get(key);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.Message);
+                // It's ok, just retreive from the database
+            }
+            return cached == null ? null : (AppAutoShowOptions)cached;
+        }
+
+        public static void SetAppAutoShowOptions(AppAutoShowOptions appAutoShowOptions)
+        {
+            if (appAutoShowOptions == null) return;
+            String key = String.Format(CacheKeyFormat.AppAutoShowOptions, appAutoShowOptions.AppId);
+            Cache.Put(key, appAutoShowOptions);
         }
     }
 }

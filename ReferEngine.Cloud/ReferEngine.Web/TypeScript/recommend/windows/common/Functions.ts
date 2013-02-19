@@ -26,7 +26,6 @@ export class FunctionInfo {
 }
 
 export class ClientFunction {
-    static authApp = new FunctionInfo("authApp");
     static authFacebook = new FunctionInfo("authFacebook");
     static hide = new FunctionInfo("hide");
     static hideLoading = new FunctionInfo("hideLoading");
@@ -35,4 +34,10 @@ export class ClientFunction {
     static setIntroPageLoaded = new FunctionInfo("setIntroPageLoaded");
     static setLoadingText = new FunctionInfo("setLoadingText");
     static showLoading = new FunctionInfo("showLoading");
+}
+
+export class ServerFunction {
+    static closedWhileLoading = new FunctionInfo("closedWhileLoading");
+    static introVisible = new FunctionInfo("introVisible");
+    static authFacebookResult = new FunctionInfo("authFacebookResult");
 }

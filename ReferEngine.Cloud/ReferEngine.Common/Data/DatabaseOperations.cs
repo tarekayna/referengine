@@ -1,4 +1,5 @@
-﻿using Microsoft.ServiceBus.Messaging;
+﻿using System.Data.Entity;
+using Microsoft.ServiceBus.Messaging;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Properties;
 using ReferEngine.Common.ViewModels;
@@ -16,7 +17,7 @@ namespace ReferEngine.Common.Data
     {
         private static SqlConnectionStringBuilder _connectionString;
         private static SqlConnection _connection;
-        private static bool _initialized = false;
+        private static bool _initialized;
 
         private static void Initialize()
         {
@@ -97,7 +98,7 @@ namespace ReferEngine.Common.Data
         {
             using (var db = new ReferEngineDatabaseContext())
             {
-                return db.AppReceipts.Find(id);
+                return db.AppReceipts.SingleOrDefault(r => r.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
             }
         }
 
@@ -419,7 +420,7 @@ namespace ReferEngine.Common.Data
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
                 Role role = db.Roles.First(r => r.RoleName.Equals(roleName, StringComparison.OrdinalIgnoreCase));
-                db.UsersInRoles.Add(new UserInRole { RoleId = role.RoleId, UserId = user.Id });
+                db.UsersInRoles.Add(new UserInRole {RoleId = role.RoleId, UserId = user.Id});
                 db.SaveChanges();
             }
         }
@@ -453,8 +454,8 @@ namespace ReferEngine.Common.Data
                 var lowercaseTerm = term.ToLower();
 
                 var matches = from a in db.StoreAppInfos
-                                   where a.Name.ToLower().StartsWith(lowercaseTerm)
-                                   select a;
+                              where a.Name.ToLower().StartsWith(lowercaseTerm)
+                              select a;
 
                 if (matches.Count() >= count)
                 {
@@ -471,11 +472,20 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static void RecommendationPageView(RecommendationPageView recommendationPageView)
+        public static void AddRecommendationPageView(AppAuthorization auth, RecommendationPage page,
+                                                     bool isAutoOpen = false)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
-                db.RecommendationPageViews.Add(recommendationPageView);
+                RecommendationPageView pageView = new RecommendationPageView
+                                                      {
+                                                          AppReceiptId = auth.AppReceipt.Id,
+                                                          TimeStamp = DateTime.UtcNow,
+                                                          RecommendationPage = page,
+                                                          AppId = auth.App.Id,
+                                                          IsAutoOpen = isAutoOpen
+                                                      };
+                db.RecommendationPageViews.Add(pageView);
                 db.SaveChanges();
             }
         }
@@ -487,7 +497,9 @@ namespace ReferEngine.Common.Data
             {
                 using (var db = new ReferEngineDatabaseContext())
                 {
-                    ipAddressLocation = db.IpAddressLocations.SingleOrDefault(l => l.IpAddress.Equals(ipAddress, StringComparison.OrdinalIgnoreCase));
+                    ipAddressLocation =
+                        db.IpAddressLocations.SingleOrDefault(
+                            l => l.IpAddress.Equals(ipAddress, StringComparison.OrdinalIgnoreCase));
                     if (ipAddressLocation == null)
                     {
                         ipAddressLocation = IpCheckOperations.CheckIpAddress(ipAddress);
@@ -503,6 +515,51 @@ namespace ReferEngine.Common.Data
                 CacheOperations.SetIpAddressLocation(ipAddressLocation);
             }
             return ipAddressLocation;
+        }
+
+        public static AppAuthorization GetAppAuthorization(string token)
+        {
+            AppAuthorization auth = CacheOperations.GetAppAuthorization(token);
+            if (auth == null)
+            {
+                using (var db = new ReferEngineDatabaseContext())
+                {
+                    //auth = db.AppAuthorizations.Single(a => a.Token == token);
+                    auth = db.AppAuthorizations.Where(a => a.Token == token)
+                             .Include(a => a.App)
+                             .Include(a => a.AppReceipt)
+                             .First();
+                    CacheOperations.AddAppAuthorization(auth, TimeSpan.FromHours(4));
+                }
+            }
+            return auth;
+        }
+
+        public static void AddAppAuthorization(AppAuthorization auth)
+        {
+            using (var db = new ReferEngineDatabaseContext())
+            {
+                db.AppReceipts.Attach(auth.AppReceipt);
+                db.Apps.Attach(auth.App);
+                db.AppAuthorizations.Add(auth);
+                CacheOperations.AddAppAuthorization(auth, TimeSpan.FromHours(4));
+                db.SaveChanges();
+            }
+
+        }
+
+        public static AppAutoShowOptions GetAppAutoShowOptions(long appId)
+        {
+            AppAutoShowOptions options = CacheOperations.GetAppAutoShowOptions(appId);
+            if (options == null)
+            {
+                using (var db = new ReferEngineDatabaseContext())
+                {
+                    options = db.AppAutoShowOptions.Single(o => o.AppId == appId);
+                    CacheOperations.SetAppAutoShowOptions(options);
+                }
+            }
+            return options;
         }
     }
 }

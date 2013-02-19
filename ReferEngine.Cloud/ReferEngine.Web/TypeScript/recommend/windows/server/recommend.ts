@@ -5,7 +5,7 @@ import common = module("common");
 import Messaging = module("../common/Messaging");
 import Functions = module("../common/Functions");
 
-require(["./../../lib/knockout"], function (ko) {
+require(["../../../lib/knockout"], function (ko) {
     $(document).ready(function () {
         var mp = common.MixPanel,
             submitButton = $("#submit-button"),
@@ -222,7 +222,7 @@ require(["./../../lib/knockout"], function (ko) {
         $.ajax(common.Url.getFriends, {
             type: "POST",
             data: {
-                re_auth_token: ReferEngineGlobals.referEngineAuthToken
+                authToken: ReferEngineGlobals.referEngineAuthToken
             },
             dataType: "json",
             error: onGetFriendsError,
@@ -274,7 +274,7 @@ require(["./../../lib/knockout"], function (ko) {
                     url: common.Url.postRecommendation,
                     data: {
                         message: msgText,
-                        re_auth_token: ReferEngineGlobals.referEngineAuthToken
+                        authToken: ReferEngineGlobals.referEngineAuthToken
                     },
                     dataType: "json",
                     error: onSubmitError,

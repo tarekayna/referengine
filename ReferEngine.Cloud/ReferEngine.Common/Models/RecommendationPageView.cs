@@ -6,7 +6,8 @@ namespace ReferEngine.Common.Models
     public enum RecommendationPage
     {
         Intro = 0,
-        Post
+        Post,
+        AppLaunch,
     }
 
     [DataContract]
@@ -26,5 +27,8 @@ namespace ReferEngine.Common.Models
 
         [DataMember]
         public Int64 AppId { get; set; }
+
+        [DataMember]
+        public bool IsAutoOpen { get; set; }
     }
 }

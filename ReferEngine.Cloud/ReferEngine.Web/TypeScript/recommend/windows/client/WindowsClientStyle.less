@@ -46,6 +46,7 @@
 .re-loading-container .re-loading-text {
     text-align: center;
     width: 300px;
+    font-size: large;
 }
 
 .re-loading-container progress.win-ring {
@@ -72,4 +73,36 @@
     text-align: center;
     color: #CCC;
     cursor: pointer;
+}
+
+.meter { 
+    margin: 10px;
+	height: 3px;  
+    width: 300px;
+	background: #FFF;
+}
+
+.meter > span {
+	display: block;
+	height: 100%;
+	background-image: linear-gradient(to right,
+	                                  rgb(152, 195, 65) 0px,
+	                                  rgb(152, 195, 65) 100px,
+	                                  rgb(38, 167, 226) 101px,
+	                                  rgb(38, 167, 226) 200px,
+	                                  rgb(186, 25, 141) 201px,
+	                                  rgb(186, 25, 141) 300px);
+    animation-name: progressOn;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@keyframes progressOn {
+    from {
+        width: 0;
+    }
+    to {
+        width: 300px;
+    }
 }

@@ -32,7 +32,7 @@ namespace ReferEngine.Web.DataAccess
 
         public AppAuthorization GetAppAuthorization(string token, string userHostAddress)
         {
-            return CacheOperations.GetAppAuthorization(token, userHostAddress);
+            return CacheOperations.GetAppAuthorization(token);
         }
 
         public FacebookOperations GetFacebookOperations(string referEngineAuthToken)

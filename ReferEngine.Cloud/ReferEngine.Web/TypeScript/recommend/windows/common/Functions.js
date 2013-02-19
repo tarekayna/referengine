@@ -34,7 +34,6 @@ define(["require", "exports"], function(require, exports) {
     exports.FunctionInfo = FunctionInfo;    
     var ClientFunction = (function () {
         function ClientFunction() { }
-        ClientFunction.authApp = new FunctionInfo("authApp");
         ClientFunction.authFacebook = new FunctionInfo("authFacebook");
         ClientFunction.hide = new FunctionInfo("hide");
         ClientFunction.hideLoading = new FunctionInfo("hideLoading");
@@ -46,4 +45,12 @@ define(["require", "exports"], function(require, exports) {
         return ClientFunction;
     })();
     exports.ClientFunction = ClientFunction;    
+    var ServerFunction = (function () {
+        function ServerFunction() { }
+        ServerFunction.closedWhileLoading = new FunctionInfo("closedWhileLoading");
+        ServerFunction.introVisible = new FunctionInfo("introVisible");
+        ServerFunction.authFacebookResult = new FunctionInfo("authFacebookResult");
+        return ServerFunction;
+    })();
+    exports.ServerFunction = ServerFunction;    
 })

@@ -3,11 +3,11 @@ define(["require", "exports"], function(require, exports) {
     var Message = (function () {
         function Message(funcInfo, details) {
             this.details = details;
-            this.functionName = funcInfo.name;
+            this.functionInfo = funcInfo;
         }
         Message.prototype.getString = function () {
             var data = {
-                functionName: this.functionName
+                functionInfo: this.functionInfo
             };
             if(this.details) {
                 data.details = this.details;
@@ -16,9 +16,7 @@ define(["require", "exports"], function(require, exports) {
         };
         Message.parse = function parse(msgString) {
             var msgJson = JSON.parse(msgString);
-            var msg = new Message(msgJson.msg);
-            msg.details = msgJson.details;
-            return msg;
+            return new Message(msgJson.functionInfo, msgJson.details);
         };
         return Message;
     })();
@@ -57,7 +55,7 @@ define(["require", "exports"], function(require, exports) {
             if(event.origin === this.receiveOrigin) {
                 var message = Message.parse(event.data);
                 for(var i = 0; i < this.messageHandlers.length; i++) {
-                    if(this.messageHandlers[i].msg === message.functionName) {
+                    if(this.messageHandlers[i].msg === message.functionInfo.name) {
                         this.messageHandlers[i].handler(message.details);
                     }
                 }

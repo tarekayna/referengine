@@ -212,7 +212,7 @@
     $.ajax(getFriendsUri, {
         type: "POST",
         data: {
-            re_auth_token: RE.ReferEngineAuthToken
+            authToken: RE.ReferEngineAuthToken
         },
         dataType: "json",
         error: onGetFriendsError,
@@ -263,7 +263,7 @@
                 url: postUri,
                 data: {
                     message: msgText,
-                    re_auth_token: RE.ReferEngineAuthToken
+                    authToken: RE.ReferEngineAuthToken
                 },
                 dataType: "json",
                 error: onSubmitError,

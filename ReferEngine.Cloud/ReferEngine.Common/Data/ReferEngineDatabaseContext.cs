@@ -8,8 +8,8 @@ namespace ReferEngine.Common.Data
 {
     public class ReferEngineDatabaseContext : DbContext
     {
-        //public ReferEngineDatabaseContext() : base(Util.DatabaseConnectionStringName)
-        public ReferEngineDatabaseContext() : base("ProductionCloudConnectionString")
+        public ReferEngineDatabaseContext() : base(Util.DatabaseConnectionStringName)
+        //public ReferEngineDatabaseContext() : base("ProductionCloudConnectionString")
         //public ReferEngineDatabaseContext() : base("TestCloudConnectionString")
         //public ReferEngineDatabaseContext() : base("LocalConnectionString")
         {
@@ -31,6 +31,8 @@ namespace ReferEngine.Common.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserInRole> UsersInRoles { get; set; }
         public DbSet<IpAddressLocation> IpAddressLocations { get; set; }
+        public DbSet<AppAuthorization> AppAuthorizations { get; set; }
+        public DbSet<AppAutoShowOptions> AppAutoShowOptions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {
@@ -77,9 +79,17 @@ namespace ReferEngine.Common.Data
             mb.Entity<PrivateBetaSignup>().Property(s => s.Email)
                         .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
+            mb.Entity<AppAuthorization>().HasKey(s => s.Token);
+            mb.Entity<AppAuthorization>().Property(s => s.Token)
+                        .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
             mb.Entity<AppWebLink>().HasKey(l => l.Link);
 
             mb.Entity<StoreAppInfo>().HasKey(i => i.MsAppId);
+
+            mb.Entity<AppAutoShowOptions>().HasKey(o => o.AppId);
+            mb.Entity<AppAutoShowOptions>().Property(s => s.AppId)
+                        .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             mb.Configurations.Add(new UserConfiguration());
             mb.Configurations.Add(new MembershipConfiguration());

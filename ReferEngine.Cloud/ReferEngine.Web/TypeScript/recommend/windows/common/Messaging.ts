@@ -2,13 +2,13 @@ import Functions = module("Functions");
 
 export class Message {
     constructor(funcInfo: Functions.FunctionInfo, public details?: any) {
-        this.functionName = funcInfo.name;
+        this.functionInfo = funcInfo;
     }
 
-    public functionName: string;
+    public functionInfo: Functions.FunctionInfo;
     
     public getString() {
-        var data: any = { functionName: this.functionName };
+        var data: any = { functionInfo: this.functionInfo };
         if (this.details) {
             data.details = this.details;
         }
@@ -17,9 +17,7 @@ export class Message {
 
     public static parse(msgString: string) {
         var msgJson = JSON.parse(msgString);
-        var msg: Message = new Message(msgJson.msg);
-        msg.details = msgJson.details;
-        return msg;
+        return new Message(msgJson.functionInfo, msgJson.details);
     }
 }
 
@@ -42,7 +40,7 @@ export class Messenger {
     public iframe: HTMLIFrameElement;
     public parentLocation: string;
 
-    public send(message: Message) {
+    private send(message: Message) {
         if (this.type == MessengerType.IFrameToClient) {
             window.parent.postMessage(message.getString(), this.parentLocation);
         }
@@ -51,7 +49,7 @@ export class Messenger {
         }
     }
 
-    public call(functionInfo: Functions.FunctionInfo, details? : any) {
+    public call(functionInfo: Functions.FunctionInfo, details?: any) {
         var msg: Message = new Message(functionInfo, details);
         this.send(msg);
     }
@@ -60,7 +58,7 @@ export class Messenger {
         if (event.origin === this.receiveOrigin) {
             var message = Message.parse(event.data);
             for (var i = 0; i < this.messageHandlers.length; i++) {
-                if (this.messageHandlers[i].msg === message.functionName) {
+                if (this.messageHandlers[i].msg === message.functionInfo.name) {
                     this.messageHandlers[i].handler(message.details);
                 }
             }
