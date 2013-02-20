@@ -5,8 +5,10 @@ var pathToReferEngine = "C:\\Users\\Tarek\\Documents\\GitHub\\Calculator\\Blu Gr
 var pathToNuget = "C:\\Users\\Tarek\\Documents\\GitHub\\referengine\\ReferEngine.Cloud\\ReferEngine.Nuget.Windows.Javascript\\content\\ReferEngine\\ReferEngine.js";
 
 var config = {
-    baseUrl: ".",
+    baseUrl: __dirname,
+    nodeRequire: require,
     name: "WindowsClientScript",
+    optimize: "none",
     out: "WindowsClientScript-built.js"
 };
 
