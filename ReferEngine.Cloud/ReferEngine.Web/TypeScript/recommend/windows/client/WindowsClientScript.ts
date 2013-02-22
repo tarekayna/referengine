@@ -6,15 +6,14 @@ declare var WinJS;
 import Messaging = module("../common/Messaging");
 import Functions = module("../common/Functions");
 
-export module ReferEngine {
+module ReferEngine {
     var client = ReferEngineClient,
         currentAppData = Windows.Storage.ApplicationData.current,
         roamingSettings = currentAppData.roamingSettings,
         localSettings = currentAppData.localSettings,
         introHasLoaded = false,
-        store = Windows.ApplicationModel.Store,
-        currentApp,
         uiInitialized: bool = false,
+        currentApp = client.currentApp,
         args = client.appActivationArgs,
         util = WinJS.Utilities,
         anim = WinJS.UI.Animation,
@@ -24,17 +23,6 @@ export module ReferEngine {
         serverFunction = Functions.ServerFunction;
 
     export var isAvailable = false;
-        
-    if (!client.appId) {
-        throw "ReferEngineClient.appId must be defined.";
-    }
-
-    if (client.appIsPublished) {
-        currentApp = store.CurrentApp;
-    }
-    else {
-        currentApp = store.CurrentAppSimulator;
-    }
 
     function initializeUI() {
         if (!uiInitialized) {
@@ -132,6 +120,14 @@ export module ReferEngine {
         static set fbScope(value: string) {
             localSettings.values[_fbScopeKey] = value;
         }
+
+        private static _appIdKey = "ReferEngine-AppId";
+        static get appId(): number {
+            return localSettings.values[_appIdKey];
+        }
+        static set appId(value: number) {
+            localSettings.values[_appIdKey] = value;
+        }
     }
 
     class AutoShowOptions {
@@ -228,13 +224,12 @@ export module ReferEngine {
     }
 
     class Url {
-        static base: string = "http://127.0.0.1:81";
-        //static base: string = "https://www.referengine-test.com";
+        //static base: string = "http://127.0.0.1:81";
+        static base: string = "https://www.referengine-test.com";
         //static base: string = "https://www.referengine.com";
-        static introBase: string = Url.base + "/recommend/win8/intro/" + client.appId;
         static auth: string = Url.base + "/recommend/win8/authorizeapp";
         static getIntroUrl(isAutoOpen: bool) {
-            return Url.introBase + "?isAutoOpen=" + (isAutoOpen ? "true" : "false");
+            return Url.base + "/recommend/win8/intro/" + RemoteOptions.appId + "?isAutoOpen=" + (isAutoOpen ? "true" : "false");
         }
     }
 
@@ -299,6 +294,8 @@ export module ReferEngine {
         static loadIntro(isAutoOpen: bool) {
             initializeUI();
             navigate(Url.getIntroUrl(isAutoOpen));
+
+            show();
             showRing();
 
             var msgIndex = 0;
@@ -403,12 +400,17 @@ export module ReferEngine {
                                 RemoteOptions.logoMarkImageData = data.logoMarkImageData;
                                 RemoteOptions.logoTextImageData = data.logoTextImageData;
                                 RemoteOptions.fbScope = data.fbScope;
+                                RemoteOptions.appId = data.appId;
                                 comp(data.token);
                             }
                             else {
                                 comp(null);
                             }
-                        }, function () {
+                        }, function (request) {
+                            console.error("ReferEngine: could not authorize app with ReferEngine.com.");
+                            if (request.statusText) {
+                                console.error("ReferEngine - Message from server: " + request.statusText);
+                            }
                             comp(null);
                         });
                     });
@@ -429,12 +431,14 @@ export module ReferEngine {
         return true;
     }
 
+    var isHidden = true;
     export function show(isAutoOpen: bool) {
-        if (isConnectedToTheInternet()) {
+        if (isConnectedToTheInternet() && isHidden) {
             Loading.loadIntro(isAutoOpen);
             anim.fadeIn(Dom.container).then(function () {
                 Dom.unHideElement(Dom.container);
             });
+            isHidden = false;
         }
     };
 
@@ -442,6 +446,22 @@ export module ReferEngine {
         anim.fadeOut(Dom.container).then(function () {
             Dom.hideElement(Dom.container);
         });
+        isHidden = true;
+    };
+
+    export function reset() {
+        Auth.setStoredToken(null, 0);
+        RemoteOptions.fbScope = null;
+        RemoteOptions.loadingMessages = [];
+        RemoteOptions.logoMarkImageData = null;
+        RemoteOptions.logoTextImageData = null;
+        RemoteOptions.style = null;
+        AutoShowOptions.enable = null;
+        AutoShowOptions.interval = null;
+        AutoShowOptions.timeout = null;
+        AutoShow.autoAskAgain = true;
+        AutoShow.launchCount = 0;
+        RemoteOptions.appId = null;
     };
 
     function navigate(url) {
@@ -509,5 +529,4 @@ export module ReferEngine {
 
     window["ReferEngine"] = ReferEngine;
     onLaunchAsync();
-} 
-
+}

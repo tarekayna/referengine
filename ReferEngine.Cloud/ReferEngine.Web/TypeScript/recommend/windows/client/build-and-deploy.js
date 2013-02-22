@@ -4,11 +4,16 @@ var fs = require('fs');
 var pathToReferEngine = "C:\\Users\\Tarek\\Documents\\GitHub\\Calculator\\Blu Graphing Calculator\\referengine\\referengine.js";
 var pathToNuget = "C:\\Users\\Tarek\\Documents\\GitHub\\referengine\\ReferEngine.Cloud\\ReferEngine.Nuget.Windows.Javascript\\content\\ReferEngine\\ReferEngine.js";
 
+var js = fs.readFileSync("WindowsClientScript.js", 'utf8');
+js = js + "require('WindowsClientScript-ready');";
+fs.writeFileSync("WindowsClientScript-ready.js", js, 'utf8');
+
 var config = {
-    baseUrl: __dirname,
-    nodeRequire: require,
-    name: "WindowsClientScript",
+    baseUrl: ".",
     optimize: "none",
+    wrap: true,
+    include: "WindowsClientScript-ready",
+    name: "../../../lib/almond.js",
     out: "WindowsClientScript-built.js"
 };
 

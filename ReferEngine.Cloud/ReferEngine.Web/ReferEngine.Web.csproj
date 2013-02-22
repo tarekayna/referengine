@@ -249,18 +249,23 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="js\lib\require-jquery.js" />
     <Content Include="js\lib\require.js" />
-    <Content Include="TypeScript\recommend\windows\client\build-and-deploy.bat" />
     <TypeScriptCompile Include="TypeScript\recommend\windows\common\Messaging.ts" />
+    <TypeScriptCompile Include="TypeScript\recommend\windows\common\Functions.ts" />
+    <Content Include="TypeScript\recommend\windows\client\build-and-deploy.bat" />
+    <Content Include="TypeScript\recommend\windows\client\build-and-deploy.js" />
+    <Content Include="TypeScript\recommend\windows\client\ReferEngineClient.ts" />
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientScript-built.js" />
     <Content Include="TypeScript\recommend\windows\client\WindowsClientScript.js">
       <DependentUpon>WindowsClientScript.ts</DependentUpon>
     </Content>
     <Content Include="TypeScript\recommend\windows\client\WindowsClientScript.min.js">
       <DependentUpon>WindowsClientScript.ts</DependentUpon>
     </Content>
-    <TypeScriptCompile Include="TypeScript\recommend\windows\common\Functions.ts" />
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientScript.ts" />
     <Content Include="TypeScript\recommend\windows\client\WindowsClientStyle.css">
       <DependentUpon>WindowsClientStyle.less</DependentUpon>
     </Content>
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientStyle.less" />
     <Content Include="TypeScript\recommend\windows\client\WindowsClientStyle.min.css">
       <DependentUpon>WindowsClientStyle.less</DependentUpon>
     </Content>
@@ -278,8 +283,6 @@
     </Content>
     <Content Include="TypeScript\recommend\windows\common\winjs.d.ts" />
     <Content Include="TypeScript\recommend\windows\common\winrt.d.ts" />
-    <Content Include="TypeScript\recommend\windows\client\build-and-deploy.js" />
-    <Content Include="TypeScript\recommend\windows\client\WindowsClientScript-built.js" />
     <TypeScriptCompile Include="TypeScript\recommend\windows\server\globals.ts" />
     <Content Include="TypeScript\recommend\windows\server\globals.js">
       <DependentUpon>globals.ts</DependentUpon>
@@ -287,10 +290,6 @@
     <Content Include="TypeScript\recommend\windows\server\globals.min.js">
       <DependentUpon>globals.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\recommend\windows\client\WindowsClientScript.ts" />
-    <Content Include="TypeScript\recommend\windows\client\ReferEngineClient.ts" />
-    <Content Include="TypeScript\recommend\windows\client\__old_script.js" />
-    <Content Include="TypeScript\recommend\windows\client\WindowsClientStyle.less" />
     <None Include="ConfigureIIS.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

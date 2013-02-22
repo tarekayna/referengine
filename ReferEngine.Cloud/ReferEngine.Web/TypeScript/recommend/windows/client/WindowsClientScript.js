@@ -3,17 +3,10 @@
 
     var Functions = __Functions__;
 
+    var ReferEngine;
     (function (ReferEngine) {
-        var client = ReferEngineClient, currentAppData = Windows.Storage.ApplicationData.current, roamingSettings = currentAppData.roamingSettings, localSettings = currentAppData.localSettings, introHasLoaded = false, store = Windows.ApplicationModel.Store, currentApp, uiInitialized = false, args = client.appActivationArgs, util = WinJS.Utilities, anim = WinJS.UI.Animation, messenger, functionRange, clientFunction = Functions.ClientFunction, serverFunction = Functions.ServerFunction;
+        var client = ReferEngineClient, currentAppData = Windows.Storage.ApplicationData.current, roamingSettings = currentAppData.roamingSettings, localSettings = currentAppData.localSettings, introHasLoaded = false, uiInitialized = false, currentApp = client.currentApp, args = client.appActivationArgs, util = WinJS.Utilities, anim = WinJS.UI.Animation, messenger, functionRange, clientFunction = Functions.ClientFunction, serverFunction = Functions.ServerFunction;
         ReferEngine.isAvailable = false;
-        if(!client.appId) {
-            throw "ReferEngineClient.appId must be defined.";
-        }
-        if(client.appIsPublished) {
-            currentApp = store.CurrentApp;
-        } else {
-            currentApp = store.CurrentAppSimulator;
-        }
         function initializeUI() {
             if(!uiInitialized) {
                 var style = Dom.createElement("style");
@@ -113,6 +106,17 @@
                 },
                 set: function (value) {
                     localSettings.values[RemoteOptions._fbScopeKey] = value;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            RemoteOptions._appIdKey = "ReferEngine-AppId";
+            Object.defineProperty(RemoteOptions, "appId", {
+                get: function () {
+                    return localSettings.values[RemoteOptions._appIdKey];
+                },
+                set: function (value) {
+                    localSettings.values[RemoteOptions._appIdKey] = value;
                 },
                 enumerable: true,
                 configurable: true
@@ -231,11 +235,10 @@
         })();        
         var Url = (function () {
             function Url() { }
-            Url.base = "http://127.0.0.1:81";
-            Url.introBase = Url.base + "/recommend/win8/intro/" + client.appId;
+            Url.base = "https://www.referengine-test.com";
             Url.auth = Url.base + "/recommend/win8/authorizeapp";
             Url.getIntroUrl = function getIntroUrl(isAutoOpen) {
-                return Url.introBase + "?isAutoOpen=" + (isAutoOpen ? "true" : "false");
+                return Url.base + "/recommend/win8/intro/" + RemoteOptions.appId + "?isAutoOpen=" + (isAutoOpen ? "true" : "false");
             };
             return Url;
         })();        
@@ -295,6 +298,7 @@
             Loading.loadIntro = function loadIntro(isAutoOpen) {
                 initializeUI();
                 navigate(Url.getIntroUrl(isAutoOpen));
+                Loading.show();
                 Loading.showRing();
                 var msgIndex = 0;
                 var event = document.createEvent("CustomEvent");
@@ -393,11 +397,16 @@
                                     RemoteOptions.logoMarkImageData = data.logoMarkImageData;
                                     RemoteOptions.logoTextImageData = data.logoTextImageData;
                                     RemoteOptions.fbScope = data.fbScope;
+                                    RemoteOptions.appId = data.appId;
                                     comp(data.token);
                                 } else {
                                     comp(null);
                                 }
-                            }, function () {
+                            }, function (request) {
+                                console.error("ReferEngine: could not authorize app with ReferEngine.com.");
+                                if(request.statusText) {
+                                    console.error("ReferEngine - Message from server: " + request.statusText);
+                                }
                                 comp(null);
                             });
                         });
@@ -417,12 +426,14 @@
             }
             return true;
         }
+        var isHidden = true;
         function show(isAutoOpen) {
-            if(isConnectedToTheInternet()) {
+            if(isConnectedToTheInternet() && isHidden) {
                 Loading.loadIntro(isAutoOpen);
                 anim.fadeIn(Dom.container).then(function () {
                     Dom.unHideElement(Dom.container);
                 });
+                isHidden = false;
             }
         }
         ReferEngine.show = show;
@@ -431,8 +442,25 @@
             anim.fadeOut(Dom.container).then(function () {
                 Dom.hideElement(Dom.container);
             });
+            isHidden = true;
         }
         ReferEngine.hide = hide;
+        ;
+        function reset() {
+            Auth.setStoredToken(null, 0);
+            RemoteOptions.fbScope = null;
+            RemoteOptions.loadingMessages = [];
+            RemoteOptions.logoMarkImageData = null;
+            RemoteOptions.logoTextImageData = null;
+            RemoteOptions.style = null;
+            AutoShowOptions.enable = null;
+            AutoShowOptions.interval = null;
+            AutoShowOptions.timeout = null;
+            AutoShow.autoAskAgain = true;
+            AutoShow.launchCount = 0;
+            RemoteOptions.appId = null;
+        }
+        ReferEngine.reset = reset;
         ;
         function navigate(url) {
             if(url.indexOf("?") == -1) {
@@ -495,6 +523,5 @@
         ;
         window["ReferEngine"] = ReferEngine;
         onLaunchAsync();
-    })(exports.ReferEngine || (exports.ReferEngine = {}));
-    var ReferEngine = exports.ReferEngine;
+    })(ReferEngine || (ReferEngine = {}));
 })

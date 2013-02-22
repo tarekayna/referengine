@@ -49,6 +49,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Pack.ps1" />
     <None Include="NuGetPackage.ps1" />
     <None Include="NuGetSetup.ps1" />
     <None Include="NuGet.exe" />
@@ -85,4 +86,8 @@
     <Message Text="SUCCESS: Published package." Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' And '$(ExitCode)' == '-1' " Importance="High" />
     <Error Text="Created package but encountered error(s) when trying to publish it.%0aCheck the NuGet.log file for details." Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' And '$(ExitCode)' == '0' " File="NuGet.log" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Nuget.Windows.Javascript\Pack.ps1
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

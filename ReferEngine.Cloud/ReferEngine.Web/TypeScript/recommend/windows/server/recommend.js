@@ -189,13 +189,13 @@ define(["require", "exports", "common", "../common/Functions"], function(require
                     text: "Error posting to Facebook. Please try again."
                 });
                 messenger.call(clientFunction.showLoading);
-                mp.track("Rcmnd Post Error", null);
+                mp.track("Recommend Post Error", null);
             };
             var onSubmitSuccess = function (data, textStatus, jqXhr) {
                 post.hide();
                 postResult.show();
                 messenger.call(clientFunction.hideLoading);
-                mp.track("Rcmnd Post Success", null);
+                mp.track("Recommend Post Success", null);
             };
             var showMustAgree = function () {
                 errorDiv.show({
@@ -234,7 +234,7 @@ define(["require", "exports", "common", "../common/Functions"], function(require
                         error: onSubmitError,
                         success: onSubmitSuccess
                     });
-                    mp.track("Rcmnd Post Submit", {
+                    mp.track("Recommend Post Submit", {
                         "Includes Message": msgText !== "",
                         "Includes Tags": tags.length > 0
                     });
@@ -244,11 +244,11 @@ define(["require", "exports", "common", "../common/Functions"], function(require
             });
             cancelButton.click(function () {
                 messenger.call(clientFunction.hide);
-                mp.track("Rcmnd Post Cancel", null);
+                mp.track("Recommend Post Cancel", null);
             });
             asContainer.css("display", "none");
             messenger.call(clientFunction.hideLoading);
-            mp.track("Rcmnd Post", null);
+            mp.track("Recommend Post", null);
         });
     });
 })

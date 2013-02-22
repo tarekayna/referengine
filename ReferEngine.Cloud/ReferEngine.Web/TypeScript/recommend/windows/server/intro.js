@@ -18,7 +18,7 @@ define(["require", "exports", "common", "../common/Functions"], function(require
             });
             messenger.call(clientFunction.showLoading);
             messenger.call(clientFunction.authFacebook);
-            mp.track("Rcmnd Intro Start");
+            mp.track("Recommend Intro Start");
         });
         cancelButton.click(function () {
             var dontAskAgain = dontAskCheckbox[0].checked;
@@ -26,19 +26,19 @@ define(["require", "exports", "common", "../common/Functions"], function(require
                 askAgain: !dontAskAgain
             });
             messenger.call(clientFunction.hide);
-            mp.track("Rcmnd Intro Cancel", {
+            mp.track("Recommend Intro Cancel", {
                 "Dont Ask Again": dontAskAgain
             });
         });
         var closedWhileLoading = false;
         var functions = [
             new Functions.Function(severFunction.closedWhileLoading, function (details) {
-                mp.track("Rcmnd Intro Closed While Loading");
+                mp.track("Recommend Intro Closed While Loading");
                 closedWhileLoading = true;
             }), 
             new Functions.Function(severFunction.introVisible, function (details) {
                 if(!closedWhileLoading) {
-                    mp.track("Rcmnd Intro");
+                    mp.track("Recommend Intro");
                 }
             }), 
             new Functions.Function(severFunction.authFacebookResult, function (details) {
