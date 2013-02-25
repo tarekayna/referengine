@@ -6,15 +6,7 @@
     @Scripts.Render("~/js/contact/index")
 }
 
-<div id="header">
-    <div class="container">  
-        <div class="row">
-            <div class="span12">
-                <h1>Contact Us</h1>
-            </div>
-        </div>
-    </div>
-</div>
+@Html.Partial("_PageHeader", new PageTitleViewModel("Contact Us"))
 
 <div id="content">
     <div class="container">

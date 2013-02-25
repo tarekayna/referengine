@@ -249,6 +249,15 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="js\lib\require-jquery.js" />
     <Content Include="js\lib\require.js" />
+    <Content Include="Views\Shared\_PageHeader.cshtml" />
+    <TypeScriptCompile Include="TypeScript\recommend\windows\server\pleaseUpdate.ts" />
+    <Content Include="TypeScript\recommend\windows\server\pleaseUpdate.js">
+      <DependentUpon>pleaseUpdate.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\server\pleaseUpdate.min.js">
+      <DependentUpon>pleaseUpdate.ts</DependentUpon>
+    </Content>
+    <Content Include="Views\Recommend\win8\pleaseUpdate.cshtml" />
     <TypeScriptCompile Include="TypeScript\recommend\windows\common\Messaging.ts" />
     <TypeScriptCompile Include="TypeScript\recommend\windows\common\Functions.ts" />
     <Content Include="TypeScript\recommend\windows\client\build-and-deploy.bat" />
@@ -302,7 +311,6 @@
     <Compile Include="Controllers\FacebookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InAppScriptController.cs" />
-    <Compile Include="Controllers\PricingController.cs" />
     <Compile Include="Controllers\RecommendController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="DataAccess\BlobStorageOperations.cs" />
@@ -328,6 +336,7 @@
     <Compile Include="Models\Common\AppNameJavaScriptGlobalVariable.cs" />
     <Compile Include="Models\Common\AppIdJavaScriptGlobalVariable.cs" />
     <Compile Include="Models\Common\JavaScriptGlobalVariable.cs" />
+    <Compile Include="Models\Common\PageTitleViewModel.cs" />
     <Compile Include="Models\Common\ReferEngineAuthTokenJavaScriptGlobalVariable.cs" />
     <Compile Include="Models\Common\IJavaScriptGlobalVariable.cs" />
     <Compile Include="Models\Common\ViewProperties.cs" />
@@ -566,8 +575,8 @@
     <Content Include="Views\About\Copyright.cshtml" />
     <Content Include="Views\Shared\fb\_Layout.cshtml" />
     <Content Include="Views\Facebook\_ViewStart.cshtml" />
-    <Content Include="Views\Pricing\Index.cshtml" />
-    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Home\Pricing.cshtml" />
+    <None Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\About\Rules.cshtml" />
     <Content Include="Views\Shared\_MixPanel.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />

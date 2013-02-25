@@ -42,6 +42,7 @@ define(["require", "exports"], function(require, exports) {
         ClientFunction.setIntroPageLoaded = new FunctionInfo("setIntroPageLoaded");
         ClientFunction.setLoadingText = new FunctionInfo("setLoadingText");
         ClientFunction.showLoading = new FunctionInfo("showLoading");
+        ClientFunction.hideLoadingCompat = new FunctionInfo("hide-loading");
         return ClientFunction;
     })();
     exports.ClientFunction = ClientFunction;    

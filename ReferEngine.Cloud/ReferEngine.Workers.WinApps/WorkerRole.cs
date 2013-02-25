@@ -93,7 +93,7 @@ namespace ReferEngine.Workers.WinApps
         {
             while (true)
             {
-                if (Util.CurrentServiceConfiguration != Util.ReferEngineServiceConfiguration.Local)
+                if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local)
                 {
                     DateTime startTime = DateTime.Now;
 

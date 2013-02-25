@@ -67,7 +67,7 @@ namespace ReferEngine.Web.App_Start
                 {
                     new BundleInfo("~/bundles/css/bootstrap",
                                    "~/css/bootstrap.css",
-                                   "~/css/bootstrap-responsive.css",
+                                   //"~/css/bootstrap-responsive.css",
                                    "~/css/font-awesome.css",
                                    "~/css/m-buttons.css",
                                    "~/css/base.css",

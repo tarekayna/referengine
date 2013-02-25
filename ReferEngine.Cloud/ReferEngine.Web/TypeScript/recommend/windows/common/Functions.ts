@@ -34,6 +34,7 @@ export class ClientFunction {
     static setIntroPageLoaded = new FunctionInfo("setIntroPageLoaded");
     static setLoadingText = new FunctionInfo("setLoadingText");
     static showLoading = new FunctionInfo("showLoading");
+    static hideLoadingCompat = new FunctionInfo("hide-loading");
 }
 
 export class ServerFunction {

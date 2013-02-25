@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Web.DataAccess;
+using ReferEngine.Web.Models.Common;
 
 namespace ReferEngine.Web.Controllers
 {
@@ -26,6 +27,16 @@ namespace ReferEngine.Web.Controllers
 
         [HttpGet]
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Pricing()
+        {
+            return View();
+        }
+
+        public ActionResult Contact()
         {
             return View();
         }

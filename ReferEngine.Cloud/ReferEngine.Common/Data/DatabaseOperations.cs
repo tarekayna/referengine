@@ -260,7 +260,7 @@ namespace ReferEngine.Common.Data
                     skip += take;
                     foreach (var appWebLink in currentSet)
                     {
-                        AppWebLink existing = db.AppWebLinks.FirstOrDefault(l => l.Link == appWebLink.Link);
+                        AppWebLink existing = db.AppWebLinks.SingleOrDefault(l => l.Link == appWebLink.Link);
                         if (existing == null)
                         {
                             db.AppWebLinks.Add(appWebLink);

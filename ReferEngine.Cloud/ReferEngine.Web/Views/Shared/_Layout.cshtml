@@ -2,7 +2,7 @@
 <html lang="en">
     @RenderSection("CustomHead", false)
     <head>
-        <title>Refer Engine - Make your iOS, Android and Windows 8 Apps Go Viral!</title>
+        <title>Refer Engine - Marketing for App Developers</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
@@ -93,10 +93,16 @@
                         <a class="brand" href="~/"><img src="~/img/logo-web-header.png" alt="Refer Engine Logo" /></a>
                         <div class="nav-collapse collapse">
                             <ul class="nav pull-right">
-                                @*<li><a href="~/features">Features</a></li>*@
+                                <li><a href="~/howitworks">How it works</a></li>
                                 <li><a href="~/pricing">Pricing</a></li>
                                 <li><a href="~/contact">Contact</a></li>
-                                @*<li><a href="~/account/login">Login</a></li>*@
+                                <li><a>|</a></li>
+                                <li>
+                                    <div class="btn-group" id="login-group">
+                                        <a class="btn disabled" @*href="~/account/login"*@>Log In</a>
+                                        <a class="btn disabled" @*href="~/account/register"*@>Sign Up</a>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -110,7 +116,7 @@
 	      <div class="container">
 	        <div class="row">
 		      <div class="span3">
-			    <h3>Quick Links</h3>
+			    <h4>Quick Links</h4>
 			    <ul>
 			      <li><a href="~/">Home</a></li>
 			      @*<li><a href="~/features">Features</a></li>*@
@@ -119,7 +125,7 @@
 			    </ul>			
 		      </div>
 		      <div class="span3">		
-			    <h3>Company</h3>
+			    <h4>Company</h4>
 			    <ul>
 			      @*<li><a href="~/about">About Us</a></li>*@
 			      <li><a href="~/about/privacy">Privacy Policy</a></li>

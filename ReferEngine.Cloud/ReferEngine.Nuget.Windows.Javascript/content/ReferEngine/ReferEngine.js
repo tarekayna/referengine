@@ -533,6 +533,7 @@ define('../common/Functions',["require", "exports"], function(require, exports) 
         ClientFunction.setIntroPageLoaded = new FunctionInfo("setIntroPageLoaded");
         ClientFunction.setLoadingText = new FunctionInfo("setLoadingText");
         ClientFunction.showLoading = new FunctionInfo("showLoading");
+        ClientFunction.hideLoadingCompat = new FunctionInfo("hide-loading");
         return ClientFunction;
     })();
     exports.ClientFunction = ClientFunction;    
@@ -783,7 +784,7 @@ define('WindowsClientScript-ready',["require", "exports", "../common/Messaging",
         })();        
         var Url = (function () {
             function Url() { }
-            Url.base = "http://127.0.0.1:81";
+            Url.base = "https://www.referengine-test.com";
             Url.auth = Url.base + "/recommend/win8/authorizeapp";
             Url.getIntroUrl = function getIntroUrl(isAutoOpen) {
                 return Url.base + "/recommend/win8/intro/" + RemoteOptions.appId + "?isAutoOpen=" + (isAutoOpen ? "true" : "false");

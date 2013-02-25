@@ -151,6 +151,13 @@ namespace ReferEngine.Web.Controllers
         {
             Verifier.IsNotNullOrEmpty(platform, "platform");
             Verifier.IsNotNullOrEmpty(id, "id");
+
+            if (string.IsNullOrEmpty(authToken))
+            {
+                ViewProperties.CurrentApp = DatabaseOperations.GetApp(id);
+                return View(String.Format("{0}/PleaseUpdate", platform), ViewProperties.CurrentApp);
+            }
+
             Verifier.IsNotNullOrEmpty(authToken, "authToken");
 
             var appAuthorization = GetAppAuthorization(authToken);

@@ -1,0 +1,27 @@
+﻿@using ReferEngine.Common.Utilities
+@model ReferEngine.Common.Models.App
+
+@section scripts
+{
+    <script data-main="/typescript/recommend/windows/server/pleaseUpdate.js" type="text/javascript" src="~/typescript/lib/require.js"></script> 
+}
+
+@section styles
+{
+    @Styles.Render("~/bundles/less/recommend/win8/intro")
+}
+
+<div class="center-content">
+    <div class="banner">
+        Please update @Model.Name to the latest version to use Refer Engine.
+    </div>
+    <br />
+    <div><a href="ms-windows-store:PDP?PFN=@Model.PackageFamilyName" id="update-link">Click Here to Update Now!</a></div>
+</div>
+
+@section footer
+{
+    <div>
+        <a class="m-btn no" id="re-cancel">Cancel</a>
+    </div>
+}

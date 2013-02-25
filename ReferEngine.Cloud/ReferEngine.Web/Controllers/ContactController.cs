@@ -14,12 +14,6 @@ namespace ReferEngine.Web.Controllers
     {
         public ContactController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
 
-        [HttpGet]
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         [HttpPost]
         public ActionResult SendMessage(string email, string message, string subject, string name)
         {

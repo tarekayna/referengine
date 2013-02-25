@@ -39,14 +39,22 @@ body {
 /* Landing
 -------------------------------------------------- */
 #landing {
-    background: none repeat scroll 0 0 #F1F1F1;
+    /*background: none repeat scroll 0 0 #F1F1F1;*/
+    background: none repeat scroll 0 0 #394755;
 }
 #landing h1 {
-    color: #308CCF;
+    /*color: #308CCF;*/
+    color: #FFF;
+}
+#landing h2 {
+    color: #FFF;
 }
 #landing p {
-    color: #394755;
+    color: #DDD;
 }
+/*#landing p {
+    color: #394755;
+}*/
 #landing .carousel-control {
     color: #0088CC;
 }
