@@ -160,6 +160,10 @@
     <Compile Include="Migrations\201302181923251_appAutoShowOptions.Designer.cs">
       <DependentUpon>201302181923251_appAutoShowOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302252220590_PrivateBetaAppAndPlatform.cs" />
+    <Compile Include="Migrations\201302252220590_PrivateBetaAppAndPlatform.Designer.cs">
+      <DependentUpon>201302252220590_PrivateBetaAppAndPlatform.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\IpAddressLocation.cs" />
     <Compile Include="Data\MixPanel\AnalysisType.cs" />
@@ -287,6 +291,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302181923251_appAutoShowOptions.resx">
       <DependentUpon>201302181923251_appAutoShowOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302252220590_PrivateBetaAppAndPlatform.resx">
+      <DependentUpon>201302252220590_PrivateBetaAppAndPlatform.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

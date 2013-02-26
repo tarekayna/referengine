@@ -247,9 +247,13 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="js\pricing.js" />
     <Content Include="js\lib\require-jquery.js" />
     <Content Include="js\lib\require.js" />
+    <Content Include="js\home.js" />
+    <Content Include="js\shared\layout-not-auth.js" />
     <Content Include="Views\Shared\_PageHeader.cshtml" />
+    <Content Include="Views\Shared\_PrivateBeta.cshtml" />
     <TypeScriptCompile Include="TypeScript\recommend\windows\server\pleaseUpdate.ts" />
     <Content Include="TypeScript\recommend\windows\server\pleaseUpdate.js">
       <DependentUpon>pleaseUpdate.ts</DependentUpon>
@@ -439,8 +443,7 @@
     <Content Include="js\app\edit.js" />
     <Content Include="js\contact\index.js" />
     <Content Include="js\lib\bootstrap.js" />
-    <Content Include="js\home\index.js" />
-    <Content Include="js\facebook.js" />
+    <Content Include="js\shared\privateBeta.js" />
     <Content Include="js\lib\jquery-1.8.3.js" />
     <Content Include="js\lib\jquery-1.9.0.js" />
     <Content Include="js\lib\jquery-ui-1.10.0.custom.js" />

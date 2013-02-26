@@ -10,6 +10,12 @@ namespace ReferEngine.Common.Models
         public string Email { get; set; }
 
         [DataMember]
+        public string AppName { get; set; }
+
+        [DataMember]
+        public string Platforms { get; set; }
+
+        [DataMember]
         public DateTime RegistrationDateTime { get; set; }
 
         public PrivateBetaSignup(string email)

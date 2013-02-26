@@ -39,11 +39,20 @@ namespace ReferEngine.Web.App_Start
                     new BundleInfo("~/bundles/js/jquery.fitvids",
                                    "~/js/lib/jquery.fitvids.js"),
 
-                    new BundleInfo("~/js/home/index",
-                                   "~/js/home/index.js"),
+                    new BundleInfo("~/js/shared/privateBeta",
+                                   "~/js/shared/privateBeta.js"),
 
                     new BundleInfo("~/js/contact/index",
                                    "~/js/contact/index.js"),
+                                   
+                    new BundleInfo("~/js/home",
+                                   "~/js/home.js"),
+                                   
+                    new BundleInfo("~/js/pricing",
+                                   "~/js/pricing.js"),
+
+                    new BundleInfo("~/js/shared/layout-not-auth",
+                                   "~/js/shared/layout-not-auth.js"),
 
                     //new BundleInfo("~/bundles/ts/recommend/windows/intro",
                     //               "~/typescript/recommend/windows/common.js",

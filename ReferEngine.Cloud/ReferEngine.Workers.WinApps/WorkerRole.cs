@@ -93,7 +93,7 @@ namespace ReferEngine.Workers.WinApps
         {
             while (true)
             {
-                if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local)
+                if (Util.CurrentServiceConfiguration != Util.ReferEngineServiceConfiguration.Local)
                 {
                     DateTime startTime = DateTime.Now;
 
@@ -120,85 +120,108 @@ namespace ReferEngine.Workers.WinApps
                             if (stream != null)
                             {
                                 StreamReader reader = new StreamReader(stream);
-                                string response = reader.ReadToEnd();
-                                TextReader textReader = new StringReader(response);
-                                HtmlDocument doc = new HtmlDocument();
-                                doc.Load(textReader);
-
-                                string msPageVer = GetAttributeValueOfXPathNode(doc, "//head/meta[@name='MS.PageVer']",
-                                                                                "content");
-
-                                if (msPageVer.Equals("1.0"))
+                                string response = string.Empty;
+                                try
                                 {
-                                    StoreAppInfo storeAppInfo = new StoreAppInfo
-                                                                    {
-                                                                        Name =
-                                                                            GetInnerTextFromId(doc, "ProductTitleText"),
-                                                                        Category =
-                                                                            GetInnerTextFromId(doc, "CategoryText"),
-                                                                        AgeRating = GetInnerTextFromId(doc, "AgeRating"),
-                                                                        Developer =
-                                                                            GetInnerTextFromId(doc, "AppDeveloper"),
-                                                                        Copyright =
-                                                                            GetInnerTextFromId(doc, "AppCopyrightText"),
-                                                                        LogoLink =
-                                                                            GetAttributeValueOfChildFromId(doc,
-                                                                                                           "AppLogo",
-                                                                                                           "img", "src"),
-                                                                        DescriptionHtml =
-                                                                            GetInnerTextFromId(doc, "DescriptionText"),
-                                                                        FeaturesHtml =
-                                                                            GetInnerHtmlFromId(doc, "FeatureText"),
-                                                                        WebsiteLink =
-                                                                            GetAttributeValueOfChildFromId(doc,
-                                                                                                           "WebsiteLink",
-                                                                                                           "a", "href"),
-                                                                        SupportLink =
-                                                                            GetAttributeValueOfChildFromId(doc,
-                                                                                                           "SupportLink",
-                                                                                                           "a", "href"),
-                                                                        PrivacyPolicyLink =
-                                                                            GetAttributeValueOfChildFromId(doc,
-                                                                                                           "DevPrivacyPolicyLink",
-                                                                                                           "a", "href"),
-                                                                        ReleaseNotes =
-                                                                            GetInnerTextFromId(doc, "ReleaseNotesText"),
-                                                                        Architecture =
-                                                                            GetInnerTextFromId(doc, "ArchitectureText"),
-                                                                        Languages =
-                                                                            GetInnerTextFromId(doc, "LanguagesText"),
-                                                                        MsAppId =
-                                                                            GetAttributeValueOfXPathNode(doc,
-                                                                                                         "//head/meta[@name='MS.App.Id']",
-                                                                                                         "content")
-                                                                    };
+                                    response = reader.ReadToEnd();
+                                }
+                                catch (IOException e)
+                                {
+                                    Console.WriteLine(e);
+                                }
+                                if (string.IsNullOrEmpty(response))
+                                {
+                                    TextReader textReader = new StringReader(response);
+                                    HtmlDocument doc = new HtmlDocument();
+                                    doc.Load(textReader);
 
-                                    storeAppInfo.SetNumberOfRatings(GetInnerTextFromId(doc, "RatingText"));
-                                    storeAppInfo.SetRating(GetAttributeValueFromId(doc, "StarRating", "aria-label"));
-                                    storeAppInfo.SetPrice(GetInnerTextFromId(doc, "Price"));
+                                    string msPageVer = GetAttributeValueOfXPathNode(doc,
+                                                                                    "//head/meta[@name='MS.PageVer']",
+                                                                                    "content");
 
-                                    storeAppInfo.PackageFamilyName = "";
-                                    HtmlNodeCollection scriptNodes = doc.DocumentNode.SelectNodes("//head/script");
-                                    foreach (var scriptNode in scriptNodes)
+                                    if (msPageVer.Equals("1.0"))
                                     {
-                                        if (scriptNode.InnerText.Contains("packageFamilyName ="))
-                                        {
-                                            int start = scriptNode.InnerText.IndexOf("packageFamilyName =",
-                                                                                     StringComparison.OrdinalIgnoreCase);
-                                            int packageStart = scriptNode.InnerText.IndexOf("'", start,
-                                                                                            StringComparison
-                                                                                                .OrdinalIgnoreCase);
-                                            int packageEnd = scriptNode.InnerText.IndexOf("'", packageStart + 1,
-                                                                                          StringComparison
-                                                                                              .OrdinalIgnoreCase);
-                                            storeAppInfo.PackageFamilyName = scriptNode.InnerText.Substring(
-                                                packageStart,
-                                                packageEnd - packageStart);
-                                            break;
-                                        }
-                                    }
+                                        StoreAppInfo storeAppInfo = new StoreAppInfo
+                                                                        {
+                                                                            Name =
+                                                                                GetInnerTextFromId(doc,
+                                                                                                   "ProductTitleText"),
+                                                                            Category =
+                                                                                GetInnerTextFromId(doc, "CategoryText"),
+                                                                            AgeRating =
+                                                                                GetInnerTextFromId(doc, "AgeRating"),
+                                                                            Developer =
+                                                                                GetInnerTextFromId(doc, "AppDeveloper"),
+                                                                            Copyright =
+                                                                                GetInnerTextFromId(doc,
+                                                                                                   "AppCopyrightText"),
+                                                                            LogoLink =
+                                                                                GetAttributeValueOfChildFromId(doc,
+                                                                                                               "AppLogo",
+                                                                                                               "img",
+                                                                                                               "src"),
+                                                                            DescriptionHtml =
+                                                                                GetInnerTextFromId(doc,
+                                                                                                   "DescriptionText"),
+                                                                            FeaturesHtml =
+                                                                                GetInnerHtmlFromId(doc, "FeatureText"),
+                                                                            WebsiteLink =
+                                                                                GetAttributeValueOfChildFromId(doc,
+                                                                                                               "WebsiteLink",
+                                                                                                               "a",
+                                                                                                               "href"),
+                                                                            SupportLink =
+                                                                                GetAttributeValueOfChildFromId(doc,
+                                                                                                               "SupportLink",
+                                                                                                               "a",
+                                                                                                               "href"),
+                                                                            PrivacyPolicyLink =
+                                                                                GetAttributeValueOfChildFromId(doc,
+                                                                                                               "DevPrivacyPolicyLink",
+                                                                                                               "a",
+                                                                                                               "href"),
+                                                                            ReleaseNotes =
+                                                                                GetInnerTextFromId(doc,
+                                                                                                   "ReleaseNotesText"),
+                                                                            Architecture =
+                                                                                GetInnerTextFromId(doc,
+                                                                                                   "ArchitectureText"),
+                                                                            Languages =
+                                                                                GetInnerTextFromId(doc, "LanguagesText"),
+                                                                            MsAppId =
+                                                                                GetAttributeValueOfXPathNode(doc,
+                                                                                                             "//head/meta[@name='MS.App.Id']",
+                                                                                                             "content")
+                                                                        };
 
-                                    DatabaseOperations.AddStoreAppInfo(storeAppInfo);
+                                        storeAppInfo.SetNumberOfRatings(GetInnerTextFromId(doc, "RatingText"));
+                                        storeAppInfo.SetRating(GetAttributeValueFromId(doc, "StarRating", "aria-label"));
+                                        storeAppInfo.SetPrice(GetInnerTextFromId(doc, "Price"));
+
+                                        storeAppInfo.PackageFamilyName = "";
+                                        HtmlNodeCollection scriptNodes = doc.DocumentNode.SelectNodes("//head/script");
+                                        foreach (var scriptNode in scriptNodes)
+                                        {
+                                            if (scriptNode.InnerText.Contains("packageFamilyName ="))
+                                            {
+                                                int start = scriptNode.InnerText.IndexOf("packageFamilyName =",
+                                                                                         StringComparison
+                                                                                             .OrdinalIgnoreCase);
+                                                int packageStart = scriptNode.InnerText.IndexOf("'", start,
+                                                                                                StringComparison
+                                                                                                    .OrdinalIgnoreCase);
+                                                int packageEnd = scriptNode.InnerText.IndexOf("'", packageStart + 1,
+                                                                                              StringComparison
+                                                                                                  .OrdinalIgnoreCase);
+                                                storeAppInfo.PackageFamilyName = scriptNode.InnerText.Substring(
+                                                    packageStart,
+                                                    packageEnd - packageStart);
+                                                break;
+                                            }
+                                        }
+
+                                        DatabaseOperations.AddStoreAppInfo(storeAppInfo);
+                                    }
                                 }
                             }
                         }

@@ -93,14 +93,15 @@
                         <a class="brand" href="~/"><img src="~/img/logo-web-header.png" alt="Refer Engine Logo" /></a>
                         <div class="nav-collapse collapse">
                             <ul class="nav pull-right">
-                                <li><a href="~/howitworks">How it works</a></li>
+                                @*<li><a href="~/howitworks">How it works</a></li>*@
                                 <li><a href="~/pricing">Pricing</a></li>
                                 <li><a href="~/contact">Contact</a></li>
                                 <li><a>|</a></li>
                                 <li>
                                     <div class="btn-group" id="login-group">
-                                        <a class="btn disabled" @*href="~/account/login"*@>Log In</a>
-                                        <a class="btn disabled" @*href="~/account/register"*@>Sign Up</a>
+                                        <a class="btn" id="log-in-hdr" href="~/account/login">Log In</a>
+                                        <a class="btn btn-success" href="#private-beta" role="button" 
+                                           data-toggle="modal" id="request-invite-hdr">Request an Invite</a>
                                     </div>
                                 </li>
                             </ul>
@@ -112,30 +113,30 @@
 
         @RenderBody()
     
-	    <div id="footer">
-	      <div class="container">
-	        <div class="row">
-		      <div class="span3">
-			    <h4>Quick Links</h4>
-			    <ul>
-			      <li><a href="~/">Home</a></li>
-			      @*<li><a href="~/features">Features</a></li>*@
-			      <li><a href="~/pricing">Pricing</a></li>
-			      <li><a href="~/contact">Contact</a></li>
-			    </ul>			
-		      </div>
-		      <div class="span3">		
-			    <h4>Company</h4>
-			    <ul>
-			      @*<li><a href="~/about">About Us</a></li>*@
-			      <li><a href="~/about/privacy">Privacy Policy</a></li>
-			      <li><a href="~/about/terms">Terms of Use</a></li>
-			      <li><a href="~/about/use">Acceptable Use Policy</a></li>
-			      <li><a href="~/about/copyright">Copyright</a></li>
-			    </ul>	
-		      </div>  
-		    </div>	  
-          </div>	  
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="span3">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="~/">Home</a></li>
+                            @*<li><a href="~/howitworks">How it works</a></li>*@
+                            <li><a href="~/pricing">Pricing</a></li>
+                            <li><a href="~/contact">Contact</a></li>
+                        </ul>			
+                    </div>
+                    <div class="span3">		
+                        <h4>Company</h4>
+                        <ul>
+                            @*<li><a href="~/about">About Us</a></li>*@
+                            <li><a href="~/about/privacy">Privacy Policy</a></li>
+                            <li><a href="~/about/terms">Terms of Use</a></li>
+                            <li><a href="~/about/use">Acceptable Use Policy</a></li>
+                            <li><a href="~/about/copyright">Copyright</a></li>
+                        </ul>	
+                    </div>  
+                </div>	  
+            </div>	  
         </div>
         
         <div id="copywrite">
@@ -148,15 +149,11 @@
             </div>	  
         </div>
     
-        @Html.Partial("_MixPanel")
 
         @Scripts.Render("~/bundles/libs/base")
-        
-        @if (ViewProperties.UseJQueryValidate)
-        {
-            @Scripts.Render("~/bundles/libs/jquery-validate")
-        }
-        
+        @Scripts.Render("~/bundles/libs/jquery-validate")
+        @Html.Partial("_MixPanel")
+
         @if (ViewProperties.UseJQueryUi)
         {
             @Scripts.Render("~/bundles/libs/jquery-ui")
@@ -164,5 +161,20 @@
 
         @RenderSection("scripts", required: false)
         @StackExchange.Profiling.MiniProfiler.RenderIncludes()
+        
+        
+        @{ ViewProperties.UseJQueryValidate = true; }
+        @Html.Partial("_PrivateBeta")
+        
+        
+        @if (Request.IsAuthenticated && ViewProperties.CurrentUser != null)
+        {
+            //@Scripts.Render("~/js/shared/layout-auth")
+        }
+        else
+        {
+            @Scripts.Render("~/js/shared/layout-not-auth")
+        }
     </body>
+
 </html>

@@ -52,4 +52,8 @@
             }
         }
     });
+    
+    mixpanel.track("Page View", {
+        Page: "Contact"
+    });
 });

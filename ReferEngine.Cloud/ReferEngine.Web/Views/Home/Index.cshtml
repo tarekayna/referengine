@@ -1,12 +1,6 @@
-﻿@{
-    ViewProperties.UseJQueryValidate = true;
+﻿@section scripts {
+    @Scripts.Render("~/js/home")
 }
-
-@section scripts
-{
-    @Scripts.Render("~/js/home/index")
-}
-
 
 <div id="landing">
     <div class="container">
@@ -14,11 +8,13 @@
             <div class="span6">
                 <h2>Marketing for App Developers</h2>
                 <p>Refer Engine enables Facebook recommendations within your app with customer rewards. Instant setup. Start for free!</p>
-                <p class="txt-middle" id="try-button"><a href="~/account/register" class="btn btn-primary btn-action">Try it for free</a></p>
+                <p class="txt-middle" id="request-invite">
+                    <a class="btn btn-primary btn-action" href="#private-beta" role="button" data-toggle="modal">Request an Invite</a>
+                </p>
             </div>
             <div class="span6">
                 <div class="js-video pull-right">
-                    <iframe src="http://player.vimeo.com/video/58735872" width="450" height="250" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                    <iframe src="https://player.vimeo.com/video/58735872" width="450" height="250" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
                 </div>
             </div>
         </div>
