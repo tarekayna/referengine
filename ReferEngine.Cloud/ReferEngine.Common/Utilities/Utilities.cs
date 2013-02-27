@@ -143,18 +143,18 @@ namespace ReferEngine.Common.Utilities
             }
         }
 
-        public static bool VerifyAppAuthorization(AppAuthorization appAuthorization)
+        public static bool VerifyAppReceipt(AppReceipt receipt)
         {
             try
             {
                 CryptoConfig.AddAlgorithm(typeof(RSAPKCS1SHA256SignatureDescription),
                                           "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256");
 
-                X509Certificate2 verificationCertificate = RetrieveCertificate(appAuthorization.AppReceipt.CertificateId);
+                X509Certificate2 verificationCertificate = RetrieveCertificate(receipt.CertificateId);
                 if (verificationCertificate != null)
                 {
                     XmlDocument xmlDoc = new XmlDocument();
-                    xmlDoc.LoadXml(appAuthorization.AppReceipt.XmlContent);
+                    xmlDoc.LoadXml(receipt.XmlContent);
                     return ValidateXml(xmlDoc, verificationCertificate);
                 }
             }

@@ -140,6 +140,31 @@
     <Compile Include="Migrations\201302071841012_IpAddressLocation.Designer.cs">
       <DependentUpon>201302071841012_IpAddressLocation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302160444208_addAppAuth.cs" />
+    <Compile Include="Migrations\201302160444208_addAppAuth.Designer.cs">
+      <DependentUpon>201302160444208_addAppAuth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302161847260_authUpdates.cs" />
+    <Compile Include="Migrations\201302161847260_authUpdates.Designer.cs">
+      <DependentUpon>201302161847260_authUpdates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302172254592_timeStampToAuth.cs" />
+    <Compile Include="Migrations\201302172254592_timeStampToAuth.Designer.cs">
+      <DependentUpon>201302172254592_timeStampToAuth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302181856181_addAutoOpenToPageView.cs" />
+    <Compile Include="Migrations\201302181856181_addAutoOpenToPageView.Designer.cs">
+      <DependentUpon>201302181856181_addAutoOpenToPageView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302181923251_appAutoShowOptions.cs" />
+    <Compile Include="Migrations\201302181923251_appAutoShowOptions.Designer.cs">
+      <DependentUpon>201302181923251_appAutoShowOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302252220590_PrivateBetaAppAndPlatform.cs" />
+    <Compile Include="Migrations\201302252220590_PrivateBetaAppAndPlatform.Designer.cs">
+      <DependentUpon>201302252220590_PrivateBetaAppAndPlatform.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\IpAddressLocation.cs" />
     <Compile Include="Data\MixPanel\AnalysisType.cs" />
     <Compile Include="Data\MixPanel\MixPanelBaseUri.cs" />
@@ -228,6 +253,7 @@
     <Content Include="facebook-users.txt" />
     <Content Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe" />
     <Content Include="Microsoft.WindowsAzure.Caching\PerformanceCounters.xml" />
+    <Content Include="Models\ReceiptXml.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201212282027508_AppLogoLinks.resx">
@@ -250,6 +276,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302071841012_IpAddressLocation.resx">
       <DependentUpon>201302071841012_IpAddressLocation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302160444208_addAppAuth.resx">
+      <DependentUpon>201302160444208_addAppAuth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302161847260_authUpdates.resx">
+      <DependentUpon>201302161847260_authUpdates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302172254592_timeStampToAuth.resx">
+      <DependentUpon>201302172254592_timeStampToAuth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302181856181_addAutoOpenToPageView.resx">
+      <DependentUpon>201302181856181_addAutoOpenToPageView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302181923251_appAutoShowOptions.resx">
+      <DependentUpon>201302181923251_appAutoShowOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302252220590_PrivateBetaAppAndPlatform.resx">
+      <DependentUpon>201302252220590_PrivateBetaAppAndPlatform.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,6 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Workers.WinApps
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Common.UnitTests", "ReferEngine.Common.UnitTests\ReferEngine.Common.UnitTests.csproj", "{DC20B55F-C0BE-4270-B3BD-46DF2E20CEB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Nuget.Windows.Javascript", "ReferEngine.Nuget.Windows.Javascript\ReferEngine.Nuget.Windows.Javascript.csproj", "{64539744-C2CD-4C1C-AF0E-307CA206E59E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8B12746F-826A-4FFC-A877-1119A0474C68} = {8B12746F-826A-4FFC-A877-1119A0474C68}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +54,10 @@ Global
 		{DC20B55F-C0BE-4270-B3BD-46DF2E20CEB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC20B55F-C0BE-4270-B3BD-46DF2E20CEB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC20B55F-C0BE-4270-B3BD-46DF2E20CEB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64539744-C2CD-4C1C-AF0E-307CA206E59E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64539744-C2CD-4C1C-AF0E-307CA206E59E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64539744-C2CD-4C1C-AF0E-307CA206E59E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64539744-C2CD-4C1C-AF0E-307CA206E59E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

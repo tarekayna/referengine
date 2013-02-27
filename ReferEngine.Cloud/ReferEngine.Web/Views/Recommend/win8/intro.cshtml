@@ -3,7 +3,7 @@
 
 @section scripts
 {
-    <script data-main="/typescript/recommend/windows/intro.js" type="text/javascript" src="~/typescript/lib/require.js"></script>
+    <script data-main="/typescript/recommend/windows/server/intro.js" type="text/javascript" src="~/typescript/lib/require.js"></script> 
 }
 
 @section styles
@@ -15,10 +15,10 @@
 
 <div class="center-content">
     <div class="banner">
-        Win cash by recommending @Model.Name to your friends! 
+        Win cash by recommending @Model.Name to your friends!
     </div>
     
-    @Html.Image(Server.MapPath("~/img/recommend/win8/intro-steps.png"), "Recommend Your Friends", "intro-steps login")
+    @Html.Image(Server.MapPath("~/img/recommend/win8/intro-steps.png"), "Recommend Your Friends", "intro-steps")
     
     <div class="steps title">
         <div class="rcmnd">Recommend</div>
@@ -34,8 +34,7 @@
     </div>
     
     <div class="rules">
-        <sup>*</sup>
-        @Html.RouteLink("Other rules apply", "Default", new { controller = "About", action = "Rules", Id = 21 },
+        @Html.RouteLink("* Other rules apply", "Default", new { controller = "About", action = "Rules", Id = 21 },
                 new { target = "_blank" })
     </div>
 </div>
@@ -48,7 +47,7 @@
             <input type="checkbox" id="dontAsk" />
             <label for="dontAsk">Don't ask me again</label>
         </div>
-        <div class="never">We <span class="underline">never</span> post to Facebook without your permission.</div>
+        <div class="never">We never post to Facebook without your permission.</div>
         <a class="m-btn go login">Log In to Facebook</a>
     </div>
 }

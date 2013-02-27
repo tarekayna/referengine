@@ -303,3 +303,6 @@ footer > div .m-btn.go {
   margin-left: 330px;
   padding: 15px 40px;
 }
+footer > div .m-btn.go#done-button {
+  margin-left: 400px;
+}

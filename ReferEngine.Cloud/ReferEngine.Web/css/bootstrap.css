@@ -4386,7 +4386,7 @@ input[type="submit"].btn.btn-mini {
   float: left;
 }
 
-.navbar .nav > li > a {
+.navbar .nav > li > a:not(.btn) {
   float: none;
   padding: 10px 15px 10px;
   color: #777777;
@@ -5771,4 +5771,10 @@ a.badge:hover {
 
 .affix {
   position: fixed;
+}
+
+.table th.vrt-mdl,
+.table td.vrt-mdl,
+.vrt-mdl {
+    vertical-align: middle
 }

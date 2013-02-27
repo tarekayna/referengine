@@ -74,6 +74,15 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.0-alpha2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Glimpse.AspNet">
+      <HintPath>..\packages\Glimpse.AspNet.1.0.0\lib\net40\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core">
+      <HintPath>..\packages\Glimpse.1.0.0\lib\net40\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Mvc3">
+      <HintPath>..\packages\Glimpse.Mvc3.1.0.0\lib\net40\Glimpse.Mvc3.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
@@ -247,30 +256,66 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="js\pricing.js" />
     <Content Include="js\lib\require-jquery.js" />
     <Content Include="js\lib\require.js" />
-    <Content Include="TypeScript\external\winjs.d.ts" />
-    <Content Include="TypeScript\external\winrt.d.ts" />
-    <TypeScriptCompile Include="TypeScript\globals.ts" />
-    <Content Include="TypeScript\globals.js">
+    <Content Include="js\home.js" />
+    <Content Include="js\shared\layout-not-auth.js" />
+    <Content Include="TypeScript\lib\almond.js" />
+    <Content Include="TypeScript\recommend\windows\client\export-functions.js" />
+    <Content Include="TypeScript\recommend\windows\client\define-exports.js" />
+    <Content Include="TypeScript\recommend\windows\client\export-messaging.js" />
+    <Content Include="Views\Shared\_PageHeader.cshtml" />
+    <Content Include="Views\Shared\_PrivateBeta.cshtml" />
+    <TypeScriptCompile Include="TypeScript\recommend\windows\server\pleaseUpdate.ts" />
+    <Content Include="TypeScript\recommend\windows\server\pleaseUpdate.js">
+      <DependentUpon>pleaseUpdate.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\server\pleaseUpdate.min.js">
+      <DependentUpon>pleaseUpdate.ts</DependentUpon>
+    </Content>
+    <Content Include="Views\Recommend\win8\pleaseUpdate.cshtml" />
+    <TypeScriptCompile Include="TypeScript\recommend\windows\common\Messaging.ts" />
+    <TypeScriptCompile Include="TypeScript\recommend\windows\common\Functions.ts" />
+    <Content Include="TypeScript\recommend\windows\client\build-and-deploy.bat" />
+    <Content Include="TypeScript\recommend\windows\client\build-and-deploy.js" />
+    <Content Include="TypeScript\recommend\windows\client\ReferEngineClient.ts" />
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientScript-built.js" />
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientScript.js">
+      <DependentUpon>WindowsClientScript.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientScript.min.js">
+      <DependentUpon>WindowsClientScript.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientScript.ts" />
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientStyle.css">
+      <DependentUpon>WindowsClientStyle.less</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientStyle.less" />
+    <Content Include="TypeScript\recommend\windows\client\WindowsClientStyle.min.css">
+      <DependentUpon>WindowsClientStyle.less</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\common\Functions.js">
+      <DependentUpon>Functions.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\common\Functions.min.js">
+      <DependentUpon>Functions.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\common\Messaging.js">
+      <DependentUpon>Messaging.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\common\Messaging.min.js">
+      <DependentUpon>Messaging.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\recommend\windows\common\winjs.d.ts" />
+    <Content Include="TypeScript\recommend\windows\common\winrt.d.ts" />
+    <TypeScriptCompile Include="TypeScript\recommend\windows\server\globals.ts" />
+    <Content Include="TypeScript\recommend\windows\server\globals.js">
       <DependentUpon>globals.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\globals.min.js">
+    <Content Include="TypeScript\recommend\windows\server\globals.min.js">
       <DependentUpon>globals.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppScript.js">
-      <DependentUpon>WindowsInAppScript.ts</DependentUpon>
-    </Content>
-    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppScript.min.js">
-      <DependentUpon>WindowsInAppScript.ts</DependentUpon>
-    </Content>
-    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppScript.ts" />
-    <Content Include="TypeScript\inAppScript\Windows\ReferEngine.External.ts" />
-    <Content Include="TypeScript\inAppScript\Windows\old_script.js" />
-    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppStyle.css">
-      <DependentUpon>WindowsInAppStyle.less</DependentUpon>
-    </Content>
-    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppStyle.less" />
     <None Include="ConfigureIIS.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -283,10 +328,8 @@
     <Compile Include="Controllers\FacebookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InAppScriptController.cs" />
-    <Compile Include="Controllers\PricingController.cs" />
     <Compile Include="Controllers\RecommendController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
-    <Compile Include="Controllers\Win8\AuthController.cs" />
     <Compile Include="DataAccess\BlobStorageOperations.cs" />
     <Compile Include="DataAccess\ReferDataReader.cs" />
     <Compile Include="DataAccess\IReferDataReader.cs" />
@@ -295,6 +338,7 @@
     <Compile Include="App_Start\ErrorEntity.cs" />
     <Compile Include="Filters\LogAttribute.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -310,6 +354,7 @@
     <Compile Include="Models\Common\AppNameJavaScriptGlobalVariable.cs" />
     <Compile Include="Models\Common\AppIdJavaScriptGlobalVariable.cs" />
     <Compile Include="Models\Common\JavaScriptGlobalVariable.cs" />
+    <Compile Include="Models\Common\PageTitleViewModel.cs" />
     <Compile Include="Models\Common\ReferEngineAuthTokenJavaScriptGlobalVariable.cs" />
     <Compile Include="Models\Common\IJavaScriptGlobalVariable.cs" />
     <Compile Include="Models\Common\ViewProperties.cs" />
@@ -412,8 +457,7 @@
     <Content Include="js\app\edit.js" />
     <Content Include="js\contact\index.js" />
     <Content Include="js\lib\bootstrap.js" />
-    <Content Include="js\home\index.js" />
-    <Content Include="js\facebook.js" />
+    <Content Include="js\shared\privateBeta.js" />
     <Content Include="js\lib\jquery-1.8.3.js" />
     <Content Include="js\lib\jquery-1.9.0.js" />
     <Content Include="js\lib\jquery-ui-1.10.0.custom.js" />
@@ -482,10 +526,7 @@
     <Content Include="Less\web\main.min.css">
       <DependentUpon>main.less</DependentUpon>
     </Content>
-    <Content Include="TypeScript\inAppScript\Windows\WindowsInAppStyle.min.css">
-      <DependentUpon>WindowsInAppStyle.less</DependentUpon>
-    </Content>
-    <TypeScriptCompile Include="TypeScript\recommend\windows\common.ts" />
+    <TypeScriptCompile Include="TypeScript\recommend\windows\server\common.ts" />
     <Content Include="TypeScript\lib\bootstrap.js" />
     <Content Include="TypeScript\lib\jquery-1.8.3.js" />
     <Content Include="TypeScript\lib\jquery-1.9.0.js" />
@@ -504,24 +545,25 @@
       <DependentUpon>require.d.ts</DependentUpon>
     </Content>
     <Content Include="TypeScript\lib\require.js" />
-    <Content Include="TypeScript\recommend\windows\common.js">
+    <Content Include="TypeScript\r.js" />
+    <Content Include="TypeScript\recommend\windows\server\common.js">
       <DependentUpon>common.ts</DependentUpon>
     </Content>
-    <TypeScriptCompile Include="TypeScript\recommend\windows\intro.ts" />
-    <Content Include="TypeScript\recommend\windows\common.min.js">
+    <TypeScriptCompile Include="TypeScript\recommend\windows\server\intro.ts" />
+    <Content Include="TypeScript\recommend\windows\server\common.min.js">
       <DependentUpon>common.ts</DependentUpon>
     </Content>
-    <TypeScriptCompile Include="TypeScript\recommend\windows\recommend.ts" />
-    <Content Include="TypeScript\recommend\windows\intro.js">
+    <TypeScriptCompile Include="TypeScript\recommend\windows\server\recommend.ts" />
+    <Content Include="TypeScript\recommend\windows\server\intro.js">
       <DependentUpon>intro.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\recommend\windows\intro.min.js">
+    <Content Include="TypeScript\recommend\windows\server\intro.min.js">
       <DependentUpon>intro.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\recommend\windows\recommend.js">
+    <Content Include="TypeScript\recommend\windows\server\recommend.js">
       <DependentUpon>recommend.ts</DependentUpon>
     </Content>
-    <Content Include="TypeScript\recommend\windows\recommend.min.js">
+    <Content Include="TypeScript\recommend\windows\server\recommend.min.js">
       <DependentUpon>recommend.ts</DependentUpon>
     </Content>
     <Content Include="Views\About\Terms.cshtml">
@@ -550,8 +592,8 @@
     <Content Include="Views\About\Copyright.cshtml" />
     <Content Include="Views\Shared\fb\_Layout.cshtml" />
     <Content Include="Views\Facebook\_ViewStart.cshtml" />
-    <Content Include="Views\Pricing\Index.cshtml" />
-    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Home\Pricing.cshtml" />
+    <None Include="Views\About\Contact.cshtml" />
     <Content Include="Views\About\Rules.cshtml" />
     <Content Include="Views\Shared\_MixPanel.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -662,6 +704,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>call ""C:\Users\Tarek\Documents\GitHub\referengine\ReferEngine.Cloud\ReferEngine.Web\TypeScript\recommend\windows\client\build-and-deploy.bat""</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 Other similar extension points exist, see Microsoft.Common.targets.
 <Target Name="BeforeBuild">

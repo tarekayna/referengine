@@ -21,23 +21,26 @@ namespace ReferEngine.Common.Models
         public string UserHostAddress { get; set; }
 
         [DataMember]
-        public bool IsVerified { get; set; }
+        public DateTime TimeStamp { get; set; }
 
-        private string _privateKey = "fo435u49ftrl93455498634jrlkenrfp3woijrewrjewlkrjewjrwlerew";
+        [DataMember]
+        public DateTime ExpiresAt { get; set; }
 
-        public AppAuthorization(App app, AppReceipt appReceipt, string userHostAddress)
+        private const string PrivateKey = "fo435u49ftrl93455498634jrlkenrfp3woijrewrjewlkrjewjrwlerew";
+
+        public AppAuthorization() {}
+
+        public AppAuthorization(App app, AppReceipt appReceipt)
         {
             App = app;
             AppReceipt = appReceipt;
-            UserHostAddress = userHostAddress;
             Token = ComputeToken();
-            IsVerified = false;
         }
 
         private string ComputeToken()
         {
-            string str = String.Format("{0}{1}{2}{3}{4}", _privateKey, AppReceipt.Id, App.Id, App.UserId,
-                                       AppReceipt.PurchaseDate);
+            string str = String.Format("{0}{1}{2}{3}{4}{5}", PrivateKey, AppReceipt.Id, App.Id, App.UserId,
+                                       AppReceipt.PurchaseDate, DateTime.Now.Ticks);
             byte[] bytes = Encoding.UTF8.GetBytes(str);
             using (HMACSHA256 sha = new HMACSHA256())
             {

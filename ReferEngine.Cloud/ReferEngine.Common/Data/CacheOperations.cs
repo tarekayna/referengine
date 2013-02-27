@@ -14,6 +14,7 @@ namespace ReferEngine.Common.Data
         internal const string AppScreenshotIdDesc = "appscreenshot-id-desc-{0}{1}";
         internal const string UserId = "user-id-{0}";
         internal const string IpAddress = "ip-{0}";
+        internal const string AppAutoShowOptions = "app-auto-show-{0}";
     }
 
     public static class CacheTimeoutValues
@@ -42,12 +43,36 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static void AddAppAuthorization(AppAuthorization appAuthorization, TimeSpan expiresIn)
+        private static void CachePutSafe(string key, object value, TimeSpan timeout)
         {
-            Cache.Put(appAuthorization.Token, appAuthorization, expiresIn);
+            try
+            {
+                Cache.Put(key, value, timeout);
+            }
+            catch (Exception t)
+            {
+                Trace.TraceError(t.Message);
+            }
         }
 
-        public static AppAuthorization GetAppAuthorization(string token, string userHostAddress)
+        private static void CachePutSafe(string key, object value)
+        {
+            try
+            {
+                Cache.Put(key, value);
+            }
+            catch (Exception t)
+            {
+                Trace.TraceError(t.Message);
+            }
+        }
+
+        public static void AddAppAuthorization(AppAuthorization appAuthorization, TimeSpan expiresIn)
+        {
+            CachePutSafe(appAuthorization.Token, appAuthorization, expiresIn);
+        }
+
+        public static AppAuthorization GetAppAuthorization(string token)
         {
             object cached = null;
             try
@@ -58,15 +83,7 @@ namespace ReferEngine.Common.Data
             {
                 Trace.TraceError(e.Message);
             }
-            if (cached != null)
-            {
-                AppAuthorization appAuthorization = (AppAuthorization)cached;
-                if (appAuthorization.UserHostAddress.Equals(userHostAddress, StringComparison.OrdinalIgnoreCase))
-                {
-                    return appAuthorization;
-                }
-            }
-            return null;
+            return cached != null ? (AppAuthorization) cached : null;
         }
 
         public static Person GetPerson(Int64 facebookId)
@@ -87,7 +104,7 @@ namespace ReferEngine.Common.Data
         public static void AddPerson(Person person)
         {
             String key = String.Format(CacheKeyFormat.Person, person.FacebookId);
-            Cache.Put(key, person);
+            CachePutSafe(key, person);
         }
 
         public static App GetApp(long id)
@@ -109,7 +126,7 @@ namespace ReferEngine.Common.Data
         public static void AddApp(long id, App app)
         {
             String key = String.Format(CacheKeyFormat.AppId, id);
-            Cache.Put(key, app);
+            CachePutSafe(key, app);
         }
 
         public static App GetApp(string packageFamilyName)
@@ -130,13 +147,13 @@ namespace ReferEngine.Common.Data
         public static void AddApp(string packageFamilyName, App app)
         {
             String key = String.Format(CacheKeyFormat.AppPackage, packageFamilyName);
-            Cache.Put(key, app, CacheTimeoutValues.App);
+            CachePutSafe(key, app, CacheTimeoutValues.App);
         }
 
         public static void AddFacebookOperations(string token, FacebookOperations facebookOperations)
         {
             string key = string.Format(CacheKeyFormat.FacebookOperations, token);
-            Cache.Put(key, facebookOperations);
+            CachePutSafe(key, facebookOperations);
         }
 
         public static FacebookOperations GetFacebookOperations(string token)
@@ -169,7 +186,7 @@ namespace ReferEngine.Common.Data
             }
 
             AppScreenshot screenshot = DatabaseOperations.GetAppScreenshot(appId, description);
-            Cache.Put(key, screenshot);
+            CachePutSafe(key, screenshot);
             return screenshot;
         }
 
@@ -193,7 +210,7 @@ namespace ReferEngine.Common.Data
         {
             if (user == null) return;
             String key = String.Format(CacheKeyFormat.UserId, user.Id);
-            Cache.Put(key, user);
+            CachePutSafe(key, user);
         }
 
         public static IpAddressLocation GetIpAddressLocation(string ipAddress)
@@ -216,7 +233,30 @@ namespace ReferEngine.Common.Data
         {
             if (ipAddressLocation == null) return;
             String key = String.Format(CacheKeyFormat.IpAddress, ipAddressLocation.IpAddress);
-            Cache.Put(key, ipAddressLocation);
+            CachePutSafe(key, ipAddressLocation);
+        }
+
+        public static AppAutoShowOptions GetAppAutoShowOptions(long appId)
+        {
+            String key = String.Format(CacheKeyFormat.AppAutoShowOptions, appId);
+            object cached = null;
+            try
+            {
+                cached = Cache.Get(key);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.Message);
+                // It's ok, just retreive from the database
+            }
+            return cached == null ? null : (AppAutoShowOptions)cached;
+        }
+
+        public static void SetAppAutoShowOptions(AppAutoShowOptions appAutoShowOptions)
+        {
+            if (appAutoShowOptions == null) return;
+            String key = String.Format(CacheKeyFormat.AppAutoShowOptions, appAutoShowOptions.AppId);
+            CachePutSafe(key, appAutoShowOptions);
         }
     }
 }
