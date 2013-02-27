@@ -13,14 +13,20 @@ define(["require", "exports", "common", "../common/Functions"], function(require
         }
         ;
         $("#update-link").click(function () {
-            mp.track("Recommend : Update : Update Now");
+            mp.track("Action", {
+                Action: "Update App Now"
+            });
         });
         $("#re-cancel").click(function () {
             messenger.call(clientFunction.hide);
-            mp.track("Recommend : Update : Cancel");
+            mp.track("Action", {
+                Action: "Update App Cancel"
+            });
             postMessageBackCompat("done");
         });
         postMessageBackCompat("hide-loading");
-        mp.track("Recommend : Update");
+        mp.track("Page View", {
+            Page: "Recommend Update"
+        });
     });
 })

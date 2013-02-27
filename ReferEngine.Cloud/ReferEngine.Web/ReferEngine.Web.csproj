@@ -252,6 +252,10 @@
     <Content Include="js\lib\require.js" />
     <Content Include="js\home.js" />
     <Content Include="js\shared\layout-not-auth.js" />
+    <Content Include="TypeScript\lib\almond.js" />
+    <Content Include="TypeScript\recommend\windows\client\export-functions.js" />
+    <Content Include="TypeScript\recommend\windows\client\define-exports.js" />
+    <Content Include="TypeScript\recommend\windows\client\export-messaging.js" />
     <Content Include="Views\Shared\_PageHeader.cshtml" />
     <Content Include="Views\Shared\_PrivateBeta.cshtml" />
     <TypeScriptCompile Include="TypeScript\recommend\windows\server\pleaseUpdate.ts" />

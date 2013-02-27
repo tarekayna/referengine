@@ -51,7 +51,7 @@ $(document).ready(function () {
            error: onFormError
         });
 
-        mixpanel.track("Page Action", {
+        mixpanel.track("Action", {
             Action: "Request Invite Submit"
         });
     };

@@ -1,10 +1,10 @@
 ﻿$(document).ready(function () {
-    var track = function(selector, actionName, source) {
+    var track = function (selector, actionName, location) {
         $(selector).click(function () {
-            mixpanel.track("Page Action", {
+            mixpanel.track("Action", {
                 Page: "Pricing",
                 Action: actionName,
-                Source: source
+                Location: location
             });
         });
     };

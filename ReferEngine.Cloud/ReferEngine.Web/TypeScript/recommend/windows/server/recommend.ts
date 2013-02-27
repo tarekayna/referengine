@@ -4,7 +4,7 @@ declare var ko;
 import common = module("common");
 import Messaging = module("../common/Messaging");
 import Functions = module("../common/Functions");
-
+ 
 require(["../../../lib/knockout"], function (ko) {
     $(document).ready(function () {
         var mp = common.MixPanel,
@@ -232,14 +232,12 @@ require(["../../../lib/knockout"], function (ko) {
         var onSubmitError = function (jqXhr, textStatus, errorThrown) {
             messenger.call(clientFunction.setLoadingText, { text: "Error posting to Facebook. Please try again." });
             messenger.call(clientFunction.showLoading);
-            mp.track("Recommend Post Error", null);
         };
 
         var onSubmitSuccess = function (data, textStatus, jqXhr) {
             post.hide();
             postResult.show();
             messenger.call(clientFunction.hideLoading);
-            mp.track("Recommend Post Success", null);
         };
 
         var showMustAgree = function () {
@@ -281,7 +279,8 @@ require(["../../../lib/knockout"], function (ko) {
                     success: onSubmitSuccess
                 });
 
-                mp.track("Recommend Post Submit", {
+                mp.track("Action", {
+                    Action: "Recommend Post Submit",
                     "Includes Message": msgText !== "",
                     "Includes Tags": tags.length > 0
                 });
@@ -292,12 +291,16 @@ require(["../../../lib/knockout"], function (ko) {
 
         cancelButton.click(function () {
             messenger.call(clientFunction.hide);
-            mp.track("Recommend Post Cancel", null);
+            mp.track("Action", {
+                Action: "Recommend Post Cancel"
+            });
         });
 
         asContainer.css("display", "none");
         messenger.call(clientFunction.hideLoading);
 
-        mp.track("Recommend Post", null);
+        mp.track("Page View", {
+            Page: "Recommend Post"
+        });
     });
 });

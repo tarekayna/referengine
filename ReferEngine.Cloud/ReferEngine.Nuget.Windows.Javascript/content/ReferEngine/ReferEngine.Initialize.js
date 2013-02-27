@@ -20,7 +20,7 @@
     // IMPORTANT: Don't forget to change this back to 'CurrentApp' before you 
     //            submit your app to store certification. If you don't, your app 
     //            will fail certification
-    ReferEngineClient.currentApp = Windows.ApplicationModel.Store.CurrentAppSimulator;
+    ReferEngineClient.currentApp = Windows.ApplicationModel.Store.CurrentApp;
     
     ReferEngineClient.appActivationArgs = args;
     var script = document.createElement("script");

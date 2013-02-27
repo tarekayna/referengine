@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>ReferEngine.Windows.Javascript</id>
-    <version>0.21</version>
+    <version>0.28</version>
     <title>ReferEngine.Windows.Javascript</title>
     <authors>ReferEngine.com</authors>
     <owners>ReferEngine.com</owners>
@@ -23,8 +23,4 @@
     <references></references>
     <tags>ReferEngine Refer Engine Apexa Windows 8 Store Windows8 Facebook</tags>
   </metadata>
-  <files>
-    <file src="content\" target="content" exclude="*.db"/>
-    <file src="tools\" target="tools" />
-  </files>
 </package>

@@ -23,6 +23,26 @@ export class MixPanel {
         var seconds = currentTime.getSeconds();
         return year + "-" + month + "-" + date + "T" + hour + ":" + minutes + ":" + seconds;
     };
+    private static getHour(currentTime: Date) {
+        return currentTime.getHours();
+    };
+    private static getMonth(currentTime: Date) {
+        var month = currentTime.getMonth();
+        switch (month) {
+            case 0: return "Jan";
+            case 1: return "Feb";
+            case 2: return "Mar";
+            case 3: return "Apr";
+            case 4: return "May";
+            case 5: return "Jun";
+            case 6: return "Jul";
+            case 7: return "Aug";
+            case 8: return "Sep";
+            case 9: return "Oct";
+            case 10: return "Nov";
+            case 11: return "Dec";
+        }
+    };
     private static getDay(currentTime: Date) {
         var day = currentTime.getDay();
         switch (day) {
@@ -47,8 +67,9 @@ export class MixPanel {
         var properties = {
             AppName: ReferEngineGlobals.appName,
             AppId: ReferEngineGlobals.appId,
-            Timestamp: getDateTime(currentTime),
-            Day: getDay(currentTime)
+            Hour: getHour(currentTime),
+            Day: getDay(currentTime),
+            Month: getMonth(currentTime)
         };
 
         if (data) {

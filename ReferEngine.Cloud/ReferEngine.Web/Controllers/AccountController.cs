@@ -121,7 +121,7 @@ namespace ReferEngine.Web.Controllers
         }
 
         // TODO: Remove when you enable registration
-        [AllowAnonymous]
+        // [AllowAnonymous]
         public ActionResult Register()
         {
             return View();

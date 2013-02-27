@@ -1,20 +1,20 @@
 ﻿$(document).ready(function () {
 
-    var track = function (selector, actionName, source) {
+    var track = function (selector, actionName, location) {
         $(selector).click(function () {
-            mixpanel.track("Page Action", {
+            mixpanel.track("Action", {
                 Action: actionName,
-                Source: source
+                Location: location
             });
         });
     };
 
     track("#request-invite-hdr", "Request Invite", "Header");
 
-
     $("#log-in-hdr").click(function () {
-        mixpanel.track("Page Action", {
-            Action: "Log In Header"
+        mixpanel.track("Action", {
+            Action: "Log In",
+            Location: "Header"
         });
     });
 });

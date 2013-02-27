@@ -26,7 +26,7 @@ $(document).ready(function () {
         messenger.call(clientFunction.showLoading);
         messenger.call(clientFunction.authFacebook);
 
-        mp.track("Recommend Intro Start");
+        mp.track("Action", { Action: "Recommend Intro Start" });
     });
 
     cancelButton.click(function () {
@@ -34,7 +34,8 @@ $(document).ready(function () {
        
         messenger.call(clientFunction.setAutoAsk, { askAgain: !dontAskAgain });
         messenger.call(clientFunction.hide);
-        mp.track("Recommend Intro Cancel", {
+        mp.track("Action", {
+            Action: "Recommend Intro Cancel",
             "Dont Ask Again": dontAskAgain
         });
     });
@@ -42,12 +43,16 @@ $(document).ready(function () {
     var closedWhileLoading = false;
     var functions: Functions.Function[] = [
         new Functions.Function(severFunction.closedWhileLoading, function (details) {
-            mp.track("Recommend Intro Closed While Loading");
+            mp.track("Action", {
+                Action: "Recommend Intro Closed While Loading"
+            });
             closedWhileLoading = true;
         }),
         new Functions.Function(severFunction.introVisible, function (details) {
             if (!closedWhileLoading) {
-                mp.track("Recommend Intro");
+                mp.track("Page View", {
+                    Page: "Recommend Intro"
+                });
             }
         }),
         new Functions.Function(severFunction.authFacebookResult, function (details) {

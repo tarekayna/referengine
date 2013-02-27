@@ -222,10 +222,10 @@ module ReferEngine {
             }
         }
     }
-
+      
     class Url {
-        //static base: string = "http://127.0.0.1:81";
-        static base: string = "https://www.referengine-test.com";
+        static base: string = "http://127.0.0.1:81";
+        //static base: string = "https://www.referengine-test.com";
         //static base: string = "https://www.referengine.com";
         static auth: string = Url.base + "/recommend/win8/authorizeapp";
         static getIntroUrl(isAutoOpen: bool) {
