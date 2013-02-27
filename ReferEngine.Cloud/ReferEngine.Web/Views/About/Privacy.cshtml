@@ -1,4 +1,5 @@
-﻿@Html.Partial("_PageHeader", new PageTitleViewModel("Privacy Policy"))
+﻿@{ ViewProperties.PageTitle = "Privacy Policy"; }
+@Html.Partial("_PageHeader", new PageTitleViewModel("Privacy Policy"))
 
 <div id="content">
 <div class="container">

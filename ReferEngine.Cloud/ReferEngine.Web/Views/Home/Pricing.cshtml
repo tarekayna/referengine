@@ -1,4 +1,6 @@
-﻿@Html.Partial("_PageHeader", new PageTitleViewModel("Plans and Pricing"))
+﻿@{ ViewProperties.PageTitle = "Pricing and Plans"; }
+
+@Html.Partial("_PageHeader", new PageTitleViewModel("Plans and Pricing"))
 
 @section scripts {
     @Scripts.Render("~/js/pricing")
