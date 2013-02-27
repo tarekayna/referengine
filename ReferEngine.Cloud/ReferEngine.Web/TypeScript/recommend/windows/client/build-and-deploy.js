@@ -11,7 +11,7 @@ fs.writeFileSync("WindowsClientScript-ready.js", js, 'utf8');
 
 var config = {
     baseUrl: ".",
-    //optimize: "none",
+    optimize: "none",
     wrap: true,
     include: ["../common/Messaging",
               "../common/Functions",

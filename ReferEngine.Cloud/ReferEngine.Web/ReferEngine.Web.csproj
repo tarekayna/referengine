@@ -267,6 +267,7 @@
     <Content Include="TypeScript\recommend\windows\client\export-messaging.js" />
     <Content Include="Views\Shared\_PageHeader.cshtml" />
     <Content Include="Views\Shared\_PrivateBeta.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
     <TypeScriptCompile Include="TypeScript\recommend\windows\server\pleaseUpdate.ts" />
     <Content Include="TypeScript\recommend\windows\server\pleaseUpdate.js">
       <DependentUpon>pleaseUpdate.ts</DependentUpon>
@@ -593,7 +594,6 @@
     <Content Include="Views\Shared\fb\_Layout.cshtml" />
     <Content Include="Views\Facebook\_ViewStart.cshtml" />
     <Content Include="Views\Home\Pricing.cshtml" />
-    <None Include="Views\About\Contact.cshtml" />
     <Content Include="Views\About\Rules.cshtml" />
     <Content Include="Views\Shared\_MixPanel.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />

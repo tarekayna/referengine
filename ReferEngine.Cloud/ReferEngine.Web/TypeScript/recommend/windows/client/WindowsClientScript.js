@@ -235,7 +235,7 @@
         })();        
         var Url = (function () {
             function Url() { }
-            Url.base = "https://www.referengine.com";
+            Url.base = "http://127.0.0.1:81";
             Url.auth = Url.base + "/recommend/win8/authorizeapp";
             Url.getIntroUrl = function getIntroUrl(isAutoOpen) {
                 return Url.base + "/recommend/win8/intro/" + RemoteOptions.appId + "?isAutoOpen=" + (isAutoOpen ? "true" : "false");

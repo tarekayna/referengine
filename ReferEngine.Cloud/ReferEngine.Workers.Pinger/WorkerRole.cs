@@ -60,7 +60,7 @@ namespace ReferEngine.Workers.Pinger
                     string.Format("{0}/fb/app/{1}", baseUrl, BluGraphingCalculatorAppId),
                     string.Format("{0}/recommend/win8/intro/{1}", baseUrl, BluGraphingCalculatorAppId),
                     string.Format("{0}/pricing", baseUrl),
-                    string.Format("{0}/about/contact", baseUrl),
+                    string.Format("{0}/contact", baseUrl),
                     string.Format("{0}/account/login", baseUrl),
                     string.Format("{0}/account/register", baseUrl),
                     string.Format("{0}/about/privacy", baseUrl),
