@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Net;
 using System.Web.Mvc;
 
 namespace ReferEngine.Common.Utilities
 {
-    public class RemoteRequireHttps : RequireHttpsAttribute
+    public class RemoteRequireHttps : RequireHttpsPermanent
     {
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
