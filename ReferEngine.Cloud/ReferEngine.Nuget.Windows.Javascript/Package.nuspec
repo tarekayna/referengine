@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>ReferEngine.Windows.Javascript</id>
-    <version>0.28</version>
-    <title>ReferEngine.Windows.Javascript</title>
+    <id>ReferEngine.Javascript</id>
+    <version>0.3</version>
+    <title>ReferEngine.Javascript</title>
     <authors>ReferEngine.com</authors>
     <owners>ReferEngine.com</owners>
     <description>
@@ -21,6 +21,6 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <copyright>Copyright Apexa Inc. 2013</copyright>
     <references></references>
-    <tags>ReferEngine Refer Engine Apexa Windows 8 Store Windows8 Facebook</tags>
+    <tags>ReferEngine Refer Engine Apexa Windows Store App Windows8 Facebook Social</tags>
   </metadata>
 </package>

@@ -1,4 +1,4 @@
-del .\ReferEngine.Nuget.Windows.Javascript\ReferEngine.Windows.Javascript.*.nupkg
+del .\ReferEngine.Nuget.Windows.Javascript\ReferEngine.Javascript.*.nupkg
 nuget pack .\ReferEngine.Nuget.Windows.Javascript\Package.nuspec -outputdirectory .\ReferEngine.Nuget.Windows.Javascript
 
 

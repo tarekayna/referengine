@@ -74,6 +74,15 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.0-alpha2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Glimpse.AspNet">
+      <HintPath>..\packages\Glimpse.AspNet.1.0.0\lib\net40\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core">
+      <HintPath>..\packages\Glimpse.1.0.0\lib\net40\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Mvc3">
+      <HintPath>..\packages\Glimpse.Mvc3.1.0.0\lib\net40\Glimpse.Mvc3.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
@@ -329,6 +338,7 @@
     <Compile Include="App_Start\ErrorEntity.cs" />
     <Compile Include="Filters\LogAttribute.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -583,7 +593,7 @@
     <Content Include="Views\Shared\fb\_Layout.cshtml" />
     <Content Include="Views\Facebook\_ViewStart.cshtml" />
     <Content Include="Views\Home\Pricing.cshtml" />
-    <None Include="Views\Home\Contact.cshtml" />
+    <None Include="Views\About\Contact.cshtml" />
     <Content Include="Views\About\Rules.cshtml" />
     <Content Include="Views\Shared\_MixPanel.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />

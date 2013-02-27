@@ -26,7 +26,7 @@ namespace ReferEngine.Web.App_Start
             routes.MapRoute(
                 name: "Home",
                 url: "{action}",
-                defaults: new { controller = "Home", action = "Index" }
+                defaults: new { controller = "Home" }
             );
 
             routes.MapRoute(

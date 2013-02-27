@@ -40,10 +40,5 @@ namespace ReferEngine.Web.Controllers
         {
             return View();
         }
-
-        public ActionResult Contact()
-        {
-            return View();
-        }
     }
 }

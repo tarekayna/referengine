@@ -57,6 +57,7 @@
     <None Include="Package.nuspec">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
     <None Include="tools\init.ps1" />
     <None Include="tools\install.ps1" />
     <None Include="tools\uninstall.ps1" />
@@ -65,6 +66,11 @@
     <Content Include="content\ReferEngine\ReferEngine-AppBarIcon.png" />
     <Content Include="content\ReferEngine\ReferEngine.Initialize.js" />
     <Content Include="content\ReferEngine\ReferEngine.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Glimpse.Core">
+      <HintPath>..\packages\Glimpse.1.0.0\lib\net35\Glimpse.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
