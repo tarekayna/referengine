@@ -2,18 +2,25 @@
 <html lang="en">
     @RenderSection("CustomHead", false)
     <head>
-        @if (!string.IsNullOrEmpty(ViewProperties.PageTitle))
-        {
-            <title>Refer Engine | Facebook Marketing for App Developers | @ViewProperties.PageTitle</title>   
+        @{
+            string title = "Refer Engine | Facebook Marketing for App Developers";
+            if (!string.IsNullOrEmpty(ViewProperties.PageTitle))
+            {
+                title = title + " | " + ViewProperties.PageTitle;
+            }
+            string desc = "Refer Engine is a Facebook integration service for applications that helps developers in marketing " +
+                          "their apps by rewarding their customers for successful recommendations.";
         }
-        else
-        {
-            <title>Refer Engine - Facebook Marketing for App Developers</title>   
-        }
+        <title>@title</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
+        <meta name="description" content="@desc">
         <meta name="author" content="Apexa Inc.">
+        <meta property="og:title" content="@title"/> 
+        <meta property="og:url" content="@Request.Url"/> 
+        <meta property="og:description" content="@desc"/> 
+        <meta property="og:image" content="https://www.referengine.com/img/logo-mark-50.png"/> 
+
         <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     
         @Html.Partial("_FavIcon")
