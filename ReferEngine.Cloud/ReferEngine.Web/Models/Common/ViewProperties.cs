@@ -21,6 +21,7 @@ namespace ReferEngine.Web.Models.Common
         public static App CurrentApp { get; set; }
         public static User CurrentUser { get; set; }
         public static string ReturnUrl { get; set; }
+        public static string PageTitle { get; set; }
 
         public static string SuccessMessage { get; set; }
         public static string StatusMessage { get; set; }

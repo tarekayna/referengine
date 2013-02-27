@@ -20,6 +20,8 @@ namespace ReferEngine.Web.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            ViewProperties.PageTitle = string.Empty;
+
             if (User.Identity.IsAuthenticated)
             {
                 ViewProperties.CurrentUser = DataReader.GetUser(WebSecurity.CurrentUserId);
