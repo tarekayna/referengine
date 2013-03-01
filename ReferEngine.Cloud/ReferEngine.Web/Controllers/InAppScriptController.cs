@@ -8,7 +8,6 @@ using ReferEngine.Web.Models.Common;
 namespace ReferEngine.Web.Controllers
 {
     [OutputCache(Duration = 0)]
-    [RemoteRequireHttps]
     public class InAppScriptController : BaseController
     {
         public InAppScriptController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }

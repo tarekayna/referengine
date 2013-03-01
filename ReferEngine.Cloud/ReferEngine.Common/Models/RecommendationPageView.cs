@@ -30,5 +30,8 @@ namespace ReferEngine.Common.Models
 
         [DataMember]
         public bool IsAutoOpen { get; set; }
+
+        [DataMember]
+        public string IpAddress { get; set; }
     }
 }

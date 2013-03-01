@@ -22,7 +22,6 @@ var config = {
 
 requirejs.optimize(config, function (buildResponse) {
     var content = fs.readFileSync(config.out, 'utf8');
-    
     fs.writeFileSync(pathToNuget, content, 'utf8');
     fs.writeFileSync(pathToReferEngine, content, 'utf8');
 }, function(err) {

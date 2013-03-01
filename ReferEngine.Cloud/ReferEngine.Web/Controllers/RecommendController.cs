@@ -15,7 +15,6 @@ using System.Xml;
 
 namespace ReferEngine.Web.Controllers
 {
-    [RemoteRequireHttps]
     [OutputCache(Duration = 0)]
     public class RecommendController : BaseController
     {

@@ -5,7 +5,6 @@ using ReferEngine.Web.Models.Admin;
 
 namespace ReferEngine.Web.Controllers
 {
-    [RemoteRequireHttps]
     [Authorize(Roles="Admin")]
     public class AdminController : BaseController
     {

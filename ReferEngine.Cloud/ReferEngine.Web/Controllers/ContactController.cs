@@ -9,7 +9,6 @@ using ReferEngine.Web.DataAccess;
 
 namespace ReferEngine.Web.Controllers
 {
-    [RemoteRequireHttps]
     public class ContactController : BaseController
     {
         public ContactController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }

@@ -32,7 +32,8 @@
         @RenderSection("styles", required: false)
     </head>
     <body>
-         
+        <div class='notifications top-right'></div>
+
         @if (Request.IsAuthenticated && ViewProperties.CurrentUser != null)
         {
             <div class="navbar navbar-fixed-top">

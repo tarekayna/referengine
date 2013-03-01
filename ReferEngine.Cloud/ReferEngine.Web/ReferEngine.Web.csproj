@@ -256,12 +256,29 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="css\bootstrap-notify.css" />
+    <Content Include="js\app\dashboard.js" />
     <Content Include="js\pricing.js" />
     <Content Include="js\lib\require-jquery.js" />
     <Content Include="js\lib\require.js" />
     <Content Include="js\home.js" />
     <Content Include="js\shared\layout-not-auth.js" />
+    <TypeScriptCompile Include="TypeScript\app\dashboard.ts" />
+    <None Include="Less\app\dashboard.less" />
+    <Content Include="Less\app\dashboard.css">
+      <DependentUpon>dashboard.less</DependentUpon>
+    </Content>
+    <Content Include="Less\app\dashboard.min.css">
+      <DependentUpon>dashboard.less</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\app\dashboard.js">
+      <DependentUpon>dashboard.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\app\dashboard.min.js">
+      <DependentUpon>dashboard.ts</DependentUpon>
+    </Content>
     <Content Include="TypeScript\lib\almond.js" />
+    <Content Include="TypeScript\lib\bootstrap-notify.js" />
     <Content Include="TypeScript\recommend\windows\client\export-functions.js" />
     <Content Include="TypeScript\recommend\windows\client\define-exports.js" />
     <Content Include="TypeScript\recommend\windows\client\export-messaging.js" />

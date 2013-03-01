@@ -27,8 +27,9 @@ namespace ReferEngine.Web.App_Start
             List<BundleInfo> scriptBundles = new List<BundleInfo>
                 {
                     new BundleInfo("~/bundles/libs/base",
-                                   "~/js/lib/jquery-1.8.3.js",
-                                   "~/js/lib/bootstrap.js"),
+                                   "~/typescript/lib/jquery-1.8.3.js",
+                                   "~/typescript/lib/bootstrap.js",
+                                   "~/typescript/lib/bootstrap-notify.js"),
                                    
                     new BundleInfo("~/bundles/libs/jquery-validate",
                                    "~/js/lib/jquery-validate.js"),
@@ -67,7 +68,10 @@ namespace ReferEngine.Web.App_Start
                     //               "~/js/lib/jquery.aceditable.js"),
 
                     new BundleInfo("~/js/app/edit",
-                                   "~/js/app/edit.js")
+                                   "~/js/app/edit.js"),
+
+                    new BundleInfo("~/ts/app/dashboard",
+                                   "~/typescript/app/dashboard.js")
                 };
             #endregion Script Bundles
 
@@ -76,6 +80,7 @@ namespace ReferEngine.Web.App_Start
                 {
                     new BundleInfo("~/bundles/css/bootstrap",
                                    "~/css/bootstrap.css",
+                                   "~/css/bootstrap-notify.css",
                                    //"~/css/bootstrap-responsive.css",
                                    "~/css/font-awesome.css",
                                    "~/css/m-buttons.css",
@@ -96,6 +101,9 @@ namespace ReferEngine.Web.App_Start
 
                     new BundleInfo("~/css/app/edit",
                                    "~/css/app/edit.css"),
+
+                    new BundleInfo("~/less/app/dashboard",
+                                   "~/less/app/dashboard.css"),
 
                     new BundleInfo("~/bundles/less/fb/app",
                                    "~/less/fb/app.css")

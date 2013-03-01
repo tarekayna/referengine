@@ -111,6 +111,8 @@ namespace ReferEngine.Common.Utilities
             }
         }
 
+        public static string GoogleApiKey { get { return "AIzaSyAav8gLq0y-uDuWDWZS7DfkVKUkesWMfeg"; } }
+
         public static bool TryConvertToInt(string str, out int result)
         {
             int actualResult = 0;

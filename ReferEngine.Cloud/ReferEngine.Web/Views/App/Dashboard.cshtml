@@ -11,13 +11,31 @@
     var data = @data;
 </script>
 
+@section styles {
+    @Styles.Render("~/less/app/dashboard");
+}
+
+@section scripts {
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?libraries=visualization&key=@Util.GoogleApiKey&sensor=false"> </script>
+    <script type="text/javascript">
+        window.re = {};
+        window.re.appId = @Model.App.Id;
+        window.re.appName = "@Model.App.Name";
+    </script>        
+    @Scripts.Render("~/ts/app/dashboard");
+}
+
 <div id="content">
     <div class="container">
-        <div class="row">
-            <div class="span12">
-                
-                <h2>@Model.App.Name</h2>
-
+        <ul class="nav nav-tabs" id="myTab">
+            <li><a href="#overviewTab" data-toggle="tab">Overview</a></li>
+            <li><a href="#chartsTab" data-toggle="tab">Charts</a></li>
+            <li class="active"><a href="#mapTab" data-toggle="tab">Maps</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane" id="overviewTab">
+                @* Start: Overview*@
                 <p>Total Recommendations: @Model.TotalNumberOfRecommendations</p>
                 
                 <table class="table table-bordered">
@@ -78,8 +96,74 @@
                         }
                     </tbody>
                 </table>
-
+                @* End: Overview*@
             </div>
-        </div>
+            <div class="tab-pane active" id="chartsTab">
+                <div class="row">
+                    <div id="chart"></div>
+                </div>
+            </div>
+            <div class="tab-pane active" id="mapTab">
+                @* Start: Map*@
+                <div class="row" id="above-map">
+                    <div class="span6">
+                        <div class="btn-group">
+                            <a class="btn disabled">Customers who:</a>
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                <span id="current-who">launched @Model.App.Name</span>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a id="launched">launched @Model.App.Name</a></li>
+                                <li><a id="intro">saw the Refer Engine intro page</a></li>
+                                <li><a id="recommended">recommended @Model.App.Name</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <span id="current-when">Past 30 days</span>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a id="past-24-hours">Past 24 hours</a></li>
+                                    <li><a id="past-48-hours">Past 48 hours</a></li>
+                                    <li><a id="past-3-days">Past 3 days</a></li>
+                                    <li><a id="past-7-days">Past 7 days</a></li>
+                                    <li><a id="past-30-days">Past 30 days</a></li>
+                                    <li><a id="past-60-days">Past 60 days</a></li>
+                                    <li><a id="past-90-days">Past 90 days</a></li>
+                                    <li><a id="past-year">Past year</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>                        
+
+                <div class="row">
+                    <div class="span12 txt-middle">
+                        <div id="map-canvas"></div>
+                    </div>
+                </div>
+                <div class="row" id="under-map">
+                    <div class="span12">
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <span id="current-how">Location Map</span>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a id="location-map">Location Map</a></li>
+                                    <li><a id="heat-map">Heat Map</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>                            
+                </div>
+                @* End: Map*@
+            </div>
     </div>
 </div>

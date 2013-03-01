@@ -3,7 +3,7 @@ using ReferEngine.Common.Utilities;
 
 namespace ReferEngine.Web.Controllers
 {
-    [RemoteRequireHttps]
+    [RequireHttpsPermanentRemote]
     public class VideoController : Controller
     {
         public ActionResult Team()

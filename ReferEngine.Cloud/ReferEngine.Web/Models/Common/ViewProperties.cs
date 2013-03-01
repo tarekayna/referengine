@@ -34,5 +34,16 @@ namespace ReferEngine.Web.Models.Common
         public static string ProviderDisplayName { get; set; }
 
         public static IList<IJavaScriptGlobalVariable> JavaScriptGlobalVariables { get; private set; }
+
+        public static void Clear()
+        {
+            CurrentApp = null;
+            PageTitle = null;
+            SuccessMessage = string.Empty;
+            StatusMessage = string.Empty;
+            ErrorMessage = string.Empty;
+            WarningMessage = string.Empty;
+            InfoMessage = string.Empty;
+        }
     }
 }

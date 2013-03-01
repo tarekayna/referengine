@@ -15,37 +15,6 @@ namespace ReferEngine.Common.Data
 {
     public static class DatabaseOperations
     {
-        private static SqlConnectionStringBuilder _connectionString;
-        private static SqlConnection _connection;
-        private static bool _initialized;
-
-        private static void Initialize()
-        {
-            if (_initialized)
-            {
-                return;
-            }
-
-            _connectionString =
-                new SqlConnectionStringBuilder(
-                    ConfigurationManager.ConnectionStrings["AzureReferEngine"].ConnectionString);
-            _connection = new SqlConnection(_connectionString.ToString());
-
-            _initialized = true;
-        }
-
-        public static void InsertPrivateBetaEmail(string email)
-        {
-            Initialize();
-            var command = _connection.CreateCommand();
-            command.CommandText = "InsertPrivateBetaEmail";
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@email", email);
-            _connection.Open();
-            command.ExecuteNonQuery();
-            _connection.Close();
-        }
-
         public static App GetApp(long id)
         {
             App app = CacheOperations.GetApp(id);
@@ -425,6 +394,50 @@ namespace ReferEngine.Common.Data
             }
         }
 
+        public static List<IpAddressLocation> GetAppLaunchLocations(App app, DateTime start, DateTime end)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                var loc = from a in db.AppAuthorizations
+                          join l in db.IpAddressLocations on a.UserHostAddress equals l.IpAddress
+                          where app.Id == a.App.Id && start.CompareTo(a.TimeStamp) < 0 && end.CompareTo(a.TimeStamp) > 0
+                          select l;
+
+                return loc.ToList();
+            }
+        }
+
+        public static List<IpAddressLocation> GetAppRecommendLocations(App app, DateTime start, DateTime end)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                var loc = from r in db.AppRecommendations
+                          join l in db.IpAddressLocations on r.IpAddress equals l.IpAddress
+                          where app.Id == r.AppId && 
+                                start.CompareTo(r.DateTime) < 0 && 
+                                end.CompareTo(r.DateTime) > 0
+                          select l;
+
+                return loc.ToList();
+            }
+        }
+
+        public static List<IpAddressLocation> GetAppIntroLocations(App app, DateTime start, DateTime end)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                var loc = from v in db.RecommendationPageViews
+                          join l in db.IpAddressLocations on v.IpAddress equals l.IpAddress
+                          where app.Id == v.AppId && 
+                                start.CompareTo(v.TimeStamp) < 0 && 
+                                end.CompareTo(v.TimeStamp) > 0 &&
+                                v.RecommendationPage == RecommendationPage.Intro
+                          select l;
+
+                return loc.ToList();
+            }
+        }
+
         public static AppDashboardViewModel GetAppDashboardViewModel(App app)
         {
             AppDashboardViewModel viewModel = new AppDashboardViewModel {App = app};
@@ -483,7 +496,8 @@ namespace ReferEngine.Common.Data
                                                           TimeStamp = DateTime.UtcNow,
                                                           RecommendationPage = page,
                                                           AppId = auth.App.Id,
-                                                          IsAutoOpen = isAutoOpen
+                                                          IsAutoOpen = isAutoOpen,
+                                                          IpAddress = auth.UserHostAddress
                                                       };
                 db.RecommendationPageViews.Add(pageView);
                 db.SaveChanges();

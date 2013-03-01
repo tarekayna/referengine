@@ -164,6 +164,10 @@
     <Compile Include="Migrations\201302252220590_PrivateBetaAppAndPlatform.Designer.cs">
       <DependentUpon>201302252220590_PrivateBetaAppAndPlatform.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303012018017_AddIpAddressToView.cs" />
+    <Compile Include="Migrations\201303012018017_AddIpAddressToView.Designer.cs">
+      <DependentUpon>201303012018017_AddIpAddressToView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\IpAddressLocation.cs" />
     <Compile Include="Data\MixPanel\AnalysisType.cs" />
@@ -218,11 +222,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="Utilities\RequireHttpsPermanent.cs" />
+    <Compile Include="Utilities\RequireHttpsPermanentRemoteAttribute.cs" />
     <Compile Include="Utilities\DateTimeExtensions.cs" />
     <Compile Include="Utilities\EnumExtensions.cs" />
     <Compile Include="Utilities\HtmlHelperExtensions.cs" />
-    <Compile Include="Utilities\RemoteRequireHttps.cs" />
     <Compile Include="Utilities\StringValueAttribute.cs" />
     <Compile Include="Utilities\UserAgentProperties.cs" />
     <Compile Include="Utilities\RSAPKCS1SHA256SignatureDescription.cs" />
@@ -295,6 +298,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302252220590_PrivateBetaAppAndPlatform.resx">
       <DependentUpon>201302252220590_PrivateBetaAppAndPlatform.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303012018017_AddIpAddressToView.resx">
+      <DependentUpon>201303012018017_AddIpAddressToView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
