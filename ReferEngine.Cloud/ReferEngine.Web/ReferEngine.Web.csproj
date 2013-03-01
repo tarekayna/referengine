@@ -355,7 +355,6 @@
     <Compile Include="DataAccess\ReferDataWriter.cs" />
     <Compile Include="App_Start\ErrorEntity.cs" />
     <Compile Include="Filters\LogAttribute.cs" />
-    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
