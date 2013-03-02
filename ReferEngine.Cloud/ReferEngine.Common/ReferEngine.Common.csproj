@@ -40,6 +40,12 @@
     <Reference Include="Facebook">
       <HintPath>..\packages\Facebook.6.1.2\lib\net45\Facebook.dll</HintPath>
     </Reference>
+    <Reference Include="Itenso.TimePeriod">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\Itenso.TimePeriod.dll</HintPath>
+    </Reference>
+    <Reference Include="Itenso.TimePeriodTests">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\Itenso.TimePeriodTests.exe</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ApplicationServer.Caching.AzureClientHelper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.Caching.1.8.1.0\lib\net35-full\Microsoft.ApplicationServer.Caching.AzureClientHelper.dll</HintPath>
     </Reference>
@@ -80,6 +86,21 @@
     </Reference>
     <Reference Include="Microsoft.WindowsFabric.Data.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.Caching.1.8.1.0\lib\net35-full\Microsoft.WindowsFabric.Data.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit-console-runner">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit-console-runner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit.core.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core.interfaces">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit.core.interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.util">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit.util.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -169,6 +190,7 @@
       <DependentUpon>201303012018017_AddIpAddressToView.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
+    <Compile Include="Models\DateCount.cs" />
     <Compile Include="Models\IpAddressLocation.cs" />
     <Compile Include="Data\MixPanel\AnalysisType.cs" />
     <Compile Include="Data\MixPanel\MixPanelBaseUri.cs" />
@@ -246,6 +268,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="docu\TimePeriod_en.pdf" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -254,6 +277,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="docu\ChangeHistory.txt" />
     <Content Include="facebook-users.txt" />
     <Content Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe" />
     <Content Include="Microsoft.WindowsAzure.Caching\PerformanceCounters.xml" />

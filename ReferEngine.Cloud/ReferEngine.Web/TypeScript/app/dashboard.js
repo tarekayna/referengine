@@ -21,6 +21,7 @@ var Notifications = (function () {
 })();
 var Map = (function () {
     function Map() { }
+    Map.map = null;
     Map.mapData = [];
     Map.heatData = [];
     Map.markers = [];
@@ -35,7 +36,6 @@ var Map = (function () {
         streetViewControl: false,
         mapTypeControl: false
     };
-    Map.map = new google.maps.Map(document.getElementById("map-canvas"), Map.options);
     Map.updateHeatmapData = function () {
         Map.heatData = [];
         for(var j = 0; j < Map.mapData.length; j++) {
@@ -73,6 +73,9 @@ var Map = (function () {
         }
     };
     Map.refresh = function () {
+        if(Map.map === null) {
+            Map.map = new google.maps.Map(document.getElementById("map-canvas"), Map.options);
+        }
         var onSubmitSuccess = function (data, textStatus, jqXhr) {
             Map.mapData = [];
             for(var i = 0; i < data.length; i++) {
@@ -167,10 +170,58 @@ function setWhoHandlers() {
     setWhoHandler("intro", "saw the Refer Engine intro page");
     setWhoHandler("recommended", "recommended " + re.appName);
 }
+function drawChart() {
+    var rowData = [
+        [
+            'Task', 
+            'Hours per Day'
+        ], 
+        [
+            'Work', 
+            11
+        ], 
+        [
+            'Eat', 
+            2
+        ], 
+        [
+            'Commute', 
+            2
+        ], 
+        [
+            'Watch TV', 
+            2
+        ], 
+        [
+            'Sleep', 
+            7
+        ]
+    ];
+    var data = google.visualization.arrayToDataTable(rowData);
+    var options = {
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('chart'));
+    chart.draw(data, options);
+}
+google.load("visualization", "1", {
+    packages: [
+        "corechart"
+    ]
+});
 $(document).ready(function () {
-    Map.refresh();
     setTabClickEvents();
-    setWhenHandlers();
-    setHowHandlers();
-    setWhoHandlers();
+    var mapInitialized = false;
+    $('a[data-toggle="tab"]').on('shown', function (e) {
+        if(e.target.hash === "#mapTab") {
+            Map.refresh();
+            if(!mapInitialized) {
+                setWhenHandlers();
+                setHowHandlers();
+                setWhoHandlers();
+            }
+        } else if(e.target.hash === "#chartsTab") {
+            drawChart();
+        } else if(e.target.hash === "#overviewTab") {
+        }
+    });
 });

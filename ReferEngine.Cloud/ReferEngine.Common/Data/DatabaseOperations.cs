@@ -1,7 +1,9 @@
 ﻿using System.Data.Entity;
+using Itenso.TimePeriod;
 using Microsoft.ServiceBus.Messaging;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Properties;
+using ReferEngine.Common.Utilities;
 using ReferEngine.Common.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -394,43 +396,69 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static List<IpAddressLocation> GetAppLaunchLocations(App app, DateTime start, DateTime end)
+        public static List<DateCount> GetAppLaunchCountDaily(App app, DateTime start, DateTime end)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                var result = new List<DateCount>();
+                    
+                DateTime current = start;
+                while (!current.IsSameDate(end))
+                {
+                    DateTime current1 = current;
+                    var auths = from a in db.AppAuthorizations
+                                where app.Id == a.App.Id &&
+                                      current1.IsSameDate(a.TimeStamp)
+                                select a;
+
+                    result.Add(new DateCount(current, auths.Count()));
+
+                    current = current.AddDays(1);
+                }
+
+                return result;
+            }
+        }
+
+        public static List<IpAddressLocation> GetAppLaunchLocations(App app, TimeRange timeRange)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
                 var loc = from a in db.AppAuthorizations
                           join l in db.IpAddressLocations on a.UserHostAddress equals l.IpAddress
-                          where app.Id == a.App.Id && start.CompareTo(a.TimeStamp) < 0 && end.CompareTo(a.TimeStamp) > 0
+                          where app.Id == a.App.Id &&
+                                timeRange.Start.CompareTo(a.TimeStamp) < 0 && 
+                                timeRange.End.CompareTo(a.TimeStamp) > 0
                           select l;
 
                 return loc.ToList();
             }
         }
 
-        public static List<IpAddressLocation> GetAppRecommendLocations(App app, DateTime start, DateTime end)
+        public static List<IpAddressLocation> GetAppRecommendLocations(App app, TimeRange timeRange)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
                 var loc = from r in db.AppRecommendations
                           join l in db.IpAddressLocations on r.IpAddress equals l.IpAddress
-                          where app.Id == r.AppId && 
-                                start.CompareTo(r.DateTime) < 0 && 
-                                end.CompareTo(r.DateTime) > 0
+                          where app.Id == r.AppId &&
+                                timeRange.Start.CompareTo(r.DateTime) < 0 &&
+                                timeRange.End.CompareTo(r.DateTime) > 0
                           select l;
 
                 return loc.ToList();
             }
         }
 
-        public static List<IpAddressLocation> GetAppIntroLocations(App app, DateTime start, DateTime end)
+        public static List<IpAddressLocation> GetAppIntroLocations(App app, TimeRange timeRange)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
                 var loc = from v in db.RecommendationPageViews
                           join l in db.IpAddressLocations on v.IpAddress equals l.IpAddress
                           where app.Id == v.AppId && 
-                                start.CompareTo(v.TimeStamp) < 0 && 
-                                end.CompareTo(v.TimeStamp) > 0 &&
+                                timeRange.Start.CompareTo(v.TimeStamp) < 0 && 
+                                timeRange.End.CompareTo(v.TimeStamp) > 0 &&
                                 v.RecommendationPage == RecommendationPage.Intro
                           select l;
 

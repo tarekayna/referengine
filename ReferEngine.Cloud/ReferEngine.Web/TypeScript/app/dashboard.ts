@@ -21,13 +21,13 @@ class Notifications {
 }
 
 class Map {
+    static map = null;
     static mapData = [];
     static heatData = [];
     static markers = [];
     static how = "location-map";
     static who = "launched";
     static when = "past-30-days";
-
     static heatMap : any;
     static center = new google.maps.LatLng(0, 0);
     static options = {
@@ -36,8 +36,7 @@ class Map {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         streetViewControl: false, 
         mapTypeControl: false,
-    };
-    static map = new google.maps.Map(document.getElementById("map-canvas"), Map.options);
+    }; 
     static updateHeatmapData = function () {
         Map.heatData = [];
         for (var j = 0; j < Map.mapData.length; j++) { 
@@ -75,6 +74,10 @@ class Map {
         }
     };
     static refresh = function () {
+        if (Map.map === null) {
+            Map.map = new google.maps.Map(document.getElementById("map-canvas"), Map.options)
+        }
+
         var onSubmitSuccess = function (data, textStatus, jqXhr) {
             Map.mapData = [];
             for (var i = 0; i < data.length; i++) {
@@ -172,12 +175,47 @@ function setWhoHandlers() {
     setWhoHandler("recommended", "recommended " + re.appName);
 }
 
+function drawChart() {
+    var rowData: any[][] = [
+      ['Task', 'Hours per Day'],
+      ['Work', 11],
+      ['Eat', 2],
+      ['Commute', 2],
+      ['Watch TV', 2],
+      ['Sleep', 7]
+    ];
+    var data = google.visualization.arrayToDataTable(rowData);
+
+    var options = {
+        //title: 'My Daily Activities'
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart'));
+    chart.draw(data, options);
+}
+
+google.load("visualization", "1", { packages: ["corechart"] });
+//google.setOnLoadCallback(drawChart);
+
 $(document).ready(function () {
-    Map.refresh();
 
     setTabClickEvents();
 
-    setWhenHandlers();
-    setHowHandlers();
-    setWhoHandlers();
+    var mapInitialized = false;
+    $('a[data-toggle="tab"]').on('shown', function (e) {
+        if (e.target.hash === "#mapTab") {
+            Map.refresh();
+            if (!mapInitialized) {
+                setWhenHandlers();
+                setHowHandlers();
+                setWhoHandlers();
+            }
+        }
+        else if (e.target.hash === "#chartsTab") {
+            drawChart();
+        }
+        else if (e.target.hash === "#overviewTab") {
+        }
+    })
+
 });

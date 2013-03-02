@@ -176,8 +176,6 @@
         }
 
         @RenderSection("scripts", required: false)
-        @StackExchange.Profiling.MiniProfiler.RenderIncludes()
-        
         
         @{ ViewProperties.UseJQueryValidate = true; }
         @Html.Partial("_PrivateBeta")
@@ -191,6 +189,8 @@
         {
             @Scripts.Render("~/js/shared/layout-not-auth")
         }
+        
+        @StackExchange.Profiling.MiniProfiler.RenderIncludes()
     </body>
 
 </html>
