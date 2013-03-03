@@ -131,7 +131,7 @@ namespace ReferEngine.Web.Controllers
                                 };
                             }
 
-                            return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Your location is not supported by ReferEngine.com yet.");
+                            throw new InvalidOperationException("Location is not supported.");
                         //}
 
                         //return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Could not verify app receipt.");
