@@ -278,6 +278,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="css\bootstrap-notify.css" />
+    <Content Include="css\daterangepicker.css" />
     <Content Include="docu\ChangeHistory.txt" />
     <Content Include="js\app\dashboard.js" />
     <Content Include="js\pricing.js" />
@@ -285,6 +286,9 @@
     <Content Include="js\lib\require.js" />
     <Content Include="js\home.js" />
     <Content Include="js\shared\layout-not-auth.js" />
+    <Content Include="TypeScript\app\dashboard.min.js.map">
+      <DependentUpon>dashboard.js</DependentUpon>
+    </Content>
     <TypeScriptCompile Include="TypeScript\app\dashboard.ts" />
     <Content Include="docu\TimePeriod_en.pdf" />
     <None Include="Less\app\dashboard.less" />
@@ -302,6 +306,8 @@
     </Content>
     <Content Include="TypeScript\lib\almond.js" />
     <Content Include="TypeScript\lib\bootstrap-notify.js" />
+    <Content Include="TypeScript\lib\date.js" />
+    <Content Include="TypeScript\lib\daterangepicker.js" />
     <Content Include="TypeScript\recommend\windows\client\export-functions.js" />
     <Content Include="TypeScript\recommend\windows\client\define-exports.js" />
     <Content Include="TypeScript\recommend\windows\client\export-messaging.js" />

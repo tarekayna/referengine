@@ -71,6 +71,8 @@ namespace ReferEngine.Web.App_Start
                                    "~/js/app/edit.js"),
 
                     new BundleInfo("~/ts/app/dashboard",
+                                   "~/typescript/lib/date.js",
+                                   "~/typescript/lib/daterangepicker.js",                     
                                    "~/typescript/app/dashboard.js")
                 };
             #endregion Script Bundles
@@ -103,6 +105,7 @@ namespace ReferEngine.Web.App_Start
                                    "~/css/app/edit.css"),
 
                     new BundleInfo("~/less/app/dashboard",
+                                   "~/css/daterangepicker.css",
                                    "~/less/app/dashboard.css"),
 
                     new BundleInfo("~/bundles/less/fb/app",

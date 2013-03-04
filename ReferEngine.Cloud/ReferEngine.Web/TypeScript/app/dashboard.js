@@ -1,3 +1,9 @@
+var Date = (function () {
+    function Date() { }
+    Date.today = function today() {
+    };
+    return Date;
+})();
 var NotificationType = (function () {
     function NotificationType() { }
     NotificationType.none = "";
@@ -18,6 +24,77 @@ var Notifications = (function () {
         }).show();
     };
     return Notifications;
+})();
+var Chart = (function () {
+    function Chart() { }
+    Chart.chart = null;
+    Chart.chartData = [];
+    Chart.who = "launched";
+    Chart.when = "past-30-days";
+    Chart.timespan = "day";
+    Chart.how = "pie-chart";
+    Chart.draw = function draw() {
+        var rowData = [
+            [
+                'Task', 
+                'Hours per Day'
+            ], 
+            [
+                'Work', 
+                11
+            ], 
+            [
+                'Eat', 
+                2
+            ], 
+            [
+                'Commute', 
+                2
+            ], 
+            [
+                'Watch TV', 
+                2
+            ], 
+            [
+                'Sleep', 
+                7
+            ]
+        ];
+        var data = google.visualization.arrayToDataTable(rowData);
+        var options = {
+        };
+        Chart.chart.draw(data, options);
+    };
+    Chart.onDataRequestSuccess = function onDataRequestSuccess(data, textStatus, jqXhr) {
+        Chart.chartData = [];
+        for(var i = 0; i < data.length; i++) {
+            Chart.chartData.push({
+            });
+        }
+        if(Map.how === "line-chart") {
+            Chart.chart = new google.visualization.LineChart(document.getElementById('chart'));
+        }
+        Notifications.show("Success: map updated", NotificationType.success);
+    };
+    Chart.onDataRequestError = function onDataRequestError(e) {
+        Notifications.show("Error: could not update chart", NotificationType.error);
+    };
+    Chart.refresh = function refresh() {
+        $.ajax("../GetAppDashboardChartData", {
+            type: "POST",
+            data: {
+                id: re.appId,
+                who: Chart.who,
+                when: Chart.when,
+                timespan: Chart.timespan
+            },
+            dataType: "json",
+            error: Chart.onDataRequestError,
+            success: Chart.onDataRequestSuccess
+        });
+        Notifications.show("Refreshing chart...", NotificationType.info);
+    };
+    return Chart;
 })();
 var Map = (function () {
     function Map() { }
@@ -121,93 +198,122 @@ function setTabClickEvents() {
         $(this).tab('show');
     });
 }
-function setWhenHandler(whn, txt) {
-    $("#" + whn).click(function () {
-        if(Map.when !== whn) {
-            Map.when = whn;
+function setMapWhenHandlers() {
+    $(".map-when").click(function () {
+        var when = $(this).attr("data-when");
+        if(Map.when !== when) {
+            Map.when = when;
             Map.refresh();
         }
-        $("#current-when").text(txt);
+        $("#current-when").text($(this).text());
     });
 }
-;
-function setWhenHandlers() {
-    setWhenHandler("past-year", "Past year");
-    setWhenHandler("past-90-days", "Past 90 days");
-    setWhenHandler("past-60-days", "Past 60 days");
-    setWhenHandler("past-30-days", "Past 30 days");
-    setWhenHandler("past-7-days", "Past 7 days");
-    setWhenHandler("past-3-days", "Past 3 days");
-    setWhenHandler("past-48-hours", "Past 48 hours");
-    setWhenHandler("past-24-hours", "Past 24 hours");
-}
-function setHowHandler(hw, txt) {
-    $("#" + hw).click(function () {
-        if(Map.how !== hw) {
-            Map.how = hw;
+function setMapHowHandlers() {
+    $(".map-how").click(function () {
+        var how = $(this).attr("data-how");
+        if(Map.how !== how) {
+            Map.how = how;
             Map.refresh();
         }
-        $("#current-how").text(txt);
+        $("#current-how").text($(this).text());
     });
 }
-;
-function setHowHandlers() {
-    setHowHandler("heat-map", "Heat Map");
-    setHowHandler("location-map", "Location Map");
-}
-function setWhoHandler(wh, txt) {
-    $("#" + wh).click(function () {
-        if(Map.who !== wh) {
-            Map.who = wh;
+function setMapWhoHandlers() {
+    $(".map-who").click(function () {
+        var who = $(this).attr("data-who");
+        if(Map.who !== who) {
+            Map.who = who;
             Map.refresh();
         }
-        $("#current-who").text(txt);
+        $("#current-who").text($(this).text());
     });
 }
-;
-function setWhoHandlers() {
-    setWhoHandler("launched", "launched " + re.appName);
-    setWhoHandler("intro", "saw the Refer Engine intro page");
-    setWhoHandler("recommended", "recommended " + re.appName);
-}
-function drawChart() {
-    var rowData = [
-        [
-            'Task', 
-            'Hours per Day'
-        ], 
-        [
-            'Work', 
-            11
-        ], 
-        [
-            'Eat', 
-            2
-        ], 
-        [
-            'Commute', 
-            2
-        ], 
-        [
-            'Watch TV', 
-            2
-        ], 
-        [
-            'Sleep', 
-            7
+function initMapDateRangePicker() {
+    $('#map-date-range').daterangepicker({
+        ranges: {
+            'Today': [
+                'today', 
+                'today'
+            ],
+            'Yesterday': [
+                'yesterday', 
+                'yesterday'
+            ],
+            'Last 7 Days': [
+                Date.today().add({
+                    days: -6
+                }), 
+                'today'
+            ],
+            'Last 30 Days': [
+                Date.today().add({
+                    days: -29
+                }), 
+                'today'
+            ],
+            'This Month': [
+                Date.today().moveToFirstDayOfMonth(), 
+                Date.today().moveToLastDayOfMonth()
+            ],
+            'Last Month': [
+                Date.today().moveToFirstDayOfMonth().add({
+                    months: -1
+                }), 
+                Date.today().moveToFirstDayOfMonth().add({
+                    days: -1
+                })
+            ]
+        },
+        opens: 'left',
+        format: 'MM/dd/yyyy',
+        separator: ' to ',
+        startDate: Date.today().add({
+            days: -29
+        }),
+        endDate: Date.today(),
+        minDate: '01/01/2012',
+        maxDate: '12/31/2013',
+        locale: {
+            applyLabel: 'Submit',
+            fromLabel: 'From',
+            toLabel: 'To',
+            customRangeLabel: 'Custom Range',
+            daysOfWeek: [
+                'Su', 
+                'Mo', 
+                'Tu', 
+                'We', 
+                'Th', 
+                'Fr', 
+                'Sa'
+            ],
+            monthNames: [
+                'January', 
+                'February', 
+                'March', 
+                'April', 
+                'May', 
+                'June', 
+                'July', 
+                'August', 
+                'September', 
+                'October', 
+                'November', 
+                'December'
+            ],
+            firstDay: 1
+        },
+        showWeekNumbers: true,
+        buttonClasses: [
+            'btn-danger'
         ]
-    ];
-    var data = google.visualization.arrayToDataTable(rowData);
-    var options = {
-    };
-    var chart = new google.visualization.LineChart(document.getElementById('chart'));
-    chart.draw(data, options);
+    }, function (start, end) {
+        $('#map-date-range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
+    });
+    $('#map-date-range span').html(Date.today().add({
+        days: -29
+    }).toString('MMMM d, yyyy') + ' - ' + Date.today().toString('MMMM d, yyyy'));
 }
-google.load("visualization", "1", {
-    packages: [
-        "corechart"
-    ]
-});
 $(document).ready(function () {
     setTabClickEvents();
     var mapInitialized = false;
@@ -215,12 +321,12 @@ $(document).ready(function () {
         if(e.target.hash === "#mapTab") {
             Map.refresh();
             if(!mapInitialized) {
-                setWhenHandlers();
-                setHowHandlers();
-                setWhoHandlers();
+                setMapWhenHandlers();
+                setMapHowHandlers();
+                setMapWhoHandlers();
             }
         } else if(e.target.hash === "#chartsTab") {
-            drawChart();
+            Chart.refresh();
         } else if(e.target.hash === "#overviewTab") {
         }
     });

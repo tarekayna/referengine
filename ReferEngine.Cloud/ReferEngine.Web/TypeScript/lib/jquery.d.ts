@@ -689,8 +689,10 @@ interface JQuery {
 
     slice(start: number, end?: number): JQuery;
 
+    //Tarek
     tab(action: string): JQuery;
     notify(prop: any): JQuery;
+    daterangepicker(prop: any, callback: any): JQuery;
 
     /*********
      UTILITIES

@@ -82,7 +82,6 @@ body {
 -------------------------------------------------- */
 #content {
     /*background: url("../img/noise.png") repeat scroll 0 0 #FFFFFF;*/
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
     color: #394755;
 }
 .bouncy:hover i {

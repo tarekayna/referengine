@@ -396,24 +396,32 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static List<DateCount> GetAppLaunchCountDaily(App app, DateTime start, DateTime end)
+        public static List<DateCount> GetAppLaunchCount(App app, TimeRange timeRange, TimeSpan timeSpan)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
                 var result = new List<DateCount>();
-                    
-                DateTime current = start;
-                while (!current.IsSameDate(end))
+
+                TimeRange currentRange = new TimeRange(timeRange.Start, timeRange.Start.Add((timeSpan)));
+                while (!currentRange.HasInside(timeRange.End))
                 {
-                    DateTime current1 = current;
+                    DateTime rangeStart = currentRange.Start;
+                    DateTime rangeEnd = currentRange.End;
                     var auths = from a in db.AppAuthorizations
                                 where app.Id == a.App.Id &&
-                                      current1.IsSameDate(a.TimeStamp)
+                                      rangeStart.CompareTo(a.TimeStamp) < 0 && 
+                                      rangeEnd.CompareTo(a.TimeStamp) > 0
                                 select a;
 
-                    result.Add(new DateCount(current, auths.Count()));
+                    var count = auths.Count();
+                    string str;
+                    if (timeSpan.Equals(TimeSpan.FromDays(1)))
+                    {
+                        str = currentRange.Start.Date.ToShortDateString();
+                    }
+                    // append to result
 
-                    current = current.AddDays(1);
+                    currentRange.Move(timeSpan);
                 }
 
                 return result;

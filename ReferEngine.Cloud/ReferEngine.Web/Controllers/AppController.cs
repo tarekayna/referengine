@@ -40,9 +40,10 @@ namespace ReferEngine.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetAppDashboardMapData(long id, string who, string when)
+        public ActionResult GetAppDashboardMapData(long id, string who, string startDate, string endDate)
         {
             ViewProperties.CurrentApp = DataReader.GetApp(id);
+            App app = ViewProperties.CurrentApp;
 
             if (ViewProperties.CurrentApp == null ||
                (ViewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
@@ -50,19 +51,21 @@ namespace ReferEngine.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
 
-            TimeRange timeRange = GetTimeRange(when);
+            DateTime start = Convert.ToDateTime(startDate);
+            DateTime end = Convert.ToDateTime(endDate);
+            TimeRange timeRange = new TimeRange(start, end);
 
             IList<IpAddressLocation> locations;
             switch (who)
             {
                 case "launched":
-                    locations = DatabaseOperations.GetAppLaunchLocations(ViewProperties.CurrentApp, timeRange);
+                    locations = DatabaseOperations.GetAppLaunchLocations(app, timeRange);
                     break;
                 case "intro":
-                    locations = DatabaseOperations.GetAppIntroLocations(ViewProperties.CurrentApp, timeRange);
+                    locations = DatabaseOperations.GetAppIntroLocations(app, timeRange);
                     break;
                 case "recommended":
-                    locations = DatabaseOperations.GetAppRecommendLocations(ViewProperties.CurrentApp, timeRange);
+                    locations = DatabaseOperations.GetAppRecommendLocations(app, timeRange);
                     break;
                 default:
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -70,22 +73,86 @@ namespace ReferEngine.Web.Controllers
             return Json(locations.Select(l => new { l.Longitude, l.Latitude, l.City }));
         }
 
-        //[HttpPost]
-        //public ActionResult GetAppDashboardChartData(long id, string when)
-        //{
-            
-        //}
-
-        private TimeRange GetTimeRange(string when)
+        [HttpPost]
+        public ActionResult GetAppDashboardChartData(long id, string who, string when, string timespan)
         {
-            TimeRange timeRange = new TimeRange {End = DateTime.UtcNow};
+            ViewProperties.CurrentApp = DataReader.GetApp(id);
+            App app = ViewProperties.CurrentApp;
+
+            if (ViewProperties.CurrentApp == null ||
+               (ViewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            TimeSpan timeSpan = GetTimeSpan(timespan);
+            TimeRange timeRange = GetTimeRange(when, timeSpan);
+
+            IList<IpAddressLocation> locations;
+            switch (who)
+            {
+                case "launched":
+                    DatabaseOperations.GetAppLaunchCount(app, timeRange, timeSpan);
+                    break;
+                case "intro":
+                    locations = DatabaseOperations.GetAppIntroLocations(app, timeRange);
+                    break;
+                case "recommended":
+                    locations = DatabaseOperations.GetAppRecommendLocations(app, timeRange);
+                    break;
+                default:
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            throw new NotImplementedException();
+            //return Json(locations.Select(l => new { l.Longitude, l.Latitude, l.City }));
+        }
+
+        private static TimeSpan GetTimeSpan(string timespan)
+        {
+            switch (timespan)
+            {
+                case "day":
+                    return TimeSpan.FromDays(1);
+                case "hour":
+                    return TimeSpan.FromHours(1);
+                case "minute":
+                    return TimeSpan.FromMinutes(1);
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+
+        private static TimeRange GetTimeRange(string when, TimeSpan timeSpan)
+        {
+            TimeRange timeRange = new TimeRange();
+
+            DateTime now = DateTime.UtcNow;
+            if (timeSpan.Equals(TimeSpan.FromDays(1)))
+            {
+                timeRange.End = new DateTime(now.Year, now.Month, now.Day);
+                timeRange.End = timeRange.End.AddDays(1);
+            }
+            else if (timeSpan.Equals(TimeSpan.FromHours(1)))
+            {
+                timeRange.End = new DateTime(now.Year, now.Month, now.Day, now.Hour, 0, 0);
+                timeRange.End = timeRange.End.AddHours(1);
+            }
+            else if (timeSpan.Equals(TimeSpan.FromMinutes(1)))
+            {
+                timeRange.End = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
+                timeRange.End = timeRange.End.AddMinutes(1);
+            }
 
             switch (when)
             {
-                case "past-24-hours":
+                case "this-hour":
+                    timeRange.Start = timeRange.End.Subtract(TimeSpan.FromHours(1));
+                    break;
+                case "today":
                     timeRange.Start = timeRange.End.Subtract(TimeSpan.FromHours(24));
                     break;
-                case "past-48-hours":
+                case "past-2-days":
                     timeRange.Start = timeRange.End.Subtract(TimeSpan.FromHours(48));
                     break;
                 case "past-3-days":

@@ -10,6 +10,7 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=visualization&key=@Util.GoogleApiKey&sensor=false"> </script>
     <script type="text/javascript">
+        google.load("visualization", "1", { packages: ["corechart"] });
         window.re = {};
         window.re.appId = @Model.App.Id;
         window.re.appName = "@Model.App.Name";
@@ -90,8 +91,46 @@
                 @* End: Overview*@
             </div>
             <div class="tab-pane" id="chartsTab">
+                <div class="row" id="above-chart">
+                    <div class="span6">
+                        <div class="btn-group">
+                            <a class="btn disabled">Customers who:</a>
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                <span id="current-who-chart">launched @Model.App.Name</span>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="chart-who" data-who="launched">launched @Model.App.Name</a></li>
+                                <li><a class="chart-who" data-who="intro">saw the Refer Engine intro page</a></li>
+                                <li><a class="chart-who" data-who="recommended">recommended @Model.App.Name</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <span id="current-when-chart">Past 30 days</span>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="chart-when" data-when="past-hour">Past hour</a></li>
+                                    <li><a class="chart-when" data-when="past-24-hours">Past 24 hours</a></li>
+                                    <li><a class="chart-when" data-when="past-48-hours">Past 48 hours</a></li>
+                                    <li><a class="chart-when" data-when="past-3-days">Past 3 days</a></li>
+                                    <li><a class="chart-when" data-when="past-7-days">Past 7 days</a></li>
+                                    <li><a class="chart-when" data-when="past-30-days">Past 30 days</a></li>
+                                    <li><a class="chart-when" data-when="past-60-days">Past 60 days</a></li>
+                                    <li><a class="chart-when" data-when="past-90-days">Past 90 days</a></li>
+                                    <li><a class="chart-when" data-when="past-year">Past year</a></li>                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="row">
-                    <div id="chart" style="width: 900px; height: 500px;"></div>
+                    <div id="chart" style="width: 900px; height: 350px;"></div>
                 </div>
             </div>
             <div class="tab-pane" id="mapTab">
@@ -105,34 +144,40 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a id="launched">launched @Model.App.Name</a></li>
-                                <li><a id="intro">saw the Refer Engine intro page</a></li>
-                                <li><a id="recommended">recommended @Model.App.Name</a></li>
+                                <li><a class="map-who" data-who="launched">launched @Model.App.Name</a></li>
+                                <li><a class="map-who" data-who="intro">saw the Refer Engine intro page</a></li>
+                                <li><a class="map-who" data-who="recommended">recommended @Model.App.Name</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="span6">
                         <div class="pull-right">
-                            <div class="btn-group">
+                            <div id="map-date-range" class="btn" style="">
+                                <i class="icon-calendar icon-large"></i>
+                                <span></span> <b class="caret"></b>
+                            </div>
+                            
+
+@*                            <div class="btn-group">
                                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                                     <span id="current-when">Past 30 days</span>
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a id="past-24-hours">Past 24 hours</a></li>
-                                    <li><a id="past-48-hours">Past 48 hours</a></li>
-                                    <li><a id="past-3-days">Past 3 days</a></li>
-                                    <li><a id="past-7-days">Past 7 days</a></li>
-                                    <li><a id="past-30-days">Past 30 days</a></li>
-                                    <li><a id="past-60-days">Past 60 days</a></li>
-                                    <li><a id="past-90-days">Past 90 days</a></li>
-                                    <li><a id="past-year">Past year</a></li>
+                                    <li><a class="map-when" data-when="past-hour">Past hour</a></li>
+                                    <li><a class="map-when" data-when="past-24-hours">Past 24 hours</a></li>
+                                    <li><a class="map-when" data-when="past-48-hours">Past 48 hours</a></li>
+                                    <li><a class="map-when" data-when="past-3-days">Past 3 days</a></li>
+                                    <li><a class="map-when" data-when="past-7-days">Past 7 days</a></li>
+                                    <li><a class="map-when" data-when="past-30-days">Past 30 days</a></li>
+                                    <li><a class="map-when" data-when="past-60-days">Past 60 days</a></li>
+                                    <li><a class="map-when" data-when="past-90-days">Past 90 days</a></li>
+                                    <li><a class="map-when" data-when="past-year">Past year</a></li>                                    
                                 </ul>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="span12 txt-middle">
                         <div id="map-canvas"></div>
@@ -147,8 +192,8 @@
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a id="location-map">Location Map</a></li>
-                                    <li><a id="heat-map">Heat Map</a></li>
+                                    <li><a class="map-how" data-how="location-map">Location Map</a></li>
+                                    <li><a class="map-how" data-how="heat-map">Heat Map</a></li>
                                 </ul>
                             </div>
                         </div>
