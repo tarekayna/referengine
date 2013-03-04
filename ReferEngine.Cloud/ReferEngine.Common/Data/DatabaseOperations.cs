@@ -396,30 +396,67 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static List<DateCount> GetAppLaunchCount(App app, TimeRange timeRange, TimeSpan timeSpan)
+        public static List<ChartUnitResult> GetAppActionCount(App app, TimeRange timeRange, TimeSpan timeSpan, string who)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
-                var result = new List<DateCount>();
+                var result = new List<ChartUnitResult>();
 
                 TimeRange currentRange = new TimeRange(timeRange.Start, timeRange.Start.Add((timeSpan)));
                 while (!currentRange.HasInside(timeRange.End))
                 {
                     DateTime rangeStart = currentRange.Start;
                     DateTime rangeEnd = currentRange.End;
-                    var auths = from a in db.AppAuthorizations
-                                where app.Id == a.App.Id &&
-                                      rangeStart.CompareTo(a.TimeStamp) < 0 && 
-                                      rangeEnd.CompareTo(a.TimeStamp) > 0
-                                select a;
 
-                    var count = auths.Count();
-                    string str;
+                    int count = 0;
+                    switch (who)
+                    {
+                        case "launched":
+                            var auths = from a in db.AppAuthorizations
+                                        where app.Id == a.App.Id &&
+                                              rangeStart.CompareTo(a.TimeStamp) < 0 &&
+                                              rangeEnd.CompareTo(a.TimeStamp) > 0
+                                        select a;
+
+                            count = auths.Count();
+                            break;
+                        case "intro":
+                            var intros = from v in db.RecommendationPageViews
+                                         where v.AppId == app.Id &&
+                                               rangeStart.CompareTo(v.TimeStamp) < 0 &&
+                                               rangeEnd.CompareTo(v.TimeStamp) > 0
+                                         select v;
+
+                            count = intros.Count();
+                            break;
+                        case "recommended":
+                            var recs = from r in db.AppRecommendations
+                                      where app.Id == r.AppId &&
+                                            rangeStart.CompareTo(r.DateTime) < 0 &&
+                                            rangeEnd.CompareTo(r.DateTime) > 0
+                                      select r;
+                            count = recs.Count();
+                            break;
+                        default:
+                            throw new InvalidOperationException();
+                    }
+
+                    string str = string.Empty;
                     if (timeSpan.Equals(TimeSpan.FromDays(1)))
                     {
                         str = currentRange.Start.Date.ToShortDateString();
                     }
-                    // append to result
+                    else if (timeSpan.Equals(TimeSpan.FromHours(1)))
+                    {
+                        str = currentRange.Start.ToShortTimeString();
+                    }
+
+                    ChartUnitResult unitResult = new ChartUnitResult
+                    {
+                        Desc = str,
+                        Result = count
+                    };
+                    result.Add(unitResult);
 
                     currentRange.Move(timeSpan);
                 }

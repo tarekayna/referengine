@@ -3,7 +3,13 @@
 declare var google;
 declare var re; 
 
-var Date2 = <any>Date;
+enum View {
+    Overview,
+    Map,
+    Chart
+};
+
+var Date2 = <any>Date; 
 
 class NotificationType {
     static none = "";
@@ -22,57 +28,221 @@ class Notifications {
     }
 }
 
+class Page {
+    static currentView: View = View.Overview;
+    static who = "launched";
+    static startDate = Date2.today().add({ days: -29 });
+    static endDate = Date2.today();
+
+    static initDateRangePicker() {
+        var ranges = {
+            'Today': ['today', 'today', 'hour'],
+            'Yesterday': ['yesterday', 'yesterday', 'hour'],
+            'Last 7 Days': [Date2.today().add({ days: -6 }), 'today'],
+            'Last 30 Days': [Date2.today().add({ days: -29 }), 'today'],
+            'This Month': [Date2.today().moveToFirstDayOfMonth(), Date2.today().moveToLastDayOfMonth()],
+            'Last Month': [Date2.today().moveToFirstDayOfMonth().add({ months: -1 }), Date2.today().moveToFirstDayOfMonth().add({ days: -1 })]
+        };
+        $('#date-range').daterangepicker(
+           {
+               ranges: ranges,
+               opens: 'left',
+               format: 'MM/dd/yyyy',
+               separator: ' to ',
+               startDate: Date2.today().add({ days: -29 }),
+               endDate: Date2.today(),
+               minDate: '01/01/2012',
+               maxDate: Date2.today(),
+               locale: {
+                   applyLabel: null,
+                   fromLabel: 'From',
+                   toLabel: 'To',
+                   customRangeLabel: 'Choose Range',
+                   daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                   monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                   firstDay: 1
+               },
+               showWeekNumbers: true,
+               buttonClasses: ['btn-danger']
+           },
+           function (start, end) {
+               if (start.compareTo(startDate) !== 0 || end.compareTo(endDate) !== 0) {
+                   var isCustomRange = true;
+                   for (var p in ranges) {
+                       var rangeStart, rangeEnd;
+                       if (ranges[p][0] === "today") {
+                           rangeStart = Date2.today();
+                       }
+                       else if (ranges[p][0] === "yesterday") {
+                           rangeStart = Date2.today().add({ days: -1 });
+                       }
+                       else {
+                           rangeStart = ranges[p][0];
+                       }
+                       if (ranges[p][1] === "today") {
+                           rangeEnd = Date2.today();
+                       }
+                       else if (ranges[p][1] === "yesterday") {
+                           rangeEnd = Date2.today().add({ days: -1 });
+                       }
+                       else {
+                           rangeEnd = ranges[p][1];
+                       }
+                       if (Date2.compare(start, rangeStart) === 0
+                           && Date2.compare(end, rangeEnd) === 0) {
+                           $('#date-range span').html(p);
+                           isCustomRange = false;
+                           break;
+                       }
+                   }
+                   if (isCustomRange) {
+                       $('#date-range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
+                   }
+                   if (start.clone().add(1).days().compareTo(end) == -1) {
+                       Chart.timespan = 'day';
+                   }
+                   else {
+                       Chart.timespan = 'hour';
+                   }
+                   startDate = start;
+                   endDate = end;
+                   refreshView();
+               }
+           }
+        );
+
+        //Set the initial state of the picker label
+        $('#date-range span').html("Last 30 days");
+        //$('#date-range span').html(Date2.today().add({ days: -29 }).toString('MMMM d, yyyy') + ' - ' + Date2.today().toString('MMMM d, yyyy'));
+
+    }
+
+    static initWhoSelector() {
+        $(".who").click(function () {
+            var newWho = $(this).attr("data-who");
+            if (Page.who !== newWho) {
+                Page.who = newWho;
+                refreshView();
+            }
+            $("#current-who").text($(this).text());
+        });
+    }
+
+    static initTabs() {
+        $('#overviewTab').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+        $('#mapTab').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+
+        $('a[data-toggle="tab"]').on('shown', function (e) {
+            if (e.target.hash === "#mapTab") {
+                Map.init();
+                Page.currentView = View.Map;
+            }
+            else if (e.target.hash === "#chartTab") {
+                Chart.init();
+                Page.currentView = View.Chart;
+            }
+            else if (e.target.hash === "#overviewTab") {
+                Page.currentView = View.Overview;
+            }
+            refreshView();
+        })
+    }
+
+    static refreshView() {
+        if (currentView === View.Overview) {
+
+        }
+        else if (currentView === View.Chart) {
+            Chart.refresh();
+        }
+        else if (currentView === View.Map) {
+            Map.refresh();
+        }
+    }
+
+    static initPage() {
+        initTabs();
+        initDateRangePicker();
+        initWhoSelector();
+    }
+}
+
 class Chart {
     static chart = null;
     static chartData = [];
-    static who = "launched";
-    static when = "past-30-days";
     static timespan = "day";
-    static how = "pie-chart";
-    static draw() {
-        var rowData: any[][] = [
-          ['Task', 'Hours per Day'],
-          ['Work', 11],
-          ['Eat', 2],
-          ['Commute', 2],
-          ['Watch TV', 2],
-          ['Sleep', 7]
-        ];
-        var data = google.visualization.arrayToDataTable(rowData);
+    static how = "line-chart";
+    static isInitialized = false;
+    static init() {
+        if (!isInitialized) {
+            initHowSelector();
+            isInitialized = true;
+        }
+    }
+    static initHowSelector() {
+        $(".chart-how").click(function () {
+            var how = $(this).attr("data-how");
+            if (Chart.how !== how) {
+                Chart.how = how;
+                Chart.refresh();
+            }
+            $("#current-how-chart").text($(this).text());
+        });
+    }
+    static onDataRequestSuccess(data, textStatus, jqXhr) {
+        Chart.chartData = [];
+        Chart.chartData.push(['Date',
+                              'Launch Count']);
+        for (var i = 0; i < data.length; i++) {
+            Chart.chartData.push([data[i].Desc,
+                                  data[i].Result]);
+        }
+        var elem = document.getElementById('chart');
+        if (Chart.how === "line-chart") {
+            Chart.chart = new google.visualization.LineChart(elem);
+        }
+        else if (Chart.how === "pie-chart") {
+            Chart.chart = new google.visualization.PieChart(elem);
+        }
+        else if (Chart.how === "area-chart") {
+            Chart.chart = new google.visualization.AreaChart(elem);
+        }
+        else if (Chart.how === "column-chart") {
+            Chart.chart = new google.visualization.ColumnChart(elem);
+        }
+        else if (Chart.how === "bar-chart") {
+            Chart.chart = new google.visualization.BarChart(elem);
+        }
+        
+        var dataTable = google.visualization.arrayToDataTable(Chart.chartData);
 
         var options = {
             //title: 'My Daily Activities'
         };
 
-        chart.draw(data, options);
-    }
-    static onDataRequestSuccess(data, textStatus, jqXhr) {
-        Chart.chartData = [];
-        for (var i = 0; i < data.length; i++) {
-            Chart.chartData.push({
-                //latlong: new google.maps.LatLng(data[i].Latitude, data[i].Longitude),
-                //city: data[i].City
-            });
-        }
-        if (Map.how === "line-chart") {
-            Chart.chart = new google.visualization.LineChart(document.getElementById('chart'));
-        }
-        //else if (Map.how === "heat-map") {
-        //    Map.removeMarkers();
-        //    Map.showHeatmap();
-        //}
+        chart.draw(dataTable, options);
         Notifications.show("Success: map updated", NotificationType.success);
     }
     static onDataRequestError(e) {
         Notifications.show("Error: could not update chart", NotificationType.error);
     }
     static refresh() {
+        var dateFormat = "dd MMMM yyyy";
+        var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
+        var endDate = Page.endDate.toString(dateFormat) + " 23:59:59";
         $.ajax("../GetAppDashboardChartData", {
             type: "POST",
             data: {
                 id: re.appId,
-                who: Chart.who,
-                when: Chart.when,
+                who: Page.who,
+                startDate: startDate,
+                endDate: endDate,
                 timespan: Chart.timespan
             },
             dataType: "json",
@@ -90,9 +260,6 @@ class Map {
     static heatData = [];
     static markers = [];
     static how = "location-map";
-    static who = "launched";
-    static startDate = null;
-    static endDate = null;
     static heatMap : any;
     static center = new google.maps.LatLng(0, 0);
     static options = {
@@ -138,10 +305,10 @@ class Map {
             }));
         }
     };
-    static refresh = function (start = Map.startDate, end = Map.endDate) {
-        
-        Map.startDate = start;
-        Map.endDate = end;
+    static refresh = function () {
+        var dateFormat = "dd MMMM yyyy";
+        var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
+        var endDate = Page.endDate.toString(dateFormat) + " 23:59:59";
 
         if (Map.map === null) {
             Map.map = new google.maps.Map(document.getElementById("map-canvas"), Map.options)
@@ -174,9 +341,9 @@ class Map {
             type: "POST",
             data: {
                 id: re.appId,
-                who: Map.who,
-                startDate: Map.startDate,
-                endDate: Map.endDate
+                who: Page.who,
+                startDate: startDate,
+                endDate: endDate
             },
             dataType: "json",
             error: onSubmitError,
@@ -185,115 +352,24 @@ class Map {
 
         Notifications.show("Refreshing map...", NotificationType.info);
     };
-}
-
-function setTabClickEvents() {
-    $('#overviewTab').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    });
-    $('#mapTab').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    });
-}
-
-//function setMapWhenHandlers() {
-//    $(".map-when").click(function () {
-//        var when = $(this).attr("data-when");
-//        if (Map.when !== when) {
-//            Map.when = when;
-//            Map.refresh();
-//        }
-//        $("#current-when").text($(this).text());
-//    });
-//}
-function setMapHowHandlers() {
-    $(".map-how").click(function () {
-        var how = $(this).attr("data-how");
-        if (Map.how !== how) {
-            Map.how = how;
-            Map.refresh();
-        }
-        $("#current-how").text($(this).text());
-    });
-}
-function setMapWhoHandlers() {
-    $(".map-who").click(function () {
-        var who = $(this).attr("data-who");
-        if (Map.who !== who) {
-            Map.who = who;
-            Map.refresh();
-        }
-        $("#current-who").text($(this).text());
-    });
-}
-
-function initMapDateRangePicker() {
-    $('#map-date-range').daterangepicker(
-       {
-           ranges: {
-               'Today': ['today', 'today'],
-               'Yesterday': ['yesterday', 'yesterday'],
-               'Last 7 Days': [Date2.today().add({ days: -6 }), 'today'],
-               'Last 30 Days': [Date2.today().add({ days: -29 }), 'today'],
-               'This Month': [Date2.today().moveToFirstDayOfMonth(), Date2.today().moveToLastDayOfMonth()],
-               'Last Month': [Date2.today().moveToFirstDayOfMonth().add({ months: -1 }), Date2.today().moveToFirstDayOfMonth().add({ days: -1 })]
-           },
-           opens: 'left',
-           format: 'MM/dd/yyyy',
-           separator: ' to ',
-           startDate: Date2.today().add({ days: -29 }),
-           endDate: Date2.today(),
-           minDate: '01/01/2012',
-           maxDate: Date2.today(),
-           locale: {
-               applyLabel: null,
-               fromLabel: 'From',
-               toLabel: 'To',
-               customRangeLabel: 'Choose Range',
-               daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-               monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-               firstDay: 1
-           },
-           showWeekNumbers: true,
-           buttonClasses: ['btn-danger']
-       },
-       function (start, end) {
-           $('#map-date-range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
-           var dateFormat = "dd MMMM yyyy";
-           var startDate = start.toString(dateFormat) + " 00:00:00";
-           var endDate = end.toString(dateFormat) + "23:59:59";
-           Map.refresh(startDate, endDate);
-       }
-    );
-
-    //Set the initial state of the picker label
-    $('#map-date-range span').html(Date2.today().add({ days: -29 }).toString('MMMM d, yyyy') + ' - ' + Date2.today().toString('MMMM d, yyyy'));
-
-}
-
-$(document).ready(function () {
-    setTabClickEvents();
-
-    var mapInitialized = false;
-    $('a[data-toggle="tab"]').on('shown', function (e) {
-        if (e.target.hash === "#mapTab") {
-
-            Map.refresh();
-            if (!mapInitialized) {
-                initMapDateRangePicker();
-                //setMapWhenHandlers();
-                setMapHowHandlers();
-                setMapWhoHandlers();
+    static initHowSelector() {
+        $(".map-how").click(function () {
+            var how = $(this).attr("data-how");
+            if (Map.how !== how) {
+                Map.how = how;
+                Map.refresh();
             }
+            $("#current-how").text($(this).text());
+        });
+    }
+    static isInitialized = false;
+    static init() {
+        if (!isInitialized) {
+            initHowSelector();
+            isInitialized = true;
         }
-        else if (e.target.hash === "#chartsTab") {
-            Chart.refresh();
-        }
-        else if (e.target.hash === "#overviewTab") {
-        }
-    })
+    }
+}
 
-});
+$(document).ready(Page.initPage);
 

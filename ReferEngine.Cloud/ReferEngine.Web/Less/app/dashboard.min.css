@@ -1,1 +1,1 @@
-﻿.tab-content{overflow:visible}#under-map{margin-top:20px}#above-map{margin-bottom:20px}.dropdown-menu{cursor:pointer}#map-canvas{width:100%;height:500px}
+﻿.tab-content{overflow:visible}#under-map,#under-chart{margin-top:20px}#filters{margin-bottom:20px}.dropdown-menu{cursor:pointer}#chart{height:350px}#map-canvas{width:100%;height:350px}@media(min-device-height:770px){#map-canvas,#chart{height:400px}}#content{padding:0}
