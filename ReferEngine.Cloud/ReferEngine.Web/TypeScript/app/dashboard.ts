@@ -257,11 +257,17 @@ class Chart {
 class Map {
     static map = null;
     static mapData = [];
+    static dataTable = [];
     static how = "location-map";
     static options = {
-        region: 'US',
+        region: null,
         displayMode: 'markers',
-        colorAxis: {colors: ['green', 'blue']}
+        colorAxis: { colors: ['blue', 'purple'] },
+        enableRegionInteractivity: true,
+        datalessRegionColor: 'CCCCCC'
+    };
+    static draw = function () {
+        Map.map.draw(Map.dataTable, Map.options);
     };
     static refresh = function () {
         var dateFormat = "dd MMMM yyyy";
@@ -270,6 +276,15 @@ class Map {
 
         if (Map.map === null) {
             Map.map = new google.visualization.GeoChart(document.getElementById('map-canvas'));
+            google.visualization.events.addListener(Map.map, 'regionClick', function (eventData) {
+                if (Map.options.region === eventData.region) {
+                    Map.options.region = null;
+                }
+                else {
+                    Map.options.region = eventData.region;
+                }
+                Map.draw();
+            });
         }
 
         var onSubmitSuccess = function (data, textStatus, jqXhr) {
@@ -279,8 +294,8 @@ class Map {
                 var l = data[i].City + ", " + data[i].Region + ", " + data[i].Country;
                 Map.mapData.push([l, data[i].Result]);
             }
-            var dataTable = google.visualization.arrayToDataTable(Map.mapData);
-            Map.map.draw(dataTable, Map.options);
+            Map.dataTable = google.visualization.arrayToDataTable(Map.mapData);
+            Map.draw();
             Notifications.show("Success: map updated", NotificationType.success);
         };
 

@@ -293,16 +293,22 @@ var Map = (function () {
     function Map() { }
     Map.map = null;
     Map.mapData = [];
+    Map.dataTable = [];
     Map.how = "location-map";
     Map.options = {
-        region: 'US',
+        region: null,
         displayMode: 'markers',
         colorAxis: {
             colors: [
-                'green', 
-                'blue'
+                'blue', 
+                'purple'
             ]
-        }
+        },
+        enableRegionInteractivity: true,
+        datalessRegionColor: 'CCCCCC'
+    };
+    Map.draw = function () {
+        Map.map.draw(Map.dataTable, Map.options);
     };
     Map.refresh = function () {
         var dateFormat = "dd MMMM yyyy";
@@ -310,6 +316,14 @@ var Map = (function () {
         var endDate = Page.endDate.toString(dateFormat) + " 23:59:59";
         if(Map.map === null) {
             Map.map = new google.visualization.GeoChart(document.getElementById('map-canvas'));
+            google.visualization.events.addListener(Map.map, 'regionClick', function (eventData) {
+                if(Map.options.region === eventData.region) {
+                    Map.options.region = null;
+                } else {
+                    Map.options.region = eventData.region;
+                }
+                Map.draw();
+            });
         }
         var onSubmitSuccess = function (data, textStatus, jqXhr) {
             Map.mapData = [];
@@ -324,8 +338,8 @@ var Map = (function () {
                     data[i].Result
                 ]);
             }
-            var dataTable = google.visualization.arrayToDataTable(Map.mapData);
-            Map.map.draw(dataTable, Map.options);
+            Map.dataTable = google.visualization.arrayToDataTable(Map.mapData);
+            Map.draw();
             Notifications.show("Success: map updated", NotificationType.success);
         };
         var onSubmitError = function (e) {
