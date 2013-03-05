@@ -257,53 +257,11 @@ class Chart {
 class Map {
     static map = null;
     static mapData = [];
-    static heatData = [];
-    static markers = [];
     static how = "location-map";
-    static heatMap : any;
-    static center = new google.maps.LatLng(0, 0);
     static options = {
-        center: Map.center,
-        zoom: 2,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        streetViewControl: false, 
-        mapTypeControl: false,
-    }; 
-    static updateHeatmapData = function () {
-        Map.heatData = [];
-        for (var j = 0; j < Map.mapData.length; j++) { 
-            Map.heatData.push(Map.mapData[j].latlong);
-        }
-        Map.heatMap = new google.maps.visualization.HeatmapLayer({
-            data: Map.heatData
-        });
-    };
-    static showHeatmap = function () {
-        Map.updateHeatmapData();
-        Map.heatMap.setMap(Map.map);
-    };
-    static hideHeatmap = function () {
-        if (Map.heatMap !== undefined) {
-            Map.heatMap.setMap(null);
-        }
-    };
-    static removeMarkers = function () {
-        for (var j = 0; j < Map.markers.length; j++) {
-            Map.markers[j].setMap(null);
-        }
-    };
-    static updateMarkers = function () {
-        Map.removeMarkers();
-        for (var i = 0; i < Map.mapData.length; i++) {
-            Map.markers.push(new google.maps.Marker({
-                position: Map.mapData[i].latlong,
-                map: Map.map,
-                title: Map.mapData[i].city,
-                origin: new google.maps.Point(16, 16),
-                anchor: new google.maps.Point(16, 16),
-                icon: "https://referenginestorage.blob.core.windows.net/referengine-design/logo-mark-32.png"
-            }));
-        }
+        region: 'US',
+        displayMode: 'markers',
+        colorAxis: {colors: ['green', 'blue']}
     };
     static refresh = function () {
         var dateFormat = "dd MMMM yyyy";
@@ -311,25 +269,18 @@ class Map {
         var endDate = Page.endDate.toString(dateFormat) + " 23:59:59";
 
         if (Map.map === null) {
-            Map.map = new google.maps.Map(document.getElementById("map-canvas"), Map.options)
+            Map.map = new google.visualization.GeoChart(document.getElementById('map-canvas'));
         }
 
         var onSubmitSuccess = function (data, textStatus, jqXhr) {
             Map.mapData = [];
+            Map.mapData.push(['City', 'Launch Count']);
             for (var i = 0; i < data.length; i++) {
-                Map.mapData.push({
-                    latlong: new google.maps.LatLng(data[i].Latitude, data[i].Longitude),
-                    city: data[i].City
-                });
+                var l = data[i].City + ", " + data[i].Region + ", " + data[i].Country;
+                Map.mapData.push([l, data[i].Result]);
             }
-            if (Map.how === "location-map") {
-                Map.updateMarkers();
-                Map.hideHeatmap();
-            }
-            else if (Map.how === "heat-map") {
-                Map.removeMarkers();
-                Map.showHeatmap();
-            }
+            var dataTable = google.visualization.arrayToDataTable(Map.mapData);
+            Map.map.draw(dataTable, Map.options);
             Notifications.show("Success: map updated", NotificationType.success);
         };
 
@@ -370,6 +321,123 @@ class Map {
         }
     }
 }
+
+//class Map {
+//    static map = null;
+//    static mapData = [];
+//    static heatData = [];
+//    static markers = [];
+//    static how = "location-map";
+//    static heatMap: any;
+//    static center = new google.maps.LatLng(0, 0);
+//    static options = {
+//        center: Map.center,
+//        zoom: 2,
+//        mapTypeId: google.maps.MapTypeId.ROADMAP,
+//        streetViewControl: false,
+//        mapTypeControl: false,
+//    };
+//    static updateHeatmapData = function () {
+//        Map.heatData = [];
+//        for (var j = 0; j < Map.mapData.length; j++) {
+//            Map.heatData.push(Map.mapData[j].latlong);
+//        }
+//        Map.heatMap = new google.maps.visualization.HeatmapLayer({
+//            data: Map.heatData
+//        });
+//    };
+//    static showHeatmap = function () {
+//        Map.updateHeatmapData();
+//        Map.heatMap.setMap(Map.map);
+//    };
+//    static hideHeatmap = function () {
+//        if (Map.heatMap !== undefined) {
+//            Map.heatMap.setMap(null);
+//        }
+//    };
+//    static removeMarkers = function () {
+//        for (var j = 0; j < Map.markers.length; j++) {
+//            Map.markers[j].setMap(null);
+//        }
+//    };
+//    static updateMarkers = function () {
+//        Map.removeMarkers();
+//        for (var i = 0; i < Map.mapData.length; i++) {
+//            Map.markers.push(new google.maps.Marker({
+//                position: Map.mapData[i].latlong,
+//                map: Map.map,
+//                title: Map.mapData[i].city,
+//                origin: new google.maps.Point(16, 16),
+//                anchor: new google.maps.Point(16, 16),
+//                icon: "https://referenginestorage.blob.core.windows.net/referengine-design/logo-mark-32.png"
+//            }));
+//        }
+//    };
+//    static refresh = function () {
+//        var dateFormat = "dd MMMM yyyy";
+//        var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
+//        var endDate = Page.endDate.toString(dateFormat) + " 23:59:59";
+
+//        if (Map.map === null) {
+//            Map.map = new google.maps.Map(document.getElementById("map-canvas"), Map.options)
+//        }
+
+//        var onSubmitSuccess = function (data, textStatus, jqXhr) {
+//            Map.mapData = [];
+//            for (var i = 0; i < data.length; i++) {
+//                Map.mapData.push({
+//                    latlong: new google.maps.LatLng(data[i].Latitude, data[i].Longitude),
+//                    city: data[i].City
+//                });
+//            }
+//            if (Map.how === "location-map") {
+//                Map.updateMarkers();
+//                Map.hideHeatmap();
+//            }
+//            else if (Map.how === "heat-map") {
+//                Map.removeMarkers();
+//                Map.showHeatmap();
+//            }
+//            Notifications.show("Success: map updated", NotificationType.success);
+//        };
+
+//        var onSubmitError = function (e) {
+//            Notifications.show("Error: could not update map", NotificationType.error);
+//        };
+
+//        $.ajax("../GetAppDashboardMapData", {
+//            type: "POST",
+//            data: {
+//                id: re.appId,
+//                who: Page.who,
+//                startDate: startDate,
+//                endDate: endDate
+//            },
+//            dataType: "json",
+//            error: onSubmitError,
+//            success: onSubmitSuccess
+//        });
+
+//        Notifications.show("Refreshing map...", NotificationType.info);
+//    };
+//    static initHowSelector() {
+//        $(".map-how").click(function () {
+//            var how = $(this).attr("data-how");
+//            if (Map.how !== how) {
+//                Map.how = how;
+//                Map.refresh();
+//            }
+//            $("#current-how").text($(this).text());
+//        });
+//    }
+//    static isInitialized = false;
+//    static init() {
+//        if (!isInitialized) {
+//            initHowSelector();
+//            isInitialized = true;
+//        }
+//    }
+//}
 
 $(document).ready(Page.initPage);
 

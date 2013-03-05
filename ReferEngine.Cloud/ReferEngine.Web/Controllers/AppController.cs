@@ -55,22 +55,22 @@ namespace ReferEngine.Web.Controllers
             DateTime end = Convert.ToDateTime(endDate);
             TimeRange timeRange = new TimeRange(start, end);
 
-            IList<IpAddressLocation> locations;
+            IList<MapUnitResult> result = new List<MapUnitResult>();
             switch (who)
             {
                 case "launched":
-                    locations = DatabaseOperations.GetAppLaunchLocations(app, timeRange);
+                    result = DatabaseOperations.GetAppLaunchLocations(app, timeRange);
                     break;
                 case "intro":
-                    locations = DatabaseOperations.GetAppIntroLocations(app, timeRange);
+                    //locations = DatabaseOperations.GetAppIntroLocations(app, timeRange);
                     break;
                 case "recommended":
-                    locations = DatabaseOperations.GetAppRecommendLocations(app, timeRange);
+                    //locations = DatabaseOperations.GetAppRecommendLocations(app, timeRange);
                     break;
                 default:
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return Json(locations.Select(l => new { l.Longitude, l.Latitude, l.City }));
+            return Json(result);
         }
 
         [HttpPost]

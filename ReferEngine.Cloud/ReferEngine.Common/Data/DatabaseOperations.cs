@@ -465,18 +465,31 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static List<IpAddressLocation> GetAppLaunchLocations(App app, TimeRange timeRange)
+        public static List<MapUnitResult> GetAppLaunchLocations(App app, TimeRange timeRange)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
                 var loc = from a in db.AppAuthorizations
                           join l in db.IpAddressLocations on a.UserHostAddress equals l.IpAddress
                           where app.Id == a.App.Id &&
-                                timeRange.Start.CompareTo(a.TimeStamp) < 0 && 
+                                timeRange.Start.CompareTo(a.TimeStamp) < 0 &&
                                 timeRange.End.CompareTo(a.TimeStamp) > 0
-                          select l;
+                          group l by new {l.Country, l.Region, l.City}
+                          into crc
+                          select new {crc.Key.Country, crc.Key.Region, crc.Key.City, Count = crc.Count()};
 
-                return loc.ToList();
+                var result = new List<MapUnitResult>();
+                foreach (var l in loc)
+                {
+                    result.Add(new MapUnitResult
+                                   {
+                                       City = l.City,
+                                       Region = l.Region,
+                                       Country = l.Country,
+                                       Result = l.Count
+                                   });
+                }
+                return result;
             }
         }
 

@@ -11,6 +11,7 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=visualization&key=@Util.GoogleApiKey&sensor=false"> </script>
     <script type="text/javascript">
         google.load("visualization", "1", { packages: ["corechart"] });
+        google.load("visualization", "1", { packages: ["geochart"] });
         window.re = {};
         window.re.appId = @Model.App.Id;
         window.re.appName = "@Model.App.Name";
