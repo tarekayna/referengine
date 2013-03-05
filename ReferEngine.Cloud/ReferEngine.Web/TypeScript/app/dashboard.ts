@@ -262,7 +262,7 @@ class Map {
     static options = {
         region: null,
         displayMode: 'markers',
-        colorAxis: { colors: ['blue', 'purple'] },
+        colorAxis: { colors: ['0099e5', 'rgb(140, 34, 222)'] },
         enableRegionInteractivity: true,
         datalessRegionColor: 'CCCCCC'
     };

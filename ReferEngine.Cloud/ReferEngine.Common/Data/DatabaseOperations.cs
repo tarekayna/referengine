@@ -465,62 +465,78 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static List<MapUnitResult> GetAppLaunchLocations(App app, TimeRange timeRange)
+        public static List<MapUnitResult> GetAppActionLocations(App app, TimeRange timeRange, string who)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
-                var loc = from a in db.AppAuthorizations
-                          join l in db.IpAddressLocations on a.UserHostAddress equals l.IpAddress
-                          where app.Id == a.App.Id &&
-                                timeRange.Start.CompareTo(a.TimeStamp) < 0 &&
-                                timeRange.End.CompareTo(a.TimeStamp) > 0
-                          group l by new {l.Country, l.Region, l.City}
-                          into crc
-                          select new {crc.Key.Country, crc.Key.Region, crc.Key.City, Count = crc.Count()};
-
                 var result = new List<MapUnitResult>();
-                foreach (var l in loc)
+                switch (who)
                 {
-                    result.Add(new MapUnitResult
-                                   {
-                                       City = l.City,
-                                       Region = l.Region,
-                                       Country = l.Country,
-                                       Result = l.Count
-                                   });
+                    case "launched":
+                        {
+                            var locations = from a in db.AppAuthorizations
+                                            join l in db.IpAddressLocations on a.UserHostAddress equals l.IpAddress
+                                            where app.Id == a.App.Id &&
+                                                  timeRange.Start.CompareTo(a.TimeStamp) < 0 &&
+                                                  timeRange.End.CompareTo(a.TimeStamp) > 0
+                                            group l by new {l.Country, l.Region, l.City}
+                                            into crc
+                                            select new {crc.Key.Country, crc.Key.Region, crc.Key.City, Count = crc.Count()};
+
+                            result.AddRange(locations.Select(l => new MapUnitResult
+                            {
+                                City = l.City,
+                                Region = l.Region,
+                                Country = l.Country,
+                                Result = l.Count
+                            }));
+                            break;
+                        }
+                    case "intro":
+                        {
+                            var locations = from v in db.RecommendationPageViews
+                                            join l in db.IpAddressLocations on v.IpAddress equals l.IpAddress
+                                            where app.Id == v.AppId &&
+                                                  timeRange.Start.CompareTo(v.TimeStamp) < 0 &&
+                                                  timeRange.End.CompareTo(v.TimeStamp) > 0 &&
+                                                  v.RecommendationPage == RecommendationPage.Intro
+                                            group l by new {l.Country, l.Region, l.City}
+                                            into crc
+                                            select new {crc.Key.Country, crc.Key.Region, crc.Key.City, Count = crc.Count()};
+
+                            result.AddRange(locations.Select(l => new MapUnitResult
+                            {
+                                City = l.City,
+                                Region = l.Region,
+                                Country = l.Country,
+                                Result = l.Count
+                            }));
+                            break;
+                        }
+                    case "recommended":
+                        {
+                            var locations = from r in db.AppRecommendations
+                                            join l in db.IpAddressLocations on r.IpAddress equals l.IpAddress
+                                            where app.Id == r.AppId &&
+                                                  timeRange.Start.CompareTo(r.DateTime) < 0 &&
+                                                  timeRange.End.CompareTo(r.DateTime) > 0
+                                            group l by new {l.Country, l.Region, l.City}
+                                            into crc
+                                            select new {crc.Key.Country, crc.Key.Region, crc.Key.City, Count = crc.Count()};
+
+                            result.AddRange(locations.Select(l => new MapUnitResult
+                            {
+                                City = l.City,
+                                Region = l.Region,
+                                Country = l.Country,
+                                Result = l.Count
+                            }));
+                            break;
+                        }
+                    default:
+                        throw new InvalidOperationException();
                 }
                 return result;
-            }
-        }
-
-        public static List<IpAddressLocation> GetAppRecommendLocations(App app, TimeRange timeRange)
-        {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
-            {
-                var loc = from r in db.AppRecommendations
-                          join l in db.IpAddressLocations on r.IpAddress equals l.IpAddress
-                          where app.Id == r.AppId &&
-                                timeRange.Start.CompareTo(r.DateTime) < 0 &&
-                                timeRange.End.CompareTo(r.DateTime) > 0
-                          select l;
-
-                return loc.ToList();
-            }
-        }
-
-        public static List<IpAddressLocation> GetAppIntroLocations(App app, TimeRange timeRange)
-        {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
-            {
-                var loc = from v in db.RecommendationPageViews
-                          join l in db.IpAddressLocations on v.IpAddress equals l.IpAddress
-                          where app.Id == v.AppId && 
-                                timeRange.Start.CompareTo(v.TimeStamp) < 0 && 
-                                timeRange.End.CompareTo(v.TimeStamp) > 0 &&
-                                v.RecommendationPage == RecommendationPage.Intro
-                          select l;
-
-                return loc.ToList();
             }
         }
 

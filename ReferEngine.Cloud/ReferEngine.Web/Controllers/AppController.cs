@@ -55,21 +55,7 @@ namespace ReferEngine.Web.Controllers
             DateTime end = Convert.ToDateTime(endDate);
             TimeRange timeRange = new TimeRange(start, end);
 
-            IList<MapUnitResult> result = new List<MapUnitResult>();
-            switch (who)
-            {
-                case "launched":
-                    result = DatabaseOperations.GetAppLaunchLocations(app, timeRange);
-                    break;
-                case "intro":
-                    //locations = DatabaseOperations.GetAppIntroLocations(app, timeRange);
-                    break;
-                case "recommended":
-                    //locations = DatabaseOperations.GetAppRecommendLocations(app, timeRange);
-                    break;
-                default:
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            IList<MapUnitResult> result = DatabaseOperations.GetAppActionLocations(app, timeRange, who);
             return Json(result);
         }
 

@@ -300,8 +300,8 @@ var Map = (function () {
         displayMode: 'markers',
         colorAxis: {
             colors: [
-                'blue', 
-                'purple'
+                '0099e5', 
+                'rgb(140, 34, 222)'
             ]
         },
         enableRegionInteractivity: true,
