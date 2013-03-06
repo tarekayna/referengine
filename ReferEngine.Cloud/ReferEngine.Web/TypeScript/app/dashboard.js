@@ -87,7 +87,9 @@ var Page = (function () {
             }),
             endDate: Date2.today(),
             minDate: '01/01/2012',
-            maxDate: Date2.today(),
+            maxDate: Date2.today().add({
+                days: 1
+            }),
             locale: {
                 applyLabel: null,
                 fromLabel: 'From',
@@ -242,7 +244,7 @@ var Chart = (function () {
         Chart.chartData = [];
         Chart.chartData.push([
             'Date', 
-            'Launch Count'
+            'Count'
         ]);
         for(var i = 0; i < data.length; i++) {
             Chart.chartData.push([
@@ -390,10 +392,14 @@ var Map = (function () {
             Map.mapData = [];
             Map.mapData.push([
                 'City', 
-                'Launch Count'
+                'Count'
             ]);
             for(var i = 0; i < data.length; i++) {
-                var l = data[i].City + ", " + data[i].Region + ", " + data[i].Country;
+                var l = data[i].City;
+                if(data[i].Region) {
+                    l += ", " + data[i].Region;
+                }
+                l += ", " + data[i].Country;
                 Map.mapData.push([
                     l, 
                     data[i].Result
