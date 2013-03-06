@@ -34,32 +34,6 @@ namespace ReferEngine.Workers.DataWriter
 
                         switch (message.ContentType)
                         {
-                            case "ReferEngine.Common.Models.AppAuthorization":
-                                {
-                                    throw new NotImplementedException();
-                                    //AppAuthorization appAuthorization = message.GetBody<AppAuthorization>();
-                                    //appAuthorization.AppReceipt.Verified = Util.VerifyAppAuthorization(appAuthorization);
-                                    //if (appAuthorization.AppReceipt.Verified)
-                                    //{
-                                    //    CacheOperations.AddAppAuthorization(appAuthorization, TimeSpan.FromMinutes(20));
-                                    //}
-                                    //DatabaseOperations.AddAppReceipt(appAuthorization.AppReceipt);
-                                    
-                                    //if (Util.CurrentServiceConfiguration != Util.ReferEngineServiceConfiguration.Local)
-                                    //{
-                                    //    DatabaseOperations.GetIpAddressLocation(appAuthorization.AppReceipt.IpAddress);
-                                    //}
-
-                                    //RecommendationPageView pageView = new RecommendationPageView
-                                    //{
-                                    //    AppReceiptId = appAuthorization.AppReceipt.Id,
-                                    //    TimeStamp = DateTime.UtcNow,
-                                    //    RecommendationPage = RecommendationPage.Intro,
-                                    //    AppId = appAuthorization.App.Id
-                                    //};
-                                    //DatabaseOperations.RecommendationPageView(pageView);
-                                    //break;
-                                }
                             case "ReferEngine.Common.Data.FacebookOperations":
                                 {
                                     FacebookOperations facebookOperations = message.GetBody<FacebookOperations>();

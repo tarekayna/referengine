@@ -19,7 +19,6 @@ using WebMatrix.WebData;
 namespace ReferEngine.Web.Controllers
 {
     [Authorize]
-    [RemoteRequireHttps]
     public class AccountController : BaseController
     {
         public AccountController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }

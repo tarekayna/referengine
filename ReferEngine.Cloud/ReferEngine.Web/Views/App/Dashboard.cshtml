@@ -1,85 +1,106 @@
-﻿@using ReferEngine.Common.Data.MixPanel
-@using ReferEngine.Common.Models
-@model ReferEngine.Common.ViewModels.AppDashboardViewModel
+﻿@using ReferEngine.Common.Models
+@model ReferEngine.Common.Models.App
 
-<script type="text/javascript">
+@section styles {
+    @Styles.Render("~/less/app/dashboard");
+}
+
+@section scripts {
+    
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=visualization&key=@Util.GoogleApiKey&sensor=false"> </script>
+    <script type="text/javascript">
+        google.load("visualization", "1", { packages: ["corechart", "geochart", "table"] });
+        window.re = {};
+        window.re.appId = @Model.Id;
+        window.re.appName = "@Model.Name";
+    </script>
+    @Scripts.Render("~/ts/app/dashboard");
+}
+
+<div id="content">
+    <div class="container">
+        
+        <div class="row" id="filters">
+            <div class="span6">
+                <div class="btn-group">
+                    <a class="btn disabled">Customers who:</a>
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span id="current-who">launched @Model.Name</span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="who" data-who="launched">launched @Model.Name</a></li>
+                        <li><a class="who" data-who="intro">saw the Refer Engine intro page</a></li>
+                        <li><a class="who" data-who="recommended">recommended @Model.Name</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="pull-right">
+                    <div id="date-range" class="btn" style="">
+                        <i class="icon-calendar icon-large"></i>
+                        <span></span><b class="caret"></b>
+                    </div>
+                </div>
+            </div>
+        </div>        
+               
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#tableTab" data-toggle="tab">Table</a></li>
+            <li><a href="#chartTab" data-toggle="tab">Chart</a></li>
+            <li><a href="#mapTab" data-toggle="tab">Map</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tableTab">
+                <div class="row">
+                    <div class="span6 offset3">
+                        <div id="table" class="img-polaroid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="chartTab">
+                <div class="row">
+                    <div id="chart" class="img-polaroid"></div>
+                </div>
+                <div class="row" id="under-chart">
+                    <div class="span12">
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <span id="current-how-chart">Line Chart</span>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="chart-how" data-how="area-chart">Area Chart</a></li>
+                                    <li><a class="chart-how" data-how="column-chart">Column Chart</a></li>
+                                    <li><a class="chart-how" data-how="line-chart">Line Chart</a></li>
+                                    <li><a class="chart-how" data-how="pie-chart">Pie Chart</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="mapTab">
+                @* Start: Map*@
+                <div class="row">
+                    <div class="span12 txt-middle">
+                        <div id="map-canvas" class="img-polaroid"></div>
+                    </div>
+                </div>
+                @* End: Map*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    @*<script type="text/javascript">
     @{ var data = Html.Raw(MixPanelOperations.GetData(new MixPanelRequestInfo(Event.RecommendIntro)
                                                           {
                                                               PropertyName = "AppId",
                                                               PropertyValues = new List<string> {ViewProperties.CurrentApp.Id.ToString()}
                                                           })); }
     var data = @data;
-</script>
-
-<div id="content">
-    <div class="container">
-        <div class="row">
-            <div class="span12">
-                
-                <h2>@Model.App.Name</h2>
-
-                <p>Total Recommendations: @Model.TotalNumberOfRecommendations</p>
-                
-                <table class="table table-bordered">
-                    <caption>Last @Model.NumberOfRecommendationsToShow Recommendations</caption>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Person Facebook Id</th>
-                            <th>Message</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (int i = 0; i < Math.Min(Model.AppRecommendations.Count(), Model.NumberOfRecommendationsToShow); i++)
-                        {
-                            <tr>
-                                <td>@Model.AppRecommendations.ElementAt(i).DateTime.ToShortDateString()</td>
-                                <td>@Model.AppRecommendations.ElementAt(i).DateTime.ToShortTimeString()</td>
-                                <td>@Model.AppRecommendations.ElementAt(i).PersonFacebookId</td>
-                                <td>@Model.AppRecommendations.ElementAt(i).UserMessage</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                
-
-                <p>Total Views: @Model.RecommendationPageViews.Count(r => r.RecommendationPage == RecommendationPage.Intro)</p>
-                
-                <table class="table table-bordered">
-                    <caption>Views Last 5 Days</caption>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th># Views</th>
-                            <th># Unique Views</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Today</td>
-                            <td>@Model.RecommendationPageViews.Count(v => v.RecommendationPage == RecommendationPage.Intro && v.TimeStamp.IsToday())</td>
-                            <td>@Model.RecommendationPageViews.Where(v => v.RecommendationPage == RecommendationPage.Intro && v.TimeStamp.IsToday()).GroupBy( v => v.AppReceiptId ).Count()</td>
-                        </tr>
-                        @for (int i = 1; i < 5; i++)
-                        {
-                            DateTime dateTime = DateTime.UtcNow.Subtract(TimeSpan.FromDays(i));
-                            <tr>
-                                <td>
-                                    @dateTime.Date.ToShortDateString()
-                                </td>
-                                <td>
-                                    @Model.RecommendationPageViews.Count(v => v.RecommendationPage == RecommendationPage.Intro && v.TimeStamp.IsSameDate(dateTime))
-                                </td>
-                                <td>
-                                    @Model.RecommendationPageViews.Where(v => v.RecommendationPage == RecommendationPage.Intro && v.TimeStamp.IsSameDate(dateTime)).GroupBy( v => v.AppReceiptId ).Count()
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-    </div>
-</div>
+</script>*@

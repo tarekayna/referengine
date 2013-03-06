@@ -1,6 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web.Helpers;
 using System.Web.Security;
 using System.Web.Mvc;
+using Itenso.TimePeriod;
+using ReferEngine.Common.Data;
+using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Web.DataAccess;
 using ReferEngine.Web.Models.Common;
@@ -8,7 +15,6 @@ using WebMatrix.WebData;
 
 namespace ReferEngine.Web.Controllers
 {
-    [RemoteRequireHttps]
     [Authorize(Roles="Admin, Dev")]
     public class AppController : BaseController
     {
@@ -26,11 +32,66 @@ namespace ReferEngine.Web.Controllers
             if (ViewProperties.CurrentApp != null &&
                (ViewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
             {
-                var viewModel = DataReader.GetAppDashboardViewModel(ViewProperties.CurrentApp);
-                return View(viewModel);
+                return View(ViewProperties.CurrentApp);
             }
 
-            return RedirectToAction("Index");
+            return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+        }
+
+        [HttpPost]
+        public ActionResult GetAppDashboardMapData(long id, string who, string startDate, string endDate)
+        {
+            ViewProperties.CurrentApp = DataReader.GetApp(id);
+            App app = ViewProperties.CurrentApp;
+
+            if (ViewProperties.CurrentApp == null ||
+               (ViewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            DateTime start = Convert.ToDateTime(startDate);
+            DateTime end = Convert.ToDateTime(endDate);
+            TimeRange timeRange = new TimeRange(start, end);
+
+            IList<MapUnitResult> result = DatabaseOperations.GetAppActionLocations(app, timeRange, who);
+            return Json(result);
+        }
+
+        [HttpPost]
+        public ActionResult GetAppDashboardChartData(long id, string who, string startDate, string endDate, string timespan)
+        {
+            ViewProperties.CurrentApp = DataReader.GetApp(id);
+            App app = ViewProperties.CurrentApp;
+
+            if (ViewProperties.CurrentApp == null ||
+               (ViewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            DateTime start = Convert.ToDateTime(startDate);
+            DateTime end = Convert.ToDateTime(endDate);
+            TimeRange timeRange = new TimeRange(start, end);
+            TimeSpan timeSpan = GetTimeSpan(timespan);
+
+            var r = DatabaseOperations.GetAppActionCount(app, timeRange, timeSpan, who);
+            return Json(r);
+        }
+
+        private static TimeSpan GetTimeSpan(string timespan)
+        {
+            switch (timespan)
+            {
+                case "day":
+                    return TimeSpan.FromDays(1);
+                case "hour":
+                    return TimeSpan.FromHours(1);
+                case "minute":
+                    return TimeSpan.FromMinutes(1);
+                default:
+                    throw new InvalidOperationException();
+            }
         }
 
         [HttpPost]

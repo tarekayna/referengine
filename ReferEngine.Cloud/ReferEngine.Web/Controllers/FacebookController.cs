@@ -6,7 +6,6 @@ using ReferEngine.Web.Models.Facebook;
 
 namespace ReferEngine.Web.Controllers
 {
-    [RemoteRequireHttps]
     public class FacebookController : BaseController
     {
         public FacebookController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }

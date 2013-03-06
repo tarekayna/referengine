@@ -1,13 +1,10 @@
 ﻿using System.Data.Entity;
+using Itenso.TimePeriod;
 using Microsoft.ServiceBus.Messaging;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Properties;
-using ReferEngine.Common.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using Membership = ReferEngine.Common.Models.Membership;
 
@@ -15,37 +12,6 @@ namespace ReferEngine.Common.Data
 {
     public static class DatabaseOperations
     {
-        private static SqlConnectionStringBuilder _connectionString;
-        private static SqlConnection _connection;
-        private static bool _initialized;
-
-        private static void Initialize()
-        {
-            if (_initialized)
-            {
-                return;
-            }
-
-            _connectionString =
-                new SqlConnectionStringBuilder(
-                    ConfigurationManager.ConnectionStrings["AzureReferEngine"].ConnectionString);
-            _connection = new SqlConnection(_connectionString.ToString());
-
-            _initialized = true;
-        }
-
-        public static void InsertPrivateBetaEmail(string email)
-        {
-            Initialize();
-            var command = _connection.CreateCommand();
-            command.CommandText = "InsertPrivateBetaEmail";
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@email", email);
-            _connection.Open();
-            command.ExecuteNonQuery();
-            _connection.Close();
-        }
-
         public static App GetApp(long id)
         {
             App app = CacheOperations.GetApp(id);
@@ -425,26 +391,148 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static AppDashboardViewModel GetAppDashboardViewModel(App app)
+        public static List<ChartUnitResult> GetAppActionCount(App app, TimeRange timeRange, TimeSpan timeSpan, string who)
         {
-            AppDashboardViewModel viewModel = new AppDashboardViewModel {App = app};
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
-                var recommendations = from r in db.AppRecommendations
-                                      where r.AppId == app.Id
-                                      orderby r.DateTime descending
+                var result = new List<ChartUnitResult>();
+
+                TimeRange currentRange = new TimeRange(timeRange.Start, timeRange.Start.Add((timeSpan)));
+                while (!currentRange.HasInside(timeRange.End))
+                {
+                    DateTime rangeStart = currentRange.Start;
+                    DateTime rangeEnd = currentRange.End;
+
+                    int count = 0;
+                    switch (who)
+                    {
+                        case "launched":
+                            var auths = from a in db.AppAuthorizations
+                                        where app.Id == a.App.Id &&
+                                              rangeStart.CompareTo(a.TimeStamp) < 0 &&
+                                              rangeEnd.CompareTo(a.TimeStamp) > 0
+                                        select a;
+
+                            count = auths.Count();
+                            break;
+                        case "intro":
+                            var intros = from v in db.RecommendationPageViews
+                                         where v.AppId == app.Id &&
+                                               rangeStart.CompareTo(v.TimeStamp) < 0 &&
+                                               rangeEnd.CompareTo(v.TimeStamp) > 0
+                                         select v;
+
+                            count = intros.Count();
+                            break;
+                        case "recommended":
+                            var recs = from r in db.AppRecommendations
+                                      where app.Id == r.AppId &&
+                                            rangeStart.CompareTo(r.DateTime) < 0 &&
+                                            rangeEnd.CompareTo(r.DateTime) > 0
                                       select r;
+                            count = recs.Count();
+                            break;
+                        default:
+                            throw new InvalidOperationException();
+                    }
 
-                viewModel.AppRecommendations = recommendations.Take(viewModel.NumberOfRecommendationsToShow).ToList();
-                viewModel.TotalNumberOfRecommendations = recommendations.Count();
+                    string str = string.Empty;
+                    if (timeSpan.Equals(TimeSpan.FromDays(1)))
+                    {
+                        str = currentRange.Start.Date.ToShortDateString();
+                    }
+                    else if (timeSpan.Equals(TimeSpan.FromHours(1)))
+                    {
+                        str = currentRange.Start.ToShortTimeString();
+                    }
 
-                var views = from v in db.RecommendationPageViews
-                            where app.Id == v.AppId
-                            orderby v.TimeStamp descending
-                            select v;
-                viewModel.RecommendationPageViews = views.ToList();
+                    ChartUnitResult unitResult = new ChartUnitResult
+                    {
+                        Desc = str,
+                        Result = count
+                    };
+                    result.Add(unitResult);
+
+                    currentRange.Move(timeSpan);
+                }
+
+                return result;
             }
-            return viewModel;
+        }
+
+        public static List<MapUnitResult> GetAppActionLocations(App app, TimeRange timeRange, string who)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                var result = new List<MapUnitResult>();
+                switch (who)
+                {
+                    case "launched":
+                        {
+                            var locations = from a in db.AppAuthorizations
+                                            join l in db.IpAddressLocations on a.UserHostAddress equals l.IpAddress
+                                            where app.Id == a.App.Id &&
+                                                  timeRange.Start.CompareTo(a.TimeStamp) < 0 &&
+                                                  timeRange.End.CompareTo(a.TimeStamp) > 0
+                                            group l by new {l.Country, l.Region, l.City}
+                                            into crc
+                                            select new {crc.Key.Country, crc.Key.Region, crc.Key.City, Count = crc.Count()};
+
+                            result.AddRange(locations.Select(l => new MapUnitResult
+                            {
+                                City = l.City,
+                                Region = l.Region,
+                                Country = l.Country,
+                                Result = l.Count
+                            }));
+                            break;
+                        }
+                    case "intro":
+                        {
+                            var locations = from v in db.RecommendationPageViews
+                                            join l in db.IpAddressLocations on v.IpAddress equals l.IpAddress
+                                            where app.Id == v.AppId &&
+                                                  timeRange.Start.CompareTo(v.TimeStamp) < 0 &&
+                                                  timeRange.End.CompareTo(v.TimeStamp) > 0 &&
+                                                  v.RecommendationPage == RecommendationPage.Intro
+                                            group l by new {l.Country, l.Region, l.City}
+                                            into crc
+                                            select new {crc.Key.Country, crc.Key.Region, crc.Key.City, Count = crc.Count()};
+
+                            result.AddRange(locations.Select(l => new MapUnitResult
+                            {
+                                City = l.City,
+                                Region = l.Region,
+                                Country = l.Country,
+                                Result = l.Count
+                            }));
+                            break;
+                        }
+                    case "recommended":
+                        {
+                            var locations = from r in db.AppRecommendations
+                                            join l in db.IpAddressLocations on r.IpAddress equals l.IpAddress
+                                            where app.Id == r.AppId &&
+                                                  timeRange.Start.CompareTo(r.DateTime) < 0 &&
+                                                  timeRange.End.CompareTo(r.DateTime) > 0
+                                            group l by new {l.Country, l.Region, l.City}
+                                            into crc
+                                            select new {crc.Key.Country, crc.Key.Region, crc.Key.City, Count = crc.Count()};
+
+                            result.AddRange(locations.Select(l => new MapUnitResult
+                            {
+                                City = l.City,
+                                Region = l.Region,
+                                Country = l.Country,
+                                Result = l.Count
+                            }));
+                            break;
+                        }
+                    default:
+                        throw new InvalidOperationException();
+                }
+                return result;
+            }
         }
 
         public static IList<StoreAppInfo> FindStoreApps(string term, int count)
@@ -483,7 +571,8 @@ namespace ReferEngine.Common.Data
                                                           TimeStamp = DateTime.UtcNow,
                                                           RecommendationPage = page,
                                                           AppId = auth.App.Id,
-                                                          IsAutoOpen = isAutoOpen
+                                                          IsAutoOpen = isAutoOpen,
+                                                          IpAddress = auth.UserHostAddress
                                                       };
                 db.RecommendationPageViews.Add(pageView);
                 db.SaveChanges();

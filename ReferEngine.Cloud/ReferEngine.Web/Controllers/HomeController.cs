@@ -1,14 +1,11 @@
-﻿using System;
-using System.Net;
-using System.Web.Mvc;
-using ReferEngine.Common.Models;
+﻿using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Web.DataAccess;
-using ReferEngine.Web.Models.Common;
+using System.Net;
+using System.Web.Mvc;
 
 namespace ReferEngine.Web.Controllers
 {
-    [RemoteRequireHttps]
     public class HomeController : BaseController
     {
         public HomeController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }

@@ -49,6 +49,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="docu\TimePeriod_en.pdf" />
     <None Include="Pack.ps1" />
     <None Include="NuGetPackage.ps1" />
     <None Include="NuGetSetup.ps1" />
@@ -66,10 +67,32 @@
     <Content Include="content\ReferEngine\ReferEngine-AppBarIcon.png" />
     <Content Include="content\ReferEngine\ReferEngine.Initialize.js" />
     <Content Include="content\ReferEngine\ReferEngine.js" />
+    <Content Include="docu\ChangeHistory.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Glimpse.Core">
       <HintPath>..\packages\Glimpse.1.0.0\lib\net35\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Itenso.TimePeriod">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\Itenso.TimePeriod.dll</HintPath>
+    </Reference>
+    <Reference Include="Itenso.TimePeriodTests">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\Itenso.TimePeriodTests.exe</HintPath>
+    </Reference>
+    <Reference Include="nunit-console-runner">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit-console-runner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit.core.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core.interfaces">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit.core.interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.util">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit.util.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

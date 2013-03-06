@@ -32,7 +32,8 @@
         @RenderSection("styles", required: false)
     </head>
     <body>
-         
+        <div class='notifications top-right'></div>
+
         @if (Request.IsAuthenticated && ViewProperties.CurrentUser != null)
         {
             <div class="navbar navbar-fixed-top">
@@ -175,8 +176,6 @@
         }
 
         @RenderSection("scripts", required: false)
-        @StackExchange.Profiling.MiniProfiler.RenderIncludes()
-        
         
         @{ ViewProperties.UseJQueryValidate = true; }
         @Html.Partial("_PrivateBeta")
@@ -190,6 +189,8 @@
         {
             @Scripts.Render("~/js/shared/layout-not-auth")
         }
+        
+        @StackExchange.Profiling.MiniProfiler.RenderIncludes()
     </body>
 
 </html>

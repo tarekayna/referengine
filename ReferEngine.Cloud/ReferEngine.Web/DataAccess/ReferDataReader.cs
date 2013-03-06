@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
-using System.Linq;
-using ReferEngine.Common.ViewModels;
 
 namespace ReferEngine.Web.DataAccess
 {
@@ -69,11 +67,6 @@ namespace ReferEngine.Web.DataAccess
         public User GetUserFromConfirmationCode(string code)
         {
             return DatabaseOperations.GetUserFromConfirmationCode(code);
-        }
-
-        public AppDashboardViewModel GetAppDashboardViewModel(App app)
-        {
-            return DatabaseOperations.GetAppDashboardViewModel(app);
         }
 
         public IList<StoreAppInfo> FindStoreApps(string term, int count)

@@ -83,6 +83,12 @@
     <Reference Include="Glimpse.Mvc3">
       <HintPath>..\packages\Glimpse.Mvc3.1.0.0\lib\net40\Glimpse.Mvc3.dll</HintPath>
     </Reference>
+    <Reference Include="Itenso.TimePeriod">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\Itenso.TimePeriod.dll</HintPath>
+    </Reference>
+    <Reference Include="Itenso.TimePeriodTests">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\Itenso.TimePeriodTests.exe</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
@@ -160,6 +166,21 @@
     <Reference Include="NinjectAdapter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CommonServiceLocator.NinjectAdapter.1.0.0.0\lib\NinjectAdapter.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit-console-runner">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit-console-runner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit.core.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core.interfaces">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit.core.interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.util">
+      <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit.util.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -256,12 +277,37 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="css\bootstrap-notify.css" />
+    <Content Include="css\daterangepicker.css" />
+    <Content Include="docu\ChangeHistory.txt" />
+    <Content Include="js\app\dashboard.js" />
     <Content Include="js\pricing.js" />
     <Content Include="js\lib\require-jquery.js" />
     <Content Include="js\lib\require.js" />
     <Content Include="js\home.js" />
     <Content Include="js\shared\layout-not-auth.js" />
+    <Content Include="TypeScript\app\dashboard.min.js.map">
+      <DependentUpon>dashboard.js</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="TypeScript\app\dashboard.ts" />
+    <Content Include="docu\TimePeriod_en.pdf" />
+    <None Include="Less\app\dashboard.less" />
+    <Content Include="Less\app\dashboard.css">
+      <DependentUpon>dashboard.less</DependentUpon>
+    </Content>
+    <Content Include="Less\app\dashboard.min.css">
+      <DependentUpon>dashboard.less</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\app\dashboard.js">
+      <DependentUpon>dashboard.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\app\dashboard.min.js">
+      <DependentUpon>dashboard.ts</DependentUpon>
+    </Content>
     <Content Include="TypeScript\lib\almond.js" />
+    <Content Include="TypeScript\lib\bootstrap-notify.js" />
+    <Content Include="TypeScript\lib\date.js" />
+    <Content Include="TypeScript\lib\daterangepicker.js" />
     <Content Include="TypeScript\recommend\windows\client\export-functions.js" />
     <Content Include="TypeScript\recommend\windows\client\define-exports.js" />
     <Content Include="TypeScript\recommend\windows\client\export-messaging.js" />
@@ -338,7 +384,6 @@
     <Compile Include="DataAccess\ReferDataWriter.cs" />
     <Compile Include="App_Start\ErrorEntity.cs" />
     <Compile Include="Filters\LogAttribute.cs" />
-    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
