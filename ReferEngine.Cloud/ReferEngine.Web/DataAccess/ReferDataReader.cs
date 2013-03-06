@@ -8,24 +8,12 @@ namespace ReferEngine.Web.DataAccess
     {
         public App GetApp(string packageFamilyName)
         {
-            App app = CacheOperations.GetApp(packageFamilyName);
-            if (app == null)
-            {
-                app = DatabaseOperations.GetApp(packageFamilyName);
-                CacheOperations.AddApp(packageFamilyName, app);
-            }
-            return app;
+            return DatabaseOperations.GetApp(packageFamilyName);
         }
 
         public App GetApp(long id)
         {
-            App app = CacheOperations.GetApp(id);
-            if (app == null)
-            {
-                app = DatabaseOperations.GetApp(id);
-                CacheOperations.AddApp(id, app);
-            }
-            return app;
+            return DatabaseOperations.GetApp(id);
         }
 
         public AppAuthorization GetAppAuthorization(string token, string userHostAddress)

@@ -106,6 +106,9 @@ footer > div .m-btn.no {
 .center-content {
   text-align: center;
 }
+.symbol {
+  font-family: 'Segoe UI Symbol';
+}
 #re-content {
   margin-top: 25px;
   height: 378px;

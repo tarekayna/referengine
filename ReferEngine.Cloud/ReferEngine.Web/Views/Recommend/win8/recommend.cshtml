@@ -58,7 +58,7 @@
     @if (Model.AppReceipt != null && Model.AppReceipt.LicenseType == LicenseType.Trial)
     {
         <div id="warning">
-            Important: You are <strong>not eligible</strong> for a recommendation award since you are using a free trial of @Model.App.Name.
+            Important: You are <strong>not eligible</strong> for a recommendation reward since you are using a free trial of @Model.App.Name.
             You can still post an app recommendation to facebook.
         </div>
     }
@@ -75,9 +75,13 @@
 <div class="postResult">
     <div>
         <p>Thank you for recommending @Model.App.Name!</p>
+        
+        @if (Model.App.RewardPlan.Type == AppRewardPlanType.Cash)
+        {
         <p>
             Refer Engine will be in touch once you have earned a referral reward.
         </p>
+        }
         <p>
             If you have any questions, please contact us at
             <a href="mailto:feedback@BluGraphingCalculator.com">feedback@BluGraphingCalculator.com</a> 

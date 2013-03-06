@@ -177,14 +177,12 @@ namespace ReferEngine.Web.Controllers
             return View(viewName, ViewProperties.CurrentApp);
         }
 
-        public ActionResult RecommendViewOnly(string platform, long id)
+        public ActionResult RecommendTest(string platform, long id)
         {
             Verifier.IsNotNullOrEmpty(platform, "platform");
             Verifier.IsNotNullOrEmpty(id, "id");
 
             ViewProperties.CurrentApp = DataReader.GetApp(id);
-
-            // Facebook is cool
             Person me = DatabaseOperations.GetPerson(509572882);
 
             string viewName = String.Format("{0}/recommend", platform);

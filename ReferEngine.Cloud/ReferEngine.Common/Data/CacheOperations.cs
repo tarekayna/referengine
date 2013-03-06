@@ -129,6 +129,12 @@ namespace ReferEngine.Common.Data
             CachePutSafe(key, app);
         }
 
+        public static void RemoveApp(long id, string packageFamilyName)
+        {
+            Cache.Remove(String.Format(CacheKeyFormat.AppId, id));
+            Cache.Remove(String.Format(CacheKeyFormat.AppPackage, packageFamilyName));
+        }
+
         public static App GetApp(string packageFamilyName)
         {
             String key = String.Format(CacheKeyFormat.AppPackage, packageFamilyName);
