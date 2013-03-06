@@ -9,11 +9,5 @@ namespace ReferEngine.Common.UnitTests.Data
     [TestClass]
     public class DatabaseOperationsTests
     {
-        [TestMethod]
-        public void TestGetAppDashboardViewModel()
-        {
-            App app = DatabaseOperations.GetApp(21);
-            DatabaseOperations.GetAppDashboardViewModel(app);
-        }
     }
 }

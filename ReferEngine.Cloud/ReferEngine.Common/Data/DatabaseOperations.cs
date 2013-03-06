@@ -3,13 +3,8 @@ using Itenso.TimePeriod;
 using Microsoft.ServiceBus.Messaging;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Properties;
-using ReferEngine.Common.Utilities;
-using ReferEngine.Common.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using Membership = ReferEngine.Common.Models.Membership;
 
@@ -538,28 +533,6 @@ namespace ReferEngine.Common.Data
                 }
                 return result;
             }
-        }
-
-        public static AppDashboardViewModel GetAppDashboardViewModel(App app)
-        {
-            AppDashboardViewModel viewModel = new AppDashboardViewModel {App = app};
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
-            {
-                var recommendations = from r in db.AppRecommendations
-                                      where r.AppId == app.Id
-                                      orderby r.DateTime descending
-                                      select r;
-
-                viewModel.AppRecommendations = recommendations.Take(viewModel.NumberOfRecommendationsToShow).ToList();
-                viewModel.TotalNumberOfRecommendations = recommendations.Count();
-
-                var views = from v in db.RecommendationPageViews
-                            where app.Id == v.AppId
-                            orderby v.TimeStamp descending
-                            select v;
-                viewModel.RecommendationPageViews = views.ToList();
-            }
-            return viewModel;
         }
 
         public static IList<StoreAppInfo> FindStoreApps(string term, int count)

@@ -1,8 +1,8 @@
 var View;
 (function (View) {
     View._map = [];
-    View._map[0] = "Overview";
-    View.Overview = 0;
+    View._map[0] = "Table";
+    View.Table = 0;
     View._map[1] = "Map";
     View.Map = 1;
     View._map[2] = "Chart";
@@ -33,8 +33,9 @@ var Notifications = (function () {
 })();
 var Page = (function () {
     function Page() { }
-    Page.currentView = View.Overview;
+    Page.currentView = View.Table;
     Page.who = "launched";
+    Page.timespan = "day";
     Page.startDate = Date2.today().add({
         days: -29
     });
@@ -154,9 +155,9 @@ var Page = (function () {
                     $('#date-range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
                 }
                 if(start.clone().add(1).days().compareTo(end) == -1) {
-                    Chart.timespan = 'day';
+                    Page.timespan = 'day';
                 } else {
-                    Chart.timespan = 'hour';
+                    Page.timespan = 'hour';
                 }
                 Page.startDate = start;
                 Page.endDate = end;
@@ -176,7 +177,7 @@ var Page = (function () {
         });
     };
     Page.initTabs = function initTabs() {
-        $('#overviewTab').click(function (e) {
+        $('#tableTab').click(function (e) {
             e.preventDefault();
             $(this).tab('show');
         });
@@ -191,14 +192,15 @@ var Page = (function () {
             } else if(e.target.hash === "#chartTab") {
                 Chart.init();
                 Page.currentView = View.Chart;
-            } else if(e.target.hash === "#overviewTab") {
-                Page.currentView = View.Overview;
+            } else if(e.target.hash === "#tableTab") {
+                Page.currentView = View.Table;
             }
             Page.refreshView();
         });
     };
     Page.refreshView = function refreshView() {
-        if(Page.currentView === View.Overview) {
+        if(Page.currentView === View.Table) {
+            Table.refresh();
         } else if(Page.currentView === View.Chart) {
             Chart.refresh();
         } else if(Page.currentView === View.Map) {
@@ -209,6 +211,7 @@ var Page = (function () {
         Page.initTabs();
         Page.initDateRangePicker();
         Page.initWhoSelector();
+        Page.refreshView();
     };
     return Page;
 })();
@@ -279,7 +282,7 @@ var Chart = (function () {
                 who: Page.who,
                 startDate: startDate,
                 endDate: endDate,
-                timespan: Chart.timespan
+                timespan: Page.timespan
             },
             dataType: "json",
             error: Chart.onDataRequestError,
@@ -288,6 +291,64 @@ var Chart = (function () {
         Notifications.show("Refreshing chart...", NotificationType.info);
     };
     return Chart;
+})();
+var Table = (function () {
+    function Table() { }
+    Table.table = null;
+    Table.tableData = [];
+    Table.timespan = "day";
+    Table.how = "table";
+    Table.isInitialized = false;
+    Table.onDataRequestSuccess = function onDataRequestSuccess(data, textStatus, jqXhr) {
+        Table.tableData = [];
+        Table.tableData.push([
+            'Date', 
+            'Launch Count'
+        ]);
+        for(var i = 0; i < data.length; i++) {
+            Table.tableData.push([
+                data[i].Desc, 
+                data[i].Result
+            ]);
+        }
+        var elem = document.getElementById('table');
+        if(Table.how === "table") {
+            Table.table = new google.visualization.Table(elem);
+        }
+        var dataTable = google.visualization.arrayToDataTable(Table.tableData);
+        var options = {
+            cssClassNames: {
+                tableCell: 'txt-middle'
+            },
+            page: "enable",
+            pageSize: 15
+        };
+        Table.table.draw(dataTable, options);
+        Notifications.show("Success: table updated", NotificationType.success);
+    };
+    Table.onDataRequestError = function onDataRequestError(e) {
+        Notifications.show("Error: could not update table", NotificationType.error);
+    };
+    Table.refresh = function refresh() {
+        var dateFormat = "dd MMMM yyyy";
+        var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
+        var endDate = Page.endDate.toString(dateFormat) + " 23:59:59";
+        $.ajax("../GetAppDashboardChartData", {
+            type: "POST",
+            data: {
+                id: re.appId,
+                who: Page.who,
+                startDate: startDate,
+                endDate: endDate,
+                timespan: Page.timespan
+            },
+            dataType: "json",
+            error: Table.onDataRequestError,
+            success: Table.onDataRequestSuccess
+        });
+        Notifications.show("Refreshing table...", NotificationType.info);
+    };
+    return Table;
 })();
 var Map = (function () {
     function Map() { }

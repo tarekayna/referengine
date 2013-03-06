@@ -32,8 +32,7 @@ namespace ReferEngine.Web.Controllers
             if (ViewProperties.CurrentApp != null &&
                (ViewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
             {
-                var viewModel = DataReader.GetAppDashboardViewModel(ViewProperties.CurrentApp);
-                return View(viewModel);
+                return View(ViewProperties.CurrentApp);
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.Forbidden);

@@ -1,5 +1,5 @@
 ﻿@using ReferEngine.Common.Models
-@model ReferEngine.Common.ViewModels.AppDashboardViewModel
+@model ReferEngine.Common.Models.App
 
 @section styles {
     @Styles.Render("~/less/app/dashboard");
@@ -10,11 +10,10 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=visualization&key=@Util.GoogleApiKey&sensor=false"> </script>
     <script type="text/javascript">
-        google.load("visualization", "1", { packages: ["corechart"] });
-        google.load("visualization", "1", { packages: ["geochart"] });
+        google.load("visualization", "1", { packages: ["corechart", "geochart", "table"] });
         window.re = {};
-        window.re.appId = @Model.App.Id;
-        window.re.appName = "@Model.App.Name";
+        window.re.appId = @Model.Id;
+        window.re.appName = "@Model.Name";
     </script>
     @Scripts.Render("~/ts/app/dashboard");
 }
@@ -27,13 +26,13 @@
                 <div class="btn-group">
                     <a class="btn disabled">Customers who:</a>
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span id="current-who">launched @Model.App.Name</span>
+                        <span id="current-who">launched @Model.Name</span>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="who" data-who="launched">launched @Model.App.Name</a></li>
+                        <li><a class="who" data-who="launched">launched @Model.Name</a></li>
                         <li><a class="who" data-who="intro">saw the Refer Engine intro page</a></li>
-                        <li><a class="who" data-who="recommended">recommended @Model.App.Name</a></li>
+                        <li><a class="who" data-who="recommended">recommended @Model.Name</a></li>
                     </ul>
                 </div>
             </div>
@@ -48,74 +47,17 @@
         </div>        
                
         <ul class="nav nav-tabs" id="myTab">
-            <li class="active"><a href="#overviewTab" data-toggle="tab">Overview</a></li>
+            <li class="active"><a href="#tableTab" data-toggle="tab">Table</a></li>
             <li><a href="#chartTab" data-toggle="tab">Chart</a></li>
             <li><a href="#mapTab" data-toggle="tab">Map</a></li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane active" id="overviewTab">
-                @* Start: Overview*@
-@*                <p>Total Recommendations: @Model.TotalNumberOfRecommendations</p>
-
-                <table class="table table-bordered">
-                    <caption>Last @Model.NumberOfRecommendationsToShow Recommendations</caption>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Person Facebook Id</th>
-                            <th>Message</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (int i = 0; i < Math.Min(Model.AppRecommendations.Count(), Model.NumberOfRecommendationsToShow); i++)
-                        {
-                            <tr>
-                                <td>@Model.AppRecommendations.ElementAt(i).DateTime.ToShortDateString()</td>
-                                <td>@Model.AppRecommendations.ElementAt(i).DateTime.ToShortTimeString()</td>
-                                <td>@Model.AppRecommendations.ElementAt(i).PersonFacebookId</td>
-                                <td>@Model.AppRecommendations.ElementAt(i).UserMessage</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-
-
-                <p>Total Views: @Model.RecommendationPageViews.Count(r => r.RecommendationPage == RecommendationPage.Intro)</p>
-
-                <table class="table table-bordered">
-                    <caption>Views Last 5 Days</caption>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th># Views</th>
-                            <th># Unique Views</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Today</td>
-                            <td>@Model.RecommendationPageViews.Count(v => v.RecommendationPage == RecommendationPage.Intro && v.TimeStamp.IsToday())</td>
-                            <td>@Model.RecommendationPageViews.Where(v => v.RecommendationPage == RecommendationPage.Intro && v.TimeStamp.IsToday()).GroupBy(v => v.AppReceiptId).Count()</td>
-                        </tr>
-                        @for (int i = 1; i < 5; i++)
-                        {
-                            DateTime dateTime = DateTime.UtcNow.Subtract(TimeSpan.FromDays(i));
-                            <tr>
-                                <td>
-                                    @dateTime.Date.ToShortDateString()
-                                </td>
-                                <td>
-                                    @Model.RecommendationPageViews.Count(v => v.RecommendationPage == RecommendationPage.Intro && v.TimeStamp.IsSameDate(dateTime))
-                                </td>
-                                <td>
-                                    @Model.RecommendationPageViews.Where(v => v.RecommendationPage == RecommendationPage.Intro && v.TimeStamp.IsSameDate(dateTime)).GroupBy(v => v.AppReceiptId).Count()
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>*@
-                @* End: Overview*@
+            <div class="tab-pane active" id="tableTab">
+                <div class="row">
+                    <div class="span6 offset3">
+                        <div id="table" class="img-polaroid"></div>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane" id="chartTab">
                 <div class="row">

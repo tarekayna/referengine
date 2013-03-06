@@ -263,7 +263,6 @@
     <Compile Include="Data\ServiceBusOperations.cs" />
     <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="Utilities\Verifier.cs" />
-    <Compile Include="ViewModels\AppDashboardViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -327,6 +326,9 @@
     <EmbeddedResource Include="Migrations\201303012018017_AddIpAddressToView.resx">
       <DependentUpon>201303012018017_AddIpAddressToView.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
