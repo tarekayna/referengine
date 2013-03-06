@@ -147,6 +147,14 @@ namespace ReferEngine.Web.Controllers
             throw new InvalidOperationException("Invalid Request.Content");
         }
 
+        public ActionResult IntroTest(string platform, long id)
+        {
+            Verifier.IsNotNullOrEmpty(platform, "platform");
+            ViewProperties.CurrentApp = DataReader.GetApp(21);
+            string viewName = String.Format("{0}/intro", platform);
+            return View(viewName, ViewProperties.CurrentApp);
+        }
+
         public ActionResult Intro(string platform, long id, string authToken, bool isAutoOpen = false)
         {
             Verifier.IsNotNullOrEmpty(platform, "platform");

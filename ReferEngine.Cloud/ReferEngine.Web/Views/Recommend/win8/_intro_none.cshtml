@@ -1,0 +1,8 @@
+﻿<div class="banner">
+    Support @Model.Name by recommending to your friends!
+</div>
+    
+<div class="rules">
+    @Html.RouteLink("* Other rules apply", "Default", new { controller = "About", action = "Rules", Id = 21 },
+            new { target = "_blank" })
+</div>

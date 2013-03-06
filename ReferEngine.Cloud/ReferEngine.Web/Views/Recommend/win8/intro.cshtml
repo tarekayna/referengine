@@ -1,4 +1,5 @@
-﻿@using ReferEngine.Common.Utilities
+﻿@using ReferEngine.Common.Models
+@using ReferEngine.Common.Utilities
 @model ReferEngine.Common.Models.App
 
 @section scripts
@@ -14,29 +15,18 @@
 @Html.Image(Server.MapPath("~/img/recommend/win8/start-arrow.png"), "Start here!", "start-arrow")
 
 <div class="center-content">
-    <div class="banner">
-        Win cash by recommending @Model.Name to your friends!
-    </div>
-    
-    @Html.Image(Server.MapPath("~/img/recommend/win8/intro-steps.png"), "Recommend Your Friends", "intro-steps")
-    
-    <div class="steps title">
-        <div class="rcmnd">Recommend</div>
-        <div class="earn">Win</div>
-    </div>
-    <div class="steps text">
-        <div class="rcmnd">
-            <span>share with your friends on facebook.</span>
-        </div>
-        <div class="earn">
-            <span>win <strong>$2 cash for every friend</strong> who buys the app<sup>*</sup></span>
-        </div>
-    </div>
-    
-    <div class="rules">
-        @Html.RouteLink("* Other rules apply", "Default", new { controller = "About", action = "Rules", Id = 21 },
-                new { target = "_blank" })
-    </div>
+    @if (Model.RewardPlan.Type == AppRewardPlanType.Cash)
+    {
+        @Html.Partial("win8/_intro_cash")
+    }
+    else if (Model.RewardPlan.Type == AppRewardPlanType.None)
+    {
+        @Html.Partial("win8/_intro_none")
+    }
+    else if (Model.RewardPlan.Type == AppRewardPlanType.Custom)
+    {
+        
+    }
 </div>
 
 @section footer

@@ -289,6 +289,8 @@
     <Content Include="TypeScript\app\dashboard.min.js.map">
       <DependentUpon>dashboard.js</DependentUpon>
     </Content>
+    <Content Include="Views\Recommend\win8\_intro_cash.cshtml" />
+    <Content Include="Views\Recommend\win8\_intro_none.cshtml" />
     <TypeScriptCompile Include="TypeScript\app\dashboard.ts" />
     <Content Include="docu\TimePeriod_en.pdf" />
     <None Include="Less\app\dashboard.less" />

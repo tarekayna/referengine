@@ -8,10 +8,10 @@ namespace ReferEngine.Common.Data
 {
     public class ReferEngineDatabaseContext : DbContext
     {
-        public ReferEngineDatabaseContext() : base(Util.DatabaseConnectionStringName)
+        //public ReferEngineDatabaseContext() : base(Util.DatabaseConnectionStringName)
         //public ReferEngineDatabaseContext() : base("ProductionCloudConnectionString")
         //public ReferEngineDatabaseContext() : base("TestCloudConnectionString")
-        //public ReferEngineDatabaseContext() : base("LocalConnectionString")
+        public ReferEngineDatabaseContext() : base("LocalConnectionString")
         //public ReferEngineDatabaseContext() : base("Server=tcp:fnx5xvuqzn.database.windows.net,1433;Database=referengine_db_local;User ID=tarek990@fnx5xvuqzn;Password=r6g4d2hA..;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;MultipleActiveResultSets=True")
         {
             this.Configuration.LazyLoadingEnabled = false;
@@ -34,6 +34,7 @@ namespace ReferEngine.Common.Data
         public DbSet<IpAddressLocation> IpAddressLocations { get; set; }
         public DbSet<AppAuthorization> AppAuthorizations { get; set; }
         public DbSet<AppAutoShowOptions> AppAutoShowOptions { get; set; }
+        public DbSet<AppRewardPlan> AppRewardPlans { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {

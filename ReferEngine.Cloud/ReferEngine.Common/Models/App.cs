@@ -53,6 +53,9 @@ namespace ReferEngine.Common.Models
         public string Platform { get; set; }
 
         [DataMember]
+        public AppRewardPlan RewardPlan { get; set; }
+
+        [DataMember]
         public List<AppScreenshot> Screenshots { get; set; }
     }
 }

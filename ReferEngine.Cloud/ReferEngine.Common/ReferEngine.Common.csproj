@@ -189,7 +189,12 @@
     <Compile Include="Migrations\201303012018017_AddIpAddressToView.Designer.cs">
       <DependentUpon>201303012018017_AddIpAddressToView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303060711309_AppRewardPlan.cs" />
+    <Compile Include="Migrations\201303060711309_AppRewardPlan.Designer.cs">
+      <DependentUpon>201303060711309_AppRewardPlan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
+    <Compile Include="Models\AppRewardPlan.cs" />
     <Compile Include="Models\ChartUnitResult.cs" />
     <Compile Include="Models\MapUnitResult.cs" />
     <Compile Include="Models\IpAddressLocation.cs" />
@@ -325,6 +330,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303012018017_AddIpAddressToView.resx">
       <DependentUpon>201303012018017_AddIpAddressToView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303060711309_AppRewardPlan.resx">
+      <DependentUpon>201303060711309_AppRewardPlan.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
