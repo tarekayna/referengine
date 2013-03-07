@@ -55,7 +55,8 @@
         </div>
     </div>
     
-    @if (Model.AppReceipt != null && Model.AppReceipt.LicenseType == LicenseType.Trial)
+    @if (Model.App.RewardPlan.Type == AppRewardPlanType.Cash &&
+         Model.AppReceipt != null && Model.AppReceipt.LicenseType == LicenseType.Trial)
     {
         <div id="warning">
             Important: You are <strong>not eligible</strong> for a recommendation reward since you are using a free trial of @Model.App.Name.

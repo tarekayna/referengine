@@ -86,14 +86,19 @@ namespace ReferEngine.Web.Controllers
 
                         DatabaseOperations.AddAppAuthorization(appAuthorization);
 
-                        //if (appReceipt.Verified)
-                        //{
                         bool locationIsSupported = Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local;
                         if (!locationIsSupported)
                         {
-                            IpAddressLocation location = DatabaseOperations.GetIpAddressLocation(userIpAddress);
-                            locationIsSupported = location.Country.Equals("United States",
-                                                                          StringComparison.OrdinalIgnoreCase);
+                            if (app.RewardPlan.Type == AppRewardPlanType.Cash)
+                            {
+                                IpAddressLocation location = DatabaseOperations.GetIpAddressLocation(userIpAddress);
+                                locationIsSupported = location.Country.Equals("United States",
+                                                                              StringComparison.OrdinalIgnoreCase);
+                            }
+                            else
+                            {
+                                locationIsSupported = true;
+                            }
                         }
 
                         if (locationIsSupported)
@@ -106,11 +111,11 @@ namespace ReferEngine.Web.Controllers
 
                             string[] loadingMessages = new string[]
                                                                {
-                                                                    "Recommend to your friends",
-                                                                    "Win cash",
-                                                                    "Claim it or donate it",
-                                                                    "Share the love",
-                                                                    "Earn a reward"
+                                                                   "Hi! Refer Engine is loading",
+                                                                   "Support your favorite apps",
+                                                                   "Share the love",
+                                                                   "Recommend to your friends",
+                                                                   "Verified recommendations only"
                                                                };
 
                             return new JsonResult
@@ -247,7 +252,7 @@ namespace ReferEngine.Web.Controllers
 
                 if (showErrorView)
                 {
-                    string viewName = String.Format("{0}/recommend-error", platform);
+                    string viewName = String.Format("{0}/recommendError", platform);
                     var viewModel = new RecommendViewModel(me, ViewProperties.CurrentApp, authToken, appReceipt);
                     return View(viewName, viewModel);
                 }

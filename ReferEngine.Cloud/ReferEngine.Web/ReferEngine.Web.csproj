@@ -287,12 +287,6 @@
     <Content Include="js\home.js" />
     <Content Include="js\shared\layout-not-auth.js" />
     <TypeScriptCompile Include="TypeScript\app\new.ts" />
-    <Content Include="Less\app\Copy of dashboard.css">
-      <DependentUpon>new.less</DependentUpon>
-    </Content>
-    <Content Include="Less\app\Copy of dashboard.min.css">
-      <DependentUpon>new.less</DependentUpon>
-    </Content>
     <Content Include="Less\app\new.css">
       <DependentUpon>new.less</DependentUpon>
     </Content>
@@ -300,7 +294,7 @@
       <DependentUpon>new.less</DependentUpon>
     </Content>
     <Content Include="TypeScript\app\dashboard.min.js.map">
-      <DependentUpon>dashboard.js</DependentUpon>
+      <DependentUpon>.js</DependentUpon>
     </Content>
     <Content Include="TypeScript\app\new.js">
       <DependentUpon>new.ts</DependentUpon>
@@ -654,7 +648,7 @@
     <Content Include="Views\Recommend\win8\recommend.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LogoMark30.cshtml" />
-    <Content Include="Views\Recommend\win8\recommend-error.cshtml" />
+    <Content Include="Views\Recommend\win8\recommendError.cshtml" />
     <Content Include="Views\About\Privacy.cshtml" />
     <Content Include="Views\About\Use.cshtml" />
     <Content Include="Views\About\Copyright.cshtml" />
