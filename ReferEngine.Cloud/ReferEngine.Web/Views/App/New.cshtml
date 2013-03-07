@@ -1,103 +1,49 @@
 ﻿@model ReferEngine.Common.Models.App
 
-@{
-    ViewProperties.UseJQueryUi = true;
-}
-
 @section Styles
 {
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css">
+    @Styles.Render("~/less/app/new")
 }
 
 @section Scripts 
 {
-    <script type="text/javascript">
-        $("#app-name").autocomplete({
-            minLength: 3,
-            source: function(request, response) {
-                $.ajax("http://127.0.0.1:81/app/FindStoreApps", {
-                    type: "POST",
-                    data: {
-                        term: request.term
-                    },
-                    dataType: "json",
-                    error: function() {
-                        response();
-                    },
-                    success: function(res) {
-                        response(res);
-                    }
-                });
-            }
-        });
-    </script>
+    @Scripts.Render("~/ts/app/new")
 }
 
-@using (Html.BeginForm(new { ViewProperties.ReturnUrl }))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-    <div id="content">
-        <div class="container">
-            <div class="row">
-                <div class="span12">
-                    
-                    @Html.Partial("_Messaging")
-
-                    <div class="modal modal-flat">
-                        <div class="modal-header">
-                            <h3>
-                                @ViewProperties.CurrentUser.FirstName, Enter the Name of Your Application
-                            </h3>
+<div id="content">
+    <div class="container">
+        <div class="step0">
+            @using (Html.BeginForm(new { ViewProperties.ReturnUrl }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                        <div class="row" style="border-bottom: 1px solid #DDD; margin-bottom: 30px; padding-left: 10px">
+                            <h3>Add New App</h3>
                         </div>
-                        <div class="modal-body txt-middle">
-                            <input type="text" id="app-name" placeholder="e.g. Blu Graphing Calculator">
-                        </div>
-                        <div class="modal-footer">
-                            <input type="submit" class="btn btn-primary" value="Find Your App By Name" />
-                        </div>
+                <div class="row row-bmargin">
+                    <div class="span3">Start typing your app name:</div>
+                    <div class="span4">
+                        <input type="text" id="refine-app-name" placeholder="" data-bind="value: AppSearchTerm, valueUpdate: 'keyup'">
                     </div>
+                    @*<div class="span6">
+                        <a class="btn btn-primary">Find Your App</a>
+                    </div>*@
                 </div>
-            </div>
+
+                <!-- ko foreach: AppSearchResults -->
+                <div class="row row-bmargin-sml">
+                    <div class="span1">
+                        <img data-bind="attr: { src: LogoLink, alt: Name }" />
+                    </div>
+                    <div class="span3" data-bind="html: Name"></div>
+                    <div class="span2" data-bind="html: Category"></div>
+                    <div class="span2" data-bind="html: Developer"></div>
+                    <div class="span4">
+                        <a class="btn btn-primary">This is my app</a>
+                    </div>  
+                </div>
+                <!-- /ko -->                
+            }
         </div>
     </div>
-}
-
-@*@using (Html.BeginForm()) {
-    @Html.ValidationSummary(true)
-
-    <fieldset>
-        <legend>App</legend>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.AppStoreLink)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.AppStoreLink)
-            @Html.ValidationMessageFor(model => model.AppStoreLink)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Description)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
-            @Html.ValidationMessageFor(model => model.Description)
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
-}
-
-
-*@
+</div>

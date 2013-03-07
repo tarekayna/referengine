@@ -25,6 +25,26 @@ namespace ReferEngine.Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult SearchForApp(string name, string platform)
+        {
+            Verifier.IsNotNullOrEmpty(name, "name");
+            Verifier.IsNotNullOrEmpty(platform, "platform");
+
+            var infos = DataReader.FindStoreApps(name, 10);
+
+            return Json(infos);
+        }
+
+        [HttpPost]
+        public ActionResult SearchForAppAutoComplete(string term)
+        {
+            var infos = DataReader.FindStoreApps(term, 5);
+            var data = from i in infos
+                       select i.Name;
+            return Json(data);
+        }
+
         public ActionResult Dashboard(long id)
         {
             ViewProperties.CurrentApp = DataReader.GetApp(id);
@@ -94,27 +114,11 @@ namespace ReferEngine.Web.Controllers
             }
         }
 
-        [HttpPost]
-        public JsonResult FindStoreApps(string term)
-        {
-            var infos = DataReader.FindStoreApps(term, 10);
-            var data = from i in infos
-                       select i.Name;
-            return Json(data);
-        }
 
-        //public ActionResult Edit(long id)
-        //{
-        //    App app = DataReader.GetApp(id);
-        //    return View(app);
-        //}
 
-        //[HttpPost]
-        //public ActionResult Edit(long id, FormCollection collection)
-        //{
-        //    App app = DataReader.GetApp(id);
-        //    return View(app);
-        //}
+
+
+
 
         //[HttpPost]
         //public ActionResult UploadScreenshots(int id, string description)

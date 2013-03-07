@@ -693,6 +693,7 @@ interface JQuery {
     tab(action: string): JQuery;
     notify(prop: any): JQuery;
     daterangepicker(prop: any, callback: any): JQuery;
+    autocomplete(prop: any): JQuery;
 
     /*********
      UTILITIES

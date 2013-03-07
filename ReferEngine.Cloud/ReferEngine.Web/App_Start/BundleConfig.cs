@@ -70,6 +70,11 @@ namespace ReferEngine.Web.App_Start
                     new BundleInfo("~/js/app/edit",
                                    "~/js/app/edit.js"),
 
+                    new BundleInfo("~/ts/app/new",
+                                   "~/js/lib/jquery-ui-1.10.0.custom.js",
+                                   "~/typescript/lib/knockout.js",
+                                   "~/typescript/app/new.js"),
+
                     new BundleInfo("~/ts/app/dashboard",
                                    "~/typescript/lib/date.js",
                                    "~/typescript/lib/daterangepicker.js",                     
@@ -83,7 +88,6 @@ namespace ReferEngine.Web.App_Start
                     new BundleInfo("~/bundles/css/bootstrap",
                                    "~/css/bootstrap.css",
                                    "~/css/bootstrap-notify.css",
-                                   //"~/css/bootstrap-responsive.css",
                                    "~/css/font-awesome.css",
                                    "~/css/m-buttons.css",
                                    "~/css/base.css",
@@ -107,6 +111,10 @@ namespace ReferEngine.Web.App_Start
                     new BundleInfo("~/less/app/dashboard",
                                    "~/css/daterangepicker.css",
                                    "~/less/app/dashboard.css"),
+
+                    new BundleInfo("~/less/app/new",
+                                   "~/css/lib/jquery-ui.css",
+                                   "~/less/app/new.css"),
 
                     new BundleInfo("~/bundles/less/fb/app",
                                    "~/less/fb/app.css")
