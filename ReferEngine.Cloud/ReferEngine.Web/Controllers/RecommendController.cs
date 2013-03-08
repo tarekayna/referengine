@@ -223,7 +223,8 @@ namespace ReferEngine.Web.Controllers
                 if (existingReceipt != null && existingReceipt.PersonFacebookId.HasValue)
                 {
                     // App + Person: something is up
-                    if (existingReceipt.PersonFacebookId != me.FacebookId)
+                    if (existingReceipt.PersonFacebookId != me.FacebookId &&
+                        appAuthorization.App.RewardPlan.Type != AppRewardPlanType.None)
                     {
                         // Another user is associated with this receipt
                         AppRecommendation appRecommendation = DataReader.GetAppRecommendation(ViewProperties.CurrentApp.Id,
