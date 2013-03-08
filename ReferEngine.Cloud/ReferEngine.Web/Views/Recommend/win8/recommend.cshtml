@@ -1,6 +1,12 @@
 ﻿@using ReferEngine.Common.Models
 @model ReferEngine.Web.Models.Recommend.Win8.RecommendViewModel
 
+@{
+    Verifier.IsNotNullOrEmpty(Model, "Model");
+    Verifier.IsNotNullOrEmpty(Model.App, "Model.App");
+    Verifier.IsNotNullOrEmpty(Model.ReferEngineAuthToken, "Model.ReferEngineAuthToken");
+}
+
 @section scripts
 {
     <script data-main="/typescript/recommend/windows/server/recommend.js" type="text/javascript" src="~/typescript/lib/require.js"></script>
