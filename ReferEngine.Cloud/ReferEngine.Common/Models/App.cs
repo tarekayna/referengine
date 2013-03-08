@@ -26,7 +26,7 @@ namespace ReferEngine.Common.Models
         public string LogoLink50 { get; set; }
 
         [DataMember]
-        public string LogoLink150 { get; set; }
+        public string LogoLinkHighQuality { get; set; }
 
         [DataMember]
         public string Description { get; set; }

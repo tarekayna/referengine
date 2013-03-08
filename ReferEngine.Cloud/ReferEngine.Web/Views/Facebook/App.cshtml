@@ -25,32 +25,24 @@
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# referengine: http://ogp.me/ns/fb/referengine#">
     <meta property="fb:app_id"             content="368842109866922" /> 
     <meta property="og:type"               content="referengine:app" /> 
-    <meta property="og:url"                content="https://apps.facebook.com/referengine/app/@Model.App.Id" /> 
     <meta property="og:title"              content="@Model.App.Name" />
-@if (Model.App.LogoLink150 != null)
-{
-    <meta property="og:image"              content="@Model.App.LogoLink150" />
-}
-else
-{
-    <meta property="og:image"              content="@Model.App.LogoLink50" />
-}
     <meta property="og:description"        content="@Model.App.Description" /> 
     <meta property="referengine:platform"  content="@Model.App.Platform" />
+@if (!string.IsNullOrEmpty(Model.App.LogoLinkHighQuality))
+{
+    <meta property="og:image" content="@Model.App.LogoLinkHighQuality" />
+}
+@foreach (var img in Model.App.Screenshots)
+{
+    <meta property="og:image" content="@img.Link" />
+}
 }
         
 <div id="landing">
     <div class="container">  
         <div class="row">
             <div class="span6">
-                @if (Model.App.LogoLink150 != null)
-                {
-                    <img src="@Model.App.LogoLink150" alt="@Model.App.Name Logo" class="app-logo" />
-                }
-                else
-                {
-                    <img src="@Model.App.LogoLink50" alt="@Model.App.Name Logo" class="app-logo" />
-                }
+                <img src="@Model.App.LogoLink50" alt="@Model.App.Name Logo" class="app-logo" />
                 <h2>@Model.App.Name</h2>	
                 <p>
                     @Model.App.Description
