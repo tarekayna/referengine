@@ -93,8 +93,8 @@ namespace ReferEngine.Workers.WinApps
         {
             while (true)
             {
-                if (Util.CurrentServiceConfiguration != Util.ReferEngineServiceConfiguration.Local)
-                {
+                //if (Util.CurrentServiceConfiguration != Util.ReferEngineServiceConfiguration.Local)
+                //{
                     DateTime startTime = DateTime.Now;
 
                     const string appStoreSiteMap = "http://apps.microsoft.com/windows/sitemap/sitemap_{0}.xml";
@@ -129,7 +129,7 @@ namespace ReferEngine.Workers.WinApps
                                 {
                                     Console.WriteLine(e);
                                 }
-                                if (string.IsNullOrEmpty(response))
+                                if (!string.IsNullOrEmpty(response))
                                 {
                                     TextReader textReader = new StringReader(response);
                                     HtmlDocument doc = new HtmlDocument();
@@ -232,7 +232,7 @@ namespace ReferEngine.Workers.WinApps
                     TimeSpan sleepTime = TimeSpan.FromHours(24).Subtract(DateTime.Now.Subtract(startTime));
                     Thread.Sleep(sleepTime);
                 }
-            }
+            //}
         }
 
         public override bool OnStart()
