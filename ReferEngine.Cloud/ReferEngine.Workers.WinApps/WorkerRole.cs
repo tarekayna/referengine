@@ -158,6 +158,7 @@ namespace ReferEngine.Workers.WinApps
                                     StoreAppInfo storeAppInfo = new StoreAppInfo
                                                                     {
                                                                         Name = GetInnerTextFromId(doc, "ProductTitleText"),
+                                                                        AppStoreLink = appWebLink.Link,
                                                                         Category = GetInnerTextFromId(doc, "CategoryText"),
                                                                         AgeRating = GetInnerTextFromId(doc, "AgeRating"),
                                                                         Developer = GetInnerTextFromId(doc, "AppDeveloper"),

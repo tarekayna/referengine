@@ -311,6 +311,12 @@
     <Content Include="TypeScript\app\new.min.js">
       <DependentUpon>new.ts</DependentUpon>
     </Content>
+    <Content Include="TypeScript\lib\SinglePage.js">
+      <DependentUpon>SinglePage.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\lib\SinglePage.min.js">
+      <DependentUpon>SinglePage.ts</DependentUpon>
+    </Content>
     <Content Include="Views\Recommend\win8\_intro_cash.cshtml" />
     <Content Include="Views\Recommend\win8\_intro_none.cshtml" />
     <TypeScriptCompile Include="TypeScript\app\dashboard.ts" />
@@ -432,6 +438,7 @@
     <Compile Include="Models\Facebook\FacebookAppViewModel.cs" />
     <Compile Include="Models\Recommend\Win8\RecommendViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="TypeScript\lib\SinglePage.ts" />
     <Compile Include="WebRole.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,14 @@
-﻿#content {
+﻿.ellipsify {
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#content {
     padding: 0;
+    padding-top: 20px;
     min-height: 500px;
 }
 
@@ -14,4 +23,29 @@
 
 .row-bmargin-sml {
     margin-bottom: 10px;
+}
+
+strong {
+    font-weight: bold !important;
+}
+
+.app-result-row {
+    .ellipsify;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #EEE;
+    }
+
+    > div {
+        padding-top: 12px;
+    }
+
+    > div:first-child {
+        padding-top: 0;
+    }
+}
+
+[data-sp-step] {
+    display: none;
 }

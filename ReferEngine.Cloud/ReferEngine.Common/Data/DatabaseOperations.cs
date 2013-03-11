@@ -564,6 +564,33 @@ namespace ReferEngine.Common.Data
             }
         }
 
+        public static App AddNewAppFromStoreInfo(string msAppId, User user)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                StoreAppInfo appInfo = db.StoreAppInfos.Single(i => i.MsAppId == msAppId);
+                AppRewardPlan rewardPlan = db.AppRewardPlans.Single(p => p.Type == AppRewardPlanType.None);
+                App app = new App()
+                    {
+                        Name = appInfo.Name,
+                        Copyright = appInfo.Copyright,
+                        ShortDescription = appInfo.DescriptionHtml,
+                        Description = appInfo.DescriptionHtml,
+                        LogoLink50 = appInfo.LogoLink,
+                        PackageFamilyName = appInfo.PackageFamilyName,
+                        Platform = "Windows 8",
+                        Publisher = appInfo.Developer,
+                        RewardPlan = rewardPlan,
+                        AppStoreLink = appInfo.AppStoreLink
+                    };
+                App addedApp = db.Apps.Add(app);
+                db.SaveChanges();
+                user.Apps.Add(addedApp);
+                db.SaveChanges();
+                return addedApp;
+            }
+        }
+
         public static void AddRecommendationPageView(AppAuthorization auth, RecommendationPage page,
                                                      bool isAutoOpen = false)
         {

@@ -26,6 +26,13 @@ namespace ReferEngine.Web.Controllers
         }
 
         [HttpPost]
+        public ActionResult AddNewApp(string msAppId)
+        {
+            DatabaseOperations.AddNewAppFromStoreInfo(msAppId, ViewProperties.CurrentUser);
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        [HttpPost]
         public ActionResult SearchForApp(string name, string platform)
         {
             Verifier.IsNotNullOrEmpty(name, "name");
@@ -34,15 +41,6 @@ namespace ReferEngine.Web.Controllers
             var infos = DataReader.FindStoreApps(name, 10);
 
             return Json(infos);
-        }
-
-        [HttpPost]
-        public ActionResult SearchForAppAutoComplete(string term)
-        {
-            var infos = DataReader.FindStoreApps(term, 5);
-            var data = from i in infos
-                       select i.Name;
-            return Json(data);
         }
 
         public ActionResult Dashboard(long id)

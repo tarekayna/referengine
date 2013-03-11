@@ -27,6 +27,7 @@ namespace ReferEngine.Common.Models
         public string Languages { get; set; }
         public string MsAppId { get; set; }
         public string PackageFamilyName { get; set; }
+        public string AppStoreLink { get; set; }
 
         public void SetRating(string starRatingText)
         {

@@ -55,25 +55,8 @@ namespace ReferEngine.Web.App_Start
                     new BundleInfo("~/js/shared/layout-not-auth",
                                    "~/js/shared/layout-not-auth.js"),
 
-                    //new BundleInfo("~/bundles/ts/recommend/windows/intro",
-                    //               "~/typescript/recommend/windows/common.js",
-                    //               "~/typescript/recommend/windows/intro.js"),
-                                   
-                    //new BundleInfo("~/bundles/ts/recommend/windows/recommend",
-                    //               "~/js/lib/knockout.js",
-                    //               "~/typescript/recommend/windows/common.js",
-                    //               "~/typescript/recommend/windows/recommend.js"),
-
-                    //new BundleInfo("~/js/lib/jquery.aceditable",
-                    //               "~/js/lib/jquery.aceditable.js"),
-
                     new BundleInfo("~/js/app/edit",
                                    "~/js/app/edit.js"),
-
-                    new BundleInfo("~/ts/app/new",
-                                   "~/js/lib/jquery-ui-1.10.0.custom.js",
-                                   "~/typescript/lib/knockout.js",
-                                   "~/typescript/app/new.js"),
 
                     new BundleInfo("~/ts/app/dashboard",
                                    "~/typescript/lib/date.js",
