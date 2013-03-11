@@ -44,11 +44,7 @@ namespace ReferEngine.Workers.DataWriter
                             case "ReferEngine.Common.Models.AppRecommendation":
                                 {
                                     AppRecommendation appRecommendation = message.GetBody<AppRecommendation>();
-                                    DatabaseOperations.AddRecommendation(appRecommendation);
-
-                                    App app = DatabaseOperations.GetApp(appRecommendation.AppId);
-                                    Person person = DatabaseOperations.GetPerson(appRecommendation.PersonFacebookId);
-                                    ReferEmailer.SendRecommendationThankYouEmail(app, person);
+                                    AppRecommendation.ProcessNew(appRecommendation);
                                     break;
                                 }
                             case "ReferEngine.Common.Models.AppReceipt":

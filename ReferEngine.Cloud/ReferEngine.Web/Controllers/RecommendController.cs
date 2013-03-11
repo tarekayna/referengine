@@ -1,4 +1,5 @@
-﻿using ReferEngine.Common.Data;
+﻿using System.Diagnostics;
+using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Web.DataAccess;
@@ -85,13 +86,13 @@ namespace ReferEngine.Web.Controllers
                         };
 
                         DatabaseOperations.AddAppAuthorization(appAuthorization);
+                        IpAddressLocation location = DatabaseOperations.GetIpAddressLocation(userIpAddress);
 
                         bool locationIsSupported = Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local;
                         if (!locationIsSupported)
                         {
                             if (app.RewardPlan.Type == AppRewardPlanType.Cash)
                             {
-                                IpAddressLocation location = DatabaseOperations.GetIpAddressLocation(userIpAddress);
                                 locationIsSupported = location.Country.Equals("United States",
                                                                               StringComparison.OrdinalIgnoreCase);
                             }
@@ -297,7 +298,21 @@ namespace ReferEngine.Web.Controllers
                                         };
 
             var postedRecommendation = await facebookOperations.PostAppRecommendationAsync(recommendation);
-            DataWriter.AddAppRecommendation(postedRecommendation);
+
+            try
+            {
+                DataWriter.AddAppRecommendation(postedRecommendation);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+
+                // If for any reason we couldn't add to the service bus,
+                // process the recommendation directly
+
+                AppRecommendation.ProcessNew(postedRecommendation);
+            }
+
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 

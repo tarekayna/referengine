@@ -34,7 +34,6 @@ class Page {
     static timespan = "day";
     static startDate = Date2.today().add({ days: -29 });
     static endDate = Date2.today();
-
     static initDateRangePicker() {
         var ranges = {
             'Today': ['today', 'today', 'hour'],
@@ -53,7 +52,7 @@ class Page {
                startDate: Date2.today().add({ days: -29 }),
                endDate: Date2.today(),
                minDate: '01/01/2012',
-               maxDate: Date2.today().add({ days: 1}),
+               maxDate: Date2.today(),
                locale: {
                    applyLabel: null,
                    fromLabel: 'From',
@@ -117,7 +116,6 @@ class Page {
         //$('#date-range span').html(Date2.today().add({ days: -29 }).toString('MMMM d, yyyy') + ' - ' + Date2.today().toString('MMMM d, yyyy'));
 
     }
-
     static initWhoSelector() {
         $(".who").click(function () {
             var newWho = $(this).attr("data-who");
@@ -128,7 +126,6 @@ class Page {
             $("#current-who").text($(this).text());
         });
     }
-
     static initTabs() {
         $('#tableTab').click(function (e) {
             e.preventDefault();
@@ -155,7 +152,6 @@ class Page {
             refreshView();
         })
     }
-
     static refreshView() {
         if (currentView === View.Table) {
             Table.refresh();
@@ -167,7 +163,6 @@ class Page {
             Map.refresh();
         }
     }
-
     static initPage() {
         initTabs();
         initDateRangePicker();
@@ -246,6 +241,7 @@ class Chart {
                 who: Page.who,
                 startDate: startDate,
                 endDate: endDate,
+                timeZoneOffset: Date2.today().getUTCOffset(),
                 timespan: Page.timespan
             },
             dataType: "json",
@@ -303,6 +299,7 @@ class Table {
                 who: Page.who,
                 startDate: startDate,
                 endDate: endDate,
+                timeZoneOffset: Date2.today().getUTCOffset(),
                 timespan: Page.timespan
             },
             dataType: "json",
@@ -373,7 +370,8 @@ class Map {
                 id: re.appId,
                 who: Page.who,
                 startDate: startDate,
-                endDate: endDate
+                endDate: endDate,
+                timeZoneOffset: Date2.today().getUTCOffset(),
             },
             dataType: "json",
             error: onSubmitError,

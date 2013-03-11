@@ -80,6 +80,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Data\ServiceBusOperationsTests.cs" />
     <Compile Include="Data\DatabaseOperationsTests.cs" />
     <Compile Include="Data\IpCheckOperationsTests.cs" />
     <Compile Include="Data\MixPanelOperationsTests.cs" />

@@ -28,39 +28,47 @@ namespace ReferEngine.Common.Utilities
         {
             get
             {
-                if (RoleEnvironment.IsAvailable)
+                try
                 {
-
-                    string currentServiceConfiguration =
-                        RoleEnvironment.GetConfigurationSettingValue("CurrentServiceConfiguration");
-                    switch (currentServiceConfiguration)
+                    if (RoleEnvironment.IsAvailable)
                     {
-                        case "ProductionCloud":
-                            return ReferEngineServiceConfiguration.ProductionCloud;
 
-                        case "TestCloud":
-                            return ReferEngineServiceConfiguration.TestCloud;
+                        string currentServiceConfiguration =
+                            RoleEnvironment.GetConfigurationSettingValue("CurrentServiceConfiguration");
+                        switch (currentServiceConfiguration)
+                        {
+                            case "ProductionCloud":
+                                return ReferEngineServiceConfiguration.ProductionCloud;
 
-                        case "Local":
-                            {
-                                // ReSharper disable ConditionIsAlwaysTrueOrFalse
-                                // ReSharper disable HeuristicUnreachableCode
+                            case "TestCloud":
+                                return ReferEngineServiceConfiguration.TestCloud;
+
+                            case "Local":
+                                {
+                                    // ReSharper disable ConditionIsAlwaysTrueOrFalse
+                                    // ReSharper disable HeuristicUnreachableCode
 #pragma warning disable 162
-                                if (SimulateTestCloud) return ReferEngineServiceConfiguration.TestCloud;
-                                if (SimulateProductionCloud) return ReferEngineServiceConfiguration.ProductionCloud;
+                                    if (SimulateTestCloud) return ReferEngineServiceConfiguration.TestCloud;
+                                    if (SimulateProductionCloud) return ReferEngineServiceConfiguration.ProductionCloud;
 #pragma warning restore 162
-                                // ReSharper restore HeuristicUnreachableCode
-                                // ReSharper restore ConditionIsAlwaysTrueOrFalse
-                                return ReferEngineServiceConfiguration.Local;
-                            }
-                    }
+                                    // ReSharper restore HeuristicUnreachableCode
+                                    // ReSharper restore ConditionIsAlwaysTrueOrFalse
+                                    return ReferEngineServiceConfiguration.Local;
+                                }
+                        }
 
-                    throw new InvalidDataException(string.Format("Invalid currentServiceConfiguration: {0}",
-                                                                 currentServiceConfiguration));
+                        throw new InvalidDataException(string.Format("Invalid currentServiceConfiguration: {0}",
+                                                                     currentServiceConfiguration));
+                    }
+                    else
+                    {
+                        return ReferEngineServiceConfiguration.Local;
+                    }
                 }
-                else
+                catch (TypeInitializationException e)
                 {
-                    return ReferEngineServiceConfiguration.Local;
+                    // Unit Testing
+                    return ReferEngineServiceConfiguration.ProductionCloud;
                 }
             }
         }

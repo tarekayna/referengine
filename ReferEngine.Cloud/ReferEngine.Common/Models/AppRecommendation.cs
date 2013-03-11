@@ -1,4 +1,6 @@
 ﻿using System;
+using ReferEngine.Common.Data;
+using ReferEngine.Common.Email;
 
 namespace ReferEngine.Common.Models
 {
@@ -14,6 +16,15 @@ namespace ReferEngine.Common.Models
         public AppRecommendation()
         {
             DateTime = DateTime.UtcNow;
+        }
+
+        public static void ProcessNew(AppRecommendation recommendation)
+        {
+            DatabaseOperations.AddRecommendation(recommendation);
+
+            App app = DatabaseOperations.GetApp(recommendation.AppId);
+            Person person = DatabaseOperations.GetPerson(recommendation.PersonFacebookId);
+            ReferEmailer.SendRecommendationThankYouEmail(app, person);            
         }
     }
 }

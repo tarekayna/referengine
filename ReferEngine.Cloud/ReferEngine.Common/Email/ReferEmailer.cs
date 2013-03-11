@@ -34,7 +34,8 @@ namespace ReferEngine.Common.Email
         public static void ProcessPrivateBetaSignup(PrivateBetaSignup privateBetaSignup)
         {
             string body = "Hello! " + "\n\n";
-            body += "Thank you for signing up for Refer Engine's private beta. We will let you as soon as we are ready.\n\n";
+            body += "Thank you for requesting an invite to Refer Engine's private beta.";
+            body += "We will contact you soon.\n\n";
             body += "Tarek\n";
             body += "ReferEngine.com Founder and Developer";
 
@@ -52,8 +53,7 @@ namespace ReferEngine.Common.Email
                 body.AppendLine();
                 body.AppendLine(string.Format("Thank you for recommending {0} through Refer Engine!", app.Name));
                 body.AppendLine();
-                body.AppendLine(
-                    "Refer Engine will let you know when you earn a referral reward for this recommendation. Your recommendation will be eligible for a reward for the next 2 weeks.");
+                body.AppendLine("We appreciate your support for your favorite apps.");
                 body.AppendLine();
                 body.AppendLine("Thanks :),");
                 body.AppendLine("Tarek from ReferEngine.com");

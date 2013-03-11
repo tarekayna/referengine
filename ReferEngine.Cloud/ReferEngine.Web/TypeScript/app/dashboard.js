@@ -87,9 +87,7 @@ var Page = (function () {
             }),
             endDate: Date2.today(),
             minDate: '01/01/2012',
-            maxDate: Date2.today().add({
-                days: 1
-            }),
+            maxDate: Date2.today(),
             locale: {
                 applyLabel: null,
                 fromLabel: 'From',
@@ -284,6 +282,7 @@ var Chart = (function () {
                 who: Page.who,
                 startDate: startDate,
                 endDate: endDate,
+                timeZoneOffset: Date2.today().getUTCOffset(),
                 timespan: Page.timespan
             },
             dataType: "json",
@@ -342,6 +341,7 @@ var Table = (function () {
                 who: Page.who,
                 startDate: startDate,
                 endDate: endDate,
+                timeZoneOffset: Date2.today().getUTCOffset(),
                 timespan: Page.timespan
             },
             dataType: "json",
@@ -418,7 +418,8 @@ var Map = (function () {
                 id: re.appId,
                 who: Page.who,
                 startDate: startDate,
-                endDate: endDate
+                endDate: endDate,
+                timeZoneOffset: Date2.today().getUTCOffset()
             },
             dataType: "json",
             error: onSubmitError,
