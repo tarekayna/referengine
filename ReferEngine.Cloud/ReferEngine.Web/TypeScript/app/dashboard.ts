@@ -231,9 +231,9 @@ class Chart {
         Notifications.show("Error: could not update chart", NotificationType.error);
     }
     static refresh() {
-        var dateFormat = "dd MMMM yyyy";
+        var dateFormat = "dd MMMM yyyy"; 
         var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
-        var endDate = Page.endDate.toString(dateFormat) + " 23:59:59";
+        var endDate = Page.endDate.add({ days: 1 }).toString(dateFormat) + " 00:00:01";
         $.ajax("../GetAppDashboardChartData", {
             type: "POST",
             data: {
@@ -291,7 +291,7 @@ class Table {
     static refresh() {
         var dateFormat = "dd MMMM yyyy";
         var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
-        var endDate = Page.endDate.toString(dateFormat) + " 23:59:59";
+        var endDate = Page.endDate.add({ days: 1 }).toString(dateFormat) + " 00:00:01";
         $.ajax("../GetAppDashboardChartData", {
             type: "POST",
             data: {
@@ -329,7 +329,7 @@ class Map {
     static refresh = function () {
         var dateFormat = "dd MMMM yyyy";
         var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
-        var endDate = Page.endDate.toString(dateFormat) + " 23:59:59";
+        var endDate = Page.endDate.add({ days: 1 }).toString(dateFormat) + " 00:00:01";
 
         if (Map.map === null) {
             Map.map = new google.visualization.GeoChart(document.getElementById('map-canvas'));

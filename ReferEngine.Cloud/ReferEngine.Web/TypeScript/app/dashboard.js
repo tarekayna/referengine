@@ -274,7 +274,9 @@ var Chart = (function () {
     Chart.refresh = function refresh() {
         var dateFormat = "dd MMMM yyyy";
         var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
-        var endDate = Page.endDate.toString(dateFormat) + " 23:59:59";
+        var endDate = Page.endDate.add({
+            days: 1
+        }).toString(dateFormat) + " 00:00:01";
         $.ajax("../GetAppDashboardChartData", {
             type: "POST",
             data: {
@@ -333,7 +335,9 @@ var Table = (function () {
     Table.refresh = function refresh() {
         var dateFormat = "dd MMMM yyyy";
         var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
-        var endDate = Page.endDate.toString(dateFormat) + " 23:59:59";
+        var endDate = Page.endDate.add({
+            days: 1
+        }).toString(dateFormat) + " 00:00:01";
         $.ajax("../GetAppDashboardChartData", {
             type: "POST",
             data: {
@@ -376,7 +380,9 @@ var Map = (function () {
     Map.refresh = function () {
         var dateFormat = "dd MMMM yyyy";
         var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
-        var endDate = Page.endDate.toString(dateFormat) + " 23:59:59";
+        var endDate = Page.endDate.add({
+            days: 1
+        }).toString(dateFormat) + " 00:00:01";
         if(Map.map === null) {
             Map.map = new google.visualization.GeoChart(document.getElementById('map-canvas'));
             google.visualization.events.addListener(Map.map, 'regionClick', function (eventData) {
