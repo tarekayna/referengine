@@ -197,6 +197,10 @@
     <Compile Include="Migrations\201303081833347_logoLinkHighQuality.Designer.cs">
       <DependentUpon>201303081833347_logoLinkHighQuality.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303112358526_AppStoreLink.cs" />
+    <Compile Include="Migrations\201303112358526_AppStoreLink.Designer.cs">
+      <DependentUpon>201303112358526_AppStoreLink.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\AppRewardPlan.cs" />
     <Compile Include="Models\ChartUnitResult.cs" />
@@ -340,6 +344,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303081833347_logoLinkHighQuality.resx">
       <DependentUpon>201303081833347_logoLinkHighQuality.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303112358526_AppStoreLink.resx">
+      <DependentUpon>201303112358526_AppStoreLink.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
