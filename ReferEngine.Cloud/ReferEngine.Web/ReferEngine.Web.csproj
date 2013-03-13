@@ -290,6 +290,7 @@
     <Content Include="css\daterangepicker.css" />
     <Content Include="css\lib\jquery-ui.css" />
     <Content Include="docu\ChangeHistory.txt" />
+    <Content Include="favicon.ico" />
     <Content Include="js\pricing.js" />
     <Content Include="js\lib\require-jquery.js" />
     <Content Include="js\lib\require.js" />
@@ -302,6 +303,7 @@
     <Content Include="Less\app\new.min.css">
       <DependentUpon>new.less</DependentUpon>
     </Content>
+    <Content Include="robots.txt" />
     <Content Include="TypeScript\app\dashboard.min.js.map">
       <DependentUpon>.js</DependentUpon>
     </Content>
