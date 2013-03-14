@@ -1,3 +1,5 @@
+var ko;
+var Date2;
 var View;
 (function (View) {
     View._map = [];
@@ -7,9 +9,10 @@ var View;
     View.Map = 1;
     View._map[2] = "Chart";
     View.Chart = 2;
+    View._map[3] = "People";
+    View.People = 3;
 })(View || (View = {}));
 ;
-var Date2 = Date;
 var NotificationType = (function () {
     function NotificationType() { }
     NotificationType.none = "";
@@ -33,13 +36,18 @@ var Notifications = (function () {
 })();
 var Page = (function () {
     function Page() { }
-    Page.currentView = View.Table;
-    Page.who = "launched";
+    Page.currentView = View.Chart;
+    Page.who = "recommended";
     Page.timespan = "day";
-    Page.startDate = Date2.today().add({
-        days: -29
-    });
-    Page.endDate = Date2.today();
+    Page.getUnitName = function getUnitName() {
+        if(Page.who === "launched") {
+            return "App Launches";
+        } else if(Page.who === "intro") {
+            return "Intro Views";
+        } else if(Page.who === "recommended") {
+            return "Recommendations";
+        }
+    };
     Page.initDateRangePicker = function initDateRangePicker() {
         var ranges = {
             'Today': [
@@ -82,10 +90,8 @@ var Page = (function () {
             opens: 'left',
             format: 'MM/dd/yyyy',
             separator: ' to ',
-            startDate: Date2.today().add({
-                days: -29
-            }),
-            endDate: Date2.today(),
+            startDate: Page.startDate,
+            endDate: Page.endDate,
             minDate: '01/01/2012',
             maxDate: Date2.today(),
             locale: {
@@ -164,7 +170,7 @@ var Page = (function () {
                 Page.refreshView();
             }
         });
-        $('#date-range span').html("Last 30 days");
+        $('#date-range span').html("Last 7 Days");
     };
     Page.initWhoSelector = function initWhoSelector() {
         $(".who").click(function () {
@@ -185,6 +191,10 @@ var Page = (function () {
             e.preventDefault();
             $(this).tab('show');
         });
+        $('#peopleTab').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
         $('a[data-toggle="tab"]').on('shown', function (e) {
             if(e.target.hash === "#mapTab") {
                 Map.init();
@@ -194,6 +204,8 @@ var Page = (function () {
                 Page.currentView = View.Chart;
             } else if(e.target.hash === "#tableTab") {
                 Page.currentView = View.Table;
+            } else if(e.target.hash === "#peopleTab") {
+                Page.currentView = View.People;
             }
             Page.refreshView();
         });
@@ -205,9 +217,15 @@ var Page = (function () {
             Chart.refresh();
         } else if(Page.currentView === View.Map) {
             Map.refresh();
+        } else if(Page.currentView === View.People) {
+            People.refresh();
         }
     };
     Page.initPage = function initPage() {
+        Page.startDate = Date2.today().add({
+            days: -6
+        });
+        Page.endDate = Date2.today();
         Page.initTabs();
         Page.initDateRangePicker();
         Page.initWhoSelector();
@@ -242,7 +260,7 @@ var Chart = (function () {
         Chart.chartData = [];
         Chart.chartData.push([
             'Date', 
-            'Count'
+            '# of ' + Page.getUnitName()
         ]);
         for(var i = 0; i < data.length; i++) {
             Chart.chartData.push([
@@ -264,6 +282,9 @@ var Chart = (function () {
         }
         var dataTable = google.visualization.arrayToDataTable(Chart.chartData);
         var options = {
+            legend: {
+                position: 'bottom'
+            }
         };
         Chart.chart.draw(dataTable, options);
         Notifications.show("Success: map updated", NotificationType.success);
@@ -274,7 +295,7 @@ var Chart = (function () {
     Chart.refresh = function refresh() {
         var dateFormat = "dd MMMM yyyy";
         var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
-        var endDate = Page.endDate.add({
+        var endDate = Page.endDate.clone().add({
             days: 1
         }).toString(dateFormat) + " 00:00:01";
         $.ajax("../GetAppDashboardChartData", {
@@ -306,7 +327,7 @@ var Table = (function () {
         Table.tableData = [];
         Table.tableData.push([
             'Date', 
-            'Launch Count'
+            '# of ' + Page.getUnitName()
         ]);
         for(var i = 0; i < data.length; i++) {
             Table.tableData.push([
@@ -398,7 +419,7 @@ var Map = (function () {
             Map.mapData = [];
             Map.mapData.push([
                 'City', 
-                'Count'
+                '# of ' + Page.getUnitName()
             ]);
             for(var i = 0; i < data.length; i++) {
                 var l = data[i].City;
@@ -452,4 +473,61 @@ var Map = (function () {
     };
     return Map;
 })();
-$(document).ready(Page.initPage);
+var PeopleViewModel = (function () {
+    function PeopleViewModel() {
+        this.PeopleData = ko.observableArray();
+    }
+    return PeopleViewModel;
+})();
+var People = (function () {
+    function People() { }
+    People.isInitialized = false;
+    People.init = function init() {
+        if(!People.isInitialized) {
+            People.viewModel = new PeopleViewModel();
+            ko.applyBindings(People.viewModel);
+            People.isInitialized = true;
+        }
+    };
+    People.onDataRequestSuccess = function onDataRequestSuccess(data, textStatus, jqXhr) {
+        People.viewModel.PeopleData.removeAll();
+        for(var i = 0; i < data.length; i++) {
+            People.viewModel.PeopleData.push(data[i]);
+        }
+        Notifications.show("Success: people view updated", NotificationType.success);
+    };
+    People.onDataRequestError = function onDataRequestError(e) {
+        Notifications.show("Error: could not update people view", NotificationType.error);
+    };
+    People.refresh = function refresh() {
+        var dateFormat = "dd MMMM yyyy";
+        var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
+        var endDate = Page.endDate.clone().add({
+            days: 1
+        }).toString(dateFormat) + " 00:00:01";
+        $.ajax("../GetAppDashboardPeopleData", {
+            type: "POST",
+            data: {
+                id: re.appId,
+                who: "recommended",
+                startDate: startDate,
+                endDate: endDate,
+                timeZoneOffset: Date2.today().getUTCOffset()
+            },
+            dataType: "json",
+            error: People.onDataRequestError,
+            success: People.onDataRequestSuccess
+        });
+        Notifications.show("Updating people view...", NotificationType.info);
+    };
+    return People;
+})();
+require([
+    "../lib/knockout", 
+    "../lib/date.js", 
+    "../lib/daterangepicker.js"
+], function (_ko) {
+    ko = _ko;
+    Date2 = Date;
+    $(document).ready(Page.initPage);
+});

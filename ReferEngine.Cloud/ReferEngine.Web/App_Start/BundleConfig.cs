@@ -57,11 +57,6 @@ namespace ReferEngine.Web.App_Start
 
                     new BundleInfo("~/js/app/edit",
                                    "~/js/app/edit.js"),
-
-                    new BundleInfo("~/ts/app/dashboard",
-                                   "~/typescript/lib/date.js",
-                                   "~/typescript/lib/daterangepicker.js",                     
-                                   "~/typescript/app/dashboard.js")
                 };
             #endregion Script Bundles
 

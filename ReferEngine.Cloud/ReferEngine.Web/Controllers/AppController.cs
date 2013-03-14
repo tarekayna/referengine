@@ -81,7 +81,7 @@ namespace ReferEngine.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetAppDashboardChartData(long id, string who, string timeZoneOffset, 
+        public ActionResult GetAppDashboardChartData(long id, string who, string timeZoneOffset,
                                                      string startDate, string endDate, string timespan)
         {
             ViewProperties.CurrentApp = DataReader.GetApp(id);
@@ -97,6 +97,25 @@ namespace ReferEngine.Web.Controllers
             TimeSpan timeSpan = GetTimeSpan(timespan);
 
             var r = DatabaseOperations.GetAppActionCount(app, timeRange, timeSpan, who);
+            return Json(r);
+        }
+
+        [HttpPost]
+        public ActionResult GetAppDashboardPeopleData(long id, string who, string timeZoneOffset,
+                                                     string startDate, string endDate)
+        {
+            ViewProperties.CurrentApp = DataReader.GetApp(id);
+            App app = ViewProperties.CurrentApp;
+
+            if (ViewProperties.CurrentApp == null ||
+               (ViewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            TimeRange timeRange = ConvertClientDateTimeToUtcTimeRange(startDate, endDate, timeZoneOffset);
+            
+            var r = DatabaseOperations.GetAppRecommendationsPeople(app, timeRange, who);
             return Json(r);
         }
 

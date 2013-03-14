@@ -395,6 +395,35 @@ namespace ReferEngine.Common.Data
             }
         }
 
+        public static List<PeopleRecommendationUnitResult> GetAppRecommendationsPeople(App app, TimeRange timeRange, string who)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                var result = new List<PeopleRecommendationUnitResult>();
+                switch (who)
+                {
+                    case "recommended":
+                        var recommendations = from r in db.AppRecommendations
+                                              where app.Id == r.AppId &&
+                                                    timeRange.Start.CompareTo(r.DateTime) < 0 &&
+                                                    timeRange.End.CompareTo(r.DateTime) > 0
+                                              select r;
+                        result.AddRange(recommendations.Select(appRecommendation => new PeopleRecommendationUnitResult
+                                                                                        {
+                                                                                            AppRecommendation = appRecommendation, 
+                                                                                            IpAddressLocation = GetIpAddressLocation(appRecommendation.IpAddress), 
+                                                                                            Person = GetPerson(appRecommendation.PersonFacebookId)
+                                                                                        }));
+                        break;
+                    default:
+                        throw new InvalidOperationException();
+                }
+
+                return result;
+            }
+        }
+
+
         public static List<ChartUnitResult> GetAppActionCount(App app, TimeRange timeRange, TimeSpan timeSpan, string who)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
