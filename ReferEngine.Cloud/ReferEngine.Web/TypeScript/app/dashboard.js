@@ -205,6 +205,7 @@ var Page = (function () {
             } else if(e.target.hash === "#tableTab") {
                 Page.currentView = View.Table;
             } else if(e.target.hash === "#peopleTab") {
+                People.init();
                 Page.currentView = View.People;
             }
             Page.refreshView();
@@ -490,6 +491,9 @@ var People = (function () {
         }
     };
     People.onDataRequestSuccess = function onDataRequestSuccess(data, textStatus, jqXhr) {
+        if(!People.isInitialized) {
+            People.init();
+        }
         People.viewModel.PeopleData.removeAll();
         for(var i = 0; i < data.length; i++) {
             People.viewModel.PeopleData.push(data[i]);
@@ -524,8 +528,8 @@ var People = (function () {
 })();
 require([
     "../lib/knockout", 
-    "../lib/date.js", 
-    "../lib/daterangepicker.js"
+    "../lib/date", 
+    "../lib/daterangepicker"
 ], function (_ko) {
     ko = _ko;
     Date2 = Date;

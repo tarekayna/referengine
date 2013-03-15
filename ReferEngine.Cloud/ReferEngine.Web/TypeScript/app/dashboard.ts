@@ -169,6 +169,7 @@ class Page {
                 Page.currentView = View.Table;
             }
             else if (e.target.hash === "#peopleTab") {
+                People.init(); 
                 Page.currentView = View.People;
             }
             refreshView();
@@ -439,33 +440,19 @@ class PeopleViewModel {
 class People {
     static viewModel;
     static isInitialized = false;
-    //static how = "";
     static init() {
         if (!isInitialized) {
             viewModel = new PeopleViewModel();
             ko.applyBindings(viewModel);
-            //initHowSelector();
             isInitialized = true;
         }
     }
-    //static initHowSelector() {
-    //    $(".people-how").click(function () {
-    //        var how = $(this).attr("data-how");
-    //        if (People.how !== how) {
-    //            People.how = how;
-    //            People.refresh();
-    //        }
-    //        $("#current-how-people").text($(this).text());
-    //    });
-    //}
     static onDataRequestSuccess(data, textStatus, jqXhr) {
+        if (!People.isInitialized) People.init();
         viewModel.PeopleData.removeAll();
         for (var i = 0; i < data.length; i++) {
             viewModel.PeopleData.push(data[i]);
         }
-        //if (People.how === "line-people") {
-        //    People.people = new google.visualization.LinePeople(elem);
-        //}
         Notifications.show("Success: people view updated", NotificationType.success);
     }
     static onDataRequestError(e) {
@@ -491,13 +478,13 @@ class People {
         });
 
         Notifications.show("Updating people view...", NotificationType.info);
-    }
+    } 
 }
-
+ 
 require(["../lib/knockout",
-         "../lib/date.js",
-         "../lib/daterangepicker.js"], function (_ko) {
+         "../lib/date",
+         "../lib/daterangepicker"], function (_ko) {
              ko = _ko;
              Date2 = <any>Date;
                 $(document).ready(Page.initPage);
-});
+});  

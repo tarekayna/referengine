@@ -1,0 +1,65 @@
+Tella story: make it clear how this came to be
+developer > apps > problem is x > why is it difficualt
+make it very clear with what exists today
+audience is not going to know a thing about marketing apps
+(tabjoy, flurry, and others)
+
+Start with me
+
+stimulated this idea,
+
+differentiate yourself
+
+Seemed weaker: why would you start with Windows 8?
+Why getting a foothold in Windows 8 allows you to translate more readily into iOS and Android
+
+Where you cut and paste, what is nuget, easily find the snippet
+(dont show the developer experience, once the developer does this
+here is what the customer will see)
+
+What is a unique that you can articulate in a pitch?
+
+Clarify more then number of active users, 
+
+Projections: more compelling. use metrics to drive assumption
+
+Tough environment for a devleoper and leverage social as a viable channel. The alternatives
+are not great.
+
+this audience is a generalist audience. Talk to your 8 year old neice.
+
+Get people's attention: make it crystal clear what your business is.
+
+TELL A STORY
+MAKE THIS GRANDIOUSE, aloow developers to benefit from lots of people using it
+SIMPLIFIED everything to take the friction out
+putting supply and demand together.
+
+in the context of the big picture.
+
+Square: just a distributor.
+
+Developers can setup their own social marketing. Accelerating and expanding marketing for app developers.
+
+Pitch: get peoples attention, have a little passion, millions are devleping, millions are using, small developers
+create a context, make it sound important. 
+Pictures and Diagrams > explain what it does and not how it works
+
+More about the State of the Business.
+ - Do you actually have a product in the market that works
+ - Is anybody using it? is anybody paying for it?
+ - Team: part time advisors. Tom Olbert.
+ 
+ - Talk more about competition. better faster cheaper
+ - Financial: what is your go to market?
+ - Team: comfort that this is a real business
+ 10x 15x return
+ 
+ 17 mil is lower than average
+ 
+ - defined business model, but others ones that are logical and reaosnable to get into
+  instead of 17 mil it will be 117 mil
+  
+  play with with 12%
+  never say it is conservative
+  
