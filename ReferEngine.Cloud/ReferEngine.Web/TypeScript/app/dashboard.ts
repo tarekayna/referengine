@@ -1,15 +1,18 @@
-///<reference path='..\lib\jquery.d.ts' static='true' />
+/// <reference path='..\lib\jquery.d.ts' static='true' />
+/// <reference path="../lib/require.d.ts" static="true" />
 
 declare var google;
-declare var re; 
+declare var re;
+
+var ko;
+var Date2;
 
 enum View {
     Table,
     Map,
-    Chart
+    Chart,
+    People
 };
-
-var Date2 = <any>Date; 
 
 class NotificationType {
     static none = "";
@@ -29,11 +32,22 @@ class Notifications {
 }
 
 class Page {
-    static currentView: View = View.Table;
-    static who = "launched";
+    static currentView: View = View.Chart;
+    static who = "recommended";
     static timespan = "day";
-    static startDate = Date2.today().add({ days: -29 });
-    static endDate = Date2.today();
+    static getUnitName() {
+        if (who === "launched") {
+            return "App Launches";
+        }
+        else if (who === "intro") {
+            return "Intro Views";
+        }
+        else if (who === "recommended") {
+            return "Recommendations";
+        }
+    }
+    static startDate;
+    static endDate;
     static initDateRangePicker() {
         var ranges = {
             'Today': ['today', 'today', 'hour'],
@@ -49,8 +63,8 @@ class Page {
                opens: 'left',
                format: 'MM/dd/yyyy',
                separator: ' to ',
-               startDate: Date2.today().add({ days: -29 }),
-               endDate: Date2.today(),
+               startDate: startDate,
+               endDate: endDate,
                minDate: '01/01/2012',
                maxDate: Date2.today(),
                locale: {
@@ -112,7 +126,7 @@ class Page {
         );
 
         //Set the initial state of the picker label
-        $('#date-range span').html("Last 30 days");
+        $('#date-range span').html("Last 7 Days");
         //$('#date-range span').html(Date2.today().add({ days: -29 }).toString('MMMM d, yyyy') + ' - ' + Date2.today().toString('MMMM d, yyyy'));
 
     }
@@ -137,6 +151,11 @@ class Page {
             $(this).tab('show');
         });
 
+        $('#peopleTab').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+
         $('a[data-toggle="tab"]').on('shown', function (e) {
             if (e.target.hash === "#mapTab") {
                 Map.init();
@@ -148,6 +167,9 @@ class Page {
             }
             else if (e.target.hash === "#tableTab") {
                 Page.currentView = View.Table;
+            }
+            else if (e.target.hash === "#peopleTab") {
+                Page.currentView = View.People;
             }
             refreshView();
         })
@@ -162,8 +184,13 @@ class Page {
         else if (currentView === View.Map) {
             Map.refresh();
         }
+        else if (currentView === View.People) {
+            People.refresh();
+        }
     }
     static initPage() {
+        startDate = Date2.today().add({ days: -6 });
+        endDate = Date2.today();
         initTabs();
         initDateRangePicker();
         initWhoSelector();
@@ -196,7 +223,7 @@ class Chart {
     static onDataRequestSuccess(data, textStatus, jqXhr) {
         Chart.chartData = [];
         Chart.chartData.push(['Date',
-                              'Count']);
+                              '# of ' + Page.getUnitName()]);
         for (var i = 0; i < data.length; i++) {
             Chart.chartData.push([data[i].Desc,
                                   data[i].Result]);
@@ -221,7 +248,9 @@ class Chart {
         var dataTable = google.visualization.arrayToDataTable(Chart.chartData);
 
         var options = {
-            //title: 'My Daily Activities'
+            legend: {
+                position: 'bottom'
+            }
         };
 
         chart.draw(dataTable, options);
@@ -231,9 +260,10 @@ class Chart {
         Notifications.show("Error: could not update chart", NotificationType.error);
     }
     static refresh() {
-        var dateFormat = "dd MMMM yyyy"; 
+        var dateFormat = "dd MMMM yyyy";
         var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
-        var endDate = Page.endDate.add({ days: 1 }).toString(dateFormat) + " 00:00:01";
+
+        var endDate = Page.endDate.clone().add({ days: 1 }).toString(dateFormat) + " 00:00:01";
         $.ajax("../GetAppDashboardChartData", {
             type: "POST",
             data: {
@@ -262,7 +292,7 @@ class Table {
     static onDataRequestSuccess(data, textStatus, jqXhr) {
         Table.tableData = [];
         Table.tableData.push(['Date',
-                              'Launch Count']);
+                              '# of ' + Page.getUnitName()]);
         for (var i = 0; i < data.length; i++) {
             Table.tableData.push([data[i].Desc,
                                   data[i].Result]);
@@ -346,7 +376,7 @@ class Map {
 
         var onSubmitSuccess = function (data, textStatus, jqXhr) {
             Map.mapData = [];
-            Map.mapData.push(['City', 'Count']);
+            Map.mapData.push(['City', '# of ' + Page.getUnitName()]);
             for (var i = 0; i < data.length; i++) {
                 var l = data[i].City;
                 if (data[i].Region) {
@@ -399,5 +429,75 @@ class Map {
     }
 }
 
-$(document).ready(Page.initPage);
+class PeopleViewModel {
+    constructor() {
+        this.PeopleData = ko.observableArray();
+    }
+    PeopleData: any;
+}
 
+class People {
+    static viewModel;
+    static isInitialized = false;
+    //static how = "";
+    static init() {
+        if (!isInitialized) {
+            viewModel = new PeopleViewModel();
+            ko.applyBindings(viewModel);
+            //initHowSelector();
+            isInitialized = true;
+        }
+    }
+    //static initHowSelector() {
+    //    $(".people-how").click(function () {
+    //        var how = $(this).attr("data-how");
+    //        if (People.how !== how) {
+    //            People.how = how;
+    //            People.refresh();
+    //        }
+    //        $("#current-how-people").text($(this).text());
+    //    });
+    //}
+    static onDataRequestSuccess(data, textStatus, jqXhr) {
+        viewModel.PeopleData.removeAll();
+        for (var i = 0; i < data.length; i++) {
+            viewModel.PeopleData.push(data[i]);
+        }
+        //if (People.how === "line-people") {
+        //    People.people = new google.visualization.LinePeople(elem);
+        //}
+        Notifications.show("Success: people view updated", NotificationType.success);
+    }
+    static onDataRequestError(e) {
+        Notifications.show("Error: could not update people view", NotificationType.error);
+    }
+    static refresh() {
+        var dateFormat = "dd MMMM yyyy";
+        var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
+
+        var endDate = Page.endDate.clone().add({ days: 1 }).toString(dateFormat) + " 00:00:01";
+        $.ajax("../GetAppDashboardPeopleData", {
+            type: "POST",
+            data: {
+                id: re.appId,
+                who: "recommended",
+                startDate: startDate,
+                endDate: endDate,
+                timeZoneOffset: Date2.today().getUTCOffset()
+            },
+            dataType: "json",
+            error: onDataRequestError,
+            success: onDataRequestSuccess
+        });
+
+        Notifications.show("Updating people view...", NotificationType.info);
+    }
+}
+
+require(["../lib/knockout",
+         "../lib/date.js",
+         "../lib/daterangepicker.js"], function (_ko) {
+             ko = _ko;
+             Date2 = <any>Date;
+                $(document).ready(Page.initPage);
+});

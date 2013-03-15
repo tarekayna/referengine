@@ -15,7 +15,7 @@
         window.re.appId = @Model.Id;
         window.re.appName = "@Model.Name";
     </script>
-    @Scripts.Render("~/ts/app/dashboard");
+    <script data-main="/typescript/app/dashboard.js" type="text/javascript" src="~/typescript/lib/require.js"></script> 
 }
 
 <div id="content">
@@ -26,7 +26,7 @@
                 <div class="btn-group">
                     <a class="btn disabled">Customers who:</a>
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span id="current-who">launched @Model.Name</span>
+                        <span id="current-who">recommended @Model.Name</span>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -47,19 +47,20 @@
         </div>        
                
         <ul class="nav nav-tabs" id="myTab">
-            <li class="active"><a href="#tableTab" data-toggle="tab">Table</a></li>
-            <li><a href="#chartTab" data-toggle="tab">Chart</a></li>
+            <li><a href="#tableTab" data-toggle="tab">Table</a></li>
+            <li class="active"><a href="#chartTab" data-toggle="tab">Chart</a></li>
             <li><a href="#mapTab" data-toggle="tab">Map</a></li>
+            <li><a href="#peopleTab" data-toggle="tab">People</a></li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane active" id="tableTab">
+            <div class="tab-pane" id="tableTab">
                 <div class="row">
                     <div class="span6 offset3">
                         <div id="table" class="img-polaroid"></div>
                     </div>
                 </div>
             </div>
-            <div class="tab-pane" id="chartTab">
+            <div class="tab-pane active" id="chartTab">
                 <div class="row">
                     <div id="chart" class="img-polaroid"></div>
                 </div>
@@ -90,6 +91,18 @@
                     </div>
                 </div>
                 @* End: Map*@
+            </div>
+            <div class="tab-pane" id="peopleTab">
+                <!-- ko foreach: PeopleData -->
+                    <div class="row">
+                        <div class="span2">
+                            <img data-bind="attr:{src: Person.PictureUrl}" />
+                        </div>
+                        <div class="span2">
+                            <img data-bind="attr:{src: Person.Name}" />
+                        </div>
+                    </div>
+                <!-- /ko -->
             </div>
         </div>
     </div>
