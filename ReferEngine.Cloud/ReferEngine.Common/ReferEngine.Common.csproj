@@ -201,6 +201,10 @@
     <Compile Include="Migrations\201303112358526_AppStoreLink.Designer.cs">
       <DependentUpon>201303112358526_AppStoreLink.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303151803169_NumberOfFriends.cs" />
+    <Compile Include="Migrations\201303151803169_NumberOfFriends.Designer.cs">
+      <DependentUpon>201303151803169_NumberOfFriends.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\AppRewardPlan.cs" />
     <Compile Include="Models\ChartUnitResult.cs" />
@@ -348,6 +352,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303112358526_AppStoreLink.resx">
       <DependentUpon>201303112358526_AppStoreLink.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303151803169_NumberOfFriends.resx">
+      <DependentUpon>201303151803169_NumberOfFriends.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

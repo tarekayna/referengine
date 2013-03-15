@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Diagnostics;
 using Itenso.TimePeriod;
 using Microsoft.ServiceBus.Messaging;
 using ReferEngine.Common.Models;
@@ -87,8 +88,16 @@ namespace ReferEngine.Common.Data
             {
                 using (var db = new ReferEngineDatabaseContext())
                 {
-                    person = db.People.First(p => p.FacebookId == facebookId);
-                    CacheOperations.AddPerson(person);
+                    person = db.People.FirstOrDefault(p => p.FacebookId == facebookId);
+
+                    if (person == null)
+                    {
+                        Trace.TraceWarning("GetPerson returned null: " + facebookId);
+                    }
+                    else
+                    {
+                        CacheOperations.AddPerson(person);
+                    }
                 }
             }
 
@@ -161,6 +170,7 @@ namespace ReferEngine.Common.Data
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
+                person.NumberOfFriends = friends.Count();
                 AddOrUpdatePerson(person, db);
 
                 foreach (var friend in friends)
@@ -407,11 +417,12 @@ namespace ReferEngine.Common.Data
                                               where app.Id == r.AppId &&
                                                     timeRange.Start.CompareTo(r.DateTime) < 0 &&
                                                     timeRange.End.CompareTo(r.DateTime) > 0
+                                              orderby r.DateTime descending
                                               select r;
                         foreach (AppRecommendation appRecommendation in recommendations)
                         {
-                            var person = GetPerson(appRecommendation.PersonFacebookId);
-                            var location = GetIpAddressLocation(appRecommendation.IpAddress);
+                            var person = GetPerson(appRecommendation.PersonFacebookId) ?? new Person(true);
+                            var location = appRecommendation.IpAddress == null ? null : GetIpAddressLocation(appRecommendation.IpAddress);
                             var res = new PersonRecommendationUnitResult(person, location, appRecommendation);
                             result.Add(res);
                         }
@@ -421,6 +432,14 @@ namespace ReferEngine.Common.Data
                 }
 
                 return result;
+            }
+        }
+
+        public static int GetNumberOfFriends(Person person)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                return db.Friendships.Count(f => f.Person1FacebookId == person.FacebookId);
             }
         }
 

@@ -9,6 +9,35 @@ namespace ReferEngine.Common.Models
     [DataContract]
     public class Person
     {
+        public Person() { }
+
+        public Person(bool isJohnSmith = false)
+        {
+            if (isJohnSmith)
+            {
+                Name = "A Customer";
+                FirstName = "John";
+                LastName = "Smith";
+                FacebookId = 0;
+                PictureUrl = "https://fbcdn-profile-a.akamaihd.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif";
+            }
+        }
+
+        public Person(dynamic person)
+        {
+            FacebookId = Convert.ToInt64(person.id);
+            Name = person.name;
+            FirstName = person.first_name;
+            LastName = person.last_name;
+            Email = person.email;
+            Gender = person.gender;
+            Timezone = Convert.ToInt32(person.timezone);
+            Verified = Convert.ToBoolean(person.verified);
+            PictureUrl = person.picture != null && person.picture.data != null ? person.picture.data.url : null;
+            PictureIsSilhouette = person.picture != null && person.picture.data != null ? person.picture.data.is_silhouette : null;
+            NumberOfFriends = 0;
+        }
+
         [DataMember]
         public Int64 FacebookId { get; set; }
 
@@ -37,23 +66,10 @@ namespace ReferEngine.Common.Models
         public string PictureUrl { get; set; }
 
         [DataMember]
+        public int NumberOfFriends { get; set; }
+
+        [DataMember]
         public bool PictureIsSilhouette { get; set; }
-
-        public Person(){}
-
-        public Person(dynamic person)
-        {
-            FacebookId = Convert.ToInt64(person.id);
-            Name = person.name;
-            FirstName = person.first_name;
-            LastName = person.last_name;
-            Email = person.email;
-            Gender = person.gender;
-            Timezone = Convert.ToInt32(person.timezone);
-            Verified = Convert.ToBoolean(person.verified);
-            PictureUrl = person.picture != null && person.picture.data != null ? person.picture.data.url : null;
-            PictureIsSilhouette = person.picture != null && person.picture.data != null ? person.picture.data.is_silhouette : null;
-        }
 
         public void Update(Person latestPerson)
         {
@@ -70,6 +86,7 @@ namespace ReferEngine.Common.Models
             PictureIsSilhouette = latestPerson.PictureUrl != null ? latestPerson.PictureIsSilhouette : PictureIsSilhouette;
             PictureUrl = latestPerson.PictureUrl ?? PictureUrl;
             Verified = latestPerson.Verified;
+            NumberOfFriends = latestPerson.NumberOfFriends;
         }
 
         public static string Serialize(IList<Person> people)

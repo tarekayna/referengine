@@ -93,20 +93,26 @@
             </div>
             <div class="tab-pane" id="peopleTab">
                 <!-- ko foreach: PeopleData -->
-                <div class="row" style="margin-bottom: 20px; color: gray; line-height: normal">
-                    <span class="span1 offset1">
-                        <img data-bind="attr:{src: PictureUrl}" />                        
-                    </span>
-                    <span class="span10" style="font-family: Lucida Grande">
-                        <p style="font-size: 12px">
-                            <span data-bind="text: Name" style=" font-weight: bold !important; color: #3b5998"></span>
-                            recommended @Model.Name.
-                        </p> 
-                        <p style="font-size: 11px; margin-top: -10px !important;">
-                            near <span data-bind="text: Location"></span>
-                        </p>
-                        <p style="font-size: 13px" data-bind="text: UserMessage"></p>
-                    </span>
+                <div class="row" style="margin-bottom: 18px; color: gray; line-height: normal">
+                    <div class="storyContainer span10 offset1" style="border-top: 1px solid #e9e9e9; padding: 18px 0 0 18px; border-left: 1px solid #e9e9e9;
+                                                                      font-family: 'lucida grande',tahoma,verdana,arial,sans-serif">
+                        <span class="" style="float: left; padding-right: 18px; height: 80px">
+                            <img data-bind="attr:{src: PictureUrl}" />                        
+                        </span>
+                        <span class="" style="padding-left: 86px">
+                            <p style="font-size: 13px">
+                                <span data-bind="text: Name" style=" font-weight: bold !important; color: #3b5998"></span>
+                                recommended @Model.Name<span data-bind="text: ToFriends"></span>.
+                            </p> 
+                            <p style="font-size: 11px; color: #999; margin-top: -5px !important;">
+                                <span data-bind="text: Time"></span>
+                                <span data-bind="visible: Location">
+                                    near <span data-bind="text: Location"></span>
+                                </span>
+                            </p>
+                            <p style="font-size: 13px; color:#333" data-bind="text: UserMessage"></p>
+                        </span>                        
+                    </div>
                 </div>
                 <!-- /ko -->
             </div>
