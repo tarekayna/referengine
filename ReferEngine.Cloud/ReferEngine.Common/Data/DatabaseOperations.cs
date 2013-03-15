@@ -395,11 +395,11 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static List<PeopleRecommendationUnitResult> GetAppRecommendationsPeople(App app, TimeRange timeRange, string who)
+        public static List<PersonRecommendationUnitResult> GetAppRecommendationsPeople(App app, TimeRange timeRange, string who)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
-                var result = new List<PeopleRecommendationUnitResult>();
+                var result = new List<PersonRecommendationUnitResult>();
                 switch (who)
                 {
                     case "recommended":
@@ -408,12 +408,13 @@ namespace ReferEngine.Common.Data
                                                     timeRange.Start.CompareTo(r.DateTime) < 0 &&
                                                     timeRange.End.CompareTo(r.DateTime) > 0
                                               select r;
-                        result.AddRange(recommendations.Select(appRecommendation => new PeopleRecommendationUnitResult
-                                                                                        {
-                                                                                            AppRecommendation = appRecommendation, 
-                                                                                            IpAddressLocation = GetIpAddressLocation(appRecommendation.IpAddress), 
-                                                                                            Person = GetPerson(appRecommendation.PersonFacebookId)
-                                                                                        }));
+                        foreach (AppRecommendation appRecommendation in recommendations)
+                        {
+                            var person = GetPerson(appRecommendation.PersonFacebookId);
+                            var location = GetIpAddressLocation(appRecommendation.IpAddress);
+                            var res = new PersonRecommendationUnitResult(person, location, appRecommendation);
+                            result.Add(res);
+                        }
                         break;
                     default:
                         throw new InvalidOperationException();
@@ -641,29 +642,36 @@ namespace ReferEngine.Common.Data
 
         public static IpAddressLocation GetIpAddressLocation(string ipAddress)
         {
-            IpAddressLocation ipAddressLocation = CacheOperations.GetIpAddressLocation(ipAddress);
-            if (ipAddressLocation == null)
+            var loc = CacheOperations.GetIpAddressLocation(ipAddress);
+            if (loc == null)
             {
                 using (var db = new ReferEngineDatabaseContext())
                 {
-                    ipAddressLocation =
-                        db.IpAddressLocations.SingleOrDefault(
-                            l => l.IpAddress.Equals(ipAddress, StringComparison.OrdinalIgnoreCase));
-                    if (ipAddressLocation == null)
+                    loc =
+                        db.IpAddressLocations.SingleOrDefault(l => l.IpAddress.Equals(ipAddress, StringComparison.OrdinalIgnoreCase));
+                    if (loc == null)
                     {
-                        ipAddressLocation = IpCheckOperations.CheckIpAddress(ipAddress);
-                        if (ipAddressLocation != null)
+                        if (ipAddress == "127.0.0.1")
                         {
-                            ipAddressLocation.IpAddress = ipAddress;
-                            db.IpAddressLocations.Add(ipAddressLocation);
-                            db.SaveChanges();
+                            loc =
+                                db.IpAddressLocations.FirstOrDefault(l => l.City.Equals("Seattle", StringComparison.OrdinalIgnoreCase));
+                        }
+                        if (loc == null)
+                        {
+                            loc = IpCheckOperations.CheckIpAddress(ipAddress);
+                            if (loc != null)
+                            {
+                                loc.IpAddress = ipAddress;
+                                db.IpAddressLocations.Add(loc);
+                                db.SaveChanges();
+                            }
                         }
                     }
                 }
 
-                CacheOperations.SetIpAddressLocation(ipAddressLocation);
+                CacheOperations.SetIpAddressLocation(loc);
             }
-            return ipAddressLocation;
+            return loc;
         }
 
         public static AppAuthorization GetAppAuthorization(string token)

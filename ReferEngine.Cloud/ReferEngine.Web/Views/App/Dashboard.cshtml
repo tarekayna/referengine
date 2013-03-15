@@ -1,5 +1,4 @@
-﻿@using ReferEngine.Common.Models
-@model ReferEngine.Common.Models.App
+﻿@model ReferEngine.Common.Models.App
 
 @section styles {
     @Styles.Render("~/less/app/dashboard");
@@ -94,14 +93,21 @@
             </div>
             <div class="tab-pane" id="peopleTab">
                 <!-- ko foreach: PeopleData -->
-                    <div class="row">
-                        <div class="span2">
-                            <img data-bind="attr:{src: Person.PictureUrl}" />
-                        </div>
-                        <div class="span2">
-                            <img data-bind="attr:{src: Person.Name}" />
-                        </div>
-                    </div>
+                <div class="row" style="margin-bottom: 20px; color: gray; line-height: normal">
+                    <span class="span1 offset1">
+                        <img data-bind="attr:{src: PictureUrl}" />                        
+                    </span>
+                    <span class="span10" style="font-family: Lucida Grande">
+                        <p style="font-size: 12px">
+                            <span data-bind="text: Name" style=" font-weight: bold !important; color: #3b5998"></span>
+                            recommended @Model.Name.
+                        </p> 
+                        <p style="font-size: 11px; margin-top: -10px !important;">
+                            near <span data-bind="text: Location"></span>
+                        </p>
+                        <p style="font-size: 13px" data-bind="text: UserMessage"></p>
+                    </span>
+                </div>
                 <!-- /ko -->
             </div>
         </div>
