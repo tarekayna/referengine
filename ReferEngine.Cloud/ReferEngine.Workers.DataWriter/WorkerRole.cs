@@ -60,6 +60,33 @@ namespace ReferEngine.Workers.DataWriter
                                     DatabaseOperations.AddPrivateBetaSignup(privateBetaSignup);
                                     break;
                                 }
+                            case "ReferEngine.Common.Models.FacebookPageViewInfo":
+                                {
+                                    FacebookPageViewInfo viewInfo = message.GetBody<FacebookPageViewInfo>();
+                                    DatabaseOperations.GetIpAddressLocation(viewInfo.IpAddress);
+
+                                    long facebookPostId = 0;
+                                    try
+                                    {
+                                        facebookPostId = Convert.ToInt64(viewInfo.ActionId);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        Trace.TraceWarning("Invalid ActionId: " + viewInfo.ActionId);
+                                    }
+
+                                    AppRecommendation recommendation = DatabaseOperations.GetAppRecommendation(facebookPostId);
+
+                                    FacebookPageView pageView = new FacebookPageView
+                                    {
+                                        AppId = viewInfo.AppId,
+                                        AppRecommendationFacebookPostId = recommendation != null ? recommendation.FacebookPostId : 0,
+                                        TimeStamp = viewInfo.TimeStamp,
+                                        IpAddress = viewInfo.IpAddress
+                                    };
+                                    DatabaseOperations.AddFacebookPageView(pageView);
+                                    break;
+                                }
                         }
 
                         message.Complete();

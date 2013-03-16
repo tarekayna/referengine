@@ -382,7 +382,15 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static IList<AppRecommendation> GetAppRecommdations(long appId, int count = -1)
+        public static AppRecommendation GetAppRecommendation(long facebookPostId)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                return db.AppRecommendations.FirstOrDefault(r => r.FacebookPostId == facebookPostId);
+            }
+        }
+
+        public static IList<AppRecommendation> GetAppRecommendations(long appId, int count = -1)
         {
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
@@ -736,6 +744,15 @@ namespace ReferEngine.Common.Data
                 }
             }
             return options;
+        }
+
+        public static void AddFacebookPageView(FacebookPageView facebookPageView)
+        {
+            using (var db = new ReferEngineDatabaseContext())
+            {
+                db.FacebookPageViews.Add(facebookPageView);
+                db.SaveChanges();
+            }
         }
     }
 }

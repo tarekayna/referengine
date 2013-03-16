@@ -57,7 +57,7 @@ namespace ReferEngine.Workers.Pinger
             _websitesToPing = new List<string>
                 {
                     string.Format("{0}/", baseUrl),
-                    string.Format("{0}/fb/app/{1}", baseUrl, BluGraphingCalculatorAppId),
+                    //string.Format("{0}/fb/app/{1}", baseUrl, BluGraphingCalculatorAppId),
                     string.Format("{0}/recommend/win8/intro/{1}", baseUrl, BluGraphingCalculatorAppId),
                     string.Format("{0}/pricing", baseUrl),
                     string.Format("{0}/contact", baseUrl),

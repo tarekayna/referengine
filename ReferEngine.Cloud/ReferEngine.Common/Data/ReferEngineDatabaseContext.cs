@@ -35,6 +35,7 @@ namespace ReferEngine.Common.Data
         public DbSet<AppAuthorization> AppAuthorizations { get; set; }
         public DbSet<AppAutoShowOptions> AppAutoShowOptions { get; set; }
         public DbSet<AppRewardPlan> AppRewardPlans { get; set; }
+        public DbSet<FacebookPageView> FacebookPageViews { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {

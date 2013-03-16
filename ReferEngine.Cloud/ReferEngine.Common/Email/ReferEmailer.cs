@@ -46,21 +46,20 @@ namespace ReferEngine.Common.Email
 
         public static void SendRecommendationThankYouEmail(App app, Person person)
         {
-            if (!string.IsNullOrEmpty(person.Email))
-            {
-                StringBuilder body = new StringBuilder();
-                body.AppendLine(person.FirstName != null ? "Hi " + person.FirstName + "," : "Hello!");
-                body.AppendLine();
-                body.AppendLine(string.Format("Thank you for recommending {0} through Refer Engine!", app.Name));
-                body.AppendLine();
-                body.AppendLine("We appreciate your support for your favorite apps.");
-                body.AppendLine();
-                body.AppendLine("Thanks :),");
-                body.AppendLine("Tarek from ReferEngine.com");
+            if (app == null || person == null) return;
+            if (string.IsNullOrEmpty(person.Email)) return;
+            StringBuilder body = new StringBuilder();
+            body.AppendLine(person.FirstName != null ? "Hi " + person.FirstName + "," : "Hello!");
+            body.AppendLine();
+            body.AppendLine(string.Format("Thank you for recommending {0} through Refer Engine!", app.Name));
+            body.AppendLine();
+            body.AppendLine("We appreciate your support for your favorite apps.");
+            body.AppendLine();
+            body.AppendLine("Thanks :),");
+            body.AppendLine("Tarek from ReferEngine.com");
 
-                string subject = string.Format("{0} Recommendation", app.Name);
-                SendPlainTextEmail(person.Email, subject, body.ToString());
-            }
+            string subject = string.Format("{0} Recommendation", app.Name);
+            SendPlainTextEmail(person.Email, subject, body.ToString());
         }
 
         public static void SendConfirmationCodeEmail(ConfirmationCodeModel model)

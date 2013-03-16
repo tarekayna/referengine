@@ -40,6 +40,7 @@ namespace ReferEngine.Common.Data
             Queues.Add(new Queue(namespaceManager, messagingFactory, "AppScreenshot", typeof(AppScreenshot)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "PrivateBetaSignup", typeof(PrivateBetaSignup)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "AppReceipt", typeof(AppReceipt)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "FacebookPageViewInfo", typeof(FacebookPageViewInfo)));
         }
 
         public static void AddToQueue(Object objectToQueue)

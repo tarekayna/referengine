@@ -205,9 +205,15 @@
     <Compile Include="Migrations\201303151803169_NumberOfFriends.Designer.cs">
       <DependentUpon>201303151803169_NumberOfFriends.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303152358592_FacebookPageView.cs" />
+    <Compile Include="Migrations\201303152358592_FacebookPageView.Designer.cs">
+      <DependentUpon>201303152358592_FacebookPageView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\AppRewardPlan.cs" />
     <Compile Include="Models\ChartUnitResult.cs" />
+    <Compile Include="Models\FacebookPageViewInfo.cs" />
+    <Compile Include="Models\FacebookPageView.cs" />
     <Compile Include="Models\PersonRecommendationUnitResult.cs" />
     <Compile Include="Models\MapUnitResult.cs" />
     <Compile Include="Models\IpAddressLocation.cs" />
@@ -355,6 +361,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303151803169_NumberOfFriends.resx">
       <DependentUpon>201303151803169_NumberOfFriends.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303152358592_FacebookPageView.resx">
+      <DependentUpon>201303152358592_FacebookPageView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Diagnostics;
+using System.Web.Mvc;
+using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Web.DataAccess;
@@ -15,6 +18,15 @@ namespace ReferEngine.Web.Controllers
         {
             UserAgentProperties userAgentProperties = new UserAgentProperties(Request.UserAgent);
             App app = DataReader.GetApp(id);
+
+            FacebookPageViewInfo viewInfo = new FacebookPageViewInfo()
+                                                    {
+                                                        TimeStamp = DateTime.UtcNow,
+                                                        ActionId = fb_action_ids,
+                                                        AppId = id,
+                                                        IpAddress = Request.UserHostAddress
+                                                    };
+            ServiceBusOperations.AddToQueue(viewInfo);
 
             return View(new FacebookAppViewModel(app, userAgentProperties));
         }
