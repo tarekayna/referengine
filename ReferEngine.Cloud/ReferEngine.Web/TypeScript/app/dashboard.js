@@ -357,7 +357,7 @@ var Table = (function () {
     Table.refresh = function refresh() {
         var dateFormat = "dd MMMM yyyy";
         var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
-        var endDate = Page.endDate.add({
+        var endDate = Page.endDate.clone().add({
             days: 1
         }).toString(dateFormat) + " 00:00:01";
         $.ajax("../GetAppDashboardChartData", {
@@ -402,7 +402,7 @@ var Map = (function () {
     Map.refresh = function () {
         var dateFormat = "dd MMMM yyyy";
         var startDate = Page.startDate.toString(dateFormat) + " 00:00:00";
-        var endDate = Page.endDate.add({
+        var endDate = Page.endDate.clone().add({
             days: 1
         }).toString(dateFormat) + " 00:00:01";
         if(Map.map === null) {

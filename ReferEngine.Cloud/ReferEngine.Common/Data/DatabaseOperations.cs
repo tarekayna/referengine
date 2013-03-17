@@ -638,7 +638,8 @@ namespace ReferEngine.Common.Data
                         Platform = "Windows 8",
                         Publisher = appInfo.Developer,
                         RewardPlan = rewardPlan,
-                        AppStoreLink = appInfo.AppStoreLink
+                        AppStoreLink = appInfo.AppStoreLink,
+                        UserId = user.Id
                     };
                 App addedApp = db.Apps.Add(app);
                 db.SaveChanges();

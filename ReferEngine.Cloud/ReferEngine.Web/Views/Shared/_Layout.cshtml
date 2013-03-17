@@ -52,7 +52,7 @@
                                     <button class="btn dropdown-toggle" data-toggle="dropdown">
                                         @if (ViewProperties.CurrentApp == null)
                                         {
-                                            <span>My Apps</span>
+                                            <span>Your Apps</span>
                                         }
                                         else
                                         {
@@ -77,6 +77,13 @@
                         </ul>
 
                         <div class="nav-collapse collapse">
+                            @if (ViewProperties.CurrentApp != null)
+                            {
+                                <ul class="nav pull-left">
+                                    <li><a href="~/app/dashboard/@ViewProperties.CurrentApp.Id">Dashboard</a></li>
+                                    <li><a href="~/app/settings/@ViewProperties.CurrentApp.Id">Settings</a></li>
+                                </ul>
+                            }
                             <ul class="nav pull-right">
                                 @if (User.IsInRole("Admin"))
                                 {

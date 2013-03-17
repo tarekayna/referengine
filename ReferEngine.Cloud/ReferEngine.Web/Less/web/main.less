@@ -1,4 +1,6 @@
-﻿.navbar
+﻿@headerFontSize: 14px;
+
+.navbar
 {
     .brand
     {
@@ -10,11 +12,21 @@
         > li {
             > a {
                 color: #394755;
+                padding: 10px;
+
+                &:not(.btn) {
+                    font-size: @headerFontSize;
+                }
             }
 
             &.active > a {
                 color: #394755;
             }
+        }
+
+        .btn,
+        .btn-group li {
+            font-size: @headerFontSize;
         }
     }
 }
@@ -24,8 +36,6 @@
     margin-top: 20px;
 }
 #try-button a {
-    /*font-weight: bold !important;
-    letter-spacing: 0.03em;*/
     margin-top: 20px;
 }
 

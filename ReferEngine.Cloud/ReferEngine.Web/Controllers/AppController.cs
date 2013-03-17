@@ -46,7 +46,25 @@ namespace ReferEngine.Web.Controllers
         public ActionResult Dashboard(long id)
         {
             ViewProperties.CurrentApp = DataReader.GetApp(id);
-            
+
+            if (ViewProperties.CurrentApp != null &&
+               (ViewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
+            {
+                if (Util.CurrentServiceConfiguration != Util.ReferEngineServiceConfiguration.Local)
+                {
+                    string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
+                    DatabaseOperations.GetIpAddressLocation(ip);
+                }
+                return View(ViewProperties.CurrentApp);
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+        }
+
+        public ActionResult Settings(long id)
+        {
+            ViewProperties.CurrentApp = DataReader.GetApp(id);
+
             if (ViewProperties.CurrentApp != null &&
                (ViewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
             {

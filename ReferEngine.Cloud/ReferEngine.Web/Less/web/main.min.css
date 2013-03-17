@@ -1,1 +1,1 @@
-﻿.navbar .brand{padding-top:0;padding-bottom:0}.navbar .nav>li>a{color:#394755}.navbar .nav>li.active>a{color:#394755}#footer{padding-top:0;margin-top:20px}#try-button a{margin-top:20px}#login-group{margin-left:20px}
+﻿.navbar .brand{padding-top:0;padding-bottom:0}.navbar .nav>li>a{color:#394755;padding:10px}.navbar .nav>li>a:not(.btn){font-size:14px}.navbar .nav>li.active>a{color:#394755}.navbar .nav .btn,.navbar .nav .btn-group li{font-size:14px}#footer{padding-top:0;margin-top:20px}#try-button a{margin-top:20px}#login-group{margin-left:20px}
