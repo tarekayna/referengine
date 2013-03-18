@@ -209,6 +209,10 @@
     <Compile Include="Migrations\201303152358592_FacebookPageView.Designer.cs">
       <DependentUpon>201303152358592_FacebookPageView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303172355413_AppVerificationCode.cs" />
+    <Compile Include="Migrations\201303172355413_AppVerificationCode.Designer.cs">
+      <DependentUpon>201303172355413_AppVerificationCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\AppRewardPlan.cs" />
     <Compile Include="Models\ChartUnitResult.cs" />
@@ -364,6 +368,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303152358592_FacebookPageView.resx">
       <DependentUpon>201303152358592_FacebookPageView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303172355413_AppVerificationCode.resx">
+      <DependentUpon>201303172355413_AppVerificationCode.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

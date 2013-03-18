@@ -71,9 +71,9 @@ namespace ReferEngine.Web.Controllers
                 if (Util.CurrentServiceConfiguration != Util.ReferEngineServiceConfiguration.Local)
                 {
                     string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
-                    DatabaseOperations.GetIpAddressLocation(ip);
+
                 }
-                return View(ViewProperties.CurrentApp);
+                return View();
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.Forbidden);

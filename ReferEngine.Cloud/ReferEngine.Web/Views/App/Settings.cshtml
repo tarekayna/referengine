@@ -1,0 +1,32 @@
+﻿@{
+    Verifier.IsNotNullOrEmpty(ViewProperties.CurrentApp, "ViewProperties.CurrentApp");
+}
+
+@section styles {
+    @*@Styles.Render("~/less/app/dashboard");*@
+}
+
+@*@section scripts {
+    
+    <script type="text/javascript">
+        google.load("visualization", "1", { packages: ["corechart", "geochart", "table"] });
+        window.re = {};
+        window.re.appId = @Model.Id;
+        window.re.appName = "@Model.Name";
+    </script>
+    <script data-main="/typescript/app/dashboard.js" type="text/javascript" src="~/typescript/lib/require.js"></script> 
+}*@
+
+
+<div id="content">
+    <div class="container">
+        <div class="row">
+            <div class="span10 offset1">
+                <input type="text" value="@ViewProperties.CurrentApp.VerificationCode" disabled="disabled"/>
+                <pre>
+                    @ViewProperties.CurrentApp.VerificationCode
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>

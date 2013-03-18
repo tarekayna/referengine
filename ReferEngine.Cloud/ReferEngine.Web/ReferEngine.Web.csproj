@@ -296,6 +296,7 @@
     <Content Include="js\lib\require.js" />
     <Content Include="js\home.js" />
     <Content Include="js\shared\layout-not-auth.js" />
+    <Content Include="Views\App\Settings.cshtml" />
     <TypeScriptCompile Include="TypeScript\app\new.ts" />
     <Content Include="Less\app\new.css">
       <DependentUpon>new.less</DependentUpon>

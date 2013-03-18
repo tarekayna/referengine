@@ -10,6 +10,7 @@ namespace ReferEngine.Common.Data
         internal const string Person = "person-fbId-{0}";
         internal const string FacebookOperations = "fb-operations-{0}";
         internal const string AppPackage = "app-package-{0}";
+        internal const string AppPackageAndVerification = "app-pkgver-{0}{1}";
         internal const string AppId = "app-id-{0}";
         internal const string AppScreenshotIdDesc = "appscreenshot-id-desc-{0}{1}";
         internal const string UserId = "user-id-{0}";
@@ -150,9 +151,30 @@ namespace ReferEngine.Common.Data
             return cached == null ? null : (App)cached;
         }
 
+        public static App GetApp(string packageFamilyName, string appVerificationCode)
+        {
+            String key = String.Format(CacheKeyFormat.AppPackageAndVerification, packageFamilyName, appVerificationCode);
+            object cached = null;
+            try
+            {
+                cached = Cache.Get(key);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+            }
+            return cached == null ? null : (App)cached;
+        }
+
         public static void AddApp(string packageFamilyName, App app)
         {
             String key = String.Format(CacheKeyFormat.AppPackage, packageFamilyName);
+            CachePutSafe(key, app, CacheTimeoutValues.App);
+        }
+
+        public static void AddApp(string packageFamilyName, string appVerificationCode, App app)
+        {
+            String key = String.Format(CacheKeyFormat.AppPackageAndVerification, packageFamilyName, appVerificationCode);
             CachePutSafe(key, app, CacheTimeoutValues.App);
         }
 

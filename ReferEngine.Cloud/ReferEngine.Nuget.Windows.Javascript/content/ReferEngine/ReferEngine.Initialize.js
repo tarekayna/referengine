@@ -5,6 +5,10 @@
         else ReferEngineClient.onLoadArray.push(callback);
     };
     
+    // Note: Replace this value with the app verification code
+    //       you get from the Settings page of your app on ReferEngine.com.
+    ReferEngineClient.appVerificationCode = "XXXXXXXXXXXX";
+    
     // Note:      Change this line to use:
     //               'Windows.ApplicationModel.Store.CurrentAppSimulator'
     //            instead of:

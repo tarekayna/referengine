@@ -236,7 +236,7 @@
         var Url = (function () {
             function Url() { }
             Url.base = "https://www.referengine.com";
-            Url.auth = Url.base + "/recommend/win8/authorizeapp";
+            Url.auth = Url.base + "/recommend/win8/authorizeappcode";
             Url.getIntroUrl = function getIntroUrl(isAutoOpen) {
                 return Url.base + "/recommend/win8/intro/" + RemoteOptions.appId + "?isAutoOpen=" + (isAutoOpen ? "true" : "false");
             };
@@ -384,7 +384,10 @@
                                     "Content-type": "text/xml"
                                 },
                                 url: Url.auth,
-                                data: xml
+                                data: {
+                                    appReceiptXml: xml,
+                                    appVerificationCode: ReferEngineClient.appVerificationCode
+                                }
                             }).done(function (request) {
                                 var data = JSON.parse(request.responseText);
                                 if(data.token && data.expiresIn) {

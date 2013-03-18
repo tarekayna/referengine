@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace ReferEngine.Common.Models
 {
@@ -38,6 +39,9 @@ namespace ReferEngine.Common.Models
         public int UserId { get; set; }
 
         [DataMember]
+        public string VerificationCode { get; set; }
+
+        [DataMember]
         public string Publisher { get; set; }
 
         [DataMember]
@@ -57,5 +61,22 @@ namespace ReferEngine.Common.Models
 
         [DataMember]
         public List<AppScreenshot> Screenshots { get; set; }
+
+        public void ComputeVerificationCode()
+        {
+            string str = String.Format("{0}{1}{2}", Id, UserId, DateTime.Now.Ticks);
+            byte[] bytes = Encoding.UTF8.GetBytes(str);
+            using (HMACSHA256 sha = new HMACSHA256())
+            {
+                sha.Initialize();
+                byte[] hashBytes = sha.ComputeHash(bytes);
+                StringBuilder builder = new StringBuilder();
+                foreach (byte b in hashBytes)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+                VerificationCode = builder.ToString();
+            }
+        }
     }
 }
