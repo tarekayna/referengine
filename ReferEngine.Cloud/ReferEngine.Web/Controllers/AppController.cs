@@ -28,7 +28,8 @@ namespace ReferEngine.Web.Controllers
         [HttpPost]
         public ActionResult AddNewApp(string msAppId)
         {
-            DatabaseOperations.AddNewAppFromStoreInfo(msAppId, ViewProperties.CurrentUser);
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+            DatabaseOperations.AddNewAppFromStoreInfo(msAppId, viewProperties.CurrentUser);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
@@ -45,17 +46,13 @@ namespace ReferEngine.Web.Controllers
 
         public ActionResult Dashboard(long id)
         {
-            ViewProperties.CurrentApp = DataReader.GetApp(id);
+            ViewProperties viewProperties = ((ViewProperties) ViewData["ViewProperties"]);
+            viewProperties.CurrentApp = DataReader.GetApp(id);
 
-            if (ViewProperties.CurrentApp != null &&
-               (ViewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
+            if (viewProperties.CurrentApp != null &&
+               (viewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
             {
-                if (Util.CurrentServiceConfiguration != Util.ReferEngineServiceConfiguration.Local)
-                {
-                    string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
-                    DatabaseOperations.GetIpAddressLocation(ip);
-                }
-                return View(ViewProperties.CurrentApp);
+                return View();
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
@@ -63,16 +60,12 @@ namespace ReferEngine.Web.Controllers
 
         public ActionResult Settings(long id)
         {
-            ViewProperties.CurrentApp = DataReader.GetApp(id);
+            ViewProperties viewProperties = ((ViewProperties) ViewData["ViewProperties"]);
+            viewProperties.CurrentApp = DataReader.GetApp(id);
 
-            if (ViewProperties.CurrentApp != null &&
-               (ViewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
+            if (viewProperties.CurrentApp != null &&
+               (viewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
             {
-                if (Util.CurrentServiceConfiguration != Util.ReferEngineServiceConfiguration.Local)
-                {
-                    string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
-
-                }
                 return View();
             }
 
@@ -83,18 +76,18 @@ namespace ReferEngine.Web.Controllers
         public ActionResult GetAppDashboardMapData(long id, string who, string timeZoneOffset, 
                                                    string startDate, string endDate)
         {
-            ViewProperties.CurrentApp = DataReader.GetApp(id);
-            App app = ViewProperties.CurrentApp;
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+            viewProperties.CurrentApp = DataReader.GetApp(id);
 
-            if (ViewProperties.CurrentApp == null ||
-               (ViewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
+            if (viewProperties.CurrentApp == null ||
+               (viewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
 
             TimeRange timeRange = ConvertClientDateTimeToUtcTimeRange(startDate, endDate, timeZoneOffset);
 
-            IList<MapUnitResult> result = DatabaseOperations.GetAppActionLocations(app, timeRange, who);
+            IList<MapUnitResult> result = DatabaseOperations.GetAppActionLocations(viewProperties.CurrentApp, timeRange, who);
             return Json(result);
         }
 
@@ -102,11 +95,12 @@ namespace ReferEngine.Web.Controllers
         public ActionResult GetAppDashboardChartData(long id, string who, string timeZoneOffset,
                                                      string startDate, string endDate, string timespan)
         {
-            ViewProperties.CurrentApp = DataReader.GetApp(id);
-            App app = ViewProperties.CurrentApp;
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+            viewProperties.CurrentApp = DataReader.GetApp(id);
+            App app = viewProperties.CurrentApp;
 
-            if (ViewProperties.CurrentApp == null ||
-               (ViewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
+            if (viewProperties.CurrentApp == null ||
+               (viewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
@@ -122,11 +116,12 @@ namespace ReferEngine.Web.Controllers
         public ActionResult GetAppDashboardPeopleData(long id, string who, string timeZoneOffset,
                                                      string startDate, string endDate)
         {
-            ViewProperties.CurrentApp = DataReader.GetApp(id);
-            App app = ViewProperties.CurrentApp;
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+            viewProperties.CurrentApp = DataReader.GetApp(id);
+            App app = viewProperties.CurrentApp;
 
-            if (ViewProperties.CurrentApp == null ||
-               (ViewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
+            if (viewProperties.CurrentApp == null ||
+               (viewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }

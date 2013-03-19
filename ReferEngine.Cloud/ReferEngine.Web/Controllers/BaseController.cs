@@ -32,11 +32,12 @@ namespace ReferEngine.Web.Controllers
             // Ensure ASP.NET Simple Membership is initialized only once per app start
             LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);
 
-            ViewProperties.Clear();
+            ViewData["ViewProperties"] = new ViewProperties();
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
 
             if (User.Identity.IsAuthenticated)
             {
-                ViewProperties.CurrentUser = DataReader.GetUser(WebSecurity.CurrentUserId);
+                viewProperties.CurrentUser = DataReader.GetUser(WebSecurity.CurrentUserId);
             }
 
             base.OnActionExecuting(filterContext);

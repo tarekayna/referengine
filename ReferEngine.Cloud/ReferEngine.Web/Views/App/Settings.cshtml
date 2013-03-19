@@ -1,9 +1,19 @@
 ﻿@{
-    Verifier.IsNotNullOrEmpty(ViewProperties.CurrentApp, "ViewProperties.CurrentApp");
+    ViewProperties viewProperties = ((ViewProperties) ViewData["ViewProperties"]);
+    Verifier.IsNotNullOrEmpty(viewProperties.CurrentApp, "viewProperties.CurrentApp");
 }
 
 @section styles {
     @*@Styles.Render("~/less/app/dashboard");*@
+    <style>
+        section h3 {
+            padding-top: 75px;
+        }
+        section:first-child h3 {
+            padding-top: 0;
+        }
+    </style>
+}
 }
 
 @*@section scripts {
@@ -11,22 +21,142 @@
     <script type="text/javascript">
         google.load("visualization", "1", { packages: ["corechart", "geochart", "table"] });
         window.re = {};
-        window.re.appId = @Model.Id;
-        window.re.appName = "@Model.Name";
+        window.re.appId = @viewProperties.CurrentApp.Id;
+        window.re.appName = "@viewProperties.CurrentApp.Name";
     </script>
     <script data-main="/typescript/app/dashboard.js" type="text/javascript" src="~/typescript/lib/require.js"></script> 
 }*@
 
 
-<div id="content">
+<div id="content" data-spy="scroll" data-target=".nav-list">
     <div class="container">
         <div class="row">
-            <div class="span10 offset1">
-                <input type="text" value="@ViewProperties.CurrentApp.VerificationCode" disabled="disabled"/>
-                <pre>
-                    @ViewProperties.CurrentApp.VerificationCode
-                </pre>
+            <div class="span3 bs-docs-sidebar affix">
+                <ul class="nav nav-list bs-docs-sidenav">
+                    <li class="nav-header">App Settings</li>
+                    <li><a href="#info"><i class="icon-chevron-right"></i> Edit Info</a></li>
+                    <li><a href="#screenshots"><i class="icon-chevron-right"></i> Edit Screenshots</a></li>
+                    <li><a href="#install"><i class="icon-chevron-right"></i> Install</a></li>
+                    <li><a href="#manage"><i class="icon-chevron-right"></i> Manage</a></li>
+                </ul>
+            </div>                      
+            <div class="span9 offset3">
+                <section id="info">
+                    <h3>Info</h3>
+                    <hr />
+                    <form class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label">App Name</label>
+                            <div class="controls static">
+                                @viewProperties.CurrentApp.Name
+                            </div>
+                            <br />
+                            <label class="control-label">Package Family Name</label>
+                            <div class="controls static">
+                                @viewProperties.CurrentApp.PackageFamilyName
+                            </div>
+                            <br />
+                            <label class="control-label">App Authorization Code</label>
+                            <div class="controls static">
+                                <code>@viewProperties.CurrentApp.VerificationCode</code>
+                            </div>
+                            <br />
+                            <label class="control-label">Description</label>
+                            <div class="controls">
+                                <textarea rows="5" style="width: 500px">@viewProperties.CurrentApp.Description</textarea>
+                            </div>
+                            <br />
+                            <label class="control-label">Logo</label>
+                            <div class="controls">
+                                <img src="@viewProperties.CurrentApp.LogoLink50" />
+                            </div>
+                            <br />
+                            <label class="control-label">High Quality Logo</label>
+                            <div class="controls">
+                                <img src="@viewProperties.CurrentApp.LogoLinkHighQuality" style="height: 100px"/>
+                            </div>
+                            <br />
+                            <label class="control-label">Copyright</label>
+                            <div class="controls">
+                                <input type="text" value="@viewProperties.CurrentApp.Copyright"/>
+                            </div>
+                            <br />
+                            <label class="control-label">Publisher</label>
+                            <div class="controls">
+                                <input type="text" value="@viewProperties.CurrentApp.Publisher"/>
+                            </div>
+                            <br />
+                            <label class="control-label">Vimeo Video Link</label>
+                            <div class="controls">
+                                <input type="text" value="@viewProperties.CurrentApp.VimeoLink"/>
+                            </div>
+                            <br />
+                            <label class="control-label">YouTube Video Link</label>
+                            <div class="controls">
+                                <input type="text" value="@viewProperties.CurrentApp.YouTubeLink"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <button type="submit" class="btn">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+                <section id="screenshots">
+                    <h3>Screenshots</h3>
+                    <hr />
+                </section>
+                <section id="install">
+                    <h3>Installation</h3>
+                    <hr />
+                    <h4>1- Install the ReferEngine.JavaScript NuGet Package in your Windows Store App</h4>
+                    <div class="row">
+                        <div class="alert span7 offset1">
+                            <small><i class="icon-info-sign"></i> NuGet is a Visual Studio feature that makes it easy to install and update third-party libraries and tools in Visual Studio.</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span8 offset1">
+                            <p><i class="icon-arrow-right"></i> Open your Windows Store solution with Visual Studio</p>
+                            <p><i class="icon-arrow-right"></i> Open Package Manager Console (View > Other Windows > Package Manager Console)</p>
+                            <p><i class="icon-arrow-right"></i> 
+                                In Package Manager Console type this command:
+                                <pre>install-package ReferEngine.JavaScript</pre>
+                            </p>
+                            <p>This will install the ReferEngine code files and setup your solution.</p>
+                        </div>
+                    </div>
+                    <h4>2- Set your App Authorization Code</h4>
+                    <div class="row">
+                        <div class="span8 offset1">
+                            <p><i class="icon-arrow-right"></i> Open the File ReferEngine\ReferEngine.Initialize.js</p>
+                            <p><i class="icon-arrow-right"></i> Replace this line:
+                                <pre>ReferEngineClient.appVerificationCode = "xxxxxxxxxxxxxxxxxx";</pre>
+                                With this:
+                                <pre>ReferEngineClient.appVerificationCode = "@viewProperties.CurrentApp.VerificationCode";</pre>
+                            </p>
+                            <p><i class="icon-arrow-right"></i> Save the file</p>
+                        </div>
+                    </div>
+                    <h4>3- Test it out!</h4>
+                    <div class="row">
+                        <div class="span8 offset1">
+                            <p>You are done! Let's test.</p>
+                            <p><i class="icon-arrow-right"></i> Press F5 (launch the app under debugger)</p>
+                            <p><i class="icon-arrow-right"></i> Open the JavaScript Console and type this command:
+                                <pre>ReferEngine.show()</pre>
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <section id="manage">
+                    <h3>Manage</h3>
+                    <hr />
+                    <button class="btn btn-danger">Delete App</button>
+                </section>
             </div>
         </div>
     </div>
 </div>
+

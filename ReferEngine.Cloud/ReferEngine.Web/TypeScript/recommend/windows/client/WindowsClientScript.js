@@ -235,7 +235,7 @@
         })();        
         var Url = (function () {
             function Url() { }
-            Url.base = "https://www.referengine.com";
+            Url.base = "https://www.ReferEngine.com";
             Url.auth = Url.base + "/recommend/win8/authorizeappcode";
             Url.getIntroUrl = function getIntroUrl(isAutoOpen) {
                 return Url.base + "/recommend/win8/intro/" + RemoteOptions.appId + "?isAutoOpen=" + (isAutoOpen ? "true" : "false");
@@ -377,17 +377,13 @@
                         comp(storedToken);
                     } else {
                         currentApp.getAppReceiptAsync().done(function (xml) {
-                            var xml64 = window.btoa(xml);
                             WinJS.xhr({
                                 type: "POST",
-                                headers: {
-                                    "Content-type": "text/xml"
-                                },
                                 url: Url.auth,
-                                data: {
-                                    appReceiptXml: xml,
-                                    appVerificationCode: ReferEngineClient.appVerificationCode
-                                }
+                                headers: {
+                                    "Content-type": "application/x-www-form-urlencoded"
+                                },
+                                data: "appReceiptXml=" + xml + "&appVerificationCode=" + ReferEngineClient.appVerificationCode
                             }).done(function (request) {
                                 var data = JSON.parse(request.responseText);
                                 if(data.token && data.expiresIn) {

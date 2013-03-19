@@ -7,7 +7,7 @@
     
     // Note: Replace this value with the app verification code
     //       you get from the Settings page of your app on ReferEngine.com.
-    ReferEngineClient.appVerificationCode = "XXXXXXXXXXXX";
+    ReferEngineClient.appVerificationCode = "xxxxxxxxxxxxxxxxxx";
     
     // Note:      Change this line to use:
     //               'Windows.ApplicationModel.Store.CurrentAppSimulator'

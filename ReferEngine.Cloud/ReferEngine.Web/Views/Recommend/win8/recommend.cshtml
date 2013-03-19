@@ -2,6 +2,8 @@
 @model ReferEngine.Web.Models.Recommend.Win8.RecommendViewModel
 
 @{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+    viewProperties.ReferEngineAuthToken = Model.ReferEngineAuthToken;
     Verifier.IsNotNullOrEmpty(Model, "Model");
     Verifier.IsNotNullOrEmpty(Model.App, "Model.App");
     Verifier.IsNotNullOrEmpty(Model.ReferEngineAuthToken, "Model.ReferEngineAuthToken");
@@ -15,10 +17,6 @@
 @section styles
 {
     @Styles.Render("~/bundles/less/recommend/win8/recommend")
-}
-
-@{
-    ViewProperties.JavaScriptGlobalVariables.Single(p => p.Name.Equals("referEngineAuthToken")).Value = Model.ReferEngineAuthToken;
 }
 
 <input type="hidden" id="appId" value="@Model.App.Id" />

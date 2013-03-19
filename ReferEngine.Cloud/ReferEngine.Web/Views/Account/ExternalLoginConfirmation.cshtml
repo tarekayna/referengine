@@ -1,11 +1,15 @@
 ﻿@model ReferEngine.Web.Models.Account.RegisterExternalLoginModel
 
+@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+}
+
 <hgroup class="title">
     <h1>Title</h1>
-    <h2>Associate your @ViewProperties.ProviderDisplayName account.</h2>
+    <h2>Associate your @viewProperties.ProviderDisplayName account.</h2>
 </hgroup>
 
-@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ViewProperties.ReturnUrl }))
+@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { viewProperties.ReturnUrl }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -13,7 +17,7 @@
     <fieldset>
         <legend>Association Form</legend>
         <p>
-            You've successfully authenticated with <strong>@ViewProperties.ProviderDisplayName</strong>.
+            You've successfully authenticated with <strong>@viewProperties.ProviderDisplayName</strong>.
             Please enter a user name for this site below and click the Confirm button to finish
             logging in.
         </p>

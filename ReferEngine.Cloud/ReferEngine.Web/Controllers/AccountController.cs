@@ -26,8 +26,9 @@ namespace ReferEngine.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl, string successMessage)
         {
-            ViewProperties.SuccessMessage = successMessage;
-            ViewProperties.ReturnUrl = returnUrl;
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+            viewProperties.SuccessMessage = successMessage;
+            viewProperties.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -36,6 +37,7 @@ namespace ReferEngine.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
             if (ModelState.IsValid)
             {
                 if (WebSecurity.Login(model.Email, model.Password, model.RememberMe))
@@ -63,7 +65,7 @@ namespace ReferEngine.Web.Controllers
                 }
             }
 
-            ViewProperties.ErrorMessage = "The email/password combination is incorrect.";
+            viewProperties.ErrorMessage = "The email/password combination is incorrect.";
             return View(model);
         }
 
@@ -194,20 +196,21 @@ namespace ReferEngine.Web.Controllers
 
         public ActionResult Manage(ManageMessageId? message)
         {
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
             switch (message)
             {
                 case ManageMessageId.ChangePasswordSuccess:
-                    ViewProperties.StatusMessage = "Your password has been changed.";
+                    viewProperties.StatusMessage = "Your password has been changed.";
                     break;
                 case ManageMessageId.RemoveLoginSuccess:
-                    ViewProperties.StatusMessage = "The external login was removed.";
+                    viewProperties.StatusMessage = "The external login was removed.";
                     break;
                 case ManageMessageId.SetPasswordSuccess:
-                    ViewProperties.StatusMessage = "Your password has been set.";
+                    viewProperties.StatusMessage = "Your password has been set.";
                     break;
             }
-            ViewProperties.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-            ViewProperties.ReturnUrl = Url.Action("Manage");
+            viewProperties.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            viewProperties.ReturnUrl = Url.Action("Manage");
             return View();
         }
 
@@ -218,9 +221,10 @@ namespace ReferEngine.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
         {
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-            ViewProperties.HasLocalPassword = hasLocalAccount;
-            ViewProperties.ReturnUrl = Url.Action("Manage");
+            viewProperties.HasLocalPassword = hasLocalAccount;
+            viewProperties.ReturnUrl = Url.Action("Manage");
             if (hasLocalAccount)
             {
                 if (ModelState.IsValid)
@@ -291,6 +295,7 @@ namespace ReferEngine.Web.Controllers
         [AllowAnonymous]
         public ActionResult ExternalLoginCallback(string returnUrl)
         {
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
             AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
             if (!result.IsSuccessful)
             {
@@ -312,8 +317,8 @@ namespace ReferEngine.Web.Controllers
             {
                 // User is new, ask for their desired membership name
                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
-                ViewProperties.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
-                ViewProperties.ReturnUrl = returnUrl;
+                viewProperties.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
+                viewProperties.ReturnUrl = returnUrl;
                 return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });
             }
         }
@@ -326,6 +331,7 @@ namespace ReferEngine.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
         {
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
             string provider = null;
             string providerUserId = null;
 
@@ -357,8 +363,8 @@ namespace ReferEngine.Web.Controllers
                 }
             }
 
-            ViewProperties.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
-            ViewProperties.ReturnUrl = returnUrl;
+            viewProperties.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
+            viewProperties.ReturnUrl = returnUrl;
             return View(model);
         }
 
@@ -375,13 +381,15 @@ namespace ReferEngine.Web.Controllers
         [ChildActionOnly]
         public ActionResult ExternalLoginsList(string returnUrl)
         {
-            ViewProperties.ReturnUrl = returnUrl;
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+            viewProperties.ReturnUrl = returnUrl;
             return PartialView("_ExternalLoginsListPartial", OAuthWebSecurity.RegisteredClientData);
         }
 
         [ChildActionOnly]
         public ActionResult RemoveExternalLogins()
         {
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
             ICollection<OAuthAccount> accounts = OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name);
             List<ExternalLogin> externalLogins = new List<ExternalLogin>();
             foreach (OAuthAccount account in accounts)
@@ -396,7 +404,7 @@ namespace ReferEngine.Web.Controllers
                 });
             }
 
-            ViewProperties.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            viewProperties.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
         }
 

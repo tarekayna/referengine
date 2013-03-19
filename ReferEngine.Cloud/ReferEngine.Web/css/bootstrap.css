@@ -2289,7 +2289,7 @@ table th[class*="span"],
 
 /* White icons with optional class, or on hover/focus/active states of certain elements */
 
-.icon-white,
+/*.icon-white,
 .nav-pills > .active > a > [class^="icon-"],
 .nav-pills > .active > a > [class*=" icon-"],
 .nav-list > .active > a > [class^="icon-"],
@@ -2307,7 +2307,7 @@ table th[class*="span"],
 .dropdown-submenu:hover > a > [class*=" icon-"],
 .dropdown-submenu:focus > a > [class*=" icon-"] {
   background-image: url("../img/glyphicons-halflings-white.png");
-}
+}*/
 
 .icon-glass {
   background-position: 0      0;

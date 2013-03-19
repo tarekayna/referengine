@@ -1,4 +1,6 @@
-﻿@using ReferEngine.Common.Utilities
+﻿@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,12 +35,12 @@
         @Html.Partial("_MixPanel")
         @Scripts.Render("~/bundles/libs/base")
         
-        @if (ViewProperties.UseJQueryValidate)
+        @if (viewProperties.UseJQueryValidate)
         {
             @Scripts.Render("~/bundles/libs/jquery-validate")
         }
         
-        @if (ViewProperties.UseJQueryUi)
+        @if (viewProperties.UseJQueryUi)
         {
             @Scripts.Render("~/bundles/libs/jquery-ui")
         }

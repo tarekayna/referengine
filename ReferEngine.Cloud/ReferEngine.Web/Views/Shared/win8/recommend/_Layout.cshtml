@@ -1,5 +1,6 @@
 ﻿@{
-    Verifier.IsNotNullOrEmpty(ViewProperties.CurrentApp, "ViewProperties.CurrentApp");
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+    Verifier.IsNotNullOrEmpty(viewProperties.CurrentApp, "viewProperties.CurrentApp");
 }
 
 <!DOCTYPE html>
@@ -7,9 +8,9 @@
 <head>
     <script src="//cdn.optimizely.com/js/179184149.js"></script>
     <title>
-        @if (ViewProperties.CurrentApp != null) 
+        @if (viewProperties.CurrentApp != null) 
         {
-            @:@ViewProperties.CurrentApp.Name | Refer Engine
+            @:@viewProperties.CurrentApp.Name | Refer Engine
         }
         else 
         {
@@ -29,8 +30,8 @@
     <body>
         <div id="re-ctnr">
             <header>
-                @HtmlHelperExtensions.Image(Html, ViewProperties.CurrentApp.LogoLink50, ViewProperties.CurrentApp.Name, "app-logo")
-                <div class="app-name">@ViewProperties.CurrentApp.Name</div>
+                @HtmlHelperExtensions.Image(Html, viewProperties.CurrentApp.LogoLink50, viewProperties.CurrentApp.Name, "app-logo")
+                <div class="app-name">@viewProperties.CurrentApp.Name</div>
                 @Html.Partial("_LogoMark30")
                 <h4 class="logo-text">Refer Engine</h4>
             </header>
@@ -48,16 +49,6 @@
         @Html.Partial("_MixPanel")
 
         @Scripts.Render("~/bundles/libs/base")
-        
-        @*@if (ViewProperties.UseJQueryValidate)
-        {
-            @Scripts.Render("~/bundles/libs/jquery-validate")
-        }
-        
-        @if (ViewProperties.UseJQueryUi)
-        {
-            @Scripts.Render("~/bundles/libs/jquery-ui")
-        }*@
 
         @RenderSection("scripts", required: false)
         @Html.Partial("_CrazyEgg")

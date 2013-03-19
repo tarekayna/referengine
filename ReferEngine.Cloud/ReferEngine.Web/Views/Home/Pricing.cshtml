@@ -1,4 +1,7 @@
-﻿@{ ViewProperties.PageTitle = "Pricing and Plans"; }
+﻿@{ 
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]); 
+    viewProperties.PageTitle = "Pricing and Plans"; 
+}
 
 @Html.Partial("_PageHeader", new PageTitleViewModel("Plans and Pricing"))
 

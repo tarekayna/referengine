@@ -1,6 +1,7 @@
 ﻿@{
-    ViewProperties.UseJQueryValidate = true;
-    ViewProperties.PageTitle = "Contact Us";
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+    viewProperties.UseJQueryValidate = true;
+    viewProperties.PageTitle = "Contact Us";
 }
 
 @section scripts {

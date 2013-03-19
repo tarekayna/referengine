@@ -1,4 +1,7 @@
-﻿@{ ViewProperties.PageTitle = "Copyright Policy"; }
+﻿@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+    viewProperties.PageTitle = "Copyright Policy";
+}
 
 	<div id="header">
 	  <div class="container">  

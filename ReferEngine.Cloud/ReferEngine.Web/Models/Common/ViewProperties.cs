@@ -1,49 +1,65 @@
+using System;
 using System.Collections.Generic;
+using System.Text;
 using ReferEngine.Common.Models;
+using ReferEngine.Common.Utilities;
 
 namespace ReferEngine.Web.Models.Common
 {
-    public static class ViewProperties
+    public class ViewProperties
     {
-        static ViewProperties()
+        public bool UseJQueryValidate { get; set; }
+        public bool UseJQueryUi { get; set; }
+        public App CurrentApp { get; set; }
+        public User CurrentUser { get; set; }
+        public string ReturnUrl { get; set; }
+        public string PageTitle { get; set; }
+
+        public string SuccessMessage { get; set; }
+        public string StatusMessage { get; set; }
+        public string ErrorMessage { get; set; }
+        public string WarningMessage { get; set; }
+        public string InfoMessage { get; set; }
+
+        public bool HasLocalPassword { get; set; }
+        public bool ShowRemoveButton { get; set; }
+        public string ProviderDisplayName { get; set; }
+
+        public string ReferEngineAuthToken { get; set; }
+
+        public string GetJavaScriptGlobalVariables()
         {
-            JavaScriptGlobalVariables = new List<IJavaScriptGlobalVariable>
-                                            {
-                                                new BaseUrlJavaScriptGlobalVariable(),
-                                                new AppNameJavaScriptGlobalVariable(),
-                                                new AppIdJavaScriptGlobalVariable(),
-                                                new ReferEngineAuthTokenJavaScriptGlobalVariable()
-                                            };
-        }
+            string format = "ReferEngineGlobals.{0} = \"{1}\";";
+            StringBuilder result = new StringBuilder();
 
-        public static bool UseJQueryValidate { get; set; }
-        public static bool UseJQueryUi { get; set; }
-        public static App CurrentApp { get; set; }
-        public static User CurrentUser { get; set; }
-        public static string ReturnUrl { get; set; }
-        public static string PageTitle { get; set; }
+            if (CurrentApp != null)
+            {
+                result.AppendLine(string.Format(format, "appId", CurrentApp.Id));
+                result.AppendLine(string.Format(format, "appName", CurrentApp.Name));
+            }
 
-        public static string SuccessMessage { get; set; }
-        public static string StatusMessage { get; set; }
-        public static string ErrorMessage { get; set; }
-        public static string WarningMessage { get; set; }
-        public static string InfoMessage { get; set; }
+            string baseUrl;
+            switch (Util.CurrentServiceConfiguration)
+            {
+                case Util.ReferEngineServiceConfiguration.ProductionCloud:
+                    baseUrl = "https://www.referengine.com";
+                    break;
+                case Util.ReferEngineServiceConfiguration.TestCloud:
+                    baseUrl = "https://www.referengine-test.com";
+                    break;
+                case Util.ReferEngineServiceConfiguration.Local:
+                    baseUrl = "http://127.0.0.1:81";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            result.AppendLine(string.Format(format, "baseUrl", baseUrl));
 
-        public static bool HasLocalPassword { get; set; }
-        public static bool ShowRemoveButton { get; set; }
-        public static string ProviderDisplayName { get; set; }
-
-        public static IList<IJavaScriptGlobalVariable> JavaScriptGlobalVariables { get; private set; }
-
-        public static void Clear()
-        {
-            CurrentApp = null;
-            PageTitle = null;
-            SuccessMessage = string.Empty;
-            StatusMessage = string.Empty;
-            ErrorMessage = string.Empty;
-            WarningMessage = string.Empty;
-            InfoMessage = string.Empty;
+            if (!string.IsNullOrEmpty(ReferEngineAuthToken))
+            {
+                result.AppendLine(string.Format(format, "referEngineAuthToken", ReferEngineAuthToken));
+            }
+            return result.ToString();
         }
     }
 }

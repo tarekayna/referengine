@@ -1,4 +1,7 @@
-﻿@model ReferEngine.Common.Models.App
+﻿@{
+    ViewProperties viewProperties = ((ViewProperties) ViewData["ViewProperties"]);
+    Verifier.IsNotNullOrEmpty(viewProperties.CurrentApp, "viewProperties.CurrentApp");
+}
 
 @section styles {
     @Styles.Render("~/less/app/dashboard");
@@ -11,8 +14,8 @@
     <script type="text/javascript">
         google.load("visualization", "1", { packages: ["corechart", "geochart", "table"] });
         window.re = {};
-        window.re.appId = @Model.Id;
-        window.re.appName = "@Model.Name";
+        window.re.appId = @viewProperties.CurrentApp.Id;
+        window.re.appName = "@viewProperties.CurrentApp.Name";
     </script>
     <script data-main="/typescript/app/dashboard.js" type="text/javascript" src="~/typescript/lib/require.js"></script> 
 }
@@ -25,13 +28,13 @@
                 <div class="btn-group">
                     <a class="btn disabled">Customers who:</a>
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span id="current-who">recommended @Model.Name</span>
+                        <span id="current-who">recommended @viewProperties.CurrentApp.Name</span>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="who" data-who="launched">launched @Model.Name</a></li>
+                        <li><a class="who" data-who="launched">launched @viewProperties.CurrentApp.Name</a></li>
                         <li><a class="who" data-who="intro">saw the Refer Engine intro page</a></li>
-                        <li><a class="who" data-who="recommended">recommended @Model.Name</a></li>
+                        <li><a class="who" data-who="recommended">recommended @viewProperties.CurrentApp.Name</a></li>
                     </ul>
                 </div>
             </div>
@@ -102,7 +105,7 @@
                         <span class="" style="padding-left: 86px">
                             <p style="font-size: 13px">
                                 <span data-bind="text: Name" style=" font-weight: bold !important; color: #3b5998"></span>
-                                recommended @Model.Name<span data-bind="text: ToFriends"></span>.
+                                recommended @viewProperties.CurrentApp.Name<span data-bind="text: ToFriends"></span>.
                             </p> 
                             <p style="font-size: 11px; color: #999; margin-top: -5px !important;">
                                 <span data-bind="text: Time"></span>
@@ -119,13 +122,3 @@
         </div>
     </div>
 </div>
-
-
-    @*<script type="text/javascript">
-    @{ var data = Html.Raw(MixPanelOperations.GetData(new MixPanelRequestInfo(Event.RecommendIntro)
-                                                          {
-                                                              PropertyName = "AppId",
-                                                              PropertyValues = new List<string> {ViewProperties.CurrentApp.Id.ToString()}
-                                                          })); }
-    var data = @data;
-</script>*@

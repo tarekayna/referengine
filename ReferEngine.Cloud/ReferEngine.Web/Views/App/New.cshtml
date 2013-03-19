@@ -1,5 +1,9 @@
 ﻿@model ReferEngine.Common.Models.App
 
+@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+}
+
 @section Styles
 {
     @Styles.Render("~/less/app/new")
@@ -12,7 +16,7 @@
 
 <div id="content">
     <div class="container">
-        @using (Html.BeginForm(new {ViewProperties.ReturnUrl}))
+        @using (Html.BeginForm(new {viewProperties.ReturnUrl}))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)

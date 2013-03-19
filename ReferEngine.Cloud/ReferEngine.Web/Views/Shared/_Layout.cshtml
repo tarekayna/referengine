@@ -1,13 +1,17 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+}
+
+<!DOCTYPE html>
 <html lang="en">
     @RenderSection("CustomHead", false)
     <head>
         @{
             const string baseTitle = "Refer Engine | Facebook Marketing for App Developers";
             string title = baseTitle;
-            if (!string.IsNullOrEmpty(ViewProperties.PageTitle))
+            if (!string.IsNullOrEmpty(viewProperties.PageTitle))
             {
-                title = title + " | " + ViewProperties.PageTitle;
+                title = title + " | " + viewProperties.PageTitle;
             }
             string desc = "Refer Engine is a Facebook integration service for applications that helps developers in marketing " +
                           "their apps by rewarding their customers for successful recommendations.";
@@ -34,7 +38,7 @@
     <body>
         <div class='notifications top-right'></div>
 
-        @if (Request.IsAuthenticated && ViewProperties.CurrentUser != null)
+        @if (Request.IsAuthenticated && viewProperties.CurrentUser != null)
         {
             <div class="navbar navbar-fixed-top">
                 <div class="navbar-inner">
@@ -46,24 +50,24 @@
                         </a>		
 
                         <ul class="nav pull-left">
-                            @if (ViewProperties.CurrentUser.Apps != null && ViewProperties.CurrentUser.Apps.Count > 0)
+                            @if (viewProperties.CurrentUser.Apps != null && viewProperties.CurrentUser.Apps.Count > 0)
                             {
                                 <div class="btn-group">
                                     <button class="btn dropdown-toggle" data-toggle="dropdown">
-                                        @if (ViewProperties.CurrentApp == null)
+                                        @if (viewProperties.CurrentApp == null)
                                         {
                                             <span>Your Apps</span>
                                         }
                                         else
                                         {
-                                            <span>@ViewProperties.CurrentApp.Name</span>
+                                            <span>@viewProperties.CurrentApp.Name</span>
                                         }
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        @for (int i = 0; i < ViewProperties.CurrentUser.Apps.Count; i++)
+                                        @for (int i = 0; i < viewProperties.CurrentUser.Apps.Count; i++)
                                         {
-                                            <li><a tabindex="-1" href="~/app/dashboard/@ViewProperties.CurrentUser.Apps[i].Id">@ViewProperties.CurrentUser.Apps[i].Name</a></li>
+                                            <li><a tabindex="-1" href="~/app/dashboard/@viewProperties.CurrentUser.Apps[i].Id">@viewProperties.CurrentUser.Apps[i].Name</a></li>
                                         }
                                         <li class="divider"></li>
                                         <li><a href="~/app/new"><i class="icon-plus-sign"></i> Add New App</a></li>
@@ -77,26 +81,44 @@
                         </ul>
 
                         <div class="nav-collapse collapse">
-                            @if (ViewProperties.CurrentApp != null)
+                            @if (viewProperties.CurrentApp != null)
                             {
                                 <ul class="nav pull-left">
-                                    <li><a href="~/app/dashboard/@ViewProperties.CurrentApp.Id">Dashboard</a></li>
-                                    <li><a href="~/app/settings/@ViewProperties.CurrentApp.Id">Settings</a></li>
+                                    <li><a href="~/app/dashboard/@viewProperties.CurrentApp.Id">Dashboard</a></li>
+                                    <li><a href="~/app/settings/@viewProperties.CurrentApp.Id">Settings</a></li>
                                 </ul>
                             }
                             <ul class="nav pull-right">
                                 @if (User.IsInRole("Admin"))
                                 {
-                                    <li><a href="~/admin/errors" target="_blank">Server Errors</a></li>
-                                    <li><a href="~/admin/admin">Admin Panel</a></li>
+                                    <div class="btn-group">
+                                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                            <span>Admin</span>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="~/admin/errors" target="_blank">Server Errors</a></li>
+                                            <li><a href="~/admin/admin">Admin Panel</a></li>
+                                        </ul>
+                                    </div>                                    
                                 }
-                                <li><a href="~/account/manage">@ViewProperties.CurrentUser.FirstName @ViewProperties.CurrentUser.LastName</a></li>
-                                <li>
-                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
-                                        @Html.AntiForgeryToken()
-                                        <a href="javascript:document.getElementById('logoutForm').submit()">(sign out)</a>
-                                    }
-                                </li>
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm"}))
+                                {
+                                    <div class="btn-group">
+                                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                            <span>@viewProperties.CurrentUser.FirstName @viewProperties.CurrentUser.LastName</span>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="~/account/manage"><i class="icon-wrench"></i> Account</a></li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                @Html.AntiForgeryToken()
+                                                <a href=" javascript:document.getElementById('logoutForm').submit() "><i class="icon-off"></i> Sign Out</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -177,18 +199,18 @@
         @Scripts.Render("~/bundles/libs/jquery-validate")
         @Html.Partial("_MixPanel")
 
-        @if (ViewProperties.UseJQueryUi)
+        @if (viewProperties.UseJQueryUi)
         {
             @Scripts.Render("~/bundles/libs/jquery-ui")
         }
 
         @RenderSection("scripts", required: false)
         
-        @{ ViewProperties.UseJQueryValidate = true; }
+        @{ viewProperties.UseJQueryValidate = true; }
         @Html.Partial("_PrivateBeta")
         
         
-        @if (Request.IsAuthenticated && ViewProperties.CurrentUser != null)
+        @if (Request.IsAuthenticated && viewProperties.CurrentUser != null)
         {
             //@Scripts.Render("~/js/shared/layout-auth")
         }

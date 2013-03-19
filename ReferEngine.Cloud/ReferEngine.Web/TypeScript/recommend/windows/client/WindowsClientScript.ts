@@ -225,8 +225,8 @@ module ReferEngine {
       
     class Url {
         //static base: string = "http://127.0.0.1:81";
-        //static base: string = "https://www.referengine-test.com";
-        static base: string = "https://www.referengine.com";
+        static base: string = "https://www.ReferEngine.com";
+        //static base: string = "https://www.ReferEngine-test.com";
         static auth: string = Url.base + "/recommend/win8/authorizeappcode";
         static getIntroUrl(isAutoOpen: bool) {
             return Url.base + "/recommend/win8/intro/" + RemoteOptions.appId + "?isAutoOpen=" + (isAutoOpen ? "true" : "false");
@@ -380,17 +380,13 @@ module ReferEngine {
                 }
                 else {
                     currentApp.getAppReceiptAsync().done(function (xml) {
-                        var xml64 = window.btoa(xml);
                         WinJS.xhr({
                             type: "POST",
-                            headers: {
-                                "Content-type": "text/xml"
-                            },
                             url: Url.auth,
-                            data: {
-                                appReceiptXml: xml,
-                                appVerificationCode: ReferEngineClient.appVerificationCode
-                            }
+                            headers: {
+                                "Content-type": "application/x-www-form-urlencoded"
+                            },
+                            data: "appReceiptXml=" + xml + "&appVerificationCode=" + ReferEngineClient.appVerificationCode
                         }).done(function (request) {
                             var data = JSON.parse(request.responseText);
                             if (data.token && data.expiresIn) {

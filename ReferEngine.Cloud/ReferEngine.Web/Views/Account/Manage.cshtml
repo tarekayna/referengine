@@ -1,6 +1,10 @@
 ﻿@model ReferEngine.Web.Models.Account.LocalPasswordModel
 
-@if (ViewProperties.HasLocalPassword)
+@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+}
+
+@if (viewProperties.HasLocalPassword)
 {
     @Html.Partial("_ChangePasswordPartial")
 }
@@ -13,6 +17,6 @@ else
     @Html.Action("RemoveExternalLogins")
 
     <h3>Add an external login</h3>
-    @Html.Action("ExternalLoginsList", new { ViewProperties.ReturnUrl })
+    @Html.Action("ExternalLoginsList", new { viewProperties.ReturnUrl })
 </section>*@
 

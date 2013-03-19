@@ -1,31 +1,35 @@
-﻿@if (!string.IsNullOrEmpty(ViewProperties.WarningMessage))
+﻿@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+}
+
+@if (!string.IsNullOrEmpty(viewProperties.WarningMessage))
 {
     <div class="alert">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        @ViewProperties.WarningMessage
+        @viewProperties.WarningMessage
     </div>
 }
         
-@if (!string.IsNullOrEmpty(ViewProperties.ErrorMessage))
+@if (!string.IsNullOrEmpty(viewProperties.ErrorMessage))
 {
     <div class="alert alert-error">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        @ViewProperties.ErrorMessage
+        @viewProperties.ErrorMessage
     </div>
 }
         
-@if (!string.IsNullOrEmpty(ViewProperties.SuccessMessage))
+@if (!string.IsNullOrEmpty(viewProperties.SuccessMessage))
 {
     <div class="alert alert-success">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        @ViewProperties.SuccessMessage
+        @viewProperties.SuccessMessage
     </div>
 }
         
-@if (!string.IsNullOrEmpty(ViewProperties.InfoMessage))
+@if (!string.IsNullOrEmpty(viewProperties.InfoMessage))
 {
     <div class="alert alert-info">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        @ViewProperties.InfoMessage
+        @viewProperties.InfoMessage
     </div>
 }

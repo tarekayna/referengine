@@ -1,4 +1,7 @@
-﻿@{ ViewProperties.PageTitle = "Terms of Use"; }
+﻿@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+    viewProperties.PageTitle = "Terms of Use";
+}
 
 <div id="header">
 	<div class="container">  

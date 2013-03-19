@@ -1,5 +1,9 @@
 ﻿@model ICollection<AuthenticationClientData>
 
+@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+}
+
 @if (Model.Count == 0)
 {
     <div class="message-info">
@@ -9,7 +13,7 @@
 }
 else
 {
-    using (Html.BeginForm("ExternalLogin", "Account", new { ViewProperties.ReturnUrl }))
+    using (Html.BeginForm("ExternalLogin", "Account", new { viewProperties.ReturnUrl }))
     {
     @Html.AntiForgeryToken()
     <fieldset id="socialLoginList">

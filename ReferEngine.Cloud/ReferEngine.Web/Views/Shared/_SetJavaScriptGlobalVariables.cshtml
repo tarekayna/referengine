@@ -1,12 +1,7 @@
 ﻿<script type="text/javascript">
 window.ReferEngineGlobals = {};
-
-    @if (ViewProperties.JavaScriptGlobalVariables != null)
-    {
-        for (int i = 0; i < ViewProperties.JavaScriptGlobalVariables.Count; i++)
-        {
-            IJavaScriptGlobalVariable globalVariable = @ViewProperties.JavaScriptGlobalVariables.ElementAt(i);
-            <text>@Html.Raw(globalVariable.GetJsSetterString())</text>
-        }
-    }    
+@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+}
+@Html.Raw(@viewProperties.GetJavaScriptGlobalVariables())
 </script>

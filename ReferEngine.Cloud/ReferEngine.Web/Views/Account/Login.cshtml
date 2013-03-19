@@ -1,6 +1,10 @@
 ﻿@model ReferEngine.Web.Models.Account.LoginModel
 
-@using (Html.BeginForm(new { ViewProperties.ReturnUrl }))
+@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+}
+
+@using (Html.BeginForm(new { viewProperties.ReturnUrl }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
