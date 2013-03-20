@@ -9,6 +9,7 @@ namespace ReferEngine.Common.Data
     {
         private readonly DataCache _cache;
         private readonly string _keyFormat;
+        protected readonly TimeSpan? DefaultTimeout = null;
 
         public CachedEntity(DataCache cache, string keyFormat)
         {
@@ -16,7 +17,7 @@ namespace ReferEngine.Common.Data
             _keyFormat = keyFormat;
         }
 
-        protected void Clear(params string[] keyParams)
+        protected void Remove(params string[] keyParams)
         {
             String key = String.Format(_keyFormat, keyParams);
             _cache.Remove(key);
@@ -79,11 +80,11 @@ namespace ReferEngine.Common.Data
     public class UserCacheEntity : CachedEntity<User>
     {
         public static string KeyFormat = "user-id-{0}";
-        public UserCacheEntity(DataCache cache) : base(cache, KeyFormat) {}
+        public UserCacheEntity(DataCache cache) : base(cache, KeyFormat) { }
 
-        public void Clear(User user)
+        public void Remove(User user)
         {
-            base.Clear(user.Id.ToString());
+            base.Remove(user.Id.ToString());
         }
 
         public User Get(long id)
@@ -93,7 +94,49 @@ namespace ReferEngine.Common.Data
 
         public void Add(User user)
         {
-            base.Add(user, null, user.Id.ToString());
+            base.Add(user, DefaultTimeout, user.Id.ToString());
+        }
+    }
+
+    public class AppByIdCacheEntity : CachedEntity<App>
+    {
+        public static string KeyFormat = "app-id-{0}";
+        public AppByIdCacheEntity(DataCache cache) : base(cache, KeyFormat) { }
+
+        public void Remove(App app)
+        {
+            base.Remove(app.Id.ToString());
+        }
+
+        public App Get(long id)
+        {
+            return base.Get(id.ToString());
+        }
+
+        public void Add(App app)
+        {
+            base.Add(app, DefaultTimeout, app.Id.ToString());
+        }
+    }
+
+    public class AppByPackageAndVerificationCacheEntity : CachedEntity<App>
+    {
+        public static string KeyFormat = "app-pkgver-{0}{1}";
+        public AppByPackageAndVerificationCacheEntity(DataCache cache) : base(cache, KeyFormat) { }
+
+        public void Remove(App app)
+        {
+            base.Remove(app.PackageFamilyName, app.VerificationCode);
+        }
+
+        public App Get(string packageFamilyName, string verificationCode)
+        {
+            return base.Get(packageFamilyName, verificationCode);
+        }
+
+        public void Add(App app)
+        {
+            base.Add(app, DefaultTimeout, app.PackageFamilyName, app.VerificationCode);
         }
     }
 
@@ -101,9 +144,6 @@ namespace ReferEngine.Common.Data
     {
         internal const string Person = "person-fbId-{0}";
         internal const string FacebookOperations = "fb-operations-{0}";
-        internal const string AppPackage = "app-package-{0}";
-        internal const string AppPackageAndVerification = "app-pkgver-{0}{1}";
-        internal const string AppId = "app-id-{0}";
         internal const string AppScreenshotIdDesc = "appscreenshot-id-desc-{0}{1}";
         internal const string IpAddress = "ip-{0}";
         internal const string AppAutoShowOptions = "app-auto-show-{0}";
@@ -139,6 +179,18 @@ namespace ReferEngine.Common.Data
         public static UserCacheEntity User
         {
             get { return _user ?? (_user = new UserCacheEntity(Cache)); }
+        }
+
+        private static AppByIdCacheEntity _appById;
+        public static AppByIdCacheEntity AppById
+        {
+            get { return _appById ?? (_appById = new AppByIdCacheEntity(Cache)); }
+        }
+
+        private static AppByPackageAndVerificationCacheEntity _appByPackageAndVerification;
+        public static AppByPackageAndVerificationCacheEntity AppByPackageAndVerification
+        {
+            get { return _appByPackageAndVerification ?? (_appByPackageAndVerification = new AppByPackageAndVerificationCacheEntity(Cache)); }
         }
 
         private static void CachePutSafe(string key, object value, TimeSpan timeout)
@@ -203,76 +255,6 @@ namespace ReferEngine.Common.Data
         {
             String key = String.Format(CacheKeyFormat.Person, person.FacebookId);
             CachePutSafe(key, person);
-        }
-
-        public static App GetApp(long id)
-        {
-            String key = String.Format(CacheKeyFormat.AppId, id);
-            object cached = null;
-            try
-            {
-                cached = Cache.Get(key);
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(ex.Message);
-                // It's ok, just retreive from the database
-            }
-            return cached == null ? null : (App)cached;
-        }
-
-        public static void AddApp(long id, App app)
-        {
-            String key = String.Format(CacheKeyFormat.AppId, id);
-            CachePutSafe(key, app);
-        }
-
-        public static void RemoveApp(long id, string packageFamilyName)
-        {
-            Cache.Remove(String.Format(CacheKeyFormat.AppId, id));
-            Cache.Remove(String.Format(CacheKeyFormat.AppPackage, packageFamilyName));
-        }
-
-        public static App GetApp(string packageFamilyName)
-        {
-            String key = String.Format(CacheKeyFormat.AppPackage, packageFamilyName);
-            object cached = null;
-            try
-            {
-                cached = Cache.Get(key);
-            }
-            catch (Exception e)
-            {
-                Trace.TraceError(e.Message);
-            }
-            return cached == null ? null : (App)cached;
-        }
-
-        public static App GetApp(string packageFamilyName, string appVerificationCode)
-        {
-            String key = String.Format(CacheKeyFormat.AppPackageAndVerification, packageFamilyName, appVerificationCode);
-            object cached = null;
-            try
-            {
-                cached = Cache.Get(key);
-            }
-            catch (Exception e)
-            {
-                Trace.TraceError(e.Message);
-            }
-            return cached == null ? null : (App)cached;
-        }
-
-        public static void AddApp(string packageFamilyName, App app)
-        {
-            String key = String.Format(CacheKeyFormat.AppPackage, packageFamilyName);
-            CachePutSafe(key, app, CacheTimeoutValues.App);
-        }
-
-        public static void AddApp(string packageFamilyName, string appVerificationCode, App app)
-        {
-            String key = String.Format(CacheKeyFormat.AppPackageAndVerification, packageFamilyName, appVerificationCode);
-            CachePutSafe(key, app, CacheTimeoutValues.App);
         }
 
         public static void AddFacebookOperations(string token, FacebookOperations facebookOperations)

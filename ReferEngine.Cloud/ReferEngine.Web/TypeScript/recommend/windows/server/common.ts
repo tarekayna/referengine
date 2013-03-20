@@ -1,11 +1,11 @@
-///<reference path='globals.ts' static='true' />
+///<reference path='../../../lib/ReferEngineGlobals.d.ts' static='true' />
 
 declare var mixpanel: any;
 
 import Messaging = module("../common/Messaging");
 
 export class Url {
-    static base: string = ReferEngineGlobals.baseUrl;
+    static base: string = re.baseUrl;
     static getFriends: string = Url.base + "/recommend/win8/getfriends";
     static postRecommendation: string = Url.base + "/recommend/win8/postrecommendation";
 }
@@ -65,8 +65,8 @@ export class MixPanel {
     static track(actionName: string, data?: any) {
         var currentTime = new Date();
         var properties = {
-            AppName: ReferEngineGlobals.appName,
-            AppId: ReferEngineGlobals.appId,
+            AppName: re.appName,
+            AppId: re.appId,
             Hour: getHour(currentTime),
             Day: getDay(currentTime),
             Month: getMonth(currentTime)

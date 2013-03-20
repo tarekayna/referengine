@@ -59,21 +59,6 @@ namespace ReferEngine.Web.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
         }
 
-        public ActionResult Settings(long id, bool? first)
-        {
-            ViewProperties viewProperties = ((ViewProperties) ViewData["ViewProperties"]);
-            viewProperties.CurrentApp = DataReader.GetApp(id);
-            viewProperties.ActiveMenuItem = "Settings";
-
-            if (viewProperties.CurrentApp != null &&
-               (viewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
-            {
-                return View(first);
-            }
-
-            return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-        }
-
         [HttpPost]
         public ActionResult GetAppDashboardMapData(long id, string who, string timeZoneOffset, 
                                                    string startDate, string endDate)
@@ -132,6 +117,43 @@ namespace ReferEngine.Web.Controllers
             
             var r = DatabaseOperations.GetAppRecommendationsPeople(app, timeRange, who);
             return Json(r);
+        }
+
+        public ActionResult Settings(long id, bool? first)
+        {
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+            viewProperties.CurrentApp = DataReader.GetApp(id);
+            viewProperties.ActiveMenuItem = "Settings";
+
+            if (viewProperties.CurrentApp != null &&
+               (viewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
+            {
+                return View(first);
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+        }
+
+        public ActionResult Delete(long id)
+        {            
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+            viewProperties.CurrentApp = DataReader.GetApp(id);
+            viewProperties.ActiveMenuItem = "Settings";
+
+            if (AuthorizeUserForApp())
+            {
+                DatabaseOperations.SetAppAsInActive(viewProperties.CurrentApp);
+                return View();
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+        }
+
+        private bool AuthorizeUserForApp()
+        {
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+            return viewProperties.CurrentApp != null &&
+                   (viewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin"));
         }
 
         private static TimeSpan GetTimeSpan(string timespan)

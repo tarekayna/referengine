@@ -6,11 +6,6 @@ namespace ReferEngine.Web.DataAccess
 {
     public class ReferDataReader : IReferDataReader
     {
-        public App GetApp(string packageFamilyName)
-        {
-            return DatabaseOperations.GetApp(packageFamilyName);
-        }
-
         public App GetApp(long id)
         {
             return DatabaseOperations.GetApp(id);

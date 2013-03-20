@@ -3,7 +3,7 @@ define(["require", "exports", "../common/Messaging"], function(require, exports,
 
     var Url = (function () {
         function Url() { }
-        Url.base = ReferEngineGlobals.baseUrl;
+        Url.base = re.baseUrl;
         Url.getFriends = Url.base + "/recommend/win8/getfriends";
         Url.postRecommendation = Url.base + "/recommend/win8/postrecommendation";
         return Url;
@@ -76,8 +76,8 @@ define(["require", "exports", "../common/Messaging"], function(require, exports,
         MixPanel.track = function track(actionName, data) {
             var currentTime = new Date();
             var properties = {
-                AppName: ReferEngineGlobals.appName,
-                AppId: ReferEngineGlobals.appId,
+                AppName: re.appName,
+                AppId: re.appId,
                 Hour: MixPanel.getHour(currentTime),
                 Day: MixPanel.getDay(currentTime),
                 Month: MixPanel.getMonth(currentTime)

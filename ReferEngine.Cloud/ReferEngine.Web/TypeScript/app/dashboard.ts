@@ -1,5 +1,6 @@
 /// <reference path='..\lib\jquery.d.ts' static='true' />
 /// <reference path="../lib/require.d.ts" static="true" />
+/// <reference path='..\lib\ReferEngineGlobals.d.ts' static='true' />
 
 declare var google;
 declare var re;
@@ -127,8 +128,6 @@ class Page {
 
         //Set the initial state of the picker label
         $('#date-range span').html("Last 7 Days");
-        //$('#date-range span').html(Date2.today().add({ days: -29 }).toString('MMMM d, yyyy') + ' - ' + Date2.today().toString('MMMM d, yyyy'));
-
     }
     static initWhoSelector() {
         $(".who").click(function () {
@@ -255,7 +254,7 @@ class Chart {
         };
 
         chart.draw(dataTable, options);
-        Notifications.show("Success: map updated", NotificationType.success);
+        Notifications.show("Success: chart updated", NotificationType.success);
     }
     static onDataRequestError(e) {
         Notifications.show("Error: could not update chart", NotificationType.error);

@@ -13,9 +13,6 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=visualization&key=@Util.GoogleApiKey&sensor=false"> </script>
     <script type="text/javascript">
         google.load("visualization", "1", { packages: ["corechart", "geochart", "table"] });
-        window.re = {};
-        window.re.appId = @viewProperties.CurrentApp.Id;
-        window.re.appName = "@viewProperties.CurrentApp.Name";
     </script>
     <script data-main="/typescript/app/dashboard.js" type="text/javascript" src="~/typescript/lib/require.js"></script> 
 }

@@ -222,7 +222,7 @@ require(["../../../lib/knockout"], function (ko) {
         $.ajax(common.Url.getFriends, {
             type: "POST",
             data: {
-                authToken: ReferEngineGlobals.referEngineAuthToken
+                authToken: re.referEngineAuthToken
             },
             dataType: "json",
             error: onGetFriendsError,
@@ -272,7 +272,7 @@ require(["../../../lib/knockout"], function (ko) {
                     url: common.Url.postRecommendation,
                     data: {
                         message: msgText,
-                        authToken: ReferEngineGlobals.referEngineAuthToken
+                        authToken: re.referEngineAuthToken
                     },
                     dataType: "json",
                     error: onSubmitError,

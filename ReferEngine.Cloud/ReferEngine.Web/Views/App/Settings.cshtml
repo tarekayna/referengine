@@ -6,28 +6,12 @@
 }
 
 @section styles {
-    @*@Styles.Render("~/less/app/dashboard");*@
-    <style>
-        section h3 {
-            padding-top: 75px;
-        }
-        section:first-child h3 {
-            padding-top: 0;
-        }
-    </style>
-}
+    @Styles.Render("~/less/app/settings");
 }
 
-@*@section scripts {
-    
-    <script type="text/javascript">
-        google.load("visualization", "1", { packages: ["corechart", "geochart", "table"] });
-        window.re = {};
-        window.re.appId = @viewProperties.CurrentApp.Id;
-        window.re.appName = "@viewProperties.CurrentApp.Name";
-    </script>
-    <script data-main="/typescript/app/dashboard.js" type="text/javascript" src="~/typescript/lib/require.js"></script> 
-}*@
+@section scripts {
+    <script data-main="/typescript/app/settings.js" type="text/javascript" src="~/typescript/lib/require.js"></script>
+}
 
 
 <div id="content" data-spy="scroll" data-target=".nav-list">
@@ -65,7 +49,7 @@
                             <br />
                             <label class="control-label">Description</label>
                             <div class="controls">
-                                <textarea rows="5" style="width: 500px">@viewProperties.CurrentApp.Description</textarea>
+                                <textarea rows="5">@viewProperties.CurrentApp.Description</textarea>
                             </div>
                             <br />
                             <label class="control-label">Logo</label>
@@ -75,7 +59,7 @@
                             <br />
                             <label class="control-label">High Quality Logo</label>
                             <div class="controls">
-                                <img src="@viewProperties.CurrentApp.LogoLinkHighQuality" style="height: 100px"/>
+                                <img src="@viewProperties.CurrentApp.LogoLinkHighQuality" id="logo-high-quality"/>
                             </div>
                             <br />
                             <label class="control-label">Copyright</label>
@@ -186,6 +170,6 @@
     </div>
     <div class="modal-footer">
     <a class="btn" href="#verify-app-delete" role="button" data-toggle="modal">Cancel</a>
-    <a href="#" class="btn btn-danger">Delete @viewProperties.CurrentApp.Name</a>
+    <a id="confirm-app-delete" class="btn btn-danger">Delete @viewProperties.CurrentApp.Name</a>
     </div>
 </div>

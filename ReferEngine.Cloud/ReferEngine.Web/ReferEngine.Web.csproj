@@ -296,10 +296,25 @@
     <Content Include="js\lib\require.js" />
     <Content Include="js\home.js" />
     <Content Include="js\shared\layout-not-auth.js" />
+    <TypeScriptCompile Include="TypeScript\app\settings.ts" />
+    <Content Include="Less\app\settings.css">
+      <DependentUpon>settings.less</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\app\settings.js">
+      <DependentUpon>settings.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\app\settings.min.js">
+      <DependentUpon>settings.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="TypeScript\lib\ReferEngineGlobals.d.ts" />
+    <Content Include="TypeScript\lib\Copy of jquery.d.js">
+      <DependentUpon>ReferEngineGlobals.d.ts</DependentUpon>
+    </Content>
     <Content Include="Views\App\Settings.cshtml" />
     <Content Include="TypeScript\app\new.min.js.map">
       <DependentUpon>new.js</DependentUpon>
     </Content>
+    <Content Include="Views\App\Delete.cshtml" />
     <TypeScriptCompile Include="TypeScript\app\new.ts" />
     <Content Include="Less\app\new.css">
       <DependentUpon>new.less</DependentUpon>
@@ -331,6 +346,7 @@
     <TypeScriptCompile Include="TypeScript\app\dashboard.ts" />
     <Content Include="docu\TimePeriod_en.pdf" />
     <Content Include="Less\app\new.less" />
+    <Content Include="Less\app\settings.less" />
     <None Include="Less\app\dashboard.less" />
     <Content Include="Less\app\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>
@@ -390,13 +406,6 @@
     </Content>
     <Content Include="TypeScript\recommend\windows\common\winjs.d.ts" />
     <Content Include="TypeScript\recommend\windows\common\winrt.d.ts" />
-    <TypeScriptCompile Include="TypeScript\recommend\windows\server\globals.ts" />
-    <Content Include="TypeScript\recommend\windows\server\globals.js">
-      <DependentUpon>globals.ts</DependentUpon>
-    </Content>
-    <Content Include="TypeScript\recommend\windows\server\globals.min.js">
-      <DependentUpon>globals.ts</DependentUpon>
-    </Content>
     <None Include="ConfigureIIS.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -527,7 +536,6 @@
     <Content Include="img\recommend\win8\start-arrow.png" />
     <Content Include="img\WindowsStore_badge_green_en_med_67x208.png" />
     <Content Include="index.html" />
-    <Content Include="js\app\new.js" />
     <Content Include="js\app\edit.js" />
     <Content Include="js\contact\index.js" />
     <Content Include="js\lib\bootstrap.js" />
@@ -538,9 +546,6 @@
     <Content Include="js\lib\jquery-validate.js" />
     <Content Include="js\lib\jquery.aceditable.js" />
     <Content Include="js\lib\jquery.fitvids.js" />
-    <Content Include="js\recommend\win8\common.js" />
-    <Content Include="js\recommend\win8\recommend.js" />
-    <Content Include="js\recommend\win8\intro.js" />
     <Content Include="Less\common.css">
       <DependentUpon>common.less</DependentUpon>
     </Content>
@@ -691,6 +696,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="js\recommend\" />
     <Folder Include="Models\InAppScript\" />
   </ItemGroup>
   <ItemGroup>

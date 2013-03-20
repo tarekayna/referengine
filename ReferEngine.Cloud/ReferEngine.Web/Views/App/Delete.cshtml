@@ -1,0 +1,15 @@
+﻿@{
+    ViewProperties viewProperties = ((ViewProperties) ViewData["ViewProperties"]);
+    Verifier.IsNotNullOrEmpty(viewProperties.CurrentApp, "viewProperties.CurrentApp");
+}
+<div id="content" data-spy="scroll" data-target=".nav-list">
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <div class="alert alert-error">
+                    @viewProperties.CurrentApp.Name has been removed from your account.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

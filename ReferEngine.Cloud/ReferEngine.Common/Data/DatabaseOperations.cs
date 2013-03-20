@@ -15,7 +15,7 @@ namespace ReferEngine.Common.Data
     {
         public static App GetApp(long id)
         {
-            App app = CacheOperations.GetApp(id);
+            App app = CacheOperations.AppById.Get(id);
             if (app == null)
             {
                 using (var db = new ReferEngineDatabaseContext())
@@ -24,24 +24,7 @@ namespace ReferEngine.Common.Data
                              .Include(a => a.RewardPlan)
                              .First();
                     app.Screenshots = db.AppScreenshots.Where(s => s.AppId == id).ToList();
-                    CacheOperations.AddApp(id, app);
-                }
-            }
-            return app;
-        }
-
-        public static App GetApp(string packageFamilyName)
-        {
-            App app = CacheOperations.GetApp(packageFamilyName);
-            if (app == null)
-            {
-                using (var db = new ReferEngineDatabaseContext())
-                {
-                    app = db.Apps.Where(a => a.PackageFamilyName == packageFamilyName && a.IsActive)
-                             .Include(a => a.RewardPlan)
-                             .First();
-                    app.Screenshots = db.AppScreenshots.Where(s => s.AppId == app.Id).ToList();
-                    CacheOperations.AddApp(packageFamilyName, app);
+                    CacheOperations.AppById.Add(app);
                 }
             }
             return app;
@@ -49,7 +32,7 @@ namespace ReferEngine.Common.Data
 
         public static App GetApp(string packageFamilyName, string appVerificationCode)
         {
-            App app = CacheOperations.GetApp(packageFamilyName, appVerificationCode);
+            App app = CacheOperations.AppByPackageAndVerification.Get(packageFamilyName, appVerificationCode);
             if (app == null)
             {
                 using (var db = new ReferEngineDatabaseContext())
@@ -60,10 +43,23 @@ namespace ReferEngine.Common.Data
                                  .Include(a => a.RewardPlan)
                                  .First();
                     app.Screenshots = db.AppScreenshots.Where(s => s.AppId == app.Id).ToList();
-                    CacheOperations.AddApp(packageFamilyName, appVerificationCode, app);
+                    CacheOperations.AppByPackageAndVerification.Add(app);
                 }
             }
             return app;
+        }
+
+        public static void SetAppAsInActive(App app)
+        {
+            using (var db = new ReferEngineDatabaseContext())
+            {
+                db.Apps.Attach(app);
+                app.IsActive = false;
+                db.SaveChanges();
+
+                User user = db.Users.First(u => u.Id == app.UserId);
+                CacheOperations.User.Remove(user);
+            }
         }
 
         public static void AddOrUpdateAppReceipt(AppReceipt appReceipt)
@@ -666,7 +662,7 @@ namespace ReferEngine.Common.Data
                 db.SaveChanges();
                 user.Apps.Add(addedApp);
                 db.SaveChanges();
-                CacheOperations.User.Clear(user);
+                CacheOperations.User.Remove(user);
                 return addedApp;
             }
         }

@@ -212,7 +212,7 @@ namespace ReferEngine.Workers.WinApps
                                                                                           StringComparison
                                                                                               .OrdinalIgnoreCase);
                                             storeAppInfo.PackageFamilyName = scriptNode.InnerText.Substring(
-                                                packageStart,
+                                                packageStart + 1,
                                                 packageEnd - packageStart);
                                             break;
                                         }

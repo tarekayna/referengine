@@ -30,8 +30,9 @@ namespace ReferEngine.Web.Models.Common
 
         public string GetJavaScriptGlobalVariables()
         {
-            string format = "ReferEngineGlobals.{0} = \"{1}\";";
             StringBuilder result = new StringBuilder();
+            result.AppendLine("window.re = {};");
+            const string format = "re.{0} = \"{1}\";";
 
             if (CurrentApp != null)
             {

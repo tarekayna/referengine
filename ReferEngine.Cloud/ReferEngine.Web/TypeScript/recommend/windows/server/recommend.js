@@ -178,7 +178,7 @@ define(["require", "exports", "common", "../common/Functions"], function(require
             $.ajax(common.Url.getFriends, {
                 type: "POST",
                 data: {
-                    authToken: ReferEngineGlobals.referEngineAuthToken
+                    authToken: re.referEngineAuthToken
                 },
                 dataType: "json",
                 error: onGetFriendsError,
@@ -226,7 +226,7 @@ define(["require", "exports", "common", "../common/Functions"], function(require
                         url: common.Url.postRecommendation,
                         data: {
                             message: msgText,
-                            authToken: ReferEngineGlobals.referEngineAuthToken
+                            authToken: re.referEngineAuthToken
                         },
                         dataType: "json",
                         error: onSubmitError,

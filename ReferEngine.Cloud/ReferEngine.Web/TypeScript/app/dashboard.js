@@ -288,7 +288,7 @@ var Chart = (function () {
             }
         };
         Chart.chart.draw(dataTable, options);
-        Notifications.show("Success: map updated", NotificationType.success);
+        Notifications.show("Success: chart updated", NotificationType.success);
     };
     Chart.onDataRequestError = function onDataRequestError(e) {
         Notifications.show("Error: could not update chart", NotificationType.error);
