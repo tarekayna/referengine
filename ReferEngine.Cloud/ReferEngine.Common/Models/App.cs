@@ -60,6 +60,9 @@ namespace ReferEngine.Common.Models
         public AppRewardPlan RewardPlan { get; set; }
 
         [DataMember]
+        public bool IsActive { get; set; }
+
+        [DataMember]
         public List<AppScreenshot> Screenshots { get; set; }
 
         public void ComputeVerificationCode()

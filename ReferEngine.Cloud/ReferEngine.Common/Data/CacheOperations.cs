@@ -105,7 +105,6 @@ namespace ReferEngine.Common.Data
         internal const string AppPackageAndVerification = "app-pkgver-{0}{1}";
         internal const string AppId = "app-id-{0}";
         internal const string AppScreenshotIdDesc = "appscreenshot-id-desc-{0}{1}";
-        //internal const string UserId = "user-id-{0}";
         internal const string IpAddress = "ip-{0}";
         internal const string AppAutoShowOptions = "app-auto-show-{0}";
     }

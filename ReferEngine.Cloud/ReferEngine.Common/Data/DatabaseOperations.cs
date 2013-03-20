@@ -20,7 +20,7 @@ namespace ReferEngine.Common.Data
             {
                 using (var db = new ReferEngineDatabaseContext())
                 {
-                    app = db.Apps.Where(a => a.Id == id)
+                    app = db.Apps.Where(a => a.Id == id && a.IsActive)
                              .Include(a => a.RewardPlan)
                              .First();
                     app.Screenshots = db.AppScreenshots.Where(s => s.AppId == id).ToList();
@@ -37,7 +37,7 @@ namespace ReferEngine.Common.Data
             {
                 using (var db = new ReferEngineDatabaseContext())
                 {
-                    app = db.Apps.Where(a => a.PackageFamilyName == packageFamilyName)
+                    app = db.Apps.Where(a => a.PackageFamilyName == packageFamilyName && a.IsActive)
                              .Include(a => a.RewardPlan)
                              .First();
                     app.Screenshots = db.AppScreenshots.Where(s => s.AppId == app.Id).ToList();
@@ -54,7 +54,9 @@ namespace ReferEngine.Common.Data
             {
                 using (var db = new ReferEngineDatabaseContext())
                 {
-                    app = db.Apps.Where(a => a.PackageFamilyName == packageFamilyName && a.VerificationCode == appVerificationCode)
+                    app = db.Apps.Where(a => a.PackageFamilyName == packageFamilyName && 
+                                             a.VerificationCode == appVerificationCode &&
+                                             a.IsActive)
                                  .Include(a => a.RewardPlan)
                                  .First();
                     app.Screenshots = db.AppScreenshots.Where(s => s.AppId == app.Id).ToList();
@@ -329,7 +331,7 @@ namespace ReferEngine.Common.Data
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
                 User user = db.Users.First(c => c.Email == email);
-                user.Apps = db.Apps.Where(a => a.UserId == user.Id).ToList();
+                user.Apps = db.Apps.Where(a => a.UserId == user.Id && a.IsActive).ToList();
                 return user;
             }
         }
@@ -339,7 +341,7 @@ namespace ReferEngine.Common.Data
             using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
             {
                 User user = db.Users.First(c => c.Id == id);
-                user.Apps = db.Apps.Where(a => a.UserId == user.Id).ToList();
+                user.Apps = db.Apps.Where(a => a.UserId == user.Id && a.IsActive).ToList();
                 return user;
             }
         }
@@ -351,7 +353,7 @@ namespace ReferEngine.Common.Data
                 Membership membership =
                     db.Memberships.First(m => m.ConfirmationToken.Equals(code, StringComparison.OrdinalIgnoreCase));
                 User user = db.Users.First(u => u.Id == membership.UserId);
-                user.Apps = db.Apps.Where(a => a.UserId == user.Id).ToList();
+                user.Apps = db.Apps.Where(a => a.UserId == user.Id && a.IsActive).ToList();
                 return user;
             }
         }
@@ -656,7 +658,8 @@ namespace ReferEngine.Common.Data
                         Publisher = appInfo.Developer,
                         RewardPlan = rewardPlan,
                         AppStoreLink = appInfo.AppStoreLink,
-                        UserId = user.Id
+                        UserId = user.Id,
+                        IsActive = true
                     };
                 app.ComputeVerificationCode();
                 App addedApp = db.Apps.Add(app);
