@@ -14,6 +14,7 @@ namespace ReferEngine.Web.Models.Common
         public User CurrentUser { get; set; }
         public string ReturnUrl { get; set; }
         public string PageTitle { get; set; }
+        public string ActiveMenuItem { get; set; }
 
         public string SuccessMessage { get; set; }
         public string StatusMessage { get; set; }

@@ -84,8 +84,12 @@
                             @if (viewProperties.CurrentApp != null)
                             {
                                 <ul class="nav pull-left">
-                                    <li><a href="~/app/dashboard/@viewProperties.CurrentApp.Id">Dashboard</a></li>
-                                    <li><a href="~/app/settings/@viewProperties.CurrentApp.Id">Settings</a></li>
+                                    <li @if(viewProperties.ActiveMenuItem == "Dashboard"){<text>class="active"</text>}>
+                                        <a href="~/app/dashboard/@viewProperties.CurrentApp.Id">Dashboard</a>
+                                    </li>
+                                    <li @if(viewProperties.ActiveMenuItem == "Settings"){<text>class="active"</text>}>
+                                        <a href="~/app/settings/@viewProperties.CurrentApp.Id">Settings</a>
+                                    </li>
                                 </ul>
                             }
                             <ul class="nav pull-right">

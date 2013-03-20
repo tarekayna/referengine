@@ -43,11 +43,11 @@ namespace ReferEngine.Web.DataAccess
 
         public User GetUser(int id)
         {
-            User user = CacheOperations.GetUser(id);
+            User user = CacheOperations.User.Get(id);
             if (user == null)
             {
                 user = DatabaseOperations.GetUser(id);
-                CacheOperations.AddUser(user);
+                CacheOperations.User.Add(user);
             }
             return user;
         }

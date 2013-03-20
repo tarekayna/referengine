@@ -1,4 +1,6 @@
-﻿@{
+﻿@model bool?
+
+@{
     ViewProperties viewProperties = ((ViewProperties) ViewData["ViewProperties"]);
     Verifier.IsNotNullOrEmpty(viewProperties.CurrentApp, "viewProperties.CurrentApp");
 }
@@ -110,9 +112,21 @@
                 <section id="install">
                     <h3>Installation</h3>
                     <hr />
-                    <h4>1- Install the ReferEngine.JavaScript NuGet Package in your Windows Store App</h4>
+                    @if (Model.HasValue && Model.Value)
+                    {
+                        <div class="alert alert-success">
+                            @viewProperties.CurrentUser.FirstName, you have successfully added
+                            @viewProperties.CurrentApp.Name to your account. The next and final
+                            step is to install ReferEngine in your app solution using the steps
+                            below.
+                        </div>
+                    }
+                    <h4>
+                        1- Install the ReferEngine.JavaScript NuGet Package 
+                        in your Windows Store App
+                    </h4>
                     <div class="row">
-                        <div class="alert span7 offset1">
+                        <div class="span9">
                             <small><i class="icon-info-sign"></i> NuGet is a Visual Studio feature that makes it easy to install and update third-party libraries and tools in Visual Studio.</small>
                         </div>
                     </div>

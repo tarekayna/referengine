@@ -21,8 +21,12 @@ require(["../lib/knockout"], function (ko) {
                 msAppId: ViewModel.SelectedApp().MsAppId
             },
             dataType: "json",
-            error: function () { },
-            success: function () { }
+            error: function () {
+
+            },
+            success: function (data) {
+                window.location.href = "../app/settings/" + data.Id + "?first=true#install";
+            }
         });
     }
 

@@ -29,8 +29,8 @@ namespace ReferEngine.Web.Controllers
         public ActionResult AddNewApp(string msAppId)
         {
             ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
-            DatabaseOperations.AddNewAppFromStoreInfo(msAppId, viewProperties.CurrentUser);
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
+            App app = DatabaseOperations.AddNewAppFromStoreInfo(msAppId, viewProperties.CurrentUser);
+            return Json(app);
         }
 
         [HttpPost]
@@ -48,6 +48,7 @@ namespace ReferEngine.Web.Controllers
         {
             ViewProperties viewProperties = ((ViewProperties) ViewData["ViewProperties"]);
             viewProperties.CurrentApp = DataReader.GetApp(id);
+            viewProperties.ActiveMenuItem = "Dashboard";
 
             if (viewProperties.CurrentApp != null &&
                (viewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
@@ -58,15 +59,16 @@ namespace ReferEngine.Web.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
         }
 
-        public ActionResult Settings(long id)
+        public ActionResult Settings(long id, bool? first)
         {
             ViewProperties viewProperties = ((ViewProperties) ViewData["ViewProperties"]);
             viewProperties.CurrentApp = DataReader.GetApp(id);
+            viewProperties.ActiveMenuItem = "Settings";
 
             if (viewProperties.CurrentApp != null &&
                (viewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
             {
-                return View();
+                return View(first);
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.Forbidden);

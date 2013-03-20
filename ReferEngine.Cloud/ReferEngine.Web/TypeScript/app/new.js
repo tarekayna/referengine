@@ -27,7 +27,8 @@ define(["require", "exports", "../lib/SinglePage"], function(require, exports, _
                 dataType: "json",
                 error: function () {
                 },
-                success: function () {
+                success: function (data) {
+                    window.location.href = "../app/settings/" + data.Id + "?first=true#install";
                 }
             });
         };
