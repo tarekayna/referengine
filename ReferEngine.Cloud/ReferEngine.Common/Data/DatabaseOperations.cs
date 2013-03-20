@@ -663,6 +663,7 @@ namespace ReferEngine.Common.Data
                 db.SaveChanges();
                 user.Apps.Add(addedApp);
                 db.SaveChanges();
+                CacheOperations.User.Clear(user);
                 return addedApp;
             }
         }
