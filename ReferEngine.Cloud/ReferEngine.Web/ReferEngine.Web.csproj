@@ -307,9 +307,6 @@
       <DependentUpon>settings.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="TypeScript\lib\ReferEngineGlobals.d.ts" />
-    <Content Include="TypeScript\lib\Copy of jquery.d.js">
-      <DependentUpon>ReferEngineGlobals.d.ts</DependentUpon>
-    </Content>
     <Content Include="Views\App\Settings.cshtml" />
     <Content Include="TypeScript\app\new.min.js.map">
       <DependentUpon>new.js</DependentUpon>
