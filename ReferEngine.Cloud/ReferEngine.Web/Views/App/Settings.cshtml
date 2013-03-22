@@ -30,11 +30,22 @@
                 <section id="info">
                     <h3>Info</h3>
                     <hr />
+                    <p>
+                        This info will appear in  
+                        <a href="https://apps.facebook.com/referengine/app/@viewProperties.CurrentApp.Id" target="_blank">
+                            @viewProperties.CurrentApp.Name's Facebook Landing Page
+                        </a>
+                    </p>
                     <form class="form-horizontal">
                         <div class="control-group">
                             <label class="control-label">App Name</label>
                             <div class="controls static">
                                 @viewProperties.CurrentApp.Name
+                            </div>
+                            <br />
+                            <label class="control-label">Facebook Landing Page</label>
+                            <div class="controls static">
+                                Preview</a>
                             </div>
                             <br />
                             <label class="control-label">Package Family Name</label>
@@ -68,9 +79,13 @@
                             </div>
                             <br />
                             <label class="control-label">Publisher</label>
-                            <div class="controls">
-                                <input type="text" value="@viewProperties.CurrentApp.Publisher"/>
-                            </div>
+                        <div class="controls">
+                            <input type="text" value="@viewProperties.CurrentApp.Publisher"/>
+                        </div>
+                        <h4>Video</h4>
+                            <p>
+                                <span class="label label-info">Hint</span> Adding a Video will increase your landing page's conversion
+                            </p>
                             <br />
                             <label class="control-label">Vimeo Video Link</label>
                             <div class="controls">

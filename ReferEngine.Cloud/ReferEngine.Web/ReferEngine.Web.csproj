@@ -300,6 +300,9 @@
     <Content Include="Less\app\settings.css">
       <DependentUpon>settings.less</DependentUpon>
     </Content>
+    <Content Include="Less\app\settings.min.css">
+      <DependentUpon>settings.less</DependentUpon>
+    </Content>
     <Content Include="TypeScript\app\settings.js">
       <DependentUpon>settings.ts</DependentUpon>
     </Content>
