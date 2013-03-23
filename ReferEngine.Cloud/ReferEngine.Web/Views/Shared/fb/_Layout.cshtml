@@ -18,8 +18,15 @@
         @Styles.Render("~/bundles/css/bootstrap")
         @RenderSection("styles", required: false)
     </head>
-    <body>
-         
+    
+@if (ViewBag.BodyBackgroundImage == null)
+{
+    @:<body>
+}
+else
+{
+    @:<body style="background-image: url('@ViewBag.BodyBackgroundImage')">
+}
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">

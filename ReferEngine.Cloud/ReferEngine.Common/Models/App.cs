@@ -30,6 +30,9 @@ namespace ReferEngine.Common.Models
         public string LogoLinkHighQuality { get; set; }
 
         [DataMember]
+        public string BackgroundImage { get; set; }
+
+        [DataMember]
         public string Description { get; set; }
 
         [DataMember]

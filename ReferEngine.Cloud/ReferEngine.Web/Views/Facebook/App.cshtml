@@ -1,4 +1,5 @@
-﻿@using ReferEngine.Common.Utilities
+﻿@using ReferEngine.Common.Data
+@using ReferEngine.Common.Utilities
 @using ReferEngine.Common.Models
 @model ReferEngine.Web.Models.Facebook.FacebookAppViewModel
 
@@ -39,8 +40,15 @@
 }
 }
         
+@{
+    if (!string.IsNullOrEmpty(Model.App.BackgroundImage))
+    {
+        ViewBag.BodyBackgroundImage = ImageData.GetAppBackgroundImage(Model.App.BackgroundImage, Request.Browser.ScreenPixelsHeight, Request.Browser.ScreenPixelsWidth);   
+    }
+}
+        
 <div id="landing">
-    <div class="container">  
+    <div class="container">
         <div class="row">
             <div class="span6">
                 <img src="@Model.App.LogoLink50" alt="@Model.App.Name Logo" class="app-logo" />
