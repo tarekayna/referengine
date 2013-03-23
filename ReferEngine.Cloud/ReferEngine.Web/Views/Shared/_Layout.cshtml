@@ -9,7 +9,7 @@
         @{
             const string baseTitle = "Refer Engine | Facebook Marketing for App Developers";
             string title = baseTitle;
-            if (!string.IsNullOrEmpty(viewProperties.PageTitle))
+            if (viewProperties != null && !string.IsNullOrEmpty(viewProperties.PageTitle))
             {
                 title = title + " | " + viewProperties.PageTitle;
             }
@@ -38,7 +38,7 @@
     <body>
         <div class='notifications top-right'></div>
 
-        @if (Request.IsAuthenticated && viewProperties.CurrentUser != null)
+        @if (Request.IsAuthenticated && viewProperties != null && viewProperties.CurrentUser != null)
         {
             <div class="navbar navbar-fixed-top">
                 <div class="navbar-inner">
@@ -203,18 +203,23 @@
         @Scripts.Render("~/bundles/libs/jquery-validate")
         @Html.Partial("_MixPanel")
 
-        @if (viewProperties.UseJQueryUi)
+        @if (viewProperties != null && viewProperties.UseJQueryUi)
         {
             @Scripts.Render("~/bundles/libs/jquery-ui")
         }
 
         @RenderSection("scripts", required: false)
         
-        @{ viewProperties.UseJQueryValidate = true; }
+        @{
+            if (viewProperties != null)
+            {
+                viewProperties.UseJQueryValidate = true;
+            }
+        }
         @Html.Partial("_PrivateBeta")
         
         
-        @if (Request.IsAuthenticated && viewProperties.CurrentUser != null)
+        @if (Request.IsAuthenticated && viewProperties != null && viewProperties.CurrentUser != null)
         {
             //@Scripts.Render("~/js/shared/layout-auth")
         }

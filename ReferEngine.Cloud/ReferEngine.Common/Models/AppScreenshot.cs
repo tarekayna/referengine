@@ -35,11 +35,6 @@ namespace ReferEngine.Common.Models
         [DataMember]
         public string Link { get; set; }
 
-        //public string Link
-        //{
-        //    get { return string.Format("https://referenginestorage.blob.core.windows.net/app-screenshots/{0}.png", Id); }
-        //}
-
         public static AppScreenshot Create(HttpPostedFileBase file, int appId)
         {
             if (file.ContentLength == 0)

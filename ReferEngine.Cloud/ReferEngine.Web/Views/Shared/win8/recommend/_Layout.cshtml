@@ -1,5 +1,6 @@
 ﻿@{
     ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+    Verifier.IsNotNullOrEmpty(viewProperties, "viewProperties");
     Verifier.IsNotNullOrEmpty(viewProperties.CurrentApp, "viewProperties.CurrentApp");
 }
 

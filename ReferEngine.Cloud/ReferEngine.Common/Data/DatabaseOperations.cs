@@ -1,5 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Diagnostics;
+using System.Net;
+using CloudinaryDotNet.Actions;
 using Itenso.TimePeriod;
 using Microsoft.ServiceBus.Messaging;
 using ReferEngine.Common.Models;
@@ -655,13 +657,34 @@ namespace ReferEngine.Common.Data
                         RewardPlan = rewardPlan,
                         AppStoreLink = appInfo.AppStoreLink,
                         UserId = user.Id,
-                        IsActive = true
+                        IsActive = true,
+                        Screenshots = new List<AppScreenshot>()
                     };
                 app.ComputeVerificationCode();
                 App addedApp = db.Apps.Add(app);
                 db.SaveChanges();
                 user.Apps.Add(addedApp);
+                var screenshotInfo = db.StoreAppScreenshots.Where(s => s.StoreAppInfoMsAppId == appInfo.MsAppId).ToList();
+                for (int i = 0; i < screenshotInfo.Count(); i++)
+                {
+                    StoreAppScreenshot storeAppScreenshot = screenshotInfo.ElementAt(i);
+                    ImageUploadResult imageUploadResult = ImageData.UploadRemote(storeAppScreenshot.Link, "app-" + app.Id + "-screenshot-" + i);
+
+                    if (imageUploadResult.StatusCode == HttpStatusCode.OK)
+                    {
+                        AppScreenshot screenshot = new AppScreenshot
+                                                       {
+                                                           AppId = app.Id,
+                                                           Description = storeAppScreenshot.Caption,
+                                                           Link = imageUploadResult.SecureUri.AbsoluteUri,
+                                                           Height = imageUploadResult.Height,
+                                                           Width = imageUploadResult.Width
+                                                       };
+                        app.Screenshots.Add(screenshot);
+                    }
+                }
                 db.SaveChanges();
+
                 CacheOperations.User.Remove(user);
                 return addedApp;
             }
@@ -771,6 +794,19 @@ namespace ReferEngine.Common.Data
             {
                 db.FacebookPageViews.Add(facebookPageView);
                 db.SaveChanges();
+            }
+        }
+
+        public static void AddStoreAppScreenshot(StoreAppScreenshot storeAppScreenshot)
+        {
+            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            {
+                var existing = db.StoreAppScreenshots.FirstOrDefault(i => i.Link == storeAppScreenshot.Link);
+                if (existing == null)
+                {
+                    db.StoreAppScreenshots.Add(storeAppScreenshot);
+                    db.SaveChanges();
+                }
             }
         }
     }

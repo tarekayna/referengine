@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CloudinaryDotNet">
+      <HintPath>..\packages\CloudinaryDotNet.1.0.4\lib\net35\CloudinaryDotNet.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.0.0-alpha2\lib\net45\EntityFramework.dll</HintPath>
@@ -86,6 +89,9 @@
     </Reference>
     <Reference Include="Microsoft.WindowsFabric.Data.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.Caching.1.8.1.0\lib\net35-full\Microsoft.WindowsFabric.Data.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit-console-runner">
       <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\nunit-console-runner.dll</HintPath>
@@ -156,6 +162,7 @@
     <Compile Include="Data\CacheOperations.cs" />
     <Compile Include="Data\DatabaseOperations.cs" />
     <Compile Include="Data\FacebookOperations.cs" />
+    <Compile Include="Data\ImageData.cs" />
     <Compile Include="Data\IpCheckOperations.cs" />
     <Compile Include="Migrations\201302071841012_IpAddressLocation.cs" />
     <Compile Include="Migrations\201302071841012_IpAddressLocation.Designer.cs">
@@ -217,9 +224,30 @@
     <Compile Include="Migrations\201303200518186_AppIsActive.Designer.cs">
       <DependentUpon>201303200518186_AppIsActive.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303222112210_AppInfoScreenshot.cs" />
+    <Compile Include="Migrations\201303222112210_AppInfoScreenshot.Designer.cs">
+      <DependentUpon>201303222112210_AppInfoScreenshot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201303222148255_StoreAppScreenshotKey.cs" />
+    <Compile Include="Migrations\201303222148255_StoreAppScreenshotKey.Designer.cs">
+      <DependentUpon>201303222148255_StoreAppScreenshotKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201303222224513_DropTableStoreAppScreenshots.cs" />
+    <Compile Include="Migrations\201303222224513_DropTableStoreAppScreenshots.Designer.cs">
+      <DependentUpon>201303222224513_DropTableStoreAppScreenshots.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201303222226523_CreateTableStoreAppScreenshot.cs" />
+    <Compile Include="Migrations\201303222226523_CreateTableStoreAppScreenshot.Designer.cs">
+      <DependentUpon>201303222226523_CreateTableStoreAppScreenshot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201303222342034_AppBackgroundImage.cs" />
+    <Compile Include="Migrations\201303222342034_AppBackgroundImage.Designer.cs">
+      <DependentUpon>201303222342034_AppBackgroundImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\AppRewardPlan.cs" />
     <Compile Include="Models\ChartUnitResult.cs" />
+    <Compile Include="Models\StoreAppScreenshot.cs" />
     <Compile Include="Models\FacebookPageViewInfo.cs" />
     <Compile Include="Models\FacebookPageView.cs" />
     <Compile Include="Models\PersonRecommendationUnitResult.cs" />
@@ -378,6 +406,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303200518186_AppIsActive.resx">
       <DependentUpon>201303200518186_AppIsActive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303222112210_AppInfoScreenshot.resx">
+      <DependentUpon>201303222112210_AppInfoScreenshot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303222148255_StoreAppScreenshotKey.resx">
+      <DependentUpon>201303222148255_StoreAppScreenshotKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303222224513_DropTableStoreAppScreenshots.resx">
+      <DependentUpon>201303222224513_DropTableStoreAppScreenshots.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303222226523_CreateTableStoreAppScreenshot.resx">
+      <DependentUpon>201303222226523_CreateTableStoreAppScreenshot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303222342034_AppBackgroundImage.resx">
+      <DependentUpon>201303222342034_AppBackgroundImage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

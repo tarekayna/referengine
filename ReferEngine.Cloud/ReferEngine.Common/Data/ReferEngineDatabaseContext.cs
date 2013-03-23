@@ -8,10 +8,10 @@ namespace ReferEngine.Common.Data
 {
     public class ReferEngineDatabaseContext : DbContext
     {
-        public ReferEngineDatabaseContext() : base(Util.DatabaseConnectionStringName)
+        //public ReferEngineDatabaseContext() : base(Util.DatabaseConnectionStringName)
         //public ReferEngineDatabaseContext() : base("ProductionCloudConnectionString")
         //public ReferEngineDatabaseContext() : base("TestCloudConnectionString")
-        //public ReferEngineDatabaseContext() : base("LocalConnectionString")
+        public ReferEngineDatabaseContext() : base("LocalConnectionString")
         //public ReferEngineDatabaseContext() : base("Server=tcp:fnx5xvuqzn.database.windows.net,1433;Database=referengine_db_local;User ID=tarek990@fnx5xvuqzn;Password=r6g4d2hA..;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;MultipleActiveResultSets=True")
         {
             this.Configuration.LazyLoadingEnabled = false;
@@ -27,6 +27,7 @@ namespace ReferEngine.Common.Data
         public DbSet<PrivateBetaSignup> PrivateBetaSignups { get; set; }
         public DbSet<AppWebLink> AppWebLinks { get; set; }
         public DbSet<StoreAppInfo> StoreAppInfos { get; set; }
+        public DbSet<StoreAppScreenshot> StoreAppScreenshots { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Membership> Memberships { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -89,6 +90,8 @@ namespace ReferEngine.Common.Data
             mb.Entity<AppWebLink>().HasKey(l => l.Link);
 
             mb.Entity<StoreAppInfo>().HasKey(i => i.MsAppId);
+
+            mb.Entity<StoreAppScreenshot>().HasKey(i => i.Link);
 
             mb.Entity<AppAutoShowOptions>().HasKey(o => o.AppId);
             mb.Entity<AppAutoShowOptions>().Property(s => s.AppId)

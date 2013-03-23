@@ -153,7 +153,7 @@ namespace ReferEngine.Workers.WinApps
                                                                                 "//head/meta[@name='MS.PageVer']",
                                                                                 "content");
 
-                                if (msPageVer.Equals("1.0"))
+                                if (msPageVer.Equals("1.0") && doc.GetElementbyId("ErrorPanel") == null)
                                 {
                                     StoreAppInfo storeAppInfo = new StoreAppInfo
                                                                     {
@@ -213,14 +213,40 @@ namespace ReferEngine.Workers.WinApps
                                                                                               .OrdinalIgnoreCase);
                                             storeAppInfo.PackageFamilyName = scriptNode.InnerText.Substring(
                                                 packageStart + 1,
-                                                packageEnd - packageStart);
+                                                packageEnd - packageStart - 1);
                                             break;
+                                        }
+                                    }
+
+                                    // Screenshot Links
+                                    List<StoreAppScreenshot> screenshots = new List<StoreAppScreenshot>();
+                                    HtmlNode node = doc.GetElementbyId("ScreenshotImageButtons");
+                                    if (node != null)
+                                    {
+                                        var screenshotInfo = node.ChildNodes.Where(n => n.Name == "a" && n.Attributes.Any(a => a.Name == "class" && a.Value.Contains("imageButton")))
+                                            .Select(n => new { url = n.GetAttributeValue("imgurl", null), caption = n.GetAttributeValue("imgcaption", null) });
+                                        foreach (dynamic s in screenshotInfo)
+                                        {
+                                            if (!string.IsNullOrEmpty(s.url))
+                                            {
+                                                var screenshot = new StoreAppScreenshot
+                                                                                    {
+                                                                                        StoreAppInfoMsAppId =storeAppInfo.MsAppId,
+                                                                                        Link = s.url,
+                                                                                        Caption = s.caption
+                                                                                    };
+                                                screenshots.Add(screenshot);
+                                            }
                                         }
                                     }
 
                                     try
                                     {
                                         DatabaseOperations.AddStoreAppInfo(storeAppInfo);
+                                        foreach (StoreAppScreenshot storeAppScreenshot in screenshots)
+                                        {
+                                            DatabaseOperations.AddStoreAppScreenshot(storeAppScreenshot);
+                                        }
                                     }
                                     catch (SqlException)
                                     {
