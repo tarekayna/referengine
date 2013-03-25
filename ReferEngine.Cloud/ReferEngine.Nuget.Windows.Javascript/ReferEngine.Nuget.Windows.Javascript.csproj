@@ -70,9 +70,6 @@
     <Content Include="docu\ChangeHistory.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Glimpse.Core">
-      <HintPath>..\packages\Glimpse.1.0.0\lib\net35\Glimpse.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Itenso.TimePeriod">
       <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\Itenso.TimePeriod.dll</HintPath>
     </Reference>

@@ -202,7 +202,7 @@ class Chart {
     static chart = null;
     static chartData = [];
     static timespan = "day";
-    static how = "line-chart";
+    static how = "column-chart";
     static isInitialized = false;
     static init() {
         if (!isInitialized) {

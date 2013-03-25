@@ -40,12 +40,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AppfailReporting">
-      <HintPath>..\packages\Appfail.WebForms.1.1.0\lib\35\AppfailReporting.dll</HintPath>
-    </Reference>
-    <Reference Include="AppfailReporting.Mvc">
-      <HintPath>..\packages\Appfail.Mvc.1.1.0\lib\35\AppfailReporting.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="CloudinaryDotNet">
       <HintPath>..\packages\CloudinaryDotNet.1.0.4\lib\net35\CloudinaryDotNet.dll</HintPath>
     </Reference>
@@ -82,15 +76,6 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.0-alpha2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.AspNet">
-      <HintPath>..\packages\Glimpse.AspNet.1.0.0\lib\net40\Glimpse.AspNet.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.Core">
-      <HintPath>..\packages\Glimpse.1.0.0\lib\net40\Glimpse.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.Mvc3">
-      <HintPath>..\packages\Glimpse.Mvc3.1.0.0\lib\net40\Glimpse.Mvc3.dll</HintPath>
     </Reference>
     <Reference Include="Itenso.TimePeriod">
       <HintPath>..\packages\TimePeriodLibrary.NET.1.4.11\lib\net20\Desktop.Release\Itenso.TimePeriod.dll</HintPath>
@@ -299,6 +284,7 @@
     <Content Include="js\lib\require.js" />
     <Content Include="js\home.js" />
     <Content Include="js\shared\layout-not-auth.js" />
+    <Content Include="Views\Shared\_GoogleAnalytics.cshtml" />
     <TypeScriptCompile Include="TypeScript\app\settings.ts" />
     <Content Include="Less\app\settings.css">
       <DependentUpon>settings.less</DependentUpon>
@@ -429,7 +415,6 @@
     <Compile Include="DataAccess\ReferDataWriter.cs" />
     <Compile Include="App_Start\ErrorEntity.cs" />
     <Compile Include="Filters\LogAttribute.cs" />
-    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

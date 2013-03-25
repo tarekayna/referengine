@@ -239,7 +239,7 @@ var Chart = (function () {
     Chart.chart = null;
     Chart.chartData = [];
     Chart.timespan = "day";
-    Chart.how = "line-chart";
+    Chart.how = "column-chart";
     Chart.isInitialized = false;
     Chart.init = function init() {
         if(!Chart.isInitialized) {
