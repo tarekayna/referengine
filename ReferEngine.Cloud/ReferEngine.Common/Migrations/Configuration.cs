@@ -7,7 +7,7 @@ using ReferEngine.Common.Models;
 
 namespace ReferEngine.Common.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<ReferEngineDatabaseContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<DatabaseContext>
     {
         public Configuration()
         {

@@ -24,6 +24,12 @@ namespace ReferEngine.Common.Models
         public string Name { get; set; }
 
         [DataMember]
+        public string Headline { get; set; }
+
+        [DataMember]
+        public string BackgroundColor { get; set; }
+
+        [DataMember]
         public string LogoLink50 { get; set; }
 
         [DataMember]

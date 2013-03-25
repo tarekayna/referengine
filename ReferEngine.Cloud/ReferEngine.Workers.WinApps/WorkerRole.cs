@@ -196,7 +196,6 @@ namespace ReferEngine.Workers.WinApps
                                     storeAppInfo.SetRating(GetAttributeValueFromId(doc, "StarRating", "aria-label"));
                                     storeAppInfo.SetPrice(GetInnerTextFromId(doc, "Price"));
 
-                                    storeAppInfo.PackageFamilyName = "";
                                     HtmlNodeCollection scriptNodes = doc.DocumentNode.SelectNodes("//head/script");
                                     foreach (var scriptNode in scriptNodes)
                                     {
@@ -215,6 +214,18 @@ namespace ReferEngine.Workers.WinApps
                                                 packageStart + 1,
                                                 packageEnd - packageStart - 1);
                                             break;
+                                        }
+                                    }
+
+                                    var styleNodes = doc.DocumentNode.SelectNodes("//head/style");
+                                    foreach (HtmlNode styleNode in styleNodes)
+                                    {
+                                        int startSearchFrom = styleNode.InnerText.IndexOf(".appColors");
+                                        if (startSearchFrom != -1)
+                                        {
+                                            int s = styleNode.InnerText.IndexOf("background-color", startSearchFrom);
+                                            int hashIndex = styleNode.InnerText.IndexOf("#", s);
+                                            storeAppInfo.BackgroundColor = styleNode.InnerText.Substring(hashIndex, 7);
                                         }
                                     }
 

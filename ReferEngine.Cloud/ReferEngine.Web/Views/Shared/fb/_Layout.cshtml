@@ -19,15 +19,8 @@
         @RenderSection("styles", required: false)
     </head>
     
-@if (ViewBag.BodyBackgroundImage == null)
-{
-    @:<body>
-}
-else
-{
-    @:<body style="background-image: url('@ViewBag.BodyBackgroundImage')">
-}
-        <div class="navbar navbar-fixed-top">
+    <body>
+@*        <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
                     <div class="pull-right navbar-logo-ctnr">
@@ -35,7 +28,7 @@ else
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
 
         @RenderBody()
 

@@ -20,7 +20,7 @@ namespace ReferEngine.Common.Data
             App app = CacheOperations.AppById.Get(id);
             if (app == null)
             {
-                using (var db = new ReferEngineDatabaseContext())
+                using (var db = new DatabaseContext())
                 {
                     app = db.Apps.Where(a => a.Id == id && a.IsActive)
                              .Include(a => a.RewardPlan)
@@ -37,7 +37,7 @@ namespace ReferEngine.Common.Data
             App app = CacheOperations.AppByPackageAndVerification.Get(packageFamilyName, appVerificationCode);
             if (app == null)
             {
-                using (var db = new ReferEngineDatabaseContext())
+                using (var db = new DatabaseContext())
                 {
                     app = db.Apps.Where(a => a.PackageFamilyName == packageFamilyName && 
                                              a.VerificationCode == appVerificationCode &&
@@ -53,7 +53,7 @@ namespace ReferEngine.Common.Data
 
         public static void SetAppAsInActive(App app)
         {
-            using (var db = new ReferEngineDatabaseContext())
+            using (var db = new DatabaseContext())
             {
                 db.Apps.Attach(app);
                 app.IsActive = false;
@@ -66,7 +66,7 @@ namespace ReferEngine.Common.Data
 
         public static void AddOrUpdateAppReceipt(AppReceipt appReceipt)
         {
-            using (var db = new ReferEngineDatabaseContext())
+            using (var db = new DatabaseContext())
             {
                 AppReceipt existingReceipt = db.AppReceipts.Find(appReceipt.Id);
                 if (existingReceipt == null)
@@ -84,7 +84,7 @@ namespace ReferEngine.Common.Data
 
         public static AppReceipt GetAppReceipt(string id)
         {
-            using (var db = new ReferEngineDatabaseContext())
+            using (var db = new DatabaseContext())
             {
                 return db.AppReceipts.SingleOrDefault(r => r.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
             }
@@ -92,7 +92,7 @@ namespace ReferEngine.Common.Data
 
         public static AppScreenshot GetAppScreenshot(long appId, string description)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 return db.AppScreenshots.First(s => s.AppId == appId && s.Description == description);
             }
@@ -103,7 +103,7 @@ namespace ReferEngine.Common.Data
             Person person = CacheOperations.GetPerson(facebookId);
             if (person == null)
             {
-                using (var db = new ReferEngineDatabaseContext())
+                using (var db = new DatabaseContext())
                 {
                     person = db.People.FirstOrDefault(p => p.FacebookId == facebookId);
 
@@ -123,7 +123,7 @@ namespace ReferEngine.Common.Data
 
         public static AppRecommendation GetAppRecommdation(long appId, long personFacebookId)
         {
-            using (var db = new ReferEngineDatabaseContext())
+            using (var db = new DatabaseContext())
             {
                 return
                     db.AppRecommendations.FirstOrDefault(r => r.AppId == appId && r.PersonFacebookId == personFacebookId);
@@ -132,7 +132,7 @@ namespace ReferEngine.Common.Data
 
         public static void AddApp(App app)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 db.Apps.Add(app);
                 db.SaveChanges();
@@ -141,7 +141,7 @@ namespace ReferEngine.Common.Data
 
         public static AppScreenshot AddAppScreenshot(AppScreenshot appScreenshot)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 AppScreenshot screenshot = db.AppScreenshots.Add(appScreenshot);
                 db.SaveChanges();
@@ -151,7 +151,7 @@ namespace ReferEngine.Common.Data
 
         public static void AddAppReceipt(AppReceipt receipt)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 if (!db.AppReceipts.Any(r => r.Id == receipt.Id))
                 {
@@ -161,7 +161,7 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static void AddOrUpdatePerson(Person person, ReferEngineDatabaseContext db)
+        public static void AddOrUpdatePerson(Person person, DatabaseContext db)
         {
             Person existingPerson = db.People.FirstOrDefault(p => p.FacebookId == person.FacebookId);
             if (existingPerson == null)
@@ -176,7 +176,7 @@ namespace ReferEngine.Common.Data
 
         public static void AddOrUpdatePerson(Person person)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 AddOrUpdatePerson(person, db);
                 db.SaveChanges();
@@ -185,7 +185,7 @@ namespace ReferEngine.Common.Data
 
         public static void AddPersonAndFriends(Person person, IList<Person> friends, BrokeredMessage message)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 person.NumberOfFriends = friends.Count();
                 AddOrUpdatePerson(person, db);
@@ -210,7 +210,7 @@ namespace ReferEngine.Common.Data
 
         public static void AddRecommendation(AppRecommendation recommendation)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 var existing =
                     db.AppRecommendations.FirstOrDefault(r => r.FacebookPostId == recommendation.FacebookPostId);
@@ -222,7 +222,7 @@ namespace ReferEngine.Common.Data
 
         public static void AddPrivateBetaSignup(PrivateBetaSignup privateBetaSignup)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 if (!db.PrivateBetaSignups.Any(s => s.Email == privateBetaSignup.Email))
                 {
@@ -234,7 +234,7 @@ namespace ReferEngine.Common.Data
 
         public static void AddAppWebLink(AppWebLink appWebLink)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 if (!db.AppWebLinks.Any(l => l.Link == appWebLink.Link))
                 {
@@ -246,7 +246,7 @@ namespace ReferEngine.Common.Data
 
         public static void AddOrUpdateAppWebLinks(IList<AppWebLink> appWebLinks)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 const int take = 1000;
                 int skip = 0;
@@ -280,7 +280,7 @@ namespace ReferEngine.Common.Data
 
         public static IList<AppWebLink> GetAppWebLinks()
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 return db.AppWebLinks.ToList();
             }
@@ -288,7 +288,7 @@ namespace ReferEngine.Common.Data
 
         public static void AddStoreAppInfo(StoreAppInfo storeAppInfo)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 StoreAppInfo existing = db.StoreAppInfos.FirstOrDefault(i => i.MsAppId.Equals(storeAppInfo.MsAppId));
                 if (existing == null)
@@ -307,7 +307,7 @@ namespace ReferEngine.Common.Data
 
         public static ConfirmationCodeModel GetConfirmationCodeModel(string email)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 var tokens = from m in db.Memberships
                              join u in db.Users on m.UserId equals u.Id
@@ -326,7 +326,7 @@ namespace ReferEngine.Common.Data
 
         public static User GetUser(string email)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 User user = db.Users.First(c => c.Email == email);
                 user.Apps = db.Apps.Where(a => a.UserId == user.Id && a.IsActive).ToList();
@@ -336,7 +336,7 @@ namespace ReferEngine.Common.Data
 
         public static User GetUser(int id)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 User user = db.Users.First(c => c.Id == id);
                 user.Apps = db.Apps.Where(a => a.UserId == user.Id && a.IsActive).ToList();
@@ -346,7 +346,7 @@ namespace ReferEngine.Common.Data
 
         public static User GetUserFromConfirmationCode(string code)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 Membership membership =
                     db.Memberships.First(m => m.ConfirmationToken.Equals(code, StringComparison.OrdinalIgnoreCase));
@@ -358,7 +358,7 @@ namespace ReferEngine.Common.Data
 
         public static Membership GetMembership(string email)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 var user = db.Users.FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
                 if (user != null)
@@ -376,7 +376,7 @@ namespace ReferEngine.Common.Data
 
         public static string GetRole(int userId)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 var userInRole = db.UsersInRoles.First(u => u.UserId == userId);
                 var role = db.Roles.First(r => r.RoleId == userInRole.RoleId);
@@ -386,7 +386,7 @@ namespace ReferEngine.Common.Data
 
         public static IList<UserMembership> GetUserMemberships()
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 IList<UserMembership> result = new List<UserMembership>();
                 foreach (var user in db.Users)
@@ -401,7 +401,7 @@ namespace ReferEngine.Common.Data
 
         public static AppRecommendation GetAppRecommendation(long facebookPostId)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 return db.AppRecommendations.FirstOrDefault(r => r.FacebookPostId == facebookPostId);
             }
@@ -409,7 +409,7 @@ namespace ReferEngine.Common.Data
 
         public static IList<AppRecommendation> GetAppRecommendations(long appId, int count = -1)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 var result = from r in db.AppRecommendations
                              where r.AppId == appId
@@ -422,7 +422,7 @@ namespace ReferEngine.Common.Data
 
         public static void AddUserRole(User user, string roleName)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 Role role = db.Roles.First(r => r.RoleName.Equals(roleName, StringComparison.OrdinalIgnoreCase));
                 db.UsersInRoles.Add(new UserInRole {RoleId = role.RoleId, UserId = user.Id});
@@ -432,7 +432,7 @@ namespace ReferEngine.Common.Data
 
         public static List<PersonRecommendationUnitResult> GetAppRecommendationsPeople(App app, TimeRange timeRange, string who)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 var result = new List<PersonRecommendationUnitResult>();
                 switch (who)
@@ -462,7 +462,7 @@ namespace ReferEngine.Common.Data
 
         public static int GetNumberOfFriends(Person person)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 return db.Friendships.Count(f => f.Person1FacebookId == person.FacebookId);
             }
@@ -471,7 +471,7 @@ namespace ReferEngine.Common.Data
 
         public static List<ChartUnitResult> GetAppActionCount(App app, TimeRange timeRange, TimeSpan timeSpan, string who)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 var result = new List<ChartUnitResult>();
 
@@ -540,7 +540,7 @@ namespace ReferEngine.Common.Data
 
         public static List<MapUnitResult> GetAppActionLocations(App app, TimeRange timeRange, string who)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 var result = new List<MapUnitResult>();
                 switch (who)
@@ -615,7 +615,7 @@ namespace ReferEngine.Common.Data
 
         public static IList<StoreAppInfo> FindStoreApps(string term, int count)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 var lowercaseTerm = term.ToLower();
 
@@ -640,7 +640,7 @@ namespace ReferEngine.Common.Data
 
         public static App AddNewAppFromStoreInfo(string msAppId, User user)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 StoreAppInfo appInfo = db.StoreAppInfos.Single(i => i.MsAppId == msAppId);
                 AppRewardPlan rewardPlan = db.AppRewardPlans.Single(p => p.Type == AppRewardPlanType.None);
@@ -658,7 +658,8 @@ namespace ReferEngine.Common.Data
                         AppStoreLink = appInfo.AppStoreLink,
                         UserId = user.Id,
                         IsActive = true,
-                        Screenshots = new List<AppScreenshot>()
+                        Screenshots = new List<AppScreenshot>(),
+                        BackgroundColor = appInfo.BackgroundColor
                     };
                 app.ComputeVerificationCode();
                 App addedApp = db.Apps.Add(app);
@@ -693,7 +694,7 @@ namespace ReferEngine.Common.Data
         public static void AddRecommendationPageView(AppAuthorization auth, RecommendationPage page,
                                                      bool isAutoOpen = false)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 RecommendationPageView pageView = new RecommendationPageView
                                                       {
@@ -714,7 +715,7 @@ namespace ReferEngine.Common.Data
             var loc = CacheOperations.GetIpAddressLocation(ipAddress);
             if (loc == null)
             {
-                using (var db = new ReferEngineDatabaseContext())
+                using (var db = new DatabaseContext())
                 {
                     loc =
                         db.IpAddressLocations.SingleOrDefault(l => l.IpAddress.Equals(ipAddress, StringComparison.OrdinalIgnoreCase));
@@ -748,7 +749,7 @@ namespace ReferEngine.Common.Data
             AppAuthorization auth = CacheOperations.GetAppAuthorization(token);
             if (auth == null)
             {
-                using (var db = new ReferEngineDatabaseContext())
+                using (var db = new DatabaseContext())
                 {
                     //auth = db.AppAuthorizations.Single(a => a.Token == token);
                     auth = db.AppAuthorizations.Where(a => a.Token == token)
@@ -763,7 +764,7 @@ namespace ReferEngine.Common.Data
 
         public static void AddAppAuthorization(AppAuthorization auth)
         {
-            using (var db = new ReferEngineDatabaseContext())
+            using (var db = new DatabaseContext())
             {
                 db.AppReceipts.Attach(auth.AppReceipt);
                 db.Apps.Attach(auth.App);
@@ -779,7 +780,7 @@ namespace ReferEngine.Common.Data
             AppAutoShowOptions options = CacheOperations.GetAppAutoShowOptions(appId);
             if (options == null)
             {
-                using (var db = new ReferEngineDatabaseContext())
+                using (var db = new DatabaseContext())
                 {
                     options = db.AppAutoShowOptions.Single(o => o.AppId == appId);
                     CacheOperations.SetAppAutoShowOptions(options);
@@ -790,7 +791,7 @@ namespace ReferEngine.Common.Data
 
         public static void AddFacebookPageView(FacebookPageView facebookPageView)
         {
-            using (var db = new ReferEngineDatabaseContext())
+            using (var db = new DatabaseContext())
             {
                 db.FacebookPageViews.Add(facebookPageView);
                 db.SaveChanges();
@@ -799,7 +800,7 @@ namespace ReferEngine.Common.Data
 
         public static void AddStoreAppScreenshot(StoreAppScreenshot storeAppScreenshot)
         {
-            using (ReferEngineDatabaseContext db = new ReferEngineDatabaseContext())
+            using (DatabaseContext db = new DatabaseContext())
             {
                 var existing = db.StoreAppScreenshots.FirstOrDefault(i => i.Link == storeAppScreenshot.Link);
                 if (existing == null)

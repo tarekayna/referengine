@@ -28,6 +28,7 @@ namespace ReferEngine.Common.Models
         public string MsAppId { get; set; }
         public string PackageFamilyName { get; set; }
         public string AppStoreLink { get; set; }
+        public string BackgroundColor { get; set; }
         public IEnumerable<StoreAppScreenshot> StoreAppScreenshots { get; set; }
 
         public void SetRating(string starRatingText)
