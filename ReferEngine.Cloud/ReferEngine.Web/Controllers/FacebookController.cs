@@ -16,19 +16,34 @@ namespace ReferEngine.Web.Controllers
         public ActionResult App(long id, string fb_action_ids, string fb_source, string action_object_map,
             string action_type_map, string action_ref_map)
         {
-            UserAgentProperties userAgentProperties = new UserAgentProperties(Request.UserAgent);
             App app = DataReader.GetApp(id);
+            return FacebookAppView(app, fb_action_ids);
+        }
 
-            FacebookPageViewInfo viewInfo = new FacebookPageViewInfo()
-                                                    {
-                                                        TimeStamp = DateTime.UtcNow,
-                                                        ActionId = fb_action_ids,
-                                                        AppId = id,
-                                                        IpAddress = Request.UserHostAddress
-                                                    };
+        public ActionResult AppByName(string platform, string name, string fb_action_ids, string fb_source, string action_object_map,
+            string action_type_map, string action_ref_map)
+        {
+            Verifier.IsNotNullOrEmpty(platform, "platform");
+            Verifier.IsNotNullOrEmpty(name, "name");
+
+            string appName = name.Replace('-', ' ');
+            App app = DatabaseOperations.GetAppByName(platform, appName);
+            return FacebookAppView(app, fb_action_ids);
+        }
+
+        private ActionResult FacebookAppView(App app, string fb_action_ids)
+        {
+            UserAgentProperties userAgentProperties = new UserAgentProperties(Request.UserAgent);
+            FacebookPageViewInfo viewInfo = new FacebookPageViewInfo
+            {
+                TimeStamp = DateTime.UtcNow,
+                ActionId = fb_action_ids,
+                AppId = app.Id,
+                IpAddress = Request.UserHostAddress
+            };
             ServiceBusOperations.AddToQueue(viewInfo);
 
-            return View(new FacebookAppViewModel(app, userAgentProperties));
+            return View("app", new FacebookAppViewModel(app, userAgentProperties));
         }
 
         // TODO: For now, the facebook home of refer engine will redirect to the app page

@@ -32,6 +32,25 @@ namespace ReferEngine.Common.Data
             return app;
         }
 
+        public static App GetAppByName(string platform, string name)
+        {
+            App app = CacheOperations.AppByPlatformAndName.Get(platform, name);
+            if (app == null)
+            {
+                using (var db = new DatabaseContext())
+                {
+                    app = db.Apps.Where(a => a.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) &&
+                                             a.IsActive &&
+                                             a.Platform.Equals(platform, StringComparison.InvariantCultureIgnoreCase))
+                             .Include(a => a.RewardPlan)
+                             .First();
+                    app.Screenshots = db.AppScreenshots.Where(s => s.AppId == app.Id).ToList();
+                    CacheOperations.AppByPlatformAndName.Add(app);
+                }
+            }
+            return app;
+        }
+
         public static App GetApp(string packageFamilyName, string appVerificationCode)
         {
             App app = CacheOperations.AppByPackageAndVerification.Get(packageFamilyName, appVerificationCode);
@@ -652,7 +671,7 @@ namespace ReferEngine.Common.Data
                         Description = appInfo.DescriptionHtml,
                         LogoLink50 = appInfo.LogoLink,
                         PackageFamilyName = appInfo.PackageFamilyName,
-                        Platform = "Windows 8",
+                        Platform = "Windows",
                         Publisher = appInfo.Developer,
                         RewardPlan = rewardPlan,
                         AppStoreLink = appInfo.AppStoreLink,

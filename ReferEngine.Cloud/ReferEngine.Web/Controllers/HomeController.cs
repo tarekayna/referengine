@@ -10,7 +10,6 @@ namespace ReferEngine.Web.Controllers
     {
         public HomeController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
 
-        [HttpGet]
         public ActionResult Index()
         {
             return View();

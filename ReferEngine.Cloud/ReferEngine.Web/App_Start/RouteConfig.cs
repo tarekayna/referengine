@@ -16,6 +16,12 @@ namespace ReferEngine.Web.App_Start
             );
 
             routes.MapRoute(
+                name: "FacebookAppPlatform",
+                url: "fb/app/{platform}/{name}",
+                defaults: new { controller = "Facebook", action = "AppByName", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Facebook",
                 url: "fb/{action}/{id}",
                 defaults: new { controller = "Facebook", action = "Home", id = UrlParameter.Optional }

@@ -119,6 +119,27 @@ namespace ReferEngine.Common.Data
         }
     }
 
+    public class AppByPlatformAndNameCacheEntity : CachedEntity<App>
+    {
+        public static string KeyFormat = "app-plat-name-{0}{1}";
+        public AppByPlatformAndNameCacheEntity(DataCache cache) : base(cache, KeyFormat) { }
+
+        public void Remove(App app)
+        {
+            base.Remove(app.Platform, app.Name);
+        }
+
+        public App Get(string platform, string name)
+        {
+            return base.Get(platform, name);
+        }
+
+        public void Add(App app)
+        {
+            base.Add(app, DefaultTimeout, app.Platform, app.Name);
+        }
+    }
+
     public class AppByPackageAndVerificationCacheEntity : CachedEntity<App>
     {
         public static string KeyFormat = "app-pkgver-{0}{1}";
@@ -185,6 +206,12 @@ namespace ReferEngine.Common.Data
         public static AppByIdCacheEntity AppById
         {
             get { return _appById ?? (_appById = new AppByIdCacheEntity(Cache)); }
+        }
+
+        private static AppByPlatformAndNameCacheEntity _appByPlatformAndName;
+        public static AppByPlatformAndNameCacheEntity AppByPlatformAndName
+        {
+            get { return _appByPlatformAndName ?? (_appByPlatformAndName = new AppByPlatformAndNameCacheEntity(Cache)); }
         }
 
         private static AppByPackageAndVerificationCacheEntity _appByPackageAndVerification;
