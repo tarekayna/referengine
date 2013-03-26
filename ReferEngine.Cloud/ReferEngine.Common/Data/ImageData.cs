@@ -26,11 +26,13 @@ namespace ReferEngine.Common.Data
             get { return _cloudinary ?? (_cloudinary = new Cloudinary(CloudinaryAccount)); }
         }
 
+        public static string BaseLink { get { return "http://res.cloudinary.com/hrwr3ufuu/image/upload/"; } }
+
         public static string GetAppBackgroundImage(string name, int height, int width)
         {
             return Cloudinary.Api.UrlImgUp
                                  .Transform(new Transformation().Width(width).Height(height).Crop("fill").Named("Blur"))
-                                 .BuildUrl(name); // 
+                                 .BuildUrl(name); 
         }
 
         public static ImageUploadResult UploadRemote(string url, string name)
@@ -38,6 +40,14 @@ namespace ReferEngine.Common.Data
             ImageUploadParams uploadParams = new ImageUploadParams {File = new FileDescription(url), PublicId = name};
 
             return Cloudinary.Upload(uploadParams);
+        }
+
+        public static string GetLink(string name, string transformation = null)
+        {
+            string link = BaseLink;
+            link += string.IsNullOrEmpty(transformation) ? "" : transformation + "/";
+            link += name;
+            return link;
         }
     }
 }

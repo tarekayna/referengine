@@ -1,11 +1,10 @@
-﻿@using ReferEngine.Common.Models
+﻿@using ReferEngine.Common.Data
+@using ReferEngine.Common.Models
 @model ReferEngine.Web.Models.Facebook.FacebookAppViewModel
 
 @{
     bool isWindows8 = Model.UserAgentProperties.IsWindows8;
     bool supportsProtocolLaunching = Model.UserAgentProperties.SupportsProtocolLaunching;
-
-    string cloudinaryBase = "http://res.cloudinary.com/hrwr3ufuu/image/upload/";
 }
 
 @section styles
@@ -26,8 +25,8 @@
     <script type="text/javascript">
         var height = window.screen.availHeight;
         var width = window.screen.availWidth;
-        var bgImageLink = '@cloudinaryBase' + "w_" + width + ",h_" + height + ",e_blur:700,c_fill/";
-        bgImageLink += '@bgImageName';
+        var transformation = "w_" + width + ",h_" + height + "e_blur:700,c_fill";
+        bgImageLink = "@ImageData.BaseLink" + transformation + "/" + "@bgImageName";
         var elem = $("#bg-image-container img");
         elem.attr("src", bgImageLink);
         elem.css("width", window.innerWidth + "px");
@@ -54,8 +53,7 @@
     <meta property="referengine:platform"  content="@Model.App.Platform" />
 @if (!string.IsNullOrEmpty(Model.App.LogoLinkHighQuality))
 {
-    string l = cloudinaryBase + Model.App.LogoLinkHighQuality;
-    <meta property="og:image" content="@l" />
+    <meta property="og:image" content="@ImageData.GetLink(Model.App.LogoLinkHighQuality)" />
 }
 @foreach (var img in Model.App.Screenshots)
 {
@@ -73,8 +71,7 @@
             <div class="span12">
                 @if (!string.IsNullOrEmpty(Model.App.LogoLinkHighQuality))
                 {
-                    string logoLink = cloudinaryBase + "w_50/" + Model.App.LogoLinkHighQuality;
-                    <img src="@logoLink" alt="@Model.App.Name Logo" class="app-logo" />
+                    <img src="@ImageData.GetLink(Model.App.LogoLinkHighQuality, "w_50")" alt="@Model.App.Name Logo" class="app-logo" />
                 }
                 else
                 {
@@ -167,7 +164,7 @@
                     {
                         AppScreenshot screenshot = Model.App.Screenshots.ElementAt(i);
                         <div class="@MvcHtmlString.Create(i == 0 && Model.App.VimeoLink == null ? "active" : "") item">
-                            <img alt="@screenshot.Title" src="@screenshot.Link">
+                            <img alt="@screenshot.Title" src="@ImageData.GetLink(screenshot.Link)">
                             <p>@screenshot.Description</p>
                         </div>
                     } 
