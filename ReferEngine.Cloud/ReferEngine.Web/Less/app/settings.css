@@ -1,6 +1,9 @@
 ﻿section h3 {
   padding-top: 75px;
 }
+section .row {
+  margin-left: 0;
+}
 section:first-child h3 {
   padding-top: 0;
 }

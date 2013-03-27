@@ -26,7 +26,7 @@ namespace ReferEngine.Common.Data
             get { return _cloudinary ?? (_cloudinary = new Cloudinary(CloudinaryAccount)); }
         }
 
-        public static string BaseLink { get { return "http://res.cloudinary.com/hrwr3ufuu/image/upload/"; } }
+        public static string BaseLink { get { return "https://cloudinary-a.akamaihd.net/hrwr3ufuu/image/upload/"; } }
 
         public static string GetAppBackgroundImage(string name, int height, int width)
         {

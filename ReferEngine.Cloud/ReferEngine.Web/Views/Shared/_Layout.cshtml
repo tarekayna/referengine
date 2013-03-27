@@ -1,4 +1,5 @@
-﻿@{
+﻿@using ReferEngine.Common.Data
+@{
     ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
 }
 
@@ -67,7 +68,9 @@
                                     <ul class="dropdown-menu">
                                         @for (int i = 0; i < viewProperties.CurrentUser.Apps.Count; i++)
                                         {
-                                            <li><a tabindex="-1" href="~/app/dashboard/@viewProperties.CurrentUser.Apps[i].Id">@viewProperties.CurrentUser.Apps[i].Name</a></li>
+                                            <li>
+                                                <a tabindex="-1" href="~/app/dashboard/@viewProperties.CurrentUser.Apps[i].Id">@viewProperties.CurrentUser.Apps[i].Name</a>
+                                            </li>
                                         }
                                         <li class="divider"></li>
                                         <li><a href="~/app/new"><i class="icon-plus-sign"></i> Add New App</a></li>

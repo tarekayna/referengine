@@ -1,9 +1,11 @@
 ﻿@using ReferEngine.Common.Data
+@using ReferEngine.Common.Models
 @model bool?
 
 @{
     ViewProperties viewProperties = ((ViewProperties) ViewData["ViewProperties"]);
     Verifier.IsNotNullOrEmpty(viewProperties.CurrentApp, "viewProperties.CurrentApp");
+    App app = viewProperties.CurrentApp;
 }
 
 @section styles {
@@ -21,76 +23,93 @@
             <div class="span3 bs-docs-sidebar affix">
                 <ul class="nav nav-list bs-docs-sidenav">
                     <li class="nav-header">App Settings</li>
-                    <li><a href="#info"><i class="icon-chevron-right"></i> Edit Info</a></li>
+                    <li><a href="#basic-info"><i class="icon-chevron-right"></i> Basic Info</a></li>
+                    <li><a href="#additional-info"><i class="icon-chevron-right"></i> Additional Info</a></li>
                     <li><a href="#screenshots"><i class="icon-chevron-right"></i> Edit Screenshots</a></li>
                     <li><a href="#install"><i class="icon-chevron-right"></i> Install</a></li>
                     <li><a href="#manage"><i class="icon-chevron-right"></i> Manage</a></li>
                 </ul>
             </div>                      
             <div class="span9 offset3">
-                <section id="info">
-                    <h3>Info</h3>
+                <section id="basic-info">
+                    <h3>Basic Info</h3>
                     <hr />
                     <p>
-                        This info will appear in  
-                        <a href="https://apps.facebook.com/referengine/app/@viewProperties.CurrentApp.Id" target="_blank">
-                            @viewProperties.CurrentApp.Name's Facebook Landing Page
-                        </a>
+                        This is information that we copied from your app's 
+                        <a href="@app.AppStoreLink" target="_blank">listing in the Windows Store</a>.
+                        This info is very important for how
+                        <a href="https://apps.facebook.com/referengine/app/@app.Id" target="_blank">
+                            @app.Name's Refer Engine Facebook Landing Page
+                        </a> looks.
                     </p>
                     <form class="form-horizontal">
                         <div class="control-group">
+                            <label class="control-label">Logo</label>
+                            <div class="controls">
+                                <img class="img-polaroid" src="@app.LogoLink50" />
+                            </div>
+                            <br />
                             <label class="control-label">App Name</label>
                             <div class="controls static">
-                                @viewProperties.CurrentApp.Name
+                                @app.Name
                             </div>
                             <br />
                             <label class="control-label">Package Family Name</label>
-                            <div class="controls static">
-                                @viewProperties.CurrentApp.PackageFamilyName
-                            </div>
-                            <br />
-                            <label class="control-label">App Authorization Code</label>
-                            <div class="controls static">
-                                <code>@viewProperties.CurrentApp.VerificationCode</code>
-                            </div>
+                            <div class="controls static">@app.PackageFamilyName</div>
                             <br />
                             <label class="control-label">Description</label>
                             <div class="controls">
-                                <textarea rows="5">@viewProperties.CurrentApp.Description</textarea>
-                            </div>
-                            <br />
-                            <label class="control-label">Logo</label>
-                            <div class="controls">
-                                <img class="img-polaroid" src="@viewProperties.CurrentApp.LogoLink50" />
-                            </div>
-                            <br />
-                            <label class="control-label">High Quality Logo</label>
-                            <div class="controls">
-                                <img class="img-polaroid" src="@ImageData.GetLink(viewProperties.CurrentApp.LogoLinkHighQuality, "w_200")" id="logo-high-quality"/>
+                                <textarea rows="5">@app.Description</textarea>
                             </div>
                             <br />
                             <label class="control-label">Copyright</label>
                             <div class="controls">
-                                <input type="text" value="@viewProperties.CurrentApp.Copyright"/>
+                                <input type="text" value="@app.Copyright"/>
                             </div>
                             <br />
                             <label class="control-label">Publisher</label>
-                        <div class="controls">
-                            <input type="text" value="@viewProperties.CurrentApp.Publisher"/>
+                            <div class="controls">
+                                <input type="text" value="@app.Publisher"/>
+                            </div>
                         </div>
-                        <h4>Video</h4>
-                            <p>
-                                <span class="label label-info">Hint</span> Adding a Video will increase your landing page's conversion
-                            </p>
+                        <div class="control-group">
+                            <div class="controls">
+                                <button type="submit" class="btn">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+                <section id="additional-info">
+                    <h3>Additional Info</h3>
+                    <hr />
+                    <p>
+                        This is additional information that will make your app's
+                        <a href="https://apps.facebook.com/referengine/app/@app.Id" target="_blank">
+                            Refer Engine Facebook Landing Page
+                        </a> shine more and be able to convert more visits into downloads.
+                    </p>
+                    <form class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label">Headline</label>
+                            <div class="controls">
+                                <input type="text" value="@app.Headline"/>
+                            </div>
+                            <br />
+                            <label class="control-label">High Quality Logo</label>
+                            <div class="controls">
+                                <a href="@ImageData.GetLink(app.LogoLinkHighQuality)">
+                                    <img class="img-polaroid" src="@ImageData.GetLink(app.LogoLinkHighQuality, "w_400")" id="logo-high-quality"/>
+                                </a>
+                            </div>
                             <br />
                             <label class="control-label">Vimeo Video Link</label>
                             <div class="controls">
-                                <input type="text" value="@viewProperties.CurrentApp.VimeoLink"/>
+                                <input type="text" value="@app.VimeoLink"/>
                             </div>
                             <br />
                             <label class="control-label">YouTube Video Link</label>
                             <div class="controls">
-                                <input type="text" value="@viewProperties.CurrentApp.YouTubeLink"/>
+                                <input type="text" value="@app.YouTubeLink"/>
                             </div>
                         </div>
                         <div class="control-group">
@@ -103,15 +122,15 @@
                 <section id="screenshots">
                     <h3>Screenshots</h3>
                     <hr />
-                    @for (int i = 0; i < @viewProperties.CurrentApp.Screenshots.Count; i++)
+                    @for (int i = 0; i < @app.Screenshots.Count; i++)
                     {
                         if (i%3 == 0)
                         {
                             @:<div class="row">
                         }
                         
-                        <a href="@ImageData.GetLink(viewProperties.CurrentApp.Screenshots.ElementAt(i).Link)" target="_blank">
-                            <img src="@ImageData.GetLink(viewProperties.CurrentApp.Screenshots.ElementAt(i).Link, "w_200")" class="img-polaroid">
+                        <a href="@ImageData.GetLink(app.Screenshots.ElementAt(i).Link)" target="_blank">
+                            <img src="@ImageData.GetLink(app.Screenshots.ElementAt(i).Link, "w_200")" class="img-polaroid">
                         </a>
                         
                         if ((i+1)%3 == 0)
@@ -127,7 +146,7 @@
                     {
                         <div class="alert alert-success">
                             @viewProperties.CurrentUser.FirstName, you have successfully added
-                            @viewProperties.CurrentApp.Name to your account. The next and final
+                            @app.Name to your account. The next and final
                             step is to install ReferEngine in your app solution using the steps
                             below.
                         </div>
@@ -159,7 +178,7 @@
                             <p><i class="icon-arrow-right"></i> Replace this line:
                                 <pre>ReferEngineClient.appVerificationCode = "xxxxxxxxxxxxxxxxxx";</pre>
                                 With this:
-                                <pre>ReferEngineClient.appVerificationCode = "@viewProperties.CurrentApp.VerificationCode";</pre>
+                                <pre>ReferEngineClient.appVerificationCode = "@app.VerificationCode";</pre>
                             </p>
                             <p><i class="icon-arrow-right"></i> Save the file</p>
                         </div>
@@ -192,11 +211,11 @@
         <h3>Are you sure?</h3>
     </div>
     <div class="modal-body">
-        Are you sure you want to delete @viewProperties.CurrentApp.Name? This will delete this app from your
+        Are you sure you want to delete @app.Name? This will delete this app from your
         account permanently.
     </div>
     <div class="modal-footer">
     <a class="btn" href="#verify-app-delete" role="button" data-toggle="modal">Cancel</a>
-    <a id="confirm-app-delete" class="btn btn-danger">Delete @viewProperties.CurrentApp.Name</a>
+    <a id="confirm-app-delete" class="btn btn-danger">Delete @app.Name</a>
     </div>
 </div>
