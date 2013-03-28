@@ -1,6 +1,7 @@
 ﻿@using ReferEngine.Common.Data
 @{
     ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+    Verifier.IsNotNullOrEmpty(viewProperties, "viewProperties");
 }
 
 <!DOCTYPE html>
@@ -105,6 +106,7 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a href="~/admin/errors" target="_blank">Server Errors</a></li>
+                                            <li><a href="~/admin/inviterequests">Invite Requests</a></li>
                                             <li><a href="~/admin/admin">Admin Panel</a></li>
                                         </ul>
                                     </div>                                    

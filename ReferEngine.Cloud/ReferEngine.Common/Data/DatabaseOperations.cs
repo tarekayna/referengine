@@ -251,6 +251,14 @@ namespace ReferEngine.Common.Data
             }
         }
 
+        public static IList<PrivateBetaSignup> GetPrivateBetaSignups()
+        {
+            using (DatabaseContext db = new DatabaseContext())
+            {
+                return db.PrivateBetaSignups.OrderByDescending(i => i.RegistrationDateTime).ToList();
+            }
+        }
+
         public static void AddAppWebLink(AppWebLink appWebLink)
         {
             using (DatabaseContext db = new DatabaseContext())
@@ -347,7 +355,8 @@ namespace ReferEngine.Common.Data
         {
             using (DatabaseContext db = new DatabaseContext())
             {
-                User user = db.Users.First(c => c.Email == email);
+                User user = db.Users.FirstOrDefault(c => c.Email == email);
+                if (user == null) return null;
                 user.Apps = db.Apps.Where(a => a.UserId == user.Id && a.IsActive).ToList();
                 return user;
             }
@@ -827,6 +836,23 @@ namespace ReferEngine.Common.Data
                     db.StoreAppScreenshots.Add(storeAppScreenshot);
                     db.SaveChanges();
                 }
+            }
+        }
+
+        public static void AddInvite(Invite invite)
+        {
+            using (DatabaseContext db = new DatabaseContext())
+            {
+                db.Invites.Add(invite);
+                db.SaveChanges();
+            }
+        }
+
+        public static Invite GetInvite(string email)
+        {
+            using (DatabaseContext db = new DatabaseContext())
+            {
+                return db.Invites.FirstOrDefault(i => i.Email.Equals(email, StringComparison.InvariantCultureIgnoreCase));
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using DotNetOpenAuth.AspNet;
+﻿using System.Net;
+using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Email;
@@ -42,6 +43,12 @@ namespace ReferEngine.Web.Controllers
             {
                 if (WebSecurity.Login(model.Email, model.Password, model.RememberMe))
                 {
+                    if (string.IsNullOrEmpty(returnUrl))
+                    {
+                        var user = DatabaseOperations.GetUser(model.Email);
+                        return user.Apps.Any() ? RedirectToLocal("/app/dashboard/" + user.Apps.First().Id) : RedirectToLocal("/app/new");
+                    }
+                    
                     return RedirectToLocal(returnUrl);
                 }
 
@@ -121,15 +128,14 @@ namespace ReferEngine.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // TODO: Remove when you enable registration
-        // [AllowAnonymous]
-        public ActionResult Register()
+        [AllowAnonymous]
+        public ActionResult Register(string code = null)
         {
+            ViewData.Add(new KeyValuePair<string, object>("code", code));
             return View();
         }
 
         [HttpPost]
-        // TODO: Remove when you enable registration
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
@@ -138,22 +144,37 @@ namespace ReferEngine.Web.Controllers
             {
                 try
                 {
-                    object propertyValues = new { model.FirstName, model.LastName, Timestamp = DateTime.UtcNow };
-                    string confirmationCode = WebSecurity.CreateUserAndAccount(model.Email, model.Password, propertyValues, requireConfirmationToken: true);
+                    Invite invite = DatabaseOperations.GetInvite(model.Email);
+                    if (invite == null || invite.VerificationCode != model.InvitationCode)
+                    {
+                        ModelState.AddModelError("", "Invitation code is invalid.");
+                    }
+                    else
+                    {
+                        object propertyValues = new {model.FirstName, model.LastName, Timestamp = DateTime.UtcNow};
+                        string confirmationCode = WebSecurity.CreateUserAndAccount(model.Email, model.Password,
+                                                                                   propertyValues,
+                                                                                   requireConfirmationToken: true);
 
-                    User user = DataReader.GetUserFromConfirmationCode(confirmationCode);
-                    DataWriter.AddUserRole(user, "Dev");
+                        User user = DataReader.GetUserFromConfirmationCode(confirmationCode);
+                        DataWriter.AddUserRole(user, "Dev");
 
-                    var confirmationCodeModel = new ConfirmationCodeModel
+                        var confirmationCodeModel = new ConfirmationCodeModel
+                                                        {
+                                                            Email = model.Email,
+                                                            ConfirmationCode = confirmationCode,
+                                                            FirstName = model.FirstName
+                                                        };
+                        ReferEmailer.SendConfirmationCodeEmail(confirmationCodeModel);
+
+                        TempData.Add("ConfirmationCodeModel", confirmationCodeModel);
+                        return RedirectToAction("ConfirmYourAccount",
+                                                new
                                                     {
-                                                        Email = model.Email,
-                                                        ConfirmationCode = confirmationCode,
-                                                        FirstName = model.FirstName
-                                                    };
-                    ReferEmailer.SendConfirmationCodeEmail(confirmationCodeModel);
-
-                    TempData.Add("ConfirmationCodeModel", confirmationCodeModel);
-                    return RedirectToAction("ConfirmYourAccount", new { SuccessMessage = "Your account has been confirmed! Please log in to start.", });
+                                                        SuccessMessage =
+                                                    "Your account has been confirmed! Please log in to start.",
+                                                    });
+                    }
                 }
                 catch (MembershipCreateUserException e)
                 {

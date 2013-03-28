@@ -33,15 +33,18 @@ namespace ReferEngine.Common.Email
 
         public static void ProcessPrivateBetaSignup(PrivateBetaSignup privateBetaSignup)
         {
-            string body = "Hello! " + "\n\n";
-            body += "Thank you for requesting an invite to Refer Engine's private beta.";
-            body += "We will contact you soon.\n\n";
-            body += "Tarek\n";
-            body += "ReferEngine.com Founder and Developer";
+            StringBuilder body = new StringBuilder();
+            body.AppendLine("Hi,");
+            body.AppendLine();
+            body.AppendLine("Thank you for requesting an invite to Refer Engine's private beta.");
+            body.AppendLine("I will contact you soon.");
+            body.AppendLine();
+            body.AppendLine("Tarek,");
+            body.AppendLine("Founder and Developer, ReferEngine.com");
 
-            const string subject = "ReferEngine.com Signup";
+            const string subject = "ReferEngine.com Invite Request";
 
-            SendPlainTextEmail(privateBetaSignup.Email, subject, body);
+            SendPlainTextEmail(privateBetaSignup.Email, subject, body.ToString());
         }
 
         public static void SendRecommendationThankYouEmail(App app, Person person)
@@ -56,10 +59,33 @@ namespace ReferEngine.Common.Email
             body.AppendLine("We appreciate your support for your favorite apps.");
             body.AppendLine();
             body.AppendLine("Thanks :),");
-            body.AppendLine("Tarek from ReferEngine.com");
+            body.AppendLine("Tarek,");
+            body.AppendLine("Founder and Developer, ReferEngine.com");
 
             string subject = string.Format("{0} Recommendation", app.Name);
             SendPlainTextEmail(person.Email, subject, body.ToString());
+        }
+
+        public static void SendInviteEmail(Invite invite)
+        {
+            if (invite == null) return;
+            StringBuilder body = new StringBuilder();
+            body.AppendLine("Hi,");
+            body.AppendLine();
+            body.AppendLine(string.Format("Congratulations! you are invited to the private beta of Refer Engine."));
+            body.AppendLine("It should take you under 20 minutes to register, add your app and integrate Refer Engine.");
+            body.AppendLine();
+            body.AppendLine("Registration Link: https://www.ReferEngine.com/account/register?code=" + invite.VerificationCode);
+            body.AppendLine();
+            body.AppendLine("Invite Code: " + invite.VerificationCode);
+            body.AppendLine();
+            body.AppendLine("I'm looking forward to working with you. If you have any questions or issues please contact me.");
+            body.AppendLine();
+            body.AppendLine("Tarek,");
+            body.AppendLine("Founder and Developer, ReferEngine.com");
+
+            string subject = string.Format("Invitation to Refer Engine's Private Beta");
+            SendPlainTextEmail(invite.Email, subject, body.ToString());
         }
 
         public static void SendConfirmationCodeEmail(ConfirmationCodeModel model)

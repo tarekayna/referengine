@@ -18,6 +18,10 @@ namespace ReferEngine.Web.Models.Account
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [DataType(DataType.Text)]
+        [Display(Name = "Invitation Code")]
+        public string InvitationCode { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]

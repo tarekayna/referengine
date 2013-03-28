@@ -6,6 +6,8 @@ namespace ReferEngine.Common.Models
     [DataContract]
     public class PrivateBetaSignup
     {
+        public PrivateBetaSignup() {}
+
         [DataMember]
         public string Email { get; set; }
 

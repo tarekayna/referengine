@@ -252,9 +252,14 @@
     <Compile Include="Migrations\201303240201212_StoreAppInfoColor.Designer.cs">
       <DependentUpon>201303240201212_StoreAppInfoColor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303271803527_Invite.cs" />
+    <Compile Include="Migrations\201303271803527_Invite.Designer.cs">
+      <DependentUpon>201303271803527_Invite.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\AppRewardPlan.cs" />
     <Compile Include="Models\ChartUnitResult.cs" />
+    <Compile Include="Models\Invite.cs" />
     <Compile Include="Models\StoreAppScreenshot.cs" />
     <Compile Include="Models\FacebookPageViewInfo.cs" />
     <Compile Include="Models\FacebookPageView.cs" />
@@ -435,6 +440,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303240201212_StoreAppInfoColor.resx">
       <DependentUpon>201303240201212_StoreAppInfoColor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303271803527_Invite.resx">
+      <DependentUpon>201303271803527_Invite.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

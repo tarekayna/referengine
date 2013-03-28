@@ -37,6 +37,7 @@ namespace ReferEngine.Common.Data
         public DbSet<AppAutoShowOptions> AppAutoShowOptions { get; set; }
         public DbSet<AppRewardPlan> AppRewardPlans { get; set; }
         public DbSet<FacebookPageView> FacebookPageViews { get; set; }
+        public DbSet<Invite> Invites { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {
@@ -90,6 +91,8 @@ namespace ReferEngine.Common.Data
             mb.Entity<AppWebLink>().HasKey(l => l.Link);
 
             mb.Entity<StoreAppInfo>().HasKey(i => i.MsAppId);
+
+            mb.Entity<Invite>().HasKey(i => i.Email);
 
             mb.Entity<StoreAppScreenshot>().HasKey(i => i.Link);
 

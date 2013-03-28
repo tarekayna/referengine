@@ -5,6 +5,8 @@
 declare var google;
 declare var re;
 
+import Notification = module("../common/notifications");
+
 var ko;
 var Date2;
 
@@ -14,23 +16,6 @@ enum View {
     Chart,
     People
 };
-
-class NotificationType {
-    static none = "";
-    static info = "info";
-    static success = "success";
-    static error = "error";
-}
-
-class Notifications {
-    static show = function (message: string, notificationType: string) {
-        $(".top-right").notify({
-            message: { text: message },
-            transition: "fade",
-            type: notificationType
-        }).show();
-    }
-}
 
 class Page {
     static currentView: View = View.Chart;
@@ -168,7 +153,7 @@ class Page {
                 Page.currentView = View.Table;
             }
             else if (e.target.hash === "#peopleTab") {
-                People.init(); 
+                People.init();
                 Page.currentView = View.People;
             }
             refreshView();
@@ -254,10 +239,10 @@ class Chart {
         };
 
         chart.draw(dataTable, options);
-        Notifications.show("Success: chart updated", NotificationType.success);
+        Notification.show("Success: chart updated", Notification.NotificationType.success);
     }
     static onDataRequestError(e) {
-        Notifications.show("Error: could not update chart", NotificationType.error);
+        Notification.show("Error: could not update chart", Notification.NotificationType.error);
     }
     static refresh() {
         var dateFormat = "dd MMMM yyyy";
@@ -279,7 +264,7 @@ class Chart {
             success: onDataRequestSuccess
         });
 
-        Notifications.show("Refreshing chart...", NotificationType.info);
+        Notification.show("Refreshing chart...", Notification.NotificationType.info);
     }
 }
 
@@ -313,10 +298,10 @@ class Table {
         };
 
         table.draw(dataTable, options);
-        Notifications.show("Success: table updated", NotificationType.success);
+        Notification.show("Success: table updated", Notification.NotificationType.success);
     }
     static onDataRequestError(e) {
-        Notifications.show("Error: could not update table", NotificationType.error);
+        Notification.show("Error: could not update table", Notification.NotificationType.error);
     }
     static refresh() {
         var dateFormat = "dd MMMM yyyy";
@@ -337,7 +322,7 @@ class Table {
             success: onDataRequestSuccess
         });
 
-        Notifications.show("Refreshing table...", NotificationType.info);
+        Notification.show("Refreshing table...", Notification.NotificationType.info);
     }
 }
 
@@ -381,17 +366,17 @@ class Map {
                 var l = data[i].City;
                 if (data[i].Region) {
                     l += ", " + data[i].Region;
-                } 
+                }
                 l += ", " + data[i].Country;
                 Map.mapData.push([l, data[i].Result]);
             }
             Map.dataTable = google.visualization.arrayToDataTable(Map.mapData);
             Map.draw();
-            Notifications.show("Success: map updated", NotificationType.success);
+            Notification.show("Success: map updated", Notification.NotificationType.success);
         };
 
         var onSubmitError = function (e) {
-            Notifications.show("Error: could not update map", NotificationType.error);
+            Notification.show("Error: could not update map", Notification.NotificationType.error);
         };
 
         $.ajax("../GetAppDashboardMapData", {
@@ -408,7 +393,7 @@ class Map {
             success: onSubmitSuccess
         });
 
-        Notifications.show("Refreshing map...", NotificationType.info);
+        Notification.show("Refreshing map...", Notification.NotificationType.info);
     };
     static initHowSelector() {
         $(".map-how").click(function () {
@@ -452,10 +437,10 @@ class People {
         for (var i = 0; i < data.length; i++) {
             viewModel.PeopleData.push(data[i]);
         }
-        Notifications.show("Success: people view updated", NotificationType.success);
+        Notification.show("Success: people view updated", Notification.NotificationType.success);
     }
     static onDataRequestError(e) {
-        Notifications.show("Error: could not update people view", NotificationType.error);
+        Notification.show("Error: could not update people view", Notification.NotificationType.error);
     }
     static refresh() {
         var dateFormat = "dd MMMM yyyy";
@@ -476,14 +461,14 @@ class People {
             success: onDataRequestSuccess
         });
 
-        Notifications.show("Updating people view...", NotificationType.info);
-    } 
+        Notification.show("Updating people view...", Notification.NotificationType.info);
+    }
 }
- 
+
 require(["../lib/knockout",
          "../lib/date",
          "../lib/daterangepicker"], function (_ko) {
              ko = _ko;
              Date2 = <any>Date;
-                $(document).ready(Page.initPage);
-});  
+             $(document).ready(Page.initPage);
+         });

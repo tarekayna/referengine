@@ -152,8 +152,10 @@
                         </div>
                     }
                     <h4>
-                        1- Install the ReferEngine.JavaScript NuGet Package 
-                        in your Windows Store App
+                        1- Open @app.Name's solution in Visual Studio
+                    </h4>
+                    <h4>
+                        2- Install the ReferEngine.Windows.JavaScript NuGet Package
                     </h4>
                     <div class="row">
                         <div class="span9">
@@ -162,19 +164,18 @@
                     </div>
                     <div class="row">
                         <div class="span8 offset1">
-                            <p><i class="icon-arrow-right"></i> Open your Windows Store solution with Visual Studio</p>
-                            <p><i class="icon-arrow-right"></i> Open Package Manager Console (View > Other Windows > Package Manager Console)</p>
+                            <p><i class="icon-arrow-right"></i> In Visual Studio, open Package Manager Console (View > Other Windows > Package Manager Console)</p>
                             <p><i class="icon-arrow-right"></i> 
                                 In Package Manager Console type this command:
-                                <pre>install-package ReferEngine.JavaScript</pre>
+                                <pre>install-package ReferEngine.Windows.JavaScript</pre>
                             </p>
-                            <p>This will install the ReferEngine code files and setup your solution.</p>
+                            <p><i class="icon-arrow-right"></i> This will install the ReferEngine code files and setup your solution.</p>
                         </div>
                     </div>
-                    <h4>2- Set your App Authorization Code</h4>
+                    <h4>3- Set your App Authorization Code</h4>
                     <div class="row">
                         <div class="span8 offset1">
-                            <p><i class="icon-arrow-right"></i> Open the File ReferEngine\ReferEngine.Initialize.js</p>
+                            <p><i class="icon-arrow-right"></i> In Visual Studio, open the file ReferEngine\ReferEngine.Initialize.js</p>
                             <p><i class="icon-arrow-right"></i> Replace this line:
                                 <pre>ReferEngineClient.appVerificationCode = "xxxxxxxxxxxxxxxxxx";</pre>
                                 With this:
@@ -183,13 +184,75 @@
                             <p><i class="icon-arrow-right"></i> Save the file</p>
                         </div>
                     </div>
-                    <h4>3- Test it out!</h4>
+                    <h4>4- Test it out!</h4>
                     <div class="row">
                         <div class="span8 offset1">
-                            <p>You are done! Let's test.</p>
+                            <p>You are done with basic integration! Let's test.</p>
                             <p><i class="icon-arrow-right"></i> Press F5 (launch the app under debugger)</p>
                             <p><i class="icon-arrow-right"></i> Open the JavaScript Console and type this command:
                                 <pre>ReferEngine.show()</pre>
+                            </p>
+                            <p><i class="icon-arrow-right"></i> Once you deploy this app, Refer Engine will automatically show
+                                on every 2nd launch until the user either recommends your app or checks the "don't
+                                ask again" box.
+                            </p>
+                        </div>
+                    </div>
+                    <h4>5- Advanced Integration (optional)</h4>
+                    <div class="row">
+                        <div class="span8 offset1">
+                            <p>
+                                You can add different entry points into Refer Engine by calling this method anywhere
+                                within your javascript:
+                                <pre>ReferEngine.show();</pre>
+                                
+                                To make sure that this only gets called when Refer Engine is properly initialized,
+                                you should wrap any initialization code with:
+                                <pre>
+ReferEngineClient.onLoad(function () {
+    // Your Initialization Code Here
+});</pre>
+
+                                Any code wrapped with <code>ReferEngineClient.onLoad</code> will only be 
+                                executed once ReferEngine is loaded and verified with the ReferEngine.com servers. 
+                                If for any reason ReferEngine fails to initialize, this code will be ignored.
+                                
+                                For example, in the step below we wrap the AppBar Icon initialization code. This 
+                                way the App Bar Icon will only show up if Refer Engine is properly initialized and 
+                                authenticated.
+                            </p>
+                        </div>
+                    </div>
+                    <h4>6- AppBar Icon (optional)</h4>
+                    <div class="row">
+                        <div class="span8 offset1">
+                            <p>
+                                You can optionally add an AppBar icon for the user to be able to manually show Refer Engine. The 
+                                resource icon is included in the package that you installed under ReferEngine\ReferEngine-AppBarIcon.png
+                            </p>
+                            <p>
+                                <i class="icon-arrow-right"></i> Add this code somewhere in your startup path
+                                <pre>
+ReferEngineClient.onLoad(function () {
+    <span class="text-info">var</span> separatorCommand = {
+        id: <span class="text-error">"appbarReferEngineSeparator"</span>,
+        type: <span class="text-error">"separator"</span>,
+        section: <span class="text-error">"selection"</span>
+    };
+    <span class="text-info">var</span> recommendCommand = {
+        label: <span class="text-error">"Recommend"</span>, <span class="text-success">// Optional: sub with resource</span>
+        id: <span class="text-error">"appbarReferEngineRecommend"</span>,
+        icon: <span class="text-error">"url(ms-appx:///ReferEngine/ReferEngine-AppBarIcon.png)"</span>,
+        section: <span class="text-error">"selection"</span>,
+        onclick: <span class="text-info">function</span>() { ReferEngine.show(); }
+    };
+        
+    <span class="text-success">// Substitute #appBarId with the id of your app bar</span>                            
+    appBar = document.getElementById("#appBarId").winControl;
+    appBar._addCommand(separatorCommand);
+    appBar._addCommand(recommendCommand);
+});
+                                </pre>
                             </p>
                         </div>
                     </div>

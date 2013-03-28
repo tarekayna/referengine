@@ -284,7 +284,28 @@
     <Content Include="js\lib\require.js" />
     <Content Include="js\home.js" />
     <Content Include="js\shared\layout-not-auth.js" />
+    <TypeScriptCompile Include="TypeScript\admin\inviteRequests.ts" />
+    <Content Include="TypeScript\admin\inviteRequests.js">
+      <DependentUpon>inviteRequests.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\admin\inviteRequests.min.js">
+      <DependentUpon>inviteRequests.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="TypeScript\common\notifications.ts" />
+    <Content Include="TypeScript\app\dashboard.js">
+      <DependentUpon>dashboard.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\app\dashboard.min.js">
+      <DependentUpon>dashboard.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\common\notifications.js">
+      <DependentUpon>notifications.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\common\notifications.min.js">
+      <DependentUpon>notifications.ts</DependentUpon>
+    </Content>
     <Content Include="Views\Shared\_GoogleAnalytics.cshtml" />
+    <Content Include="Views\Admin\InviteRequests.cshtml" />
     <TypeScriptCompile Include="TypeScript\app\settings.ts" />
     <Content Include="Less\app\settings.css">
       <DependentUpon>settings.less</DependentUpon>
@@ -312,12 +333,6 @@
       <DependentUpon>new.less</DependentUpon>
     </Content>
     <Content Include="robots.txt" />
-    <Content Include="TypeScript\app\dashboard.js">
-      <DependentUpon>dashboard.ts</DependentUpon>
-    </Content>
-    <Content Include="TypeScript\app\dashboard.min.js">
-      <DependentUpon>dashboard.ts</DependentUpon>
-    </Content>
     <Content Include="TypeScript\app\new.js">
       <DependentUpon>new.ts</DependentUpon>
     </Content>
