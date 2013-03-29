@@ -1,7 +1,8 @@
-define(["require", "exports"], function(require, exports) {
+define(["require", "exports", "../common/notifications"], function(require, exports, __Notification__) {
+    var Notification = __Notification__;
+
     var ko;
     var Date2;
-    
     var View;
     (function (View) {
         View._map = [];
@@ -269,10 +270,10 @@ define(["require", "exports"], function(require, exports) {
                 }
             };
             Chart.chart.draw(dataTable, options);
-            Notifications.show("Success: chart updated", NotificationType.success);
+            Notification.show("Success: chart updated", Notification.NotificationType.success);
         };
         Chart.onDataRequestError = function onDataRequestError(e) {
-            Notifications.show("Error: could not update chart", NotificationType.error);
+            Notification.show("Error: could not update chart", Notification.NotificationType.error);
         };
         Chart.refresh = function refresh() {
             var dateFormat = "dd MMMM yyyy";
@@ -294,7 +295,7 @@ define(["require", "exports"], function(require, exports) {
                 error: Chart.onDataRequestError,
                 success: Chart.onDataRequestSuccess
             });
-            Notifications.show("Refreshing chart...", NotificationType.info);
+            Notification.show("Refreshing chart...", Notification.NotificationType.info);
         };
         return Chart;
     })();    
@@ -330,10 +331,10 @@ define(["require", "exports"], function(require, exports) {
                 pageSize: 15
             };
             Table.table.draw(dataTable, options);
-            Notifications.show("Success: table updated", NotificationType.success);
+            Notification.show("Success: table updated", Notification.NotificationType.success);
         };
         Table.onDataRequestError = function onDataRequestError(e) {
-            Notifications.show("Error: could not update table", NotificationType.error);
+            Notification.show("Error: could not update table", Notification.NotificationType.error);
         };
         Table.refresh = function refresh() {
             var dateFormat = "dd MMMM yyyy";
@@ -355,7 +356,7 @@ define(["require", "exports"], function(require, exports) {
                 error: Table.onDataRequestError,
                 success: Table.onDataRequestSuccess
             });
-            Notifications.show("Refreshing table...", NotificationType.info);
+            Notification.show("Refreshing table...", Notification.NotificationType.info);
         };
         return Table;
     })();    
@@ -416,10 +417,10 @@ define(["require", "exports"], function(require, exports) {
                 }
                 Map.dataTable = google.visualization.arrayToDataTable(Map.mapData);
                 Map.draw();
-                Notifications.show("Success: map updated", NotificationType.success);
+                Notification.show("Success: map updated", Notification.NotificationType.success);
             };
             var onSubmitError = function (e) {
-                Notifications.show("Error: could not update map", NotificationType.error);
+                Notification.show("Error: could not update map", Notification.NotificationType.error);
             };
             $.ajax("../GetAppDashboardMapData", {
                 type: "POST",
@@ -434,7 +435,7 @@ define(["require", "exports"], function(require, exports) {
                 error: onSubmitError,
                 success: onSubmitSuccess
             });
-            Notifications.show("Refreshing map...", NotificationType.info);
+            Notification.show("Refreshing map...", Notification.NotificationType.info);
         };
         Map.initHowSelector = function initHowSelector() {
             $(".map-how").click(function () {
@@ -479,10 +480,10 @@ define(["require", "exports"], function(require, exports) {
             for(var i = 0; i < data.length; i++) {
                 People.viewModel.PeopleData.push(data[i]);
             }
-            Notifications.show("Success: people view updated", NotificationType.success);
+            Notification.show("Success: people view updated", Notification.NotificationType.success);
         };
         People.onDataRequestError = function onDataRequestError(e) {
-            Notifications.show("Error: could not update people view", NotificationType.error);
+            Notification.show("Error: could not update people view", Notification.NotificationType.error);
         };
         People.refresh = function refresh() {
             var dateFormat = "dd MMMM yyyy";
@@ -503,7 +504,7 @@ define(["require", "exports"], function(require, exports) {
                 error: People.onDataRequestError,
                 success: People.onDataRequestSuccess
             });
-            Notifications.show("Updating people view...", NotificationType.info);
+            Notification.show("Updating people view...", Notification.NotificationType.info);
         };
         return People;
     })();    

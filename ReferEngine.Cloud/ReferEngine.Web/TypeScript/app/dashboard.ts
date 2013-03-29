@@ -5,7 +5,7 @@
 declare var google;
 declare var re;
 
-import Notification = module("../common/notifications");
+import Notification = module("../common/notifications"); 
 
 var ko;
 var Date2;

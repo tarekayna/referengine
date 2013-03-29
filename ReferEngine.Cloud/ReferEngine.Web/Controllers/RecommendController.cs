@@ -359,6 +359,7 @@ namespace ReferEngine.Web.Controllers
         {
             string userHostAddress = System.Web.HttpContext.Current.Request.UserHostAddress;
             var auth = DatabaseOperations.GetAppAuthorization(authToken);
+
             if (auth.UserHostAddress.Equals(userHostAddress, StringComparison.OrdinalIgnoreCase))
             {
                 if (auth.ExpiresAt.CompareTo(DateTime.UtcNow) > 0)
@@ -369,7 +370,9 @@ namespace ReferEngine.Web.Controllers
                 throw new InvalidOperationException("AppAuthorization has expired");
             }
 
-            throw new InvalidOperationException("AppAuthorization has a different ip address.");
+            string msg = string.Format("AppAuthorization has a different ip address. Original: {0}. This Request: {1}",
+                                       auth.UserHostAddress, userHostAddress);
+            throw new InvalidOperationException(msg);
         }
     }
 }

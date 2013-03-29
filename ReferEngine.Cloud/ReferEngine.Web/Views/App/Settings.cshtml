@@ -16,7 +16,6 @@
     <script data-main="/typescript/app/settings.js" type="text/javascript" src="~/typescript/lib/require.js"></script>
 }
 
-
 <div id="content" data-spy="scroll" data-target=".nav-list">
     <div class="container">
         <div class="row">
@@ -25,7 +24,7 @@
                     <li class="nav-header">App Settings</li>
                     <li><a href="#basic-info"><i class="icon-chevron-right"></i> Basic Info</a></li>
                     <li><a href="#additional-info"><i class="icon-chevron-right"></i> Additional Info</a></li>
-                    <li><a href="#screenshots"><i class="icon-chevron-right"></i> Edit Screenshots</a></li>
+                    <li><a href="#screenshots"><i class="icon-chevron-right"></i> Screenshots</a></li>
                     <li><a href="#install"><i class="icon-chevron-right"></i> Install</a></li>
                     <li><a href="#manage"><i class="icon-chevron-right"></i> Manage</a></li>
                 </ul>
@@ -244,13 +243,20 @@ ReferEngineClient.onLoad(function () {
         id: <span class="text-error">"appbarReferEngineRecommend"</span>,
         icon: <span class="text-error">"url(ms-appx:///ReferEngine/ReferEngine-AppBarIcon.png)"</span>,
         section: <span class="text-error">"selection"</span>,
-        onclick: <span class="text-info">function</span>() { ReferEngine.show(); }
+        onclick: <span class="text-info">function</span>() { 
+            <span class="text-info">if</span> (window.ReferEngine) {
+                ReferEngine.show(); 
+            }
+        }
     };
         
-    <span class="text-success">// Substitute #appBarId with the id of your app bar</span>                            
-    appBar = document.getElementById("#appBarId").winControl;
-    appBar._addCommand(separatorCommand);
-    appBar._addCommand(recommendCommand);
+    <span class="text-success">// Substitute #appBarId with the id of your app bar</span>
+    <span class="text-info">var</span> appBarElement = document.getElementById(<span class="text-error">"appBarId"</span>);
+    <span class="text-info">if</span> (appBarElement) {
+        <span class="text-info">var</span> appBar = appBarElement.winControl;
+        appBar._addCommand(separatorCommand);
+        appBar._addCommand(recommendCommand);
+    }
 });
                                 </pre>
                             </p>

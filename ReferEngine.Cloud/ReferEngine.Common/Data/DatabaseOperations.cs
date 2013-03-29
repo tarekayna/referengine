@@ -779,7 +779,6 @@ namespace ReferEngine.Common.Data
             {
                 using (var db = new DatabaseContext())
                 {
-                    //auth = db.AppAuthorizations.Single(a => a.Token == token);
                     auth = db.AppAuthorizations.Where(a => a.Token == token)
                              .Include(a => a.App)
                              .Include(a => a.AppReceipt)
