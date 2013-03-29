@@ -58,13 +58,4 @@
       <Setting name="CurrentServiceConfiguration" />
     </ConfigurationSettings>
   </WorkerRole>
-  <WorkerRole name="ReferEngine.Workers.WinApps" vmsize="ExtraSmall">
-    <Imports>
-      <Import moduleName="Diagnostics" />
-      <Import moduleName="RemoteAccess" />
-    </Imports>
-    <ConfigurationSettings>
-      <Setting name="CurrentServiceConfiguration" />
-    </ConfigurationSettings>
-  </WorkerRole>
 </ServiceDefinition>

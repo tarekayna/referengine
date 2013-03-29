@@ -24,7 +24,6 @@
     <meta name="author" content="Apexa Inc.">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Duru+Sans' rel='stylesheet' type='text/css'>
-    @Html.Partial("_FavIcon")
     @Html.Partial("_SetJavaScriptGlobalVariables")
     @RenderSection("styles", required: false)
 </head>
@@ -52,9 +51,6 @@
         @Scripts.Render("~/bundles/libs/base")
 
         @RenderSection("scripts", required: false)
-        @Html.Partial("_CrazyEgg")
-        @Html.Partial("_LiveChat")
         @StackExchange.Profiling.MiniProfiler.RenderIncludes()
-        @Html.Partial("_GoogleAnalytics")
     </body>
 </html>

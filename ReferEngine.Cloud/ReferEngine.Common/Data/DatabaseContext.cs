@@ -91,6 +91,8 @@ namespace ReferEngine.Common.Data
             mb.Entity<AppWebLink>().HasKey(l => l.Link);
 
             mb.Entity<StoreAppInfo>().HasKey(i => i.MsAppId);
+            mb.Entity<StoreAppInfo>().Property(i => i.AppStoreLink).IsOptional();
+            mb.Entity<StoreAppInfo>().Property(i => i.BackgroundColor).IsOptional();
 
             mb.Entity<Invite>().HasKey(i => i.Email);
 

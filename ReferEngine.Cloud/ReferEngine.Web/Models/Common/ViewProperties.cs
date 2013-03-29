@@ -50,7 +50,7 @@ namespace ReferEngine.Web.Models.Common
                     baseUrl = "https://www.referengine-test.com";
                     break;
                 case Util.ReferEngineServiceConfiguration.Local:
-                    baseUrl = "http://127.0.0.1:81";
+                    baseUrl = "http://127.0.0.7:81";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

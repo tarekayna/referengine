@@ -92,10 +92,6 @@
       <Project>{175f5eb3-aa40-4032-a3e4-a0d9643b8d21}</Project>
       <Name>ReferEngine.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ReferEngine.Workers.WinApps\ReferEngine.Workers.WinApps.csproj">
-      <Project>{69b2a66e-16c2-4949-9dbf-3b4652bca473}</Project>
-      <Name>ReferEngine.Workers.WinApps</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

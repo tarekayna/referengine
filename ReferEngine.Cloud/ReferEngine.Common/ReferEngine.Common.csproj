@@ -256,6 +256,14 @@
     <Compile Include="Migrations\201303271803527_Invite.Designer.cs">
       <DependentUpon>201303271803527_Invite.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303291946296_test23.cs" />
+    <Compile Include="Migrations\201303291946296_test23.Designer.cs">
+      <DependentUpon>201303291946296_test23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201303291949383_OptionalAppStoreLink.cs" />
+    <Compile Include="Migrations\201303291949383_OptionalAppStoreLink.Designer.cs">
+      <DependentUpon>201303291949383_OptionalAppStoreLink.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\AppRewardPlan.cs" />
     <Compile Include="Models\ChartUnitResult.cs" />
@@ -443,6 +451,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303271803527_Invite.resx">
       <DependentUpon>201303271803527_Invite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303291946296_test23.resx">
+      <DependentUpon>201303291946296_test23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303291949383_OptionalAppStoreLink.resx">
+      <DependentUpon>201303291949383_OptionalAppStoreLink.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

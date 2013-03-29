@@ -5,13 +5,13 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>1.8</ProductVersion>
-    <ProjectGuid>23cd7e74-84b8-441a-af6e-628e6166e93f</ProjectGuid>
+    <ProjectGuid>a9b87dab-1235-46aa-84c6-fe21c7ee19f7</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ReferCloud</RootNamespace>
-    <AssemblyName>ReferCloud</AssemblyName>
+    <RootNamespace>ReferEngine.WorkerCloud</RootNamespace>
+    <AssemblyName>ReferEngine.WorkerCloud</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
-    <Name>ReferEngine.Cloud</Name>
+    <Name>ReferEngine.WorkerCloud</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,43 +34,18 @@
   <ItemGroup>
     <ServiceDefinition Include="ServiceDefinition.csdef" />
     <ServiceConfiguration Include="ServiceConfiguration.TestCloud.cscfg" />
-    <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.ProductionCloud.cscfg" />
+    <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ReferEngine.Web\ReferEngine.Web.csproj">
-      <Name>ReferEngine.Web</Name>
-      <Project>{8b12746f-826a-4ffc-a877-1119a0474c68}</Project>
-      <Private>True</Private>
-      <RoleType>Web</RoleType>
-      <RoleName>ReferEngine.Web</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
-    <ProjectReference Include="..\ReferEngine.Workers.DataWriter\ReferEngine.Workers.DataWriter.csproj">
-      <Name>ReferEngine.Workers.DataWriter</Name>
-      <Project>{15b3e0d2-6217-493a-a690-158c497f5318}</Project>
+    <ProjectReference Include="..\ReferEngine.WorkerCloud.WinApps\ReferEngine.WorkerCloud.WinApps.csproj">
+      <Name>ReferEngine.WorkerCloud.WinApps</Name>
+      <Project>{bbf7af39-0ec8-45d5-8d9d-4d2bc7c35bc2}</Project>
       <Private>True</Private>
       <RoleType>Worker</RoleType>
-      <RoleName>ReferEngine.Workers.DataWriter</RoleName>
+      <RoleName>ReferEngine.WorkerCloud.WinApps</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
-    <ProjectReference Include="..\ReferEngine.Workers.Pinger\ReferEngine.Workers.Pinger.csproj">
-      <Name>ReferEngine.Workers.Pinger</Name>
-      <Project>{3374d4a7-04c1-46df-8e53-f78023edb6bc}</Project>
-      <Private>True</Private>
-      <RoleType>Worker</RoleType>
-      <RoleName>ReferEngine.Workers.Pinger</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Profiles" />
-  </ItemGroup>
-  <ItemGroup>
-    <PublishProfile Include="Profiles\referengine-test.com staging.azurePubxml" />
-    <PublishProfile Include="Profiles\referengine.com staging.azurePubxml" />
-    <PublishProfile Include="Profiles\referengine.com production.azurePubxml" />
-    <PublishProfile Include="Profiles\referengine-test.com.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
