@@ -1,4 +1,5 @@
-﻿using Facebook;
+﻿using System.Diagnostics;
+using Facebook;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
 using System;
@@ -158,9 +159,30 @@ namespace ReferEngine.Common.Data
                 };
 
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage responseMessage = await httpClient.GetAsync(uriBuilder.Uri);
-            responseMessage.EnsureSuccessStatusCode();
-            string response = await responseMessage.Content.ReadAsStringAsync();
+
+            string response;
+            for (int i = 0; true ; i++)
+            {
+                if (i == 2)
+                {
+                    HttpResponseMessage responseMessage = await httpClient.GetAsync(uriBuilder.Uri);
+                    responseMessage.EnsureSuccessStatusCode();
+                    response = await responseMessage.Content.ReadAsStringAsync();
+                    break;
+                }
+                
+                try
+                {
+                    HttpResponseMessage responseMessage = await httpClient.GetAsync(uriBuilder.Uri);
+                    responseMessage.EnsureSuccessStatusCode();
+                    response = await responseMessage.Content.ReadAsStringAsync();
+                    break;
+                }
+                catch (HttpRequestException e)
+                {
+                    Trace.TraceError(e.Message);
+                }
+            }
 
             const string str = "access_token=";
             const string expiresStr = "&expires=";

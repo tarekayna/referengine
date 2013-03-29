@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Net;
 using CloudinaryDotNet.Actions;
@@ -740,36 +741,43 @@ namespace ReferEngine.Common.Data
 
         public static IpAddressLocation GetIpAddressLocation(string ipAddress)
         {
-            var loc = CacheOperations.GetIpAddressLocation(ipAddress);
-            if (loc == null)
+            var location = CacheOperations.GetIpAddressLocation(ipAddress);
+            if (location == null)
             {
                 using (var db = new DatabaseContext())
                 {
-                    loc =
+                    location =
                         db.IpAddressLocations.SingleOrDefault(l => l.IpAddress.Equals(ipAddress, StringComparison.OrdinalIgnoreCase));
-                    if (loc == null)
+                    if (location == null)
                     {
                         if (ipAddress == "127.0.0.1")
                         {
-                            loc =
+                            location =
                                 db.IpAddressLocations.FirstOrDefault(l => l.City.Equals("Seattle", StringComparison.OrdinalIgnoreCase));
                         }
-                        if (loc == null)
+                        if (location == null)
                         {
-                            loc = IpCheckOperations.CheckIpAddress(ipAddress);
-                            if (loc != null)
+                            location = IpCheckOperations.CheckIpAddress(ipAddress);
+                            if (location != null)
                             {
-                                loc.IpAddress = ipAddress;
-                                db.IpAddressLocations.Add(loc);
-                                db.SaveChanges();
+                                location.IpAddress = ipAddress;
+                                try
+                                {
+                                    db.IpAddressLocations.Add(location);
+                                    db.SaveChanges();
+                                }
+                                catch (DbUpdateException e)
+                                {
+                                    Trace.TraceError(e.Message);
+                                }
                             }
                         }
                     }
                 }
 
-                CacheOperations.SetIpAddressLocation(loc);
+                CacheOperations.SetIpAddressLocation(location);
             }
-            return loc;
+            return location;
         }
 
         public static AppAuthorization GetAppAuthorization(string token)
