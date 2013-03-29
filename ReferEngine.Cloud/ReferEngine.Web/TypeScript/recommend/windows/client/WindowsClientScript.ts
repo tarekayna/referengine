@@ -225,8 +225,8 @@ module ReferEngine {
       
     class Url {
         //static base: string = "http://127.0.0.1:81";
-        static base: string = "https://www.ReferEngine.com";
-        //static base: string = "https://www.ReferEngine-test.com";
+        static base: string = "https://www.referengine.com";
+        //static base: string = "https://www.referengine-test.com";
         static auth: string = Url.base + "/recommend/win8/authorizeappcode";
         static getIntroUrl(isAutoOpen: bool) {
             return Url.base + "/recommend/win8/intro/" + RemoteOptions.appId + "?isAutoOpen=" + (isAutoOpen ? "true" : "false");
