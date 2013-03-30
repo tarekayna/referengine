@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Net;
@@ -260,19 +261,26 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static void AddAppWebLink(AppWebLink appWebLink)
+        public static void AddWindowsAppStoreLink(WindowsAppStoreLink appWebLink)
         {
             using (DatabaseContext db = new DatabaseContext())
             {
-                if (!db.AppWebLinks.Any(l => l.Link == appWebLink.Link))
+                if (!db.WindowsAppStoreLinks.Any(l => l.Link == appWebLink.Link))
                 {
-                    db.AppWebLinks.Add(appWebLink);
-                    db.SaveChanges();
+                    try
+                    {
+                        db.WindowsAppStoreLinks.Add(appWebLink);
+                        db.SaveChanges();
+                    }
+                    catch (DbUpdateException e)
+                    {
+                        Trace.TraceError(e.Message);
+                    }
                 }
             }
         }
 
-        public static void AddOrUpdateAppWebLinks(IList<AppWebLink> appWebLinks)
+        public static void AddOrUpdateAppWebLinks(IList<WindowsAppStoreLink> appWebLinks)
         {
             using (DatabaseContext db = new DatabaseContext())
             {
@@ -285,18 +293,33 @@ namespace ReferEngine.Common.Data
                     skip += take;
                     foreach (var appWebLink in currentSet)
                     {
-                        AppWebLink existing = db.AppWebLinks.SingleOrDefault(l => l.Link == appWebLink.Link);
-                        if (existing == null)
+                        try
                         {
-                            db.AppWebLinks.Add(appWebLink);
+                            WindowsAppStoreLink existing =
+                                db.WindowsAppStoreLinks.SingleOrDefault(l => l.Link == appWebLink.Link);
+                            if (existing == null)
+                            {
+                                db.WindowsAppStoreLinks.Add(appWebLink);
+                            }
+                            else
+                            {
+                                existing.LastUpdated = DateTime.UtcNow;
+                            }
                         }
-                        else
+                        catch (EntityCommandExecutionException e)
                         {
-                            existing.LastUpdated = DateTime.UtcNow;
+                            Trace.TraceError(e.Message);
                         }
                     }
 
-                    db.SaveChanges();
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (DbUpdateException e)
+                    {
+                        Trace.TraceError(e.Message);
+                    }
 
                     if (currentSet.Count() < take)
                     {
@@ -306,30 +329,26 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static IList<AppWebLink> GetAppWebLinks()
+        public static IList<WindowsAppStoreLink> GetWindowsAppStoreLinks()
         {
             using (DatabaseContext db = new DatabaseContext())
             {
-                return db.AppWebLinks.ToList();
+                return db.WindowsAppStoreLinks.ToList();
             }
         }
 
-        public static void AddStoreAppInfo(StoreAppInfo storeAppInfo)
+        public static void AddWindowsAppStoreInfo(WindowsAppStoreInfo storeAppInfo)
         {
             using (DatabaseContext db = new DatabaseContext())
             {
-                StoreAppInfo existing = db.StoreAppInfos.FirstOrDefault(i => i.MsAppId.Equals(storeAppInfo.MsAppId));
-                if (existing == null)
+                var existing = db.WindowsAppStoreInfos.Where(i => i.MsAppId.Equals(storeAppInfo.MsAppId));
+                if (existing.Any())
                 {
-                    db.StoreAppInfos.Add(storeAppInfo);
-                    db.SaveChanges();
+                    db.WindowsAppStoreInfos.Remove(existing.First());
                 }
-                else if (!existing.IsIdentical(storeAppInfo))
-                {
-                    db.StoreAppInfos.Remove(existing);
-                    db.StoreAppInfos.Add(storeAppInfo);
-                    db.SaveChanges();
-                }
+
+                db.WindowsAppStoreInfos.Add(storeAppInfo);
+                db.SaveChanges();
             }
         }
 
@@ -642,13 +661,13 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static IList<StoreAppInfo> FindStoreApps(string term, int count)
+        public static IList<WindowsAppStoreInfo> FindStoreApps(string term, int count)
         {
             using (DatabaseContext db = new DatabaseContext())
             {
                 var lowercaseTerm = term.ToLower();
 
-                var matches = from a in db.StoreAppInfos
+                var matches = from a in db.WindowsAppStoreInfos
                               where a.Name.ToLower().StartsWith(lowercaseTerm)
                               select a;
 
@@ -657,7 +676,7 @@ namespace ReferEngine.Common.Data
                     return matches.Take(count).ToList();
                 }
 
-                var containsMatches = from a in db.StoreAppInfos
+                var containsMatches = from a in db.WindowsAppStoreInfos
                                       where a.Name.ToLower().Contains(lowercaseTerm)
                                       select a;
 
@@ -671,7 +690,7 @@ namespace ReferEngine.Common.Data
         {
             using (DatabaseContext db = new DatabaseContext())
             {
-                StoreAppInfo appInfo = db.StoreAppInfos.Single(i => i.MsAppId == msAppId);
+                WindowsAppStoreInfo appInfo = db.WindowsAppStoreInfos.Single(i => i.MsAppId == msAppId);
                 AppRewardPlan rewardPlan = db.AppRewardPlans.Single(p => p.Type == AppRewardPlanType.None);
                 App app = new App()
                     {
@@ -694,10 +713,10 @@ namespace ReferEngine.Common.Data
                 App addedApp = db.Apps.Add(app);
                 db.SaveChanges();
                 user.Apps.Add(addedApp);
-                var screenshotInfo = db.StoreAppScreenshots.Where(s => s.StoreAppInfoMsAppId == appInfo.MsAppId).ToList();
+                var screenshotInfo = db.WindowsAppStoreScreenshots.Where(s => s.StoreAppInfoMsAppId == appInfo.MsAppId).ToList();
                 for (int i = 0; i < screenshotInfo.Count(); i++)
                 {
-                    StoreAppScreenshot storeAppScreenshot = screenshotInfo.ElementAt(i);
+                    WindowsAppStoreScreenshot storeAppScreenshot = screenshotInfo.ElementAt(i);
                     ImageUploadResult imageUploadResult = ImageData.UploadRemote(storeAppScreenshot.Link, "app-" + app.Id + "-screenshot-" + i);
 
                     if (imageUploadResult.StatusCode == HttpStatusCode.OK)
@@ -833,15 +852,22 @@ namespace ReferEngine.Common.Data
             }
         }
 
-        public static void AddStoreAppScreenshot(StoreAppScreenshot storeAppScreenshot)
+        public static void AddWindowsAppStoreScreenshot(WindowsAppStoreScreenshot storeAppScreenshot)
         {
             using (DatabaseContext db = new DatabaseContext())
             {
-                var existing = db.StoreAppScreenshots.FirstOrDefault(i => i.Link == storeAppScreenshot.Link);
+                var existing = db.WindowsAppStoreScreenshots.FirstOrDefault(i => i.Link == storeAppScreenshot.Link);
                 if (existing == null)
                 {
-                    db.StoreAppScreenshots.Add(storeAppScreenshot);
-                    db.SaveChanges();
+                    try
+                    {
+                        db.WindowsAppStoreScreenshots.Add(storeAppScreenshot);
+                        db.SaveChanges();
+                    }
+                    catch (DbUpdateException e)
+                    {
+                        Trace.TraceError(e.Message);
+                    }
                 }
             }
         }

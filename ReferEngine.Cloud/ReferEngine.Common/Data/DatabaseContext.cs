@@ -25,9 +25,6 @@ namespace ReferEngine.Common.Data
         public DbSet<Person> People { get; set; }
         public DbSet<AppScreenshot> AppScreenshots { get; set; }
         public DbSet<PrivateBetaSignup> PrivateBetaSignups { get; set; }
-        public DbSet<AppWebLink> AppWebLinks { get; set; }
-        public DbSet<StoreAppInfo> StoreAppInfos { get; set; }
-        public DbSet<StoreAppScreenshot> StoreAppScreenshots { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Membership> Memberships { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -38,6 +35,9 @@ namespace ReferEngine.Common.Data
         public DbSet<AppRewardPlan> AppRewardPlans { get; set; }
         public DbSet<FacebookPageView> FacebookPageViews { get; set; }
         public DbSet<Invite> Invites { get; set; }
+        public DbSet<WindowsAppStoreLink> WindowsAppStoreLinks { get; set; }
+        public DbSet<WindowsAppStoreInfo> WindowsAppStoreInfos { get; set; }
+        public DbSet<WindowsAppStoreScreenshot> WindowsAppStoreScreenshots { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {
@@ -88,15 +88,13 @@ namespace ReferEngine.Common.Data
             mb.Entity<AppAuthorization>().Property(s => s.Token)
                         .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
-            mb.Entity<AppWebLink>().HasKey(l => l.Link);
+            mb.Entity<WindowsAppStoreLink>().HasKey(l => l.Link);
 
-            mb.Entity<StoreAppInfo>().HasKey(i => i.MsAppId);
-            mb.Entity<StoreAppInfo>().Property(i => i.AppStoreLink).IsOptional();
-            mb.Entity<StoreAppInfo>().Property(i => i.BackgroundColor).IsOptional();
+            mb.Entity<WindowsAppStoreInfo>().HasKey(i => i.MsAppId);
 
             mb.Entity<Invite>().HasKey(i => i.Email);
 
-            mb.Entity<StoreAppScreenshot>().HasKey(i => i.Link);
+            mb.Entity<WindowsAppStoreScreenshot>().HasKey(i => i.Link);
 
             mb.Entity<AppAutoShowOptions>().HasKey(o => o.AppId);
             mb.Entity<AppAutoShowOptions>().Property(s => s.AppId)

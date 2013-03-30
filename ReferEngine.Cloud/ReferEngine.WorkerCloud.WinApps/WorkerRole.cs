@@ -31,7 +31,7 @@ namespace ReferEngine.WorkerCloud.WinApps
             }
 
             XmlNodeList xmlNodeList = xmlDocument.GetElementsByTagName("loc");
-            List<AppWebLink> appWebLinks = new List<AppWebLink>();
+            List<WindowsAppStoreLink> appWebLinks = new List<WindowsAppStoreLink>();
             for (int i = 0; i < xmlNodeList.Count; i++)
             {
                 XmlNode xmlNode = xmlNodeList.Item(i);
@@ -39,7 +39,7 @@ namespace ReferEngine.WorkerCloud.WinApps
                 string link = xmlNode.InnerText;
                 if (link.Contains("en-us") && !appWebLinks.Any(a => a.Link.Equals(link, StringComparison.OrdinalIgnoreCase)))
                 {
-                    AppWebLink appWebLink = new AppWebLink
+                    WindowsAppStoreLink appWebLink = new WindowsAppStoreLink
                     {
                         Link = xmlNode.InnerText,
                         LastUpdated = DateTime.UtcNow
@@ -115,11 +115,11 @@ namespace ReferEngine.WorkerCloud.WinApps
                 }
 
                 // Now that we got all the links, time to scrape
-                IList<AppWebLink> appWebLinks = new List<AppWebLink>();
+                IList<WindowsAppStoreLink> appWebLinks = new List<WindowsAppStoreLink>();
 
                 try
                 {
-                    appWebLinks = DatabaseOperations.GetAppWebLinks();
+                    appWebLinks = DatabaseOperations.GetWindowsAppStoreLinks();
                 }
                 catch (SqlException)
                 {
@@ -156,7 +156,7 @@ namespace ReferEngine.WorkerCloud.WinApps
 
                                 if (msPageVer.Equals("1.0") && doc.GetElementbyId("ErrorPanel") == null)
                                 {
-                                    StoreAppInfo storeAppInfo = new StoreAppInfo
+                                    WindowsAppStoreInfo storeAppInfo = new WindowsAppStoreInfo
                                     {
                                         Name = GetInnerTextFromId(doc, "ProductTitleText"),
                                         AppStoreLink = appWebLink.Link,
@@ -231,7 +231,7 @@ namespace ReferEngine.WorkerCloud.WinApps
                                     }
 
                                     // Screenshot Links
-                                    List<StoreAppScreenshot> screenshots = new List<StoreAppScreenshot>();
+                                    List<WindowsAppStoreScreenshot> screenshots = new List<WindowsAppStoreScreenshot>();
                                     HtmlNode node = doc.GetElementbyId("ScreenshotImageButtons");
                                     if (node != null)
                                     {
@@ -241,7 +241,7 @@ namespace ReferEngine.WorkerCloud.WinApps
                                         {
                                             if (!string.IsNullOrEmpty(s.url))
                                             {
-                                                var screenshot = new StoreAppScreenshot
+                                                var screenshot = new WindowsAppStoreScreenshot
                                                 {
                                                     StoreAppInfoMsAppId = storeAppInfo.MsAppId,
                                                     Link = s.url,
@@ -254,10 +254,10 @@ namespace ReferEngine.WorkerCloud.WinApps
 
                                     try
                                     {
-                                        DatabaseOperations.AddStoreAppInfo(storeAppInfo);
-                                        foreach (StoreAppScreenshot storeAppScreenshot in screenshots)
+                                        DatabaseOperations.AddWindowsAppStoreInfo(storeAppInfo);
+                                        foreach (WindowsAppStoreScreenshot storeAppScreenshot in screenshots)
                                         {
-                                            DatabaseOperations.AddStoreAppScreenshot(storeAppScreenshot);
+                                            DatabaseOperations.AddWindowsAppStoreScreenshot(storeAppScreenshot);
                                         }
                                     }
                                     catch (SqlException e)
