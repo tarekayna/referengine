@@ -784,7 +784,7 @@ define('WindowsClientScript-ready',["require", "exports", "../common/Messaging",
         })();        
         var Url = (function () {
             function Url() { }
-            Url.base = "https://www.ReferEngine.com";
+            Url.base = "https://www.referengine.com";
             Url.auth = Url.base + "/recommend/win8/authorizeappcode";
             Url.getIntroUrl = function getIntroUrl(isAutoOpen) {
                 return Url.base + "/recommend/win8/intro/" + RemoteOptions.appId + "?isAutoOpen=" + (isAutoOpen ? "true" : "false");
