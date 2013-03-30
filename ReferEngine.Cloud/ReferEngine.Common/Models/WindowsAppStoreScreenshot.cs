@@ -6,7 +6,7 @@ using System.Drawing;
 namespace ReferEngine.Common.Models
 {
     [DataContract]
-    public class StoreAppScreenshot
+    public class WindowsAppStoreScreenshot
     {
         [DataMember]
         public string StoreAppInfoMsAppId { get; set; }

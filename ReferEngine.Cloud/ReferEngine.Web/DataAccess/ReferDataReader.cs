@@ -52,7 +52,7 @@ namespace ReferEngine.Web.DataAccess
             return DatabaseOperations.GetUserFromConfirmationCode(code);
         }
 
-        public IList<StoreAppInfo> FindStoreApps(string term, int count)
+        public IList<WindowsAppStoreInfo> FindStoreApps(string term, int count)
         {
             return DatabaseOperations.FindStoreApps(term, count);
         }

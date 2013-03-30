@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace ReferEngine.Common.Models
 {
     [DataContract]
-    public class AppWebLink
+    public class WindowsAppStoreLink
     {
         [DataMember]
         public string Link { get; set; }

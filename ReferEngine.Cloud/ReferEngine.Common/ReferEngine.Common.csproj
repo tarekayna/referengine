@@ -264,11 +264,15 @@
     <Compile Include="Migrations\201303291949383_OptionalAppStoreLink.Designer.cs">
       <DependentUpon>201303291949383_OptionalAppStoreLink.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303292155196_WindowsAppStoreInfos.cs" />
+    <Compile Include="Migrations\201303292155196_WindowsAppStoreInfos.Designer.cs">
+      <DependentUpon>201303292155196_WindowsAppStoreInfos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\AppRewardPlan.cs" />
     <Compile Include="Models\ChartUnitResult.cs" />
     <Compile Include="Models\Invite.cs" />
-    <Compile Include="Models\StoreAppScreenshot.cs" />
+    <Compile Include="Models\WindowsAppStoreScreenshot.cs" />
     <Compile Include="Models\FacebookPageViewInfo.cs" />
     <Compile Include="Models\FacebookPageView.cs" />
     <Compile Include="Models\PersonRecommendationUnitResult.cs" />
@@ -311,13 +315,13 @@
     <Compile Include="Models\AppAuthorization.cs" />
     <Compile Include="Models\RecommendationPageView.cs" />
     <Compile Include="Models\AppPlatform.cs" />
-    <Compile Include="Models\AppWebLink.cs" />
+    <Compile Include="Models\WindowsAppStoreLink.cs" />
     <Compile Include="Models\UserInRole.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\UserMembership.cs" />
     <Compile Include="Models\Membership.cs" />
     <Compile Include="Models\PrivateBetaSignup.cs" />
-    <Compile Include="Models\StoreAppInfo.cs" />
+    <Compile Include="Models\WindowsAppStoreInfo.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ConfirmationCodeModel.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -457,6 +461,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303291949383_OptionalAppStoreLink.resx">
       <DependentUpon>201303291949383_OptionalAppStoreLink.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303292155196_WindowsAppStoreInfos.resx">
+      <DependentUpon>201303292155196_WindowsAppStoreInfos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

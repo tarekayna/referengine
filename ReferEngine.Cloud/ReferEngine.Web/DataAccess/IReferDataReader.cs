@@ -14,6 +14,6 @@ namespace ReferEngine.Web.DataAccess
         AppRecommendation GetAppRecommendation(long appId, long personFacebookId);
         User GetUser(int id);
         User GetUserFromConfirmationCode(string code);
-        IList<StoreAppInfo> FindStoreApps(string term, int count);
+        IList<WindowsAppStoreInfo> FindStoreApps(string term, int count);
     }
 }
