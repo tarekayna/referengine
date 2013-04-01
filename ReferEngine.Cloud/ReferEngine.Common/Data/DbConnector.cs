@@ -42,13 +42,17 @@ namespace ReferEngine.Common.Data
                 case Util.ReferEngineServiceConfiguration.TestCloud:
                     _connectionStrings = new List<string>
                     {
-                        GetConnectionString("fnx5xvuqzn", "referengine_db_test")
+                        GetConnectionString("fnx5xvuqzn", "referengine_db_test"),
+                        GetConnectionString("cy7xqbzm5w", "referengine_db_eastus_test"),
+                        GetConnectionString("r0mmnh6n2q", "referengine_db_eastasia_test")
                     };
                     break;
                 case Util.ReferEngineServiceConfiguration.Local:
                     _connectionStrings = new List<string>
                     {
-                        GetConnectionString("fnx5xvuqzn", "referengine_db_local")
+                        GetConnectionString("fnx5xvuqzn", "referengine_db_local"),
+                        GetConnectionString("cy7xqbzm5w", "referengine_db_eastus_local"),
+                        GetConnectionString("r0mmnh6n2q", "referengine_db_eastasia_local")
                     };
                     break;
                 default:
