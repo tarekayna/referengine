@@ -1,4 +1,6 @@
-﻿using ReferEngine.Common.Utilities;
+﻿using System.Text;
+using ReferEngine.Common.Email;
+using ReferEngine.Common.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -91,7 +93,19 @@ namespace ReferEngine.Common.Data
                 }
                 catch (Exception e)
                 {
-                    Trace.TraceError(e.Message);
+                    StringBuilder builder = new StringBuilder();
+
+                    Exception ex = e;
+
+                    while (ex != null)
+                    {
+                        builder.AppendLine(string.Format("Message: {0}", e.Message));
+                        builder.AppendLine(string.Format("Stack Trace: {0}", e.StackTrace));
+                        builder.AppendLine();
+                        ex = ex.InnerException;
+                    }
+
+                    ReferEmailer.SendPlainTextEmail("tarek@referengine.com", "Database Exception", builder.ToString());
                 }
             }
 
