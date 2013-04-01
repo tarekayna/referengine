@@ -8,7 +8,6 @@ using System;
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
-using ReferEngine.Common.Utilities;
 using ReferEngine.Workers.DataWriter.Properties;
 
 namespace ReferEngine.Workers.DataWriter
@@ -37,8 +36,8 @@ namespace ReferEngine.Workers.DataWriter
                             case "ReferEngine.Common.Data.FacebookOperations":
                                 {
                                     FacebookOperations facebookOperations = message.GetBody<FacebookOperations>();
-                                    DatabaseOperations.AddOrUpdatePerson(facebookOperations.GetCurrentUser());
-                                    DatabaseOperations.AddPersonAndFriends(facebookOperations.GetCurrentUser(), facebookOperations.GetFriends(), message);
+                                    DataOperations.AddOrUpdatePerson(facebookOperations.GetCurrentUser());
+                                    DataOperations.AddPersonAndFriends(facebookOperations.GetCurrentUser(), facebookOperations.GetFriends(), message);
                                     break;
                                 }
                             case "ReferEngine.Common.Models.AppRecommendation":
@@ -50,20 +49,20 @@ namespace ReferEngine.Workers.DataWriter
                             case "ReferEngine.Common.Models.AppReceipt":
                                 {
                                     AppReceipt appReceipt = message.GetBody<AppReceipt>();
-                                    DatabaseOperations.AddOrUpdateAppReceipt(appReceipt);
+                                    DataOperations.AddOrUpdateAppReceipt(appReceipt);
                                     break;
                                 }
                             case "ReferEngine.Common.Models.PrivateBetaSignup":
                                 {
                                     PrivateBetaSignup privateBetaSignup = message.GetBody<PrivateBetaSignup>();
                                     ReferEmailer.ProcessPrivateBetaSignup(privateBetaSignup);
-                                    DatabaseOperations.AddPrivateBetaSignup(privateBetaSignup);
+                                    DataOperations.AddPrivateBetaSignup(privateBetaSignup);
                                     break;
                                 }
                             case "ReferEngine.Common.Models.FacebookPageViewInfo":
                                 {
                                     FacebookPageViewInfo viewInfo = message.GetBody<FacebookPageViewInfo>();
-                                    DatabaseOperations.GetIpAddressLocation(viewInfo.IpAddress);
+                                    DataOperations.GetIpAddressLocation(viewInfo.IpAddress);
 
                                     long facebookPostId = 0;
                                     try
@@ -75,7 +74,7 @@ namespace ReferEngine.Workers.DataWriter
                                         Trace.TraceWarning("Invalid ActionId: " + viewInfo.ActionId);
                                     }
 
-                                    AppRecommendation recommendation = DatabaseOperations.GetAppRecommendation(facebookPostId);
+                                    AppRecommendation recommendation = DataOperations.GetAppRecommendation(facebookPostId);
 
                                     FacebookPageView pageView = new FacebookPageView
                                     {
@@ -84,7 +83,7 @@ namespace ReferEngine.Workers.DataWriter
                                         TimeStamp = viewInfo.TimeStamp,
                                         IpAddress = viewInfo.IpAddress
                                     };
-                                    DatabaseOperations.AddFacebookPageView(pageView);
+                                    DataOperations.AddFacebookPageView(pageView);
                                     break;
                                 }
                         }

@@ -8,7 +8,7 @@ namespace ReferEngine.Web.Models.Admin
     {
         public AdminViewModel()
         {
-            UserMemberships = DatabaseOperations.GetUserMemberships();
+            UserMemberships = DataOperations.GetUserMemberships();
         }
 
         public IList<UserMembership> UserMemberships { get; set; }

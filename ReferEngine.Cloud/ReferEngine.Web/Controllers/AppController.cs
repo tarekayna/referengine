@@ -3,11 +3,9 @@ using NodaTime;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
-using ReferEngine.Web.DataAccess;
 using ReferEngine.Web.Models.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -18,8 +16,6 @@ namespace ReferEngine.Web.Controllers
     [Authorize(Roles="Admin, Dev")]
     public class AppController : BaseController
     {
-        public AppController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
-
         public ActionResult New()
         {
             return View();
@@ -29,7 +25,7 @@ namespace ReferEngine.Web.Controllers
         public ActionResult AddNewApp(string msAppId)
         {
             ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
-            App app = DatabaseOperations.AddNewAppFromStoreInfo(msAppId, viewProperties.CurrentUser);
+            App app = DataOperations.AddNewAppFromStoreInfo(msAppId, viewProperties.CurrentUser);
             return Json(app);
         }
 
@@ -39,7 +35,7 @@ namespace ReferEngine.Web.Controllers
             Verifier.IsNotNullOrEmpty(name, "name");
             Verifier.IsNotNullOrEmpty(platform, "platform");
 
-            var infos = DataReader.FindStoreApps(name, 10);
+            var infos = DataOperations.FindStoreApps(name, 10);
 
             return Json(infos);
         }
@@ -47,7 +43,7 @@ namespace ReferEngine.Web.Controllers
         public ActionResult Dashboard(long id)
         {
             ViewProperties viewProperties = ((ViewProperties) ViewData["ViewProperties"]);
-            viewProperties.CurrentApp = DataReader.GetApp(id);
+            viewProperties.CurrentApp = DataOperations.GetApp(id);
             viewProperties.ActiveMenuItem = "Dashboard";
 
             if (viewProperties.CurrentApp != null &&
@@ -64,7 +60,7 @@ namespace ReferEngine.Web.Controllers
                                                    string startDate, string endDate)
         {
             ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
-            viewProperties.CurrentApp = DataReader.GetApp(id);
+            viewProperties.CurrentApp = DataOperations.GetApp(id);
 
             if (viewProperties.CurrentApp == null ||
                (viewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
@@ -74,7 +70,7 @@ namespace ReferEngine.Web.Controllers
 
             TimeRange timeRange = ConvertClientDateTimeToUtcTimeRange(startDate, endDate, timeZoneOffset);
 
-            IList<MapUnitResult> result = DatabaseOperations.GetAppActionLocations(viewProperties.CurrentApp, timeRange, who);
+            IList<MapUnitResult> result = DataOperations.GetAppActionLocations(viewProperties.CurrentApp, timeRange, who);
             return Json(result);
         }
 
@@ -83,7 +79,7 @@ namespace ReferEngine.Web.Controllers
                                                      string startDate, string endDate, string timespan)
         {
             ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
-            viewProperties.CurrentApp = DataReader.GetApp(id);
+            viewProperties.CurrentApp = DataOperations.GetApp(id);
             App app = viewProperties.CurrentApp;
 
             if (viewProperties.CurrentApp == null ||
@@ -95,7 +91,7 @@ namespace ReferEngine.Web.Controllers
             TimeRange timeRange = ConvertClientDateTimeToUtcTimeRange(startDate, endDate, timeZoneOffset);
             TimeSpan timeSpan = GetTimeSpan(timespan);
 
-            var r = DatabaseOperations.GetAppActionCount(app, timeRange, timeSpan, who);
+            var r = DataOperations.GetAppActionCount(app, timeRange, timeSpan, who);
             return Json(r);
         }
 
@@ -104,7 +100,7 @@ namespace ReferEngine.Web.Controllers
                                                      string startDate, string endDate)
         {
             ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
-            viewProperties.CurrentApp = DataReader.GetApp(id);
+            viewProperties.CurrentApp = DataOperations.GetApp(id);
             App app = viewProperties.CurrentApp;
 
             if (viewProperties.CurrentApp == null ||
@@ -115,14 +111,14 @@ namespace ReferEngine.Web.Controllers
 
             TimeRange timeRange = ConvertClientDateTimeToUtcTimeRange(startDate, endDate, timeZoneOffset);
             
-            var r = DatabaseOperations.GetAppRecommendationsPeople(app, timeRange, who);
+            var r = DataOperations.GetAppRecommendationsPeople(app, timeRange, who);
             return Json(r);
         }
 
         public ActionResult Settings(long id, bool? first)
         {
             ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
-            viewProperties.CurrentApp = DataReader.GetApp(id);
+            viewProperties.CurrentApp = DataOperations.GetApp(id);
             viewProperties.ActiveMenuItem = "Settings";
 
             if (viewProperties.CurrentApp != null &&
@@ -137,12 +133,12 @@ namespace ReferEngine.Web.Controllers
         public ActionResult Delete(long id)
         {            
             ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
-            viewProperties.CurrentApp = DataReader.GetApp(id);
+            viewProperties.CurrentApp = DataOperations.GetApp(id);
             viewProperties.ActiveMenuItem = "Settings";
 
             if (AuthorizeUserForApp())
             {
-                DatabaseOperations.SetAppAsInActive(viewProperties.CurrentApp);
+                DataOperations.SetAppAsInActive(viewProperties.CurrentApp);
                 return View();
             }
 

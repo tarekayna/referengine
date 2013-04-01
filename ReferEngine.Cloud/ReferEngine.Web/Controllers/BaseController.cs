@@ -3,8 +3,8 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
+using ReferEngine.Common.Data;
 using ReferEngine.Common.Utilities;
-using ReferEngine.Web.DataAccess;
 using ReferEngine.Web.Models.Account;
 using ReferEngine.Web.Models.Common;
 using WebMatrix.WebData;
@@ -15,17 +15,9 @@ namespace ReferEngine.Web.Controllers
     [RequireHttpsPermanentRemote]
     public class BaseController : Controller
     {
-        protected IReferDataReader DataReader { get; set; }
-        protected IReferDataWriter DataWriter { get; set; }
         private static SimpleMembershipInitializer _initializer;
         private static object _initializerLock = new object();
         private static bool _isInitialized;
-
-        public BaseController(IReferDataReader dataReader, IReferDataWriter dataWriter)
-        {
-            DataReader = dataReader;
-            DataWriter = dataWriter;
-        }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -37,7 +29,7 @@ namespace ReferEngine.Web.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                viewProperties.CurrentUser = DataReader.GetUser(WebSecurity.CurrentUserId);
+                viewProperties.CurrentUser = DataOperations.GetUser(WebSecurity.CurrentUserId);
             }
 
             base.OnActionExecuting(filterContext);

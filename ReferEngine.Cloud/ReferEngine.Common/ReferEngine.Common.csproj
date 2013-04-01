@@ -160,6 +160,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\CacheOperations.cs" />
+    <Compile Include="Data\DbConnector.cs" />
+    <Compile Include="Data\DataOperations.cs" />
     <Compile Include="Data\DatabaseOperations.cs" />
     <Compile Include="Data\FacebookOperations.cs" />
     <Compile Include="Data\ImageData.cs" />

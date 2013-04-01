@@ -19,8 +19,6 @@ namespace ReferEngine.Web.Controllers
     [OutputCache(Duration = 0)]
     public class RecommendController : BaseController
     {
-        public RecommendController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
-
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult AuthorizeAppCode(string platform, string appReceiptXml, string appVerificationCode)
@@ -49,14 +47,14 @@ namespace ReferEngine.Web.Controllers
                     App app;
                     try
                     {
-                        app = DatabaseOperations.GetApp(packageFamilyName, appVerificationCode);
+                        app = DataOperations.GetApp(packageFamilyName, appVerificationCode);
                     }
                     catch (Exception)
                     {
                         return new HttpNotFoundResult("Could not find app. Your app must be registered under your account at www.ReferEngine.com and Autorization Code must be properly set in ReferEngine.Initialize.js.");
                     }
 
-                    AppReceipt appReceipt = DatabaseOperations.GetAppReceipt(receiptId);
+                    AppReceipt appReceipt = DataOperations.GetAppReceipt(receiptId);
                     if (appReceipt == null)
                     {
                         appReceipt = new AppReceipt
@@ -70,7 +68,7 @@ namespace ReferEngine.Web.Controllers
                             CertificateId = certificateId
                         };
                         appReceipt.Verified = Util.VerifyAppReceipt(appReceipt);
-                        DatabaseOperations.AddAppReceipt(appReceipt);
+                        DataOperations.AddAppReceipt(appReceipt);
                     }
 
                     AppAuthorization appAuthorization = new AppAuthorization(app, appReceipt)
@@ -80,8 +78,8 @@ namespace ReferEngine.Web.Controllers
                         UserHostAddress = userIpAddress
                     };
 
-                    DatabaseOperations.AddAppAuthorization(appAuthorization);
-                    IpAddressLocation location = DatabaseOperations.GetIpAddressLocation(userIpAddress);
+                    DataOperations.AddAppAuthorization(appAuthorization);
+                    IpAddressLocation location = DataOperations.GetIpAddressLocation(userIpAddress);
 
                     bool locationIsSupported = Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local;
                     if (!locationIsSupported)
@@ -101,7 +99,7 @@ namespace ReferEngine.Web.Controllers
                     {
                         // TODO: Verify app license
 
-                        AppAutoShowOptions autoShowOptions = DatabaseOperations.GetAppAutoShowOptions(app.Id);
+                        AppAutoShowOptions autoShowOptions = DataOperations.GetAppAutoShowOptions(app.Id);
 
                         string style = System.IO.File.ReadAllText(Server.MapPath(@"~\TypeScript\recommend\windows\client\WindowsClientStyle.min.css"));
 
@@ -172,7 +170,7 @@ namespace ReferEngine.Web.Controllers
         {
             ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
             Verifier.IsNotNullOrEmpty(platform, "platform");
-            viewProperties.CurrentApp = DataReader.GetApp(21);
+            viewProperties.CurrentApp = DataOperations.GetApp(21);
             string viewName = String.Format("{0}/intro", platform);
             return View(viewName, viewProperties.CurrentApp);
         }
@@ -185,7 +183,7 @@ namespace ReferEngine.Web.Controllers
 
             if (string.IsNullOrEmpty(authToken))
             {
-                viewProperties.CurrentApp = DatabaseOperations.GetApp(id);
+                viewProperties.CurrentApp = DataOperations.GetApp(id);
                 return View(String.Format("{0}/PleaseUpdate", platform), viewProperties.CurrentApp);
             }
 
@@ -193,9 +191,9 @@ namespace ReferEngine.Web.Controllers
 
             var appAuthorization = GetAppAuthorization(authToken);
 
-            DatabaseOperations.AddRecommendationPageView(appAuthorization, RecommendationPage.Intro, isAutoOpen);
+            DataOperations.AddRecommendationPageView(appAuthorization, RecommendationPage.Intro, isAutoOpen);
 
-            viewProperties.CurrentApp = DataReader.GetApp(id);
+            viewProperties.CurrentApp = DataOperations.GetApp(id);
             string viewName = String.Format("{0}/intro", platform);
             return View(viewName, viewProperties.CurrentApp);
         }
@@ -206,8 +204,8 @@ namespace ReferEngine.Web.Controllers
             Verifier.IsNotNullOrEmpty(platform, "platform");
             Verifier.IsNotNullOrEmpty(id, "id");
 
-            viewProperties.CurrentApp = DataReader.GetApp(id);
-            Person me = DatabaseOperations.GetPerson(509572882);
+            viewProperties.CurrentApp = DataOperations.GetApp(id);
+            Person me = DataOperations.GetPerson(509572882);
 
             string viewName = String.Format("{0}/recommend", platform);
             var viewModel = new RecommendViewModel(me, viewProperties.CurrentApp, "fake_auth_token", null);
@@ -228,7 +226,7 @@ namespace ReferEngine.Web.Controllers
                 bool showErrorView = false;
                 AppAuthorization appAuthorization = GetAppAuthorization(authToken);
 
-                DatabaseOperations.AddRecommendationPageView(appAuthorization, RecommendationPage.Post);
+                DataOperations.AddRecommendationPageView(appAuthorization, RecommendationPage.Post);
 
                 // App is cool
                 viewProperties.CurrentApp = appAuthorization.App;
@@ -239,7 +237,7 @@ namespace ReferEngine.Web.Controllers
                 Person me = await facebookOperations.GetCurrentUserAsync();
 
                 AppReceipt appReceipt = appAuthorization.AppReceipt;
-                AppReceipt existingReceipt = DataReader.GetAppReceipt(appReceipt.Id);
+                AppReceipt existingReceipt = DataOperations.GetAppReceipt(appReceipt.Id);
                 if (existingReceipt != null && existingReceipt.PersonFacebookId.HasValue)
                 {
                     // App + Person: something is up
@@ -247,8 +245,8 @@ namespace ReferEngine.Web.Controllers
                         appAuthorization.App.RewardPlan.Type != AppRewardPlanType.None)
                     {
                         // Another user is associated with this receipt
-                        AppRecommendation appRecommendation = DataReader.GetAppRecommendation(viewProperties.CurrentApp.Id,
-                                                                                              existingReceipt.PersonFacebookId.Value);
+                        AppRecommendation appRecommendation = DataOperations.GetAppRecommendation(viewProperties.CurrentApp.Id,
+                                                                                                  existingReceipt.PersonFacebookId.Value);
                         if (appRecommendation != null)
                         {
                             // Another user already posted a recommendation for this app using this receipt
@@ -282,12 +280,8 @@ namespace ReferEngine.Web.Controllers
                     // AppReceipt should already be in the database
                     // Update it with the Facebook Id of the user
                     appReceipt.PersonFacebookId = me.FacebookId;
-                    DataWriter.AddAppReceipt(appReceipt);
-
-                    using (profiler.Step("DataWriter.AddFacebookOperations"))
-                    {
-                        DataWriter.AddFacebookOperations(authToken, facebookOperations);
-                    }
+                    ServiceBusOperations.AddToQueue(appReceipt);
+                    DataOperations.AddFacebookOperations(facebookOperations);
 
                     string viewName = String.Format("{0}/recommend", platform);
                     var viewModel = new RecommendViewModel(me, viewProperties.CurrentApp, authToken, appReceipt);
@@ -304,7 +298,7 @@ namespace ReferEngine.Web.Controllers
 
             AppAuthorization appAuthorization = GetAppAuthorization(authToken);
 
-            var facebookOperations = DataReader.GetFacebookOperations(authToken);
+            var facebookOperations = DataOperations.GetFacebookOperations(authToken);
             Verifier.IsNotNullOrEmpty(facebookOperations, "facebookOperations");
 
             var me = await facebookOperations.GetCurrentUserAsync();
@@ -320,7 +314,7 @@ namespace ReferEngine.Web.Controllers
 
             try
             {
-                DataWriter.AddAppRecommendation(postedRecommendation);
+                ServiceBusOperations.AddToQueue(postedRecommendation);
             }
             catch (Exception e)
             {
@@ -343,7 +337,7 @@ namespace ReferEngine.Web.Controllers
 
             GetAppAuthorization(authToken);
 
-            var facebookOperations = DataReader.GetFacebookOperations(authToken);
+            var facebookOperations = DataOperations.GetFacebookOperations(authToken);
             Verifier.IsNotNullOrEmpty(facebookOperations, "facebookOperations");
 
             var friends = await facebookOperations.GetFriendsAsync();
@@ -357,7 +351,7 @@ namespace ReferEngine.Web.Controllers
 
         private static AppAuthorization GetAppAuthorization(string authToken)
         {
-            var auth = DatabaseOperations.GetAppAuthorization(authToken);
+            var auth = DataOperations.GetAppAuthorization(authToken);
 
             if (auth.ExpiresAt.CompareTo(DateTime.UtcNow) > 0)
             {

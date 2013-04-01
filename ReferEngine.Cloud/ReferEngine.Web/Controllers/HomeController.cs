@@ -1,6 +1,6 @@
-﻿using ReferEngine.Common.Models;
+﻿using ReferEngine.Common.Data;
+using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
-using ReferEngine.Web.DataAccess;
 using System.Net;
 using System.Web.Mvc;
 
@@ -8,8 +8,6 @@ namespace ReferEngine.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
-
         public ActionResult Index()
         {
             return View();
@@ -27,7 +25,7 @@ namespace ReferEngine.Web.Controllers
                 Platforms = platforms
             };
 
-            DataWriter.AddPrivateBetaSignup(privateBetaSignup);
+            DataOperations.AddPrivateBetaSignup(privateBetaSignup);
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

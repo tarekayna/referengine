@@ -1,22 +1,18 @@
-﻿using System;
-using System.Diagnostics;
-using System.Web.Mvc;
-using ReferEngine.Common.Data;
+﻿using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
-using ReferEngine.Web.DataAccess;
 using ReferEngine.Web.Models.Facebook;
+using System;
+using System.Web.Mvc;
 
 namespace ReferEngine.Web.Controllers
 {
     public class FacebookController : BaseController
     {
-        public FacebookController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
-
         public ActionResult App(long id, string fb_action_ids, string fb_source, string action_object_map,
             string action_type_map, string action_ref_map)
         {
-            App app = DataReader.GetApp(id);
+            App app = DataOperations.GetApp(id);
             return FacebookAppView(app, fb_action_ids);
         }
 
@@ -27,7 +23,7 @@ namespace ReferEngine.Web.Controllers
             Verifier.IsNotNullOrEmpty(name, "name");
 
             string appName = name.Replace('-', ' ');
-            App app = DatabaseOperations.GetAppByName(platform, appName);
+            App app = DataOperations.GetAppByName(platform, appName);
             return FacebookAppView(app, fb_action_ids);
         }
 
@@ -50,7 +46,7 @@ namespace ReferEngine.Web.Controllers
         public ActionResult Home()
         {
             UserAgentProperties userAgentProperties = new UserAgentProperties(Request.UserAgent);
-            App app = DataReader.GetApp(21);
+            App app = DataOperations.GetApp(21);
 
             return View("App", new FacebookAppViewModel(app, userAgentProperties));
         }

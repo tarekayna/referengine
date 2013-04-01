@@ -50,7 +50,7 @@ namespace ReferEngine.WorkerCloud.WinApps
 
             try
             {
-                DatabaseOperations.AddOrUpdateAppWebLinks(appWebLinks);
+                DataOperations.AddOrUpdateAppWebLinks(appWebLinks);
             }
             catch (SqlException)
             {
@@ -119,7 +119,7 @@ namespace ReferEngine.WorkerCloud.WinApps
 
                 try
                 {
-                    appWebLinks = DatabaseOperations.GetWindowsAppStoreLinks();
+                    appWebLinks = DataOperations.GetWindowsAppStoreLinks();
                 }
                 catch (SqlException)
                 {
@@ -254,15 +254,15 @@ namespace ReferEngine.WorkerCloud.WinApps
 
                                     try
                                     {
-                                        DatabaseOperations.AddWindowsAppStoreInfo(storeAppInfo);
+                                        DataOperations.AddWindowsAppStoreInfo(storeAppInfo);
                                         foreach (WindowsAppStoreScreenshot storeAppScreenshot in screenshots)
                                         {
-                                            DatabaseOperations.AddWindowsAppStoreScreenshot(storeAppScreenshot);
+                                            DataOperations.AddWindowsAppStoreScreenshot(storeAppScreenshot);
                                         }
                                     }
                                     catch (SqlException e)
                                     {
-                                        ReferEmailer.SendPlainTextEmail("tarek@apexa.co", "WinAppsWorker Exception", e.Message);
+                                        ReferEmailer.SendPlainTextEmail("tarek@referengine.com", "WinAppsWorker Exception", e.Message);
                                     }
                                 }
                             }

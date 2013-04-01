@@ -424,10 +424,6 @@
     <Compile Include="Controllers\RecommendController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="DataAccess\BlobStorageOperations.cs" />
-    <Compile Include="DataAccess\ReferDataReader.cs" />
-    <Compile Include="DataAccess\IReferDataReader.cs" />
-    <Compile Include="DataAccess\IReferDataWriter.cs" />
-    <Compile Include="DataAccess\ReferDataWriter.cs" />
     <Compile Include="App_Start\ErrorEntity.cs" />
     <Compile Include="Filters\LogAttribute.cs" />
     <Compile Include="Global.asax.cs">

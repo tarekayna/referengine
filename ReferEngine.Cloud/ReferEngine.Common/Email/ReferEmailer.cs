@@ -22,7 +22,7 @@ namespace ReferEngine.Common.Email
                 {
                     const string host = "smtp.mandrillapp.com";
                     const int port = 587;
-                    const string username = "tarek@apexa.co";
+                    const string username = "tarek@referengine.com";
                     const string password = "38b99f5a-45aa-4dab-8c94-452718b2afee";
                     _client = new SmtpClient(host, port);
                     _client.Credentials = new NetworkCredential(username, password);;

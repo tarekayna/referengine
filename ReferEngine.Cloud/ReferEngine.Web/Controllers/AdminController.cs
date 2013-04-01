@@ -4,8 +4,6 @@ using System.Web.Mvc;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Email;
 using ReferEngine.Common.Models;
-using ReferEngine.Common.Utilities;
-using ReferEngine.Web.DataAccess;
 using ReferEngine.Web.Models.Admin;
 
 namespace ReferEngine.Web.Controllers
@@ -13,8 +11,6 @@ namespace ReferEngine.Web.Controllers
     [Authorize(Roles="Admin")]
     public class AdminController : BaseController
     {
-        public AdminController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
-
         public ActionResult Admin()
         {
             var viewModel = new AdminViewModel();
@@ -23,14 +19,14 @@ namespace ReferEngine.Web.Controllers
 
         public ActionResult InviteRequests()
         {
-            IList<PrivateBetaSignup> signups = DatabaseOperations.GetPrivateBetaSignups();
+            IList<PrivateBetaSignup> signups = DataOperations.GetPrivateBetaSignups();
             return View(signups);
         }
 
         [HttpPost]
         public ActionResult SendInvite(string email)
         {
-            Invite invite = DatabaseOperations.GetInvite(email);
+            Invite invite = DataOperations.GetInvite(email);
             if (invite != null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Invite already sent to this email.");
@@ -38,7 +34,7 @@ namespace ReferEngine.Web.Controllers
 
             invite = Invite.Generate(email);
             ReferEmailer.SendInviteEmail(invite);
-            DatabaseOperations.AddInvite(invite);
+            DataOperations.AddInvite(invite);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }

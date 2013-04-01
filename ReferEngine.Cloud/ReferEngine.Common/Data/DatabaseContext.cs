@@ -8,7 +8,7 @@ namespace ReferEngine.Common.Data
 {
     public class DatabaseContext : DbContext
     {
-        public DatabaseContext() : base(Util.DatabaseConnectionStringName)
+        public DatabaseContext(string connection) : base(connection)
         //public DatabaseContext() : base("ProductionCloudConnectionString")
         //public DatabaseContext() : base("TestCloudConnectionString")
         //public DatabaseContext() : base("LocalConnectionString")

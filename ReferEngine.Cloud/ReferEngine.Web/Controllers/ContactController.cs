@@ -11,8 +11,6 @@ namespace ReferEngine.Web.Controllers
 {
     public class ContactController : BaseController
     {
-        public ContactController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
-
         [HttpPost]
         public ActionResult SendMessage(string email, string message, string subject, string name)
         {

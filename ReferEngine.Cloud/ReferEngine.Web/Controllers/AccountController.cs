@@ -1,12 +1,8 @@
-﻿using System.Net;
-using DotNetOpenAuth.AspNet;
+﻿using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Email;
 using ReferEngine.Common.Models;
-using ReferEngine.Common.Utilities;
-using ReferEngine.Web.DataAccess;
-using ReferEngine.Web.Filters;
 using ReferEngine.Web.Models.Common;
 using ReferEngine.Web.Models.Account;
 using System;
@@ -22,8 +18,6 @@ namespace ReferEngine.Web.Controllers
     [Authorize]
     public class AccountController : BaseController
     {
-        public AccountController(IReferDataReader dataReader, IReferDataWriter dataWriter) : base(dataReader, dataWriter) { }
-
         [AllowAnonymous]
         public ActionResult Login(string returnUrl, string successMessage)
         {
@@ -45,7 +39,7 @@ namespace ReferEngine.Web.Controllers
                 {
                     if (string.IsNullOrEmpty(returnUrl))
                     {
-                        var user = DatabaseOperations.GetUser(model.Email);
+                        var user = DataOperations.GetUser(model.Email);
                         return user.Apps.Any() ? RedirectToLocal("/app/dashboard/" + user.Apps.First().Id) : RedirectToLocal("/app/new");
                     }
                     
@@ -56,7 +50,7 @@ namespace ReferEngine.Web.Controllers
                 {
                     if (!WebSecurity.IsConfirmed(model.Email))
                     {
-                        User user = DatabaseOperations.GetUser(model.Email);
+                        User user = DataOperations.GetUser(model.Email);
                         if (user != null)
                         {
                             ConfirmationCodeModel confirmModel = new ConfirmationCodeModel
@@ -107,7 +101,7 @@ namespace ReferEngine.Web.Controllers
             {
                 if (WebSecurity.UserExists(email) && !WebSecurity.IsConfirmed(email))
                 {
-                    var confirmationCodeModel = DatabaseOperations.GetConfirmationCodeModel(email);
+                    var confirmationCodeModel = DataOperations.GetConfirmationCodeModel(email);
                     if (confirmationCodeModel != null)
                     {
                         ReferEmailer.SendConfirmationCodeEmail(confirmationCodeModel);
@@ -144,7 +138,7 @@ namespace ReferEngine.Web.Controllers
             {
                 try
                 {
-                    Invite invite = DatabaseOperations.GetInvite(model.Email);
+                    Invite invite = DataOperations.GetInvite(model.Email);
                     if (invite == null || invite.VerificationCode != model.InvitationCode)
                     {
                         ModelState.AddModelError("", "Invitation code is invalid.");
@@ -156,8 +150,8 @@ namespace ReferEngine.Web.Controllers
                                                                                    propertyValues,
                                                                                    requireConfirmationToken: true);
 
-                        User user = DataReader.GetUserFromConfirmationCode(confirmationCode);
-                        DataWriter.AddUserRole(user, "Dev");
+                        User user = DataOperations.GetUserFromConfirmationCode(confirmationCode);
+                        DataOperations.AddUserRole(user, "Dev");
 
                         var confirmationCodeModel = new ConfirmationCodeModel
                                                         {
@@ -265,10 +259,8 @@ namespace ReferEngine.Web.Controllers
                     {
                         return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
-                    }
+                    
+                    ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
                 }
             }
             else
@@ -353,8 +345,8 @@ namespace ReferEngine.Web.Controllers
         public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
         {
             ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
-            string provider = null;
-            string providerUserId = null;
+            string provider;
+            string providerUserId;
 
             if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))
             {

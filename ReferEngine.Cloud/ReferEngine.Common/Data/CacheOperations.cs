@@ -5,7 +5,7 @@ using ReferEngine.Common.Models;
 
 namespace ReferEngine.Common.Data
 {
-    public class CachedEntity<T>
+    internal class CachedEntity<T>
     {
         private readonly DataCache _cache;
         private readonly string _keyFormat;
@@ -77,7 +77,7 @@ namespace ReferEngine.Common.Data
         }
     }
 
-    public class UserCacheEntity : CachedEntity<User>
+    internal class UserCacheEntity : CachedEntity<User>
     {
         public static string KeyFormat = "user-id-{0}";
         public UserCacheEntity(DataCache cache) : base(cache, KeyFormat) { }
@@ -98,7 +98,7 @@ namespace ReferEngine.Common.Data
         }
     }
 
-    public class AppByIdCacheEntity : CachedEntity<App>
+    internal class AppByIdCacheEntity : CachedEntity<App>
     {
         public static string KeyFormat = "app-id-{0}";
         public AppByIdCacheEntity(DataCache cache) : base(cache, KeyFormat) { }
@@ -119,7 +119,7 @@ namespace ReferEngine.Common.Data
         }
     }
 
-    public class AppByPlatformAndNameCacheEntity : CachedEntity<App>
+    internal class AppByPlatformAndNameCacheEntity : CachedEntity<App>
     {
         public static string KeyFormat = "app-plat-name-{0}{1}";
         public AppByPlatformAndNameCacheEntity(DataCache cache) : base(cache, KeyFormat) { }
@@ -140,7 +140,7 @@ namespace ReferEngine.Common.Data
         }
     }
 
-    public class AppByPackageAndVerificationCacheEntity : CachedEntity<App>
+    internal class AppByPackageAndVerificationCacheEntity : CachedEntity<App>
     {
         public static string KeyFormat = "app-pkgver-{0}{1}";
         public AppByPackageAndVerificationCacheEntity(DataCache cache) : base(cache, KeyFormat) { }
@@ -161,7 +161,7 @@ namespace ReferEngine.Common.Data
         }
     }
 
-    public static class CacheKeyFormat
+    internal static class CacheKeyFormat
     {
         internal const string Person = "person-fbId-{0}";
         internal const string FacebookOperations = "fb-operations-{0}";
@@ -170,12 +170,12 @@ namespace ReferEngine.Common.Data
         internal const string AppAutoShowOptions = "app-auto-show-{0}";
     }
 
-    public static class CacheTimeoutValues
+    internal static class CacheTimeoutValues
     {
         internal static TimeSpan App = TimeSpan.FromDays(1);
     }
 
-    public class CacheOperations
+    internal class CacheOperations
     {
         private static DataCache _cache;
         public static DataCache Cache
@@ -310,18 +310,17 @@ namespace ReferEngine.Common.Data
             return null;
         }
 
+        public static void AddAppScreenshot(AppScreenshot appScreenshot)
+        {
+            String key = String.Format(CacheKeyFormat.AppScreenshotIdDesc, appScreenshot.AppId, appScreenshot.Description);
+            CachePutSafe(key, appScreenshot);
+        }
+
         public static AppScreenshot GetAppScreenshot(long appId, string description)
         {
             String key = String.Format(CacheKeyFormat.AppScreenshotIdDesc, appId, description);
             object cached = Cache.Get(key);
-            if (cached != null)
-            {
-                return (AppScreenshot) cached;
-            }
-
-            AppScreenshot screenshot = DatabaseOperations.GetAppScreenshot(appId, description);
-            CachePutSafe(key, screenshot);
-            return screenshot;
+            return (AppScreenshot) cached;
         }
 
         public static IpAddressLocation GetIpAddressLocation(string ipAddress)
