@@ -51,7 +51,8 @@
     <Folder Include="Profiles" />
   </ItemGroup>
   <ItemGroup>
-    <PublishProfile Include="Profiles\referengine-workercloudProduction.azurePubxml" />
+    <PublishProfile Include="Profiles\referengine-workercloud-Production.azurePubxml" />
+    <PublishProfile Include="Profiles\referengine-workercloud-Staging.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
