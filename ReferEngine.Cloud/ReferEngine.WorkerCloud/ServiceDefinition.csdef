@@ -9,4 +9,9 @@
       <Setting name="CurrentServiceConfiguration" />
     </ConfigurationSettings>
   </WorkerRole>
+  <WorkerRole name="ReferEngine.WorkerCloud.iOSApps" vmsize="Small">
+    <Imports>
+      <Import moduleName="Diagnostics" />
+    </Imports>
+  </WorkerRole>
 </ServiceDefinition>

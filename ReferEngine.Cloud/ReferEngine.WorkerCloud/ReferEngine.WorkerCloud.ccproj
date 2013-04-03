@@ -38,6 +38,14 @@
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ReferEngine.WorkerCloud.iOSApps\ReferEngine.WorkerCloud.iOSApps.csproj">
+      <Name>ReferEngine.WorkerCloud.iOSApps</Name>
+      <Project>{718db0c3-bb7f-41d5-8d55-76ad1c637a1d}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>ReferEngine.WorkerCloud.iOSApps</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
     <ProjectReference Include="..\ReferEngine.WorkerCloud.WinApps\ReferEngine.WorkerCloud.WinApps.csproj">
       <Name>ReferEngine.WorkerCloud.WinApps</Name>
       <Project>{bbf7af39-0ec8-45d5-8d9d-4d2bc7c35bc2}</Project>
