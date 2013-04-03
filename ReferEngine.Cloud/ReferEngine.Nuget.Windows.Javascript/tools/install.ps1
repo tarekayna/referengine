@@ -28,14 +28,14 @@ $startPagePath = getStartPagePath
 
 function addScriptTagToStartPage {
 	$startPageContent = Get-Content -Path $startPagePath
-	Set-Content $startPagePath $startPageContent[0]
+	Set-Content $startPagePath $startPageContent[0] -Encoding UTF8
 	$i = 1;
 	$openScriptFound = 0;
 	$appendedLine = 0;
 	while ($i -lt $startPageContent.count)
 	{
 	    $line = $startPageContent[$i]
-	    Add-Content $startPagePath $line
+	    Add-Content $startPagePath $line -Encoding UTF8
 	    
 	    if ($appendedLine -eq 0)
 	    {
@@ -50,7 +50,7 @@ function addScriptTagToStartPage {
 	        {
 	            if ($line.indexOf("</script") -ne -1)
 	            {
-	                Add-Content $startPagePath $scriptTag
+	                Add-Content $startPagePath $scriptTag -Encoding UTF8
 	                $appendedLine = 1
 	            }
 	        }
@@ -61,3 +61,18 @@ function addScriptTagToStartPage {
 }
 
 addScriptTagToStartPage
+
+function removeThumbsFile {
+	foreach ($item in $project.ProjectItems) { 
+        if ($item.name -eq "ReferEngine")  { 
+            foreach ($childItem in $item.ProjectItems) { 
+                if ($childItem.name -eq "Thumbs.db")  { 
+                    $childItem.Delete(); 
+                    break; 
+                } 
+            }
+            break; 
+        }
+    }
+}
+removeThumbsFile

@@ -11,7 +11,7 @@ fs.writeFileSync("WindowsClientScript-ready.js", js, 'utf8');
 
 var config = {
     baseUrl: ".",
-    optimize: "none",
+    //optimize: "none",
     wrap: true,
     include: ["../common/Messaging",
               "../common/Functions",
@@ -22,8 +22,8 @@ var config = {
 
 requirejs.optimize(config, function (buildResponse) {
     var content = fs.readFileSync(config.out, 'utf8');
-    fs.writeFileSync(pathToNuget, content, 'utf8');
-    fs.writeFileSync(pathToReferEngine, content, 'utf8');
+    fs.writeFileSync(pathToNuget, "\ufeff" + content, 'utf8');
+    //fs.writeFileSync(pathToReferEngine, content, 'utf8');
 }, function(err) {
     //optimization err callback
     console.log("what!!");

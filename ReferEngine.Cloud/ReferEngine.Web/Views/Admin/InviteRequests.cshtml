@@ -34,7 +34,7 @@
                                 <td>@signup.Platforms</td>
                                 <td>@signup.RegistrationDateTime.ToShortDateString()</td>
                                 <td>
-                                    @if (DatabaseOperations.GetInvite(signup.Email) == null)
+                                    @if (DataOperations.GetInvite(signup.Email) == null)
                                     {
                                         <span class="label label-important">Not Sent</span>
                                     }

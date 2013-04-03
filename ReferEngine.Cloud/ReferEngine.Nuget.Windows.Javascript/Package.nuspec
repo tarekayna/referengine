@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>ReferEngine.Javascript</id>
-    <version>0.3</version>
-    <title>ReferEngine.Javascript</title>
-    <authors>ReferEngine.com</authors>
-    <owners>ReferEngine.com</owners>
+    <id>ReferEngine.Windows.Javascript</id>
+    <version>0.33</version>
+    <title>ReferEngine.Windows.Javascript</title>
+    <authors>www.ReferEngine.com</authors>
+    <owners>www.ReferEngine.com</owners>
     <description>
       ReferEngine.com is a facebook integration service for Windows Store Apps. Refer Engine offers app customers the ability to recommend your
       Windows app and earn rewards for successful recommendations. You can register your app at www.referengine.com.
@@ -13,7 +13,7 @@
     <releaseNotes>
     </releaseNotes>
     <summary>
-      ReferEngine.com is a facebook integration service for Windows Store Apps. 
+      ReferEngine.com is a facebook marketing service for Windows Store Apps. 
     </summary>
     <language>en-US</language>
     <projectUrl>http://www.referengine.com</projectUrl>
