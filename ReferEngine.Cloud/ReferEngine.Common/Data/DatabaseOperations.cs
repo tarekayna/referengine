@@ -410,6 +410,11 @@ namespace ReferEngine.Common.Data
                 });
         }
 
+        internal static WindowsAppStoreInfo GetWindowsAppStoreInfo(string msAppId)
+        {
+            return (WindowsAppStoreInfo) DbConnector.Execute(db => db.WindowsAppStoreInfos.FirstOrDefault(i => i.MsAppId == msAppId));
+        }
+
         internal static IList<WindowsAppStoreInfo> FindStoreApps(string term, int count)
         {
             return (IList<WindowsAppStoreInfo>) DbConnector.Execute(db =>

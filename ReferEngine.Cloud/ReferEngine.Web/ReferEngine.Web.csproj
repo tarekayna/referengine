@@ -284,6 +284,14 @@
     <Content Include="js\lib\require.js" />
     <Content Include="js\home.js" />
     <Content Include="js\shared\layout-not-auth.js" />
+    <TypeScriptCompile Include="TypeScript\admin\windowsAppInvites.ts" />
+    <Content Include="TypeScript\admin\windowsAppInvites.js">
+      <DependentUpon>windowsAppInvites.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\admin\windowsAppInvites.min.js">
+      <DependentUpon>windowsAppInvites.ts</DependentUpon>
+    </Content>
+    <Content Include="Views\Admin\WindowsAppInvites.cshtml" />
     <TypeScriptCompile Include="TypeScript\admin\inviteRequests.ts" />
     <Content Include="TypeScript\admin\inviteRequests.js">
       <DependentUpon>inviteRequests.ts</DependentUpon>

@@ -73,33 +73,6 @@ namespace ReferEngine.Common.Utilities
             }
         }
 
-        public static string CurrentServiceConfigurationString 
-        {
-            get
-            {
-                switch (CurrentServiceConfiguration)
-                {
-                    case ReferEngineServiceConfiguration.ProductionCloud:
-                        return "ProductionCloud";
-                    case ReferEngineServiceConfiguration.TestCloud:
-                        return "TestCloud";
-                    case ReferEngineServiceConfiguration.Local:
-                        return "Local";
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-        }
-
-        public static string DatabaseConnectionStringName
-        {
-            get
-            {
-                string format = CurrentServiceConfigurationString + "{0}";
-                return string.Format(format, "ConnectionString");
-            }
-        }
-
         public static string ElmahConnectionString 
         {
             get

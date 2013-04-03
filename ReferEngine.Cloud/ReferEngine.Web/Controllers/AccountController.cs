@@ -104,7 +104,7 @@ namespace ReferEngine.Web.Controllers
                     var confirmationCodeModel = DataOperations.GetConfirmationCodeModel(email);
                     if (confirmationCodeModel != null)
                     {
-                        ReferEmailer.SendConfirmationCodeEmail(confirmationCodeModel);
+                        Emailer.SendConfirmationCodeEmail(confirmationCodeModel);
                         return RedirectToAction("Login", new {SuccessMessage = "Confirmation email sent.", });
                     }
                 }
@@ -159,7 +159,7 @@ namespace ReferEngine.Web.Controllers
                                                             ConfirmationCode = confirmationCode,
                                                             FirstName = model.FirstName
                                                         };
-                        ReferEmailer.SendConfirmationCodeEmail(confirmationCodeModel);
+                        Emailer.SendConfirmationCodeEmail(confirmationCodeModel);
 
                         TempData.Add("ConfirmationCodeModel", confirmationCodeModel);
                         return RedirectToAction("ConfirmYourAccount",

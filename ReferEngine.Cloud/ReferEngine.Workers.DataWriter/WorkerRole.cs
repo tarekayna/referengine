@@ -55,7 +55,7 @@ namespace ReferEngine.Workers.DataWriter
                             case "ReferEngine.Common.Models.PrivateBetaSignup":
                                 {
                                     PrivateBetaSignup privateBetaSignup = message.GetBody<PrivateBetaSignup>();
-                                    ReferEmailer.ProcessPrivateBetaSignup(privateBetaSignup);
+                                    Emailer.ProcessPrivateBetaSignup(privateBetaSignup);
                                     DataOperations.AddPrivateBetaSignup(privateBetaSignup);
                                     break;
                                 }

@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Specialized;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
-using System.Threading.Tasks;
+using System.Web.Helpers;
 using ReferEngine.Common.Models;
 
 namespace ReferEngine.Common.Email
 {
-    public static class ReferEmailer
+    public static class Emailer
     {
         private static readonly MailAddress From = new MailAddress("tarek@referengine.com", "Tarek, ReferEngine.com");
         
@@ -124,6 +123,56 @@ namespace ReferEngine.Common.Email
             };
             mailMessage.ReplyToList.Add(From);
             Client.Send(mailMessage);
+        }
+
+        public static void SendWindowsAppInvite(string to, WindowsAppStoreInfo appInfo, Invite invite, string name = null)
+        {
+            const string template = "refer-engine-windows-app-invitation";
+            string subject = appInfo.Name + "'s Private Beta Invite to Refer Engine";
+
+            dynamic vars = new
+                {
+                    _rcpt = to,
+                    Greeting = name == null ? "Hi" : "Hi " + name,
+                    InviteLink = "https://www.ReferEngine.com/account/register?code=" + invite.VerificationCode,
+                    InviteCode = invite.VerificationCode,
+                    AppName = appInfo.Name
+                };
+
+            string mergeVars = Json.Encode(vars);
+
+            SendTemplateEmail(template, to, subject, mergeVars);
+        }
+
+        public static void SendTemplateEmail(string template, string to, string subject, string mergeVars)
+        {
+            var toMailAddress = new MailAddress(to);
+            var mailMessage = new MailMessage(From, toMailAddress)
+            {
+                Sender = From,
+                Subject = subject
+            };
+            mailMessage.Headers.Add("X-MC-MergeVars", mergeVars);
+            mailMessage.Headers.Add("X-MC-Template", template);
+            mailMessage.ReplyToList.Add(From);
+            Client.Send(mailMessage);
+        }
+
+        public static void SendExceptionEmail(Exception e, string subject = null)
+        {
+            StringBuilder builder = new StringBuilder();
+            Exception ex = e;
+            while (ex != null)
+            {
+                builder.AppendLine(e.Message);
+                builder.AppendLine();
+                builder.AppendLine(e.StackTrace);
+                builder.AppendLine();
+                builder.AppendLine();
+                ex = ex.InnerException;
+            }
+
+            SendPlainTextEmail("tarek@referengine.com", subject ?? "Exception", builder.ToString());
         }
     }
 }

@@ -178,6 +178,11 @@ namespace ReferEngine.Common.Data
             return DatabaseOperations.FindStoreApps(term, count);
         }
 
+        public static WindowsAppStoreInfo GetWindowsAppStoreInfo(string msAppId)
+        {
+            return DatabaseOperations.GetWindowsAppStoreInfo(msAppId);
+        }
+
         public static IpAddressLocation GetIpAddressLocation(string ipAddress)
         {
             var location = CacheOperations.GetIpAddressLocation(ipAddress);

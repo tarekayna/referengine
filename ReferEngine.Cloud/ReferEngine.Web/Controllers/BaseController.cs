@@ -35,6 +35,7 @@ namespace ReferEngine.Web.Controllers
             base.OnActionExecuting(filterContext);
         }
 
+// ReSharper disable ClassNeverInstantiated.Local
         private class SimpleMembershipInitializer
         {
             public SimpleMembershipInitializer()
@@ -52,7 +53,7 @@ namespace ReferEngine.Web.Controllers
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection(Util.DatabaseConnectionStringName, "Users", "Id", "Email", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection(DbConnector.GetCurretConnectionStringName(), "Users", "Id", "Email", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {
@@ -61,4 +62,5 @@ namespace ReferEngine.Web.Controllers
             }
         }
     }
+// ReSharper restore ClassNeverInstantiated.Local
 }

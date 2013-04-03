@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using Microsoft.WindowsAzure.ServiceRuntime;
@@ -16,6 +17,7 @@ namespace ReferEngine.Workers.Pinger
 
         public override void Run()
         {
+            if (Util.CurrentServiceConfiguration != Util.ReferEngineServiceConfiguration.ProductionCloud) return;
             while (true)
             {
                 foreach (string website in _websitesToPing)
@@ -25,9 +27,9 @@ namespace ReferEngine.Workers.Pinger
                         HttpWebRequest httpWebRequest = WebRequest.CreateHttp(website);
                         httpWebRequest.GetResponse();
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-                        // This is a best effort role. Move on
+                        Trace.TraceError(e.Message);
                     }
                     finally
                     {
@@ -43,16 +45,8 @@ namespace ReferEngine.Workers.Pinger
         {
             ServicePointManager.DefaultConnectionLimit = 12;
 
-            string baseUrl = "https://www.referengine.com";
-            switch (Util.CurrentServiceConfiguration)
-            {
-                case Util.ReferEngineServiceConfiguration.Local:
-                    baseUrl = "http://127.0.0.1:81";
-                    break;
-                case Util.ReferEngineServiceConfiguration.TestCloud:
-                    baseUrl = "https://www.referengine-test.com";
-                    break;
-            }
+            const string baseUrl = "https://www.referengine.com";
+            //const string baseUrl = "http://127.0.0.1:81";
 
             _websitesToPing = new List<string>
                 {

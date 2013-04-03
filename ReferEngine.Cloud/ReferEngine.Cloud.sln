@@ -22,6 +22,15 @@ Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "ReferEngine.WorkerCloud", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.WorkerCloud.WinApps", "ReferEngine.WorkerCloud.WinApps\ReferEngine.WorkerCloud.WinApps.csproj", "{BBF7AF39-0EC8-45D5-8D9D-4D2BC7C35BC2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2E9C1DE6-19FF-4F02-A5FE-55C4EC6C75B3}"
+	ProjectSection(SolutionItems) = preProject
+		AddMigration_West_Local.ps1 = AddMigration_West_Local.ps1
+		UpdateDatabase_Production_Asia.ps1 = UpdateDatabase_Production_Asia.ps1
+		UpdateDatabase_Production_East.ps1 = UpdateDatabase_Production_East.ps1
+		UpdateDatabase_Production_West.ps1 = UpdateDatabase_Production_West.ps1
+		UpdateDatabase_West_Local.ps1 = UpdateDatabase_West_Local.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

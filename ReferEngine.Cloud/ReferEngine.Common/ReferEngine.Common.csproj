@@ -270,6 +270,10 @@
     <Compile Include="Migrations\201303292155196_WindowsAppStoreInfos.Designer.cs">
       <DependentUpon>201303292155196_WindowsAppStoreInfos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201304030124519_InviteUpdates.cs" />
+    <Compile Include="Migrations\201304030124519_InviteUpdates.Designer.cs">
+      <DependentUpon>201304030124519_InviteUpdates.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\AppRewardPlan.cs" />
     <Compile Include="Models\ChartUnitResult.cs" />
@@ -466,6 +470,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303292155196_WindowsAppStoreInfos.resx">
       <DependentUpon>201303292155196_WindowsAppStoreInfos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304030124519_InviteUpdates.resx">
+      <DependentUpon>201304030124519_InviteUpdates.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

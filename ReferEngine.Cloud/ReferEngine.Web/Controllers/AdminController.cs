@@ -17,6 +17,21 @@ namespace ReferEngine.Web.Controllers
             return View(viewModel);
         }
 
+        public ActionResult WindowsAppInvites()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SendWindowsAppInvite(string msAppId, string email, string name)
+        {
+            WindowsAppStoreInfo appStoreInfo = DataOperations.GetWindowsAppStoreInfo(msAppId);
+            Invite invite = Invite.Generate(email, isRequested: false, msAppId: msAppId);
+            Emailer.SendWindowsAppInvite(email, appStoreInfo, invite, name);
+            DataOperations.AddInvite(invite);
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
         public ActionResult InviteRequests()
         {
             IList<PrivateBetaSignup> signups = DataOperations.GetPrivateBetaSignups();
@@ -33,7 +48,7 @@ namespace ReferEngine.Web.Controllers
             }
 
             invite = Invite.Generate(email);
-            ReferEmailer.SendInviteEmail(invite);
+            Emailer.SendInviteEmail(invite);
             DataOperations.AddInvite(invite);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

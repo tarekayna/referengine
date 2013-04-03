@@ -1,12 +1,12 @@
 ﻿using System.Data.Entity;
-using ReferEngine.Common.Utilities;
+using ReferEngine.Common.Data;
 
 namespace ReferEngine.Web.Models.Account
 {
     public class UsersContext : DbContext
     {
         public UsersContext()
-            : base(Util.DatabaseConnectionStringName)
+            : base(DbConnector.GetCurretConnectionStringName())
         {
         }
 

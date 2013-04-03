@@ -103,174 +103,224 @@ namespace ReferEngine.WorkerCloud.WinApps
             {
                 DateTime startTime = DateTime.Now;
 
-                const string appStoreSiteMap = "http://apps.microsoft.com/windows/sitemap/sitemap_{0}.xml";
-                int sitemapIndex = 1;
-                string url = string.Format(appStoreSiteMap, sitemapIndex);
-
-                while (ProcessStoreSitemap(url))
-                {
-                    sitemapIndex++;
-                    url = string.Format(appStoreSiteMap, sitemapIndex);
-                    //if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local) break;
-                }
-
-                // Now that we got all the links, time to scrape
-                IList<WindowsAppStoreLink> appWebLinks = new List<WindowsAppStoreLink>();
-
                 try
                 {
-                    appWebLinks = DataOperations.GetWindowsAppStoreLinks();
-                }
-                catch (SqlException)
-                {
-                }
+                    const string appStoreSiteMap = "http://apps.microsoft.com/windows/sitemap/sitemap_{0}.xml";
+                    int sitemapIndex = 1;
+                    string url = string.Format(appStoreSiteMap, sitemapIndex);
 
-                foreach (var appWebLink in appWebLinks)
-                {
-                    HttpWebRequest httpWebRequest = WebRequest.CreateHttp(appWebLink.Link);
-                    HttpWebResponse httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                    if (httpWebResponse.StatusCode == HttpStatusCode.OK)
+                    while (ProcessStoreSitemap(url))
                     {
-                        Stream stream = httpWebResponse.GetResponseStream();
-                        if (stream != null)
+                        sitemapIndex++;
+                        url = string.Format(appStoreSiteMap, sitemapIndex);
+                        //if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local) break;
+                    }
+
+                    // Now that we got all the links, time to scrape
+                    IList<WindowsAppStoreLink> appWebLinks = new List<WindowsAppStoreLink>();
+
+                    try
+                    {
+                        appWebLinks = DataOperations.GetWindowsAppStoreLinks();
+                    }
+                    catch (SqlException)
+                    {
+                    }
+
+                    foreach (var appWebLink in appWebLinks)
+                    {
+                        HttpWebRequest httpWebRequest = WebRequest.CreateHttp(appWebLink.Link);
+                        HttpWebResponse httpWebResponse = (HttpWebResponse) httpWebRequest.GetResponse();
+                        if (httpWebResponse.StatusCode == HttpStatusCode.OK)
                         {
-                            StreamReader reader = new StreamReader(stream);
-                            string response = string.Empty;
-                            try
+                            Stream stream = httpWebResponse.GetResponseStream();
+                            if (stream != null)
                             {
-                                response = reader.ReadToEnd();
-                            }
-                            catch (IOException e)
-                            {
-                                Console.WriteLine(e);
-                            }
-                            if (!string.IsNullOrEmpty(response))
-                            {
-                                TextReader textReader = new StringReader(response);
-                                HtmlDocument doc = new HtmlDocument();
-                                doc.Load(textReader);
-
-                                string msPageVer = GetAttributeValueOfXPathNode(doc,
-                                                                                "//head/meta[@name='MS.PageVer']",
-                                                                                "content");
-
-                                if (msPageVer.Equals("1.0") && doc.GetElementbyId("ErrorPanel") == null)
+                                StreamReader reader = new StreamReader(stream);
+                                string response = string.Empty;
+                                try
                                 {
-                                    WindowsAppStoreInfo storeAppInfo = new WindowsAppStoreInfo
-                                    {
-                                        Name = GetInnerTextFromId(doc, "ProductTitleText"),
-                                        AppStoreLink = appWebLink.Link,
-                                        Category = GetInnerTextFromId(doc, "CategoryText"),
-                                        AgeRating = GetInnerTextFromId(doc, "AgeRating"),
-                                        Developer = GetInnerTextFromId(doc, "AppDeveloper"),
-                                        Copyright = GetInnerTextFromId(doc, "AppCopyrightText"),
-                                        LogoLink = GetAttributeValueOfChildFromId(doc,
-                                                                           "AppLogo",
-                                                                           "img",
-                                                                           "src"),
-                                        DescriptionHtml = GetInnerTextFromId(doc,
-                                                               "DescriptionText"),
-                                        FeaturesHtml = GetInnerHtmlFromId(doc, "FeatureText"),
-                                        WebsiteLink = GetAttributeValueOfChildFromId(doc,
-                                                                           "WebsiteLink",
-                                                                           "a",
-                                                                           "href"),
-                                        SupportLink = GetAttributeValueOfChildFromId(doc,
-                                                                           "SupportLink",
-                                                                           "a",
-                                                                           "href"),
-                                        PrivacyPolicyLink = GetAttributeValueOfChildFromId(doc,
-                                                                           "DevPrivacyPolicyLink",
-                                                                           "a",
-                                                                           "href"),
-                                        ReleaseNotes = GetInnerTextFromId(doc,
-                                                               "ReleaseNotesText"),
-                                        Architecture = GetInnerTextFromId(doc,
-                                                               "ArchitectureText"),
-                                        Languages = GetInnerTextFromId(doc, "LanguagesText"),
-                                        MsAppId = GetAttributeValueOfXPathNode(doc,
-                                                                         "//head/meta[@name='MS.App.Id']",
-                                                                         "content")
-                                    };
+                                    response = reader.ReadToEnd();
+                                }
+                                catch (IOException e)
+                                {
+                                    Console.WriteLine(e);
+                                }
+                                if (!string.IsNullOrEmpty(response))
+                                {
+                                    TextReader textReader = new StringReader(response);
+                                    HtmlDocument doc = new HtmlDocument();
+                                    doc.Load(textReader);
 
-                                    storeAppInfo.SetNumberOfRatings(GetInnerTextFromId(doc, "RatingText"));
-                                    storeAppInfo.SetRating(GetAttributeValueFromId(doc, "StarRating", "aria-label"));
-                                    storeAppInfo.SetPrice(GetInnerTextFromId(doc, "Price"));
+                                    string msPageVer = GetAttributeValueOfXPathNode(doc,
+                                                                                    "//head/meta[@name='MS.PageVer']",
+                                                                                    "content");
 
-                                    HtmlNodeCollection scriptNodes = doc.DocumentNode.SelectNodes("//head/script");
-                                    foreach (var scriptNode in scriptNodes)
+                                    if (msPageVer.Equals("1.0") && doc.GetElementbyId("ErrorPanel") == null)
                                     {
-                                        if (scriptNode.InnerText.Contains("packageFamilyName ="))
+                                        WindowsAppStoreInfo storeAppInfo = new WindowsAppStoreInfo
+                                                                               {
+                                                                                   Name =
+                                                                                       GetInnerTextFromId(doc,
+                                                                                                          "ProductTitleText"),
+                                                                                   AppStoreLink = appWebLink.Link,
+                                                                                   Category =
+                                                                                       GetInnerTextFromId(doc,
+                                                                                                          "CategoryText"),
+                                                                                   AgeRating =
+                                                                                       GetInnerTextFromId(doc,
+                                                                                                          "AgeRating"),
+                                                                                   Developer =
+                                                                                       GetInnerTextFromId(doc,
+                                                                                                          "AppDeveloper"),
+                                                                                   Copyright =
+                                                                                       GetInnerTextFromId(doc,
+                                                                                                          "AppCopyrightText"),
+                                                                                   LogoLink =
+                                                                                       GetAttributeValueOfChildFromId(
+                                                                                           doc,
+                                                                                           "AppLogo",
+                                                                                           "img",
+                                                                                           "src"),
+                                                                                   DescriptionHtml =
+                                                                                       GetInnerTextFromId(doc,
+                                                                                                          "DescriptionText"),
+                                                                                   FeaturesHtml =
+                                                                                       GetInnerHtmlFromId(doc,
+                                                                                                          "FeatureText"),
+                                                                                   WebsiteLink =
+                                                                                       GetAttributeValueOfChildFromId(
+                                                                                           doc,
+                                                                                           "WebsiteLink",
+                                                                                           "a",
+                                                                                           "href"),
+                                                                                   SupportLink =
+                                                                                       GetAttributeValueOfChildFromId(
+                                                                                           doc,
+                                                                                           "SupportLink",
+                                                                                           "a",
+                                                                                           "href"),
+                                                                                   PrivacyPolicyLink =
+                                                                                       GetAttributeValueOfChildFromId(
+                                                                                           doc,
+                                                                                           "DevPrivacyPolicyLink",
+                                                                                           "a",
+                                                                                           "href"),
+                                                                                   ReleaseNotes =
+                                                                                       GetInnerTextFromId(doc,
+                                                                                                          "ReleaseNotesText"),
+                                                                                   Architecture =
+                                                                                       GetInnerTextFromId(doc,
+                                                                                                          "ArchitectureText"),
+                                                                                   Languages =
+                                                                                       GetInnerTextFromId(doc,
+                                                                                                          "LanguagesText"),
+                                                                                   MsAppId =
+                                                                                       GetAttributeValueOfXPathNode(doc,
+                                                                                                                    "//head/meta[@name='MS.App.Id']",
+                                                                                                                    "content")
+                                                                               };
+
+                                        storeAppInfo.SetNumberOfRatings(GetInnerTextFromId(doc, "RatingText"));
+                                        storeAppInfo.SetRating(GetAttributeValueFromId(doc, "StarRating", "aria-label"));
+                                        storeAppInfo.SetPrice(GetInnerTextFromId(doc, "Price"));
+
+                                        HtmlNodeCollection scriptNodes = doc.DocumentNode.SelectNodes("//head/script");
+                                        foreach (var scriptNode in scriptNodes)
                                         {
-                                            int start = scriptNode.InnerText.IndexOf("packageFamilyName =",
-                                                                                     StringComparison
-                                                                                         .OrdinalIgnoreCase);
-                                            int packageStart = scriptNode.InnerText.IndexOf("'", start,
-                                                                                            StringComparison
-                                                                                                .OrdinalIgnoreCase);
-                                            int packageEnd = scriptNode.InnerText.IndexOf("'", packageStart + 1,
-                                                                                          StringComparison
-                                                                                              .OrdinalIgnoreCase);
-                                            storeAppInfo.PackageFamilyName = scriptNode.InnerText.Substring(
-                                                packageStart + 1,
-                                                packageEnd - packageStart - 1);
-                                            break;
-                                        }
-                                    }
-
-                                    var styleNodes = doc.DocumentNode.SelectNodes("//head/style");
-                                    foreach (HtmlNode styleNode in styleNodes)
-                                    {
-                                        int startSearchFrom = styleNode.InnerText.IndexOf(".appColors");
-                                        if (startSearchFrom != -1)
-                                        {
-                                            int s = styleNode.InnerText.IndexOf("background-color", startSearchFrom);
-                                            int hashIndex = styleNode.InnerText.IndexOf("#", s);
-                                            storeAppInfo.BackgroundColor = styleNode.InnerText.Substring(hashIndex, 7);
-                                        }
-                                    }
-
-                                    // Screenshot Links
-                                    List<WindowsAppStoreScreenshot> screenshots = new List<WindowsAppStoreScreenshot>();
-                                    HtmlNode node = doc.GetElementbyId("ScreenshotImageButtons");
-                                    if (node != null)
-                                    {
-                                        var screenshotInfo = node.ChildNodes.Where(n => n.Name == "a" && n.Attributes.Any(a => a.Name == "class" && a.Value.Contains("imageButton")))
-                                            .Select(n => new { url = n.GetAttributeValue("imgurl", null), caption = n.GetAttributeValue("imgcaption", null) });
-                                        foreach (dynamic s in screenshotInfo)
-                                        {
-                                            if (!string.IsNullOrEmpty(s.url))
+                                            if (scriptNode.InnerText.Contains("packageFamilyName ="))
                                             {
-                                                var screenshot = new WindowsAppStoreScreenshot
-                                                {
-                                                    StoreAppInfoMsAppId = storeAppInfo.MsAppId,
-                                                    Link = s.url,
-                                                    Caption = s.caption
-                                                };
-                                                screenshots.Add(screenshot);
+                                                int start = scriptNode.InnerText.IndexOf("packageFamilyName =",
+                                                                                         StringComparison
+                                                                                             .OrdinalIgnoreCase);
+                                                int packageStart = scriptNode.InnerText.IndexOf("'", start,
+                                                                                                StringComparison
+                                                                                                    .OrdinalIgnoreCase);
+                                                int packageEnd = scriptNode.InnerText.IndexOf("'", packageStart + 1,
+                                                                                              StringComparison
+                                                                                                  .OrdinalIgnoreCase);
+                                                storeAppInfo.PackageFamilyName = scriptNode.InnerText.Substring(
+                                                    packageStart + 1,
+                                                    packageEnd - packageStart - 1);
+                                                break;
                                             }
                                         }
-                                    }
 
-                                    try
-                                    {
-                                        DataOperations.AddWindowsAppStoreInfo(storeAppInfo);
-                                        foreach (WindowsAppStoreScreenshot storeAppScreenshot in screenshots)
+                                        var styleNodes = doc.DocumentNode.SelectNodes("//head/style");
+                                        foreach (HtmlNode styleNode in styleNodes)
                                         {
-                                            DataOperations.AddWindowsAppStoreScreenshot(storeAppScreenshot);
+                                            int startSearchFrom = styleNode.InnerText.IndexOf(".appColors");
+                                            if (startSearchFrom != -1)
+                                            {
+                                                int s = styleNode.InnerText.IndexOf("background-color", startSearchFrom);
+                                                int hashIndex = styleNode.InnerText.IndexOf("#", s);
+                                                storeAppInfo.BackgroundColor = styleNode.InnerText.Substring(hashIndex,
+                                                                                                             7);
+                                            }
                                         }
-                                    }
-                                    catch (SqlException e)
-                                    {
-                                        ReferEmailer.SendPlainTextEmail("tarek@referengine.com", "WinAppsWorker Exception", e.Message);
+
+                                        // Screenshot Links
+                                        List<WindowsAppStoreScreenshot> screenshots =
+                                            new List<WindowsAppStoreScreenshot>();
+                                        HtmlNode node = doc.GetElementbyId("ScreenshotImageButtons");
+                                        if (node != null)
+                                        {
+                                            var screenshotInfo = node.ChildNodes.Where(
+                                                n =>
+                                                n.Name == "a" &&
+                                                n.Attributes.Any(
+                                                    a => a.Name == "class" && a.Value.Contains("imageButton")))
+                                                                     .Select(
+                                                                         n =>
+                                                                         new
+                                                                             {
+                                                                                 url =
+                                                                             n.GetAttributeValue("imgurl", null),
+                                                                                 caption =
+                                                                             n.GetAttributeValue("imgcaption", null)
+                                                                             });
+                                            foreach (dynamic s in screenshotInfo)
+                                            {
+                                                if (!string.IsNullOrEmpty(s.url))
+                                                {
+                                                    var screenshot = new WindowsAppStoreScreenshot
+                                                                         {
+                                                                             StoreAppInfoMsAppId = storeAppInfo.MsAppId,
+                                                                             Link = s.url,
+                                                                             Caption = s.caption
+                                                                         };
+                                                    screenshots.Add(screenshot);
+                                                }
+                                            }
+                                        }
+
+                                        try
+                                        {
+                                            DataOperations.AddWindowsAppStoreInfo(storeAppInfo);
+                                            foreach (WindowsAppStoreScreenshot storeAppScreenshot in screenshots)
+                                            {
+                                                DataOperations.AddWindowsAppStoreScreenshot(storeAppScreenshot);
+                                            }
+                                        }
+                                        catch (SqlException e)
+                                        {
+                                            Emailer.SendPlainTextEmail("tarek@referengine.com",
+                                                                       "WinAppsWorker Exception", e.Message);
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
 
-                    httpWebResponse.Close();
+                        httpWebResponse.Close();
+                    }
                 }
+                catch (Exception e)
+                {
+                    Emailer.SendExceptionEmail(e, "WinApps Worker Exception");
+                }
+
+                Emailer.SendPlainTextEmail("tarek@referengine.com", "Status: Healthy WinApps Worker", "Yes Sir!");
 
                 TimeSpan sleepTime = TimeSpan.FromHours(24).Subtract(DateTime.Now.Subtract(startTime));
                 Thread.Sleep(sleepTime);

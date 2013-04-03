@@ -24,7 +24,7 @@ namespace ReferEngine.Common.Models
 
             App app = DatabaseOperations.GetApp(recommendation.AppId);
             Person person = DatabaseOperations.GetPerson(recommendation.PersonFacebookId);
-            ReferEmailer.SendRecommendationThankYouEmail(app, person);            
+            Emailer.SendRecommendationThankYouEmail(app, person);            
         }
     }
 }
