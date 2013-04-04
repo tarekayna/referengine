@@ -354,6 +354,7 @@
     <Compile Include="Data\ServiceBusOperations.cs" />
     <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="Utilities\Verifier.cs" />
+    <Compile Include="ViewModels\AppStore\Windows\WindowsAppViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -475,9 +476,7 @@
       <DependentUpon>201304030124519_InviteUpdates.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

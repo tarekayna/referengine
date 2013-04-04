@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Microsoft.ApplicationServer.Caching;
 using ReferEngine.Common.Models;
+using ReferEngine.Common.ViewModels.AppStore.Windows;
 
 namespace ReferEngine.Common.Data
 {
@@ -140,6 +141,27 @@ namespace ReferEngine.Common.Data
         }
     }
 
+    internal class WindowsAppViewModelByNameCacheEntity : CachedEntity<WindowsAppViewModel>
+    {
+        public static string KeyFormat = "WindowsAppViewModel-name-{0}";
+        public WindowsAppViewModelByNameCacheEntity(DataCache cache) : base(cache, KeyFormat) { }
+
+        public void Remove(WindowsAppViewModel viewModel)
+        {
+            base.Remove(viewModel.WindowsAppStoreInfo.Name);
+        }
+
+        public WindowsAppViewModel Get(string name)
+        {
+            return base.Get(name);
+        }
+
+        public void Add(WindowsAppViewModel viewModel)
+        {
+            base.Add(viewModel, DefaultTimeout, viewModel.WindowsAppStoreInfo.Name);
+        }
+    }
+
     internal class AppByPackageAndVerificationCacheEntity : CachedEntity<App>
     {
         public static string KeyFormat = "app-pkgver-{0}{1}";
@@ -212,6 +234,12 @@ namespace ReferEngine.Common.Data
         public static AppByPlatformAndNameCacheEntity AppByPlatformAndName
         {
             get { return _appByPlatformAndName ?? (_appByPlatformAndName = new AppByPlatformAndNameCacheEntity(Cache)); }
+        }
+
+        private static WindowsAppViewModelByNameCacheEntity _windowsAppViewModelByName;
+        public static WindowsAppViewModelByNameCacheEntity WindowsAppViewModelByName
+        {
+            get { return _windowsAppViewModelByName ?? (_windowsAppViewModelByName = new WindowsAppViewModelByNameCacheEntity(Cache)); }
         }
 
         private static AppByPackageAndVerificationCacheEntity _appByPackageAndVerification;

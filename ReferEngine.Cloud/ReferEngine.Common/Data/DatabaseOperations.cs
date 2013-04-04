@@ -11,6 +11,7 @@ using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using ReferEngine.Common.ViewModels.AppStore.Windows;
 using Membership = ReferEngine.Common.Models.Membership;
 
 namespace ReferEngine.Common.Data
@@ -206,6 +207,48 @@ namespace ReferEngine.Common.Data
 
                     return count > -1 ? result.Take(count).ToList() : result.ToList();
                 });
+        }
+
+        internal static IList<PersonRecommendationUnitResult> GetAppRecommendationsPeople(App app, int count, int start, DatabaseContext dbContext = null)
+        {
+            if (dbContext == null)
+            {
+                return (IList<PersonRecommendationUnitResult>)DbConnector.Execute(db =>
+                {
+                    var result = new List<PersonRecommendationUnitResult>();
+                    var allRecommendations = from r in db.AppRecommendations
+                                             where app.Id == r.AppId
+                                             orderby r.DateTime descending
+                                             select r;
+                    var recommendations = allRecommendations.Skip(start - 1).Take(count);
+                    foreach (AppRecommendation appRecommendation in recommendations)
+                    {
+                        var person = GetPerson(appRecommendation.PersonFacebookId) ?? new Person(true);
+                        var location = appRecommendation.IpAddress == null ? null : GetIpAddressLocation(appRecommendation.IpAddress);
+                        var res = new PersonRecommendationUnitResult(person, location, appRecommendation);
+                        result.Add(res);
+                    }
+                    return result;
+                });    
+            }
+            else
+            {
+                var db = dbContext;
+                var result = new List<PersonRecommendationUnitResult>();
+                var allRecommendations = from r in db.AppRecommendations
+                                            where app.Id == r.AppId
+                                            orderby r.DateTime descending
+                                            select r;
+                var recommendations = allRecommendations.Skip(start - 1).Take(count);
+                foreach (AppRecommendation appRecommendation in recommendations)
+                {
+                    var person = GetPerson(appRecommendation.PersonFacebookId) ?? new Person(true);
+                    var location = appRecommendation.IpAddress == null ? null : GetIpAddressLocation(appRecommendation.IpAddress);
+                    var res = new PersonRecommendationUnitResult(person, location, appRecommendation);
+                    result.Add(res);
+                }
+                return result;
+            }
         }
 
         internal static IList<PersonRecommendationUnitResult> GetAppRecommendationsPeople(App app, TimeRange timeRange, string who)
@@ -412,7 +455,27 @@ namespace ReferEngine.Common.Data
 
         internal static WindowsAppStoreInfo GetWindowsAppStoreInfo(string msAppId)
         {
-            return (WindowsAppStoreInfo) DbConnector.Execute(db => db.WindowsAppStoreInfos.FirstOrDefault(i => i.MsAppId == msAppId));
+            return (WindowsAppStoreInfo)DbConnector.Execute(db => db.WindowsAppStoreInfos.FirstOrDefault(i => i.MsAppId == msAppId));
+        }
+
+        internal static WindowsAppViewModel GetWindowsAppViewModelByName(string name)
+        {
+            return (WindowsAppViewModel)DbConnector.Execute(db =>
+            {
+                WindowsAppStoreInfo appStoreInfo = db.WindowsAppStoreInfos.FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+                if (appStoreInfo == null) return null;
+                App app = db.Apps.FirstOrDefault(a => a.PackageFamilyName == appStoreInfo.PackageFamilyName);
+                WindowsAppViewModel viewModel = new WindowsAppViewModel(appStoreInfo, app);
+                if (app != null)
+                {
+                    var recommendations = from r in db.AppRecommendations
+                                          where r.AppId == app.Id
+                                          orderby r.DateTime descending
+                                          select r;
+                    viewModel.NumberOfRecommendations = recommendations.Count();
+                }
+                return viewModel;
+            });
         }
 
         internal static IList<WindowsAppStoreInfo> FindStoreApps(string term, int count)

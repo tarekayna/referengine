@@ -4,6 +4,7 @@ using ReferEngine.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using ReferEngine.Common.ViewModels.AppStore.Windows;
 using Membership = ReferEngine.Common.Models.Membership;
 
 namespace ReferEngine.Common.Data
@@ -181,6 +182,22 @@ namespace ReferEngine.Common.Data
         public static WindowsAppStoreInfo GetWindowsAppStoreInfo(string msAppId)
         {
             return DatabaseOperations.GetWindowsAppStoreInfo(msAppId);
+        }
+
+        public static WindowsAppViewModel GetWindowsAppViewModelByName(string name)
+        {
+            WindowsAppViewModel viewModel = CacheOperations.WindowsAppViewModelByName.Get(name);
+            if (viewModel == null)
+            {
+                viewModel = DatabaseOperations.GetWindowsAppViewModelByName(name);
+                CacheOperations.WindowsAppViewModelByName.Add(viewModel);
+            }
+            return viewModel;
+        }
+
+        public static IList<PersonRecommendationUnitResult> GetAppRecommendationsPeople(App app, int count, int start)
+        {
+            return DatabaseOperations.GetAppRecommendationsPeople(app, count, start);
         }
 
         public static IpAddressLocation GetIpAddressLocation(string ipAddress)
