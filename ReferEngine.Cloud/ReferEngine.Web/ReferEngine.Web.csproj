@@ -443,6 +443,8 @@
     <Content Include="js\lib\require.js" />
     <Content Include="js\home.js" />
     <Content Include="js\shared\layout-not-auth.js" />
+    <Content Include="Views\Home\BluGraphingCalculator.cshtml" />
+    <Content Include="Views\Home\BluGraphingCalculatorPrivacy.cshtml" />
     <TypeScriptCompile Include="TypeScript\AppStore\Windows\WindowsApp.ts" />
     <Content Include="TypeScript\AppStore\Windows\WindowsApp.js">
       <DependentUpon>WindowsApp.ts</DependentUpon>
@@ -450,11 +452,6 @@
     <Content Include="TypeScript\AppStore\Windows\WindowsApp.min.js">
       <DependentUpon>WindowsApp.ts</DependentUpon>
     </Content>
-    <Content Include="Views\AppStore\_AppStoreLayout.cshtml" />
-    <Content Include="Views\AppStore\Windows\WindowsCategory.cshtml" />
-    <Content Include="Views\AppStore\Windows\WindowsStore.cshtml" />
-    <Content Include="Views\AppStore\Windows\WindowsApp.cshtml" />
-    <Content Include="Views\AppStore\_ViewStart.cshtml" />
     <TypeScriptCompile Include="TypeScript\admin\windowsAppInvites.ts" />
     <Content Include="TypeScript\admin\windowsAppInvites.js">
       <DependentUpon>windowsAppInvites.ts</DependentUpon>
@@ -606,7 +603,6 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\AppController.cs" />
-    <Compile Include="Controllers\AppStoreController.cs" />
     <Compile Include="Controllers\FacebookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RecommendController.cs" />
@@ -885,7 +881,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\AppStore\Models\" />
     <Folder Include="js\recommend\" />
-    <Folder Include="Models\AppStore\Windows\" />
     <Folder Include="Models\InAppScript\" />
   </ItemGroup>
   <ItemGroup>

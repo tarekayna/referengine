@@ -39,5 +39,15 @@ namespace ReferEngine.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult BluGraphingCalculator()
+        {
+            return View();
+        }
+
+        public ActionResult BluGraphingCalculatorPrivacy()
+        {
+            return View();
+        }
     }
 }
