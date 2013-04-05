@@ -462,14 +462,20 @@ namespace ReferEngine.Common.Data
         {
             return (WindowsAppViewModel)DbConnector.Execute(db =>
             {
-                WindowsAppStoreInfo appStoreInfo = db.WindowsAppStoreInfos.FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
-                if (appStoreInfo == null) return null;
-                App app = db.Apps.FirstOrDefault(a => a.PackageFamilyName == appStoreInfo.PackageFamilyName);
-                WindowsAppViewModel viewModel = new WindowsAppViewModel(appStoreInfo, app);
-                if (app != null)
+                WindowsAppViewModel viewModel = new WindowsAppViewModel();
+                viewModel.WindowsAppStoreInfo = db.WindowsAppStoreInfos.FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+                if (viewModel.WindowsAppStoreInfo == null) return null;
+                viewModel.App = db.Apps.FirstOrDefault(a => a.PackageFamilyName == viewModel.WindowsAppStoreInfo.PackageFamilyName);
+                if (viewModel.App == null)
                 {
+                    viewModel.WindowsAppStoreInfo.StoreAppScreenshots = 
+                        db.WindowsAppStoreScreenshots.Where(s => s.StoreAppInfoMsAppId == viewModel.WindowsAppStoreInfo.MsAppId).ToList();
+                }
+                else
+                {
+                    viewModel.App.Screenshots = db.AppScreenshots.Where(s => s.AppId == viewModel.App.Id).ToList();
                     var recommendations = from r in db.AppRecommendations
-                                          where r.AppId == app.Id
+                                          where r.AppId == viewModel.App.Id
                                           orderby r.DateTime descending
                                           select r;
                     viewModel.NumberOfRecommendations = recommendations.Count();

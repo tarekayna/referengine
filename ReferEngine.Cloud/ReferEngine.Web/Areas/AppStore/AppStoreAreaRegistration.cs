@@ -15,6 +15,11 @@ namespace ReferEngine.Web.Areas.AppStore
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
+                "AppStore_action",
+                "AppStore/{controller}/{action}"
+            );
+
+            context.MapRoute(
                 "AppStore_default",
                 "AppStore/{controller}/{category}/{name}",
                 new { action = "Index", category = UrlParameter.Optional, name = UrlParameter.Optional }

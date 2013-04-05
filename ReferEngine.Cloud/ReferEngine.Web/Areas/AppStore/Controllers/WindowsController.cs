@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Common.ViewModels.AppStore.Windows;
+using System.Net;
+using System.Web.Mvc;
 
 namespace ReferEngine.Web.Areas.AppStore.Controllers
 {
@@ -38,10 +35,17 @@ namespace ReferEngine.Web.Areas.AppStore.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
 
-        public ActionResult GetAppRecommendations(long appId, int count, int start)
+        [HttpPost]
+        public ActionResult GetAppRecommendations(long appId, string page)
         {
+            int pageNumber = Convert.ToInt32(page);
             App app = DataOperations.GetApp(appId);
             if (app == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            // 1 > 1
+            // 2 > 11
+            // 3 > 21
+            int count = 10;
+            int start = 1 + count * (pageNumber - 1);
             var data = DataOperations.GetAppRecommendationsPeople(app, count, start);
             return Json(data);
         }

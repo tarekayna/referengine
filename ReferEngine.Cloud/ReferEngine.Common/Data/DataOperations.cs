@@ -190,7 +190,10 @@ namespace ReferEngine.Common.Data
             if (viewModel == null)
             {
                 viewModel = DatabaseOperations.GetWindowsAppViewModelByName(name);
-                CacheOperations.WindowsAppViewModelByName.Add(viewModel);
+                if (viewModel != null)
+                {
+                    CacheOperations.WindowsAppViewModelByName.Add(viewModel);
+                }
             }
             return viewModel;
         }

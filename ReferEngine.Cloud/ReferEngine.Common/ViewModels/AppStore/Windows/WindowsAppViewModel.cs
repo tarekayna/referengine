@@ -9,7 +9,7 @@ namespace ReferEngine.Common.ViewModels.AppStore.Windows
     public class WindowsAppViewModel
     {
         [DataMember]
-        public App App { get; private set; }
+        public App App { get; set; }
 
         [DataMember]
         public int NumberOfRecommendations { get; set; }
@@ -17,12 +17,6 @@ namespace ReferEngine.Common.ViewModels.AppStore.Windows
         public UserAgentProperties UserAgentProperties { get; set; }
 
         [DataMember]
-        public WindowsAppStoreInfo WindowsAppStoreInfo { get; private set; }
-
-        public WindowsAppViewModel(WindowsAppStoreInfo appInfo, App app)
-        {
-            WindowsAppStoreInfo = appInfo;
-            App = app;
-        }
+        public WindowsAppStoreInfo WindowsAppStoreInfo { get; set; }
     }
 }

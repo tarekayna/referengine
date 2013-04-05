@@ -5,7 +5,7 @@
 declare var google;
 declare var re;
 
-//import Notification = module("../../common/notifications"); 
+import Notification = module("../../common/notifications"); 
 
 var ko;
 var Date2;
@@ -40,25 +40,24 @@ class People {
         for (var i = 0; i < data.length; i++) {
             viewModel.PeopleData.push(data[i]);
         }
-        //Notification.show("Success: people view updated", Notification.NotificationType.success);
+        Notification.show("Success: people view updated", Notification.NotificationType.success);
     }
     static onDataRequestError(e) {
-        //Notification.show("Error: could not update people view", Notification.NotificationType.error);
+        Notification.show("Error: could not update people view", Notification.NotificationType.error);
     }
     static refresh() {
         $.ajax("../GetAppRecommendations", {
             type: "POST",
             data: {
-                id: 21,
-                count: 10,
-                start: 1
+                appId: re.appId,
+                page: 1
             },
             dataType: "json",
             error: onDataRequestError,
             success: onDataRequestSuccess
         });
 
-        //Notification.show("Updating people view...", Notification.NotificationType.info);
+        Notification.show("Updating people view...", Notification.NotificationType.info);
     }
 }
 
