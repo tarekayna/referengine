@@ -1,5 +1,4 @@
-﻿@using ReferEngine.Common.Data
-@using ReferEngine.Common.Models
+﻿@using ReferEngine.Common.Models
 @model ReferEngine.Common.ViewModels.AppStore.Windows.WindowsAppViewModel
 
 @{
@@ -25,7 +24,7 @@
     <div class="span4">
         <aside>
             @{
-                string storeLink = "";
+                string storeLink;
                 bool showDataToggle = false;
             }
             @if (isWindows8)
@@ -46,6 +45,7 @@
                 showDataToggle = true;
             }
             <a class="text-center" href="@storeLink" @if (showDataToggle) { <text>role = "button" data-toggle = "modal"</text> }>
+@* ReSharper disable Html.TagNotResolved *@
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="250px"
                      height="150px" viewBox="0 0 250 150" enable-background="new 0 0 250 150" xml:space="preserve">
                     <g id="Layer_2">
@@ -74,6 +74,7 @@
                         <text transform="matrix(1 0 0 1 21.209 131.6768)" fill="#FFFFFF" font-family="'Segoe UI Semilight'" font-size="14">Download from the Windows Store</text>
                     </g>
                 </svg>
+@* ReSharper restore Html.TagNotResolved *@
             </a>
 @*            <div class="widget">
                 <h4 class="heading-success"><span class="btn btn-large btn-success">
@@ -112,23 +113,23 @@
                     <div class="carousel-inner">
                         @if (Model.App == null)
                         {
-                            for (int i = 0; i < appInfo.StoreAppScreenshots.Count(); i++)
+                            for (int i = 0; i < appInfo.CloudinaryImages.Count(); i++)
                             {
-                                var screenshot = appInfo.StoreAppScreenshots.ElementAt(i);
+                                var image = appInfo.CloudinaryImages.ElementAt(i);
                                 <div class="@MvcHtmlString.Create(i == 0 ? "active" : "") item">
-                                    <img alt="@screenshot.Caption" src="@screenshot.Link" />
-                                    <p>@screenshot.Caption</p>
+                                    <img alt="@image.Description" src="@image.GetLink()" />
+                                    <p>@image.Description</p>
                                 </div>
                             }
                         }
                         else
                         {
-                            for (int i = 0; i < Model.App.Screenshots.Count(); i++)
+                            for (int i = 0; i < Model.App.CloudinaryImages.Count(); i++)
                             {
-                                var screenshot = Model.App.Screenshots.ElementAt(i);
+                                var image = Model.App.CloudinaryImages.ElementAt(i);
                                 <div class="@MvcHtmlString.Create(i == 0 ? "active" : "") item">
-                                    <img alt="@screenshot.Description" src="@ImageData.GetLink(screenshot.Link)" />
-                                    <p>@screenshot.Description</p>
+                                    <img alt="@image.Description" src="@image.GetLink()" />
+                                    <p>@image.Description</p>
                                 </div>
                             }
                         }

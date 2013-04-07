@@ -24,6 +24,23 @@ namespace ReferEngine.Common.Utilities
             Local
         }
 
+        public static string CurrentServiceConfigurationString {
+            get
+            {
+                switch (CurrentServiceConfiguration)
+                {
+                    case ReferEngineServiceConfiguration.ProductionCloud:
+                        return "ProductionCloud";
+                    case ReferEngineServiceConfiguration.TestCloud:
+                        return "TestCloud";
+                    case ReferEngineServiceConfiguration.Local:
+                        return "Local";
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         public static ReferEngineServiceConfiguration CurrentServiceConfiguration
         {
             get

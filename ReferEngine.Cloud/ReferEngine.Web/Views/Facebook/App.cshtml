@@ -18,15 +18,12 @@
     {
         @Scripts.Render("~/bundles/js/jquery.fitvids")
     }
-    @{
-        string bgImageName = string.IsNullOrEmpty(Model.App.BackgroundImage) ? "app_default_background_dsgi1h.jpg" :
-                             Model.App.BackgroundImage;   
-    } 
+
     <script type="text/javascript">
         var height = window.screen.availHeight;
         var width = window.screen.availWidth;
         var transformation = "w_" + width + ",h_" + height + "e_blur:700,c_fill";
-        bgImageLink = "@ImageData.BaseLink" + transformation + "/" + "@bgImageName";
+        bgImageLink = "@Model.App.BackgroundImage.GetLink()";
         var elem = $("#bg-image-container img");
         elem.attr("src", bgImageLink);
         elem.css("width", window.innerWidth + "px");
@@ -51,13 +48,13 @@
     <meta property="og:title"              content="@Model.App.Name" />
     <meta property="og:description"        content="@Model.App.Description" /> 
     <meta property="referengine:platform"  content="@Model.App.Platform" />
-@if (!string.IsNullOrEmpty(Model.App.LogoLinkHighQuality))
+@if (Model.App.HighQualityLogoImage != null)
 {
-    <meta property="og:image" content="@ImageData.GetLink(Model.App.LogoLinkHighQuality)" />
+    <meta property="og:image" content="Model.App.HighQualityLogoImage.GetLink()" />
 }
-@foreach (var img in Model.App.Screenshots)
+@foreach (var img in Model.App.CloudinaryImages)
 {
-    <meta property="og:image" content="@img.Link" />
+    <meta property="og:image" content="@img.GetLink()" />
 }
 }
         
@@ -69,13 +66,13 @@
     <div class="container">
         <div class="row">
             <div class="span12">
-                @if (!string.IsNullOrEmpty(Model.App.LogoLinkHighQuality))
+                @if (Model.App.HighQualityLogoImage != null)
                 {
-                    <img src="@ImageData.GetLink(Model.App.LogoLinkHighQuality, "w_50")" alt="@Model.App.Name Logo" class="app-logo" />
+                    <img src="@Model.App.HighQualityLogoImage.GetLink("w_50")" alt="@Model.App.Name Logo" class="app-logo" />
                 }
                 else
                 {
-                    <img src="@Model.App.LogoLink50" alt="@Model.App.Name Logo" class="app-logo" />
+                    <img src="@Model.App.LogoImage.GetLink()" alt="@Model.App.Name Logo" class="app-logo" />
                 }
 
                 @if (string.IsNullOrEmpty(Model.App.Headline))
@@ -91,7 +88,7 @@
                 <div class="center-content store-logo-ctnr">
                 
                     @{
-                        string storeLink = "";
+                        string storeLink;
                         bool showDataToggle = false;
                     }
                     @if (isWindows8)
@@ -112,6 +109,7 @@
                         showDataToggle = true;
                     }
                     <a href="@storeLink" @if (showDataToggle) { <text>role = "button" data-toggle = "modal"</text> }>
+@* ReSharper disable Html.TagNotResolved *@
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="250px"
                              height="150px" viewBox="0 0 250 150" enable-background="new 0 0 250 150" xml:space="preserve">
                             <g id="Layer_2">
@@ -140,6 +138,7 @@
                                 <text transform="matrix(1 0 0 1 21.209 131.6768)" fill="#FFFFFF" font-family="'Segoe UI Semilight'" font-size="14">Download from the Windows Store</text>
                             </g>
                         </svg>
+@* ReSharper restore Html.TagNotResolved *@
                     </a>
                 </div>  
             </div>
@@ -147,7 +146,7 @@
     </div>
 </div>    
  
-@if (Model.App.Screenshots != null && Model.App.Screenshots.Count > 0)
+@if (Model.App.CloudinaryImages != null && Model.App.CloudinaryImages.Count > 0)
 {
 	<div class="container">  
     <div class="row">
@@ -160,12 +159,12 @@
                             <iframe src="@Model.App.VimeoLink" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
                         </div>
                     }                    
-                    @for (int i = 0; i < Model.App.Screenshots.Count; i++)
+                    @for (int i = 0; i < Model.App.CloudinaryImages.Count; i++)
                     {
-                        AppScreenshot screenshot = Model.App.Screenshots.ElementAt(i);
+                        CloudinaryImage image = Model.App.CloudinaryImages.ElementAt(i);
                         <div class="@MvcHtmlString.Create(i == 0 && Model.App.VimeoLink == null ? "active" : "") item">
-                            <img alt="@screenshot.Title" src="@ImageData.GetLink(screenshot.Link)">
-                            <p>@screenshot.Description</p>
+                            <img alt="@image.Description" src="@image.GetLink()">
+                            <p>@image.Description</p>
                         </div>
                     } 
                 </div>

@@ -2,7 +2,6 @@
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
-using ReferEngine.Web.DataAccess;
 using ReferEngine.Web.Models.Common;
 using ReferEngine.Web.Models.Recommend.Win8;
 using StackExchange.Profiling;
@@ -219,74 +218,69 @@ namespace ReferEngine.Web.Controllers
             Verifier.IsNotNullOrEmpty(authToken, "authToken");
             Verifier.IsNotNullOrEmpty(facebookCode, "facebookCode");
 
-            var profiler = MiniProfiler.Current;
+            bool showErrorView = false;
+            AppAuthorization appAuthorization = GetAppAuthorization(authToken);
 
-            using (profiler.Step("Recommend"))
+            DataOperations.AddRecommendationPageView(appAuthorization, RecommendationPage.Post);
+
+            // App is cool
+            viewProperties.CurrentApp = appAuthorization.App;
+            string accessCode = facebookCode.Replace("%23", "#");
+            FacebookOperations facebookOperations = await FacebookOperations.CreateAsync(accessCode, authToken);
+
+            // Facebook is cool
+            Person me = await facebookOperations.GetCurrentUserAsync();
+
+            AppReceipt appReceipt = appAuthorization.AppReceipt;
+            AppReceipt existingReceipt = DataOperations.GetAppReceipt(appReceipt.Id);
+            if (existingReceipt != null && existingReceipt.PersonFacebookId.HasValue)
             {
-                bool showErrorView = false;
-                AppAuthorization appAuthorization = GetAppAuthorization(authToken);
-
-                DataOperations.AddRecommendationPageView(appAuthorization, RecommendationPage.Post);
-
-                // App is cool
-                viewProperties.CurrentApp = appAuthorization.App;
-                string accessCode = facebookCode.Replace("%23", "#");
-                FacebookOperations facebookOperations = await FacebookOperations.CreateAsync(accessCode, authToken);
-
-                // Facebook is cool
-                Person me = await facebookOperations.GetCurrentUserAsync();
-
-                AppReceipt appReceipt = appAuthorization.AppReceipt;
-                AppReceipt existingReceipt = DataOperations.GetAppReceipt(appReceipt.Id);
-                if (existingReceipt != null && existingReceipt.PersonFacebookId.HasValue)
+                // App + Person: something is up
+                if (existingReceipt.PersonFacebookId != me.FacebookId &&
+                    appAuthorization.App.RewardPlan.Type != AppRewardPlanType.None)
                 {
-                    // App + Person: something is up
-                    if (existingReceipt.PersonFacebookId != me.FacebookId &&
-                        appAuthorization.App.RewardPlan.Type != AppRewardPlanType.None)
+                    // Another user is associated with this receipt
+                    AppRecommendation appRecommendation = DataOperations.GetAppRecommendation(viewProperties.CurrentApp.Id,
+                                                                                                existingReceipt.PersonFacebookId.Value);
+                    if (appRecommendation != null)
                     {
-                        // Another user is associated with this receipt
-                        AppRecommendation appRecommendation = DataOperations.GetAppRecommendation(viewProperties.CurrentApp.Id,
-                                                                                                  existingReceipt.PersonFacebookId.Value);
-                        if (appRecommendation != null)
-                        {
-                            // Another user already posted a recommendation for this app using this receipt
-                            showErrorView = true;
-                        }
-                        //else
-                        //{
-                        // Well that user logged in, but didn't submit a recommendation
-                        // That's ok, continue
-                        //}
+                        // Another user already posted a recommendation for this app using this receipt
+                        showErrorView = true;
                     }
                     //else
                     //{
-                    //    // Current user is already associated with this receipt
-                    //    // Two options:
-                    //    //          1- Person has already posted a recommendation for this app using this receipt
-                    //    //             It's fine, they can post again
-                    //    //          2- Person has logged in before but did not submit a recommendation
-                    //    //             That's ok, continue
+                    // Well that user logged in, but didn't submit a recommendation
+                    // That's ok, continue
                     //}
                 }
+                //else
+                //{
+                //    // Current user is already associated with this receipt
+                //    // Two options:
+                //    //          1- Person has already posted a recommendation for this app using this receipt
+                //    //             It's fine, they can post again
+                //    //          2- Person has logged in before but did not submit a recommendation
+                //    //             That's ok, continue
+                //}
+            }
 
-                if (showErrorView)
-                {
-                    string viewName = String.Format("{0}/recommendError", platform);
-                    var viewModel = new RecommendViewModel(me, viewProperties.CurrentApp, authToken, appReceipt);
-                    return View(viewName, viewModel);
-                }
-                else
-                {
-                    // AppReceipt should already be in the database
-                    // Update it with the Facebook Id of the user
-                    appReceipt.PersonFacebookId = me.FacebookId;
-                    ServiceBusOperations.AddToQueue(appReceipt);
-                    DataOperations.AddFacebookOperations(facebookOperations);
+            if (showErrorView)
+            {
+                string viewName = String.Format("{0}/recommendError", platform);
+                var viewModel = new RecommendViewModel(me, viewProperties.CurrentApp, authToken, appReceipt);
+                return View(viewName, viewModel);
+            }
+            else
+            {
+                // AppReceipt should already be in the database
+                // Update it with the Facebook Id of the user
+                appReceipt.PersonFacebookId = me.FacebookId;
+                ServiceBusOperations.AddToQueue(appReceipt);
+                DataOperations.AddFacebookOperations(facebookOperations);
 
-                    string viewName = String.Format("{0}/recommend", platform);
-                    var viewModel = new RecommendViewModel(me, viewProperties.CurrentApp, authToken, appReceipt);
-                    return View(viewName, viewModel);
-                }
+                string viewName = String.Format("{0}/recommend", platform);
+                var viewModel = new RecommendViewModel(me, viewProperties.CurrentApp, authToken, appReceipt);
+                return View(viewName, viewModel);
             }
         }
 

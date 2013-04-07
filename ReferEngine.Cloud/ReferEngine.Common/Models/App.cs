@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
@@ -9,7 +10,10 @@ namespace ReferEngine.Common.Models
     [DataContract]
     public class App
     {
-        public App() {}
+        public App()
+        {
+            CloudinaryImages = new Collection<CloudinaryImage>();
+        }
 
         [DataMember]
         public Int64 Id { get; set; }
@@ -24,19 +28,22 @@ namespace ReferEngine.Common.Models
         public string Name { get; set; }
 
         [DataMember]
+        public WindowsAppStoreCategory Category { get; set; }
+
+        [DataMember]
         public string Headline { get; set; }
 
         [DataMember]
         public string BackgroundColor { get; set; }
 
         [DataMember]
-        public string LogoLink50 { get; set; }
+        public CloudinaryImage LogoImage { get; set; }
 
         [DataMember]
-        public string LogoLinkHighQuality { get; set; }
+        public CloudinaryImage HighQualityLogoImage { get; set; }
 
         [DataMember]
-        public string BackgroundImage { get; set; }
+        public CloudinaryImage BackgroundImage { get; set; }
 
         [DataMember]
         public string Description { get; set; }
@@ -72,7 +79,7 @@ namespace ReferEngine.Common.Models
         public bool IsActive { get; set; }
 
         [DataMember]
-        public List<AppScreenshot> Screenshots { get; set; }
+        public virtual ICollection<CloudinaryImage> CloudinaryImages { get; set; }
 
         public void ComputeVerificationCode()
         {

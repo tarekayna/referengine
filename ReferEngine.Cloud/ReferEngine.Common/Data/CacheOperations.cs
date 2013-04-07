@@ -187,7 +187,6 @@ namespace ReferEngine.Common.Data
     {
         internal const string Person = "person-fbId-{0}";
         internal const string FacebookOperations = "fb-operations-{0}";
-        internal const string AppScreenshotIdDesc = "appscreenshot-id-desc-{0}{1}";
         internal const string IpAddress = "ip-{0}";
         internal const string AppAutoShowOptions = "app-auto-show-{0}";
     }
@@ -336,19 +335,6 @@ namespace ReferEngine.Common.Data
             }
 
             return null;
-        }
-
-        public static void AddAppScreenshot(AppScreenshot appScreenshot)
-        {
-            String key = String.Format(CacheKeyFormat.AppScreenshotIdDesc, appScreenshot.AppId, appScreenshot.Description);
-            CachePutSafe(key, appScreenshot);
-        }
-
-        public static AppScreenshot GetAppScreenshot(long appId, string description)
-        {
-            String key = String.Format(CacheKeyFormat.AppScreenshotIdDesc, appId, description);
-            object cached = Cache.Get(key);
-            return (AppScreenshot) cached;
         }
 
         public static IpAddressLocation GetIpAddressLocation(string ipAddress)

@@ -11,5 +11,8 @@ namespace ReferEngine.Common.Models
 
         [DataMember]
         public DateTime LastUpdated { get; set; }
+
+        [DataMember]
+        public int NumberOfConsecutiveFailures { get; set; }
     }
 }

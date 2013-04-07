@@ -1,8 +1,8 @@
-﻿using CloudinaryDotNet.Actions;
-using Itenso.TimePeriod;
+﻿using Itenso.TimePeriod;
 using Microsoft.ServiceBus.Messaging;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Properties;
+using ReferEngine.Common.ViewModels.AppStore.Windows;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,62 +10,78 @@ using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using ReferEngine.Common.ViewModels.AppStore.Windows;
+using System.Linq.Expressions;
+using ImageInfo = ReferEngine.Common.Models.ImageInfo;
 using Membership = ReferEngine.Common.Models.Membership;
 
 namespace ReferEngine.Common.Data
 {
     internal static class DatabaseOperations
     {
+        private static App QueryForActiveApp(DatabaseContext db, Expression<Func<App, bool>> expression, bool nullOk = false)
+        {
+            var q = db.Apps.Where(expression)
+                           .Where(a => a.IsActive)
+                           .Include(a => a.CloudinaryImages)
+                           .Include(a => a.BackgroundImage)
+                           .Include(a => a.HighQualityLogoImage)
+                           .Include(a => a.LogoImage)
+                           .Include(a => a.Category)
+                           .Include(a => a.RewardPlan);
+            return nullOk ? q.FirstOrDefault() : q.First();
+        }
+
+        private static List<App> QueryForActiveApps(DatabaseContext db, Expression<Func<App, bool>> expression)
+        {
+            return db.Apps.Where(expression)
+                          .Where(a => a.IsActive)
+                          .Include(a => a.CloudinaryImages)
+                          .Include(a => a.BackgroundImage)
+                          .Include(a => a.HighQualityLogoImage)
+                          .Include(a => a.LogoImage)
+                          .Include(a => a.Category)
+                          .Include(a => a.RewardPlan)
+                          .ToList();
+        }
+
+        private static WindowsAppStoreInfo QueryForWindowsAppStoreInfo(DatabaseContext db, Expression<Func<WindowsAppStoreInfo, bool>> expression, bool nullOk = false)
+        {
+            var q = db.WindowsAppStoreInfos.Where(expression)
+                            .Include(i => i.CloudinaryImages)
+                            .Include(i => i.LogoImage)
+                            .Include(i => i.Category);
+            return nullOk ? q.FirstOrDefault() : q.First();
+        }
+
+        private static IList<WindowsAppStoreInfo> QueryForWindowsAppStoreInfos(DatabaseContext db, Expression<Func<WindowsAppStoreInfo, bool>> expression)
+        {
+            return db.WindowsAppStoreInfos.Where(expression)
+                     .Include(i => i.CloudinaryImages)
+                     .Include(i => i.LogoImage)
+                     .Include(i => i.Category)
+                     .ToList();
+        }
+
         internal static App GetApp(long id)
         {
-            return (App)DbConnector.Execute(db =>
-            {
-                App app = db.Apps.Where(a => a.Id == id && a.IsActive)
-                            .Include(a => a.RewardPlan)
-                            .First();
-                app.Screenshots = db.AppScreenshots.Where(s => s.AppId == id).ToList();
-                return app;
-            });
+            return (App)DbConnector.Execute(db => QueryForActiveApp(db, a => a.Id == id));
         }
 
         internal static App GetAppByName(string platform, string name)
         {
-            return (App) DbConnector.Execute(db =>
-            {
-                App app = db.Apps.Where(a => a.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) &&
-                                                a.IsActive &&
-                                                a.Platform.Equals(platform, StringComparison.InvariantCultureIgnoreCase))
-                            .Include(a => a.RewardPlan)
-                            .First();
-                app.Screenshots = db.AppScreenshots.Where(s => s.AppId == app.Id).ToList();
-                return app;
-            });
+            return (App) DbConnector.Execute(db => QueryForActiveApp(db, a => a.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) &&
+                                                                              a.Platform.Equals(platform, StringComparison.InvariantCultureIgnoreCase)));
         }
 
         internal static App GetApp(string packageFamilyName, string appVerificationCode)
         {
-            return (App)DbConnector.Execute(db =>
-            {
-                App app = db.Apps.Where(a => a.PackageFamilyName == packageFamilyName &&
-                                        a.VerificationCode == appVerificationCode &&
-                                        a.IsActive)
-                                 .Include(a => a.RewardPlan)
-                                 .First();
-                app.Screenshots = db.AppScreenshots.Where(s => s.AppId == app.Id).ToList();
-                return app;
-            });
+            return (App)DbConnector.Execute(db => QueryForActiveApp(db, a => a.PackageFamilyName == packageFamilyName &&
+                                                  a.VerificationCode == appVerificationCode));
         }
 
         internal static AppReceipt GetAppReceipt(string id)
         {
             return (AppReceipt)DbConnector.Execute(db => db.AppReceipts.SingleOrDefault(r => r.Id.Equals(id, StringComparison.OrdinalIgnoreCase)));
-        }
-
-        internal static AppScreenshot GetAppScreenshot(long appId, string description)
-        {
-            return (AppScreenshot)DbConnector.Execute(db => db.AppScreenshots.First(s => s.AppId == appId && s.Description == description));
         }
 
         internal static Person GetPerson(Int64 facebookId)
@@ -117,7 +133,7 @@ namespace ReferEngine.Common.Data
             {
                 User user = db.Users.FirstOrDefault(c => c.Email == email);
                 if (user == null) return null;
-                user.Apps = db.Apps.Where(a => a.UserId == user.Id && a.IsActive).ToList();
+                user.Apps = QueryForActiveApps(db, a => a.UserId == user.Id);
                 return user;
             });
         }
@@ -127,7 +143,7 @@ namespace ReferEngine.Common.Data
             return (User) DbConnector.Execute(db =>
                 {
                     User user = db.Users.First(c => c.Id == id);
-                    user.Apps = db.Apps.Where(a => a.UserId == user.Id && a.IsActive).ToList();
+                    user.Apps = QueryForActiveApps(db, a => a.UserId == user.Id);
                     return user;
                 });
         }
@@ -139,7 +155,7 @@ namespace ReferEngine.Common.Data
                     Membership membership =
                         db.Memberships.First(m => m.ConfirmationToken.Equals(code, StringComparison.OrdinalIgnoreCase));
                     User user = db.Users.First(u => u.Id == membership.UserId);
-                    user.Apps = db.Apps.Where(a => a.UserId == user.Id && a.IsActive).ToList();
+                    user.Apps = QueryForActiveApps(db, a => a.UserId == user.Id);
                     return user;
                 });
         }
@@ -455,7 +471,7 @@ namespace ReferEngine.Common.Data
 
         internal static WindowsAppStoreInfo GetWindowsAppStoreInfo(string msAppId)
         {
-            return (WindowsAppStoreInfo)DbConnector.Execute(db => db.WindowsAppStoreInfos.FirstOrDefault(i => i.MsAppId == msAppId));
+            return (WindowsAppStoreInfo)DbConnector.Execute(db => QueryForWindowsAppStoreInfo(db, i => i.MsAppId == msAppId, nullOk: true));
         }
 
         internal static WindowsAppViewModel GetWindowsAppViewModelByName(string name)
@@ -463,17 +479,11 @@ namespace ReferEngine.Common.Data
             return (WindowsAppViewModel)DbConnector.Execute(db =>
             {
                 WindowsAppViewModel viewModel = new WindowsAppViewModel();
-                viewModel.WindowsAppStoreInfo = db.WindowsAppStoreInfos.FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+                viewModel.WindowsAppStoreInfo = QueryForWindowsAppStoreInfo(db, i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase), nullOk: true);
                 if (viewModel.WindowsAppStoreInfo == null) return null;
-                viewModel.App = db.Apps.FirstOrDefault(a => a.PackageFamilyName == viewModel.WindowsAppStoreInfo.PackageFamilyName);
-                if (viewModel.App == null)
+                viewModel.App = QueryForActiveApp(db, a => a.PackageFamilyName == viewModel.WindowsAppStoreInfo.PackageFamilyName, nullOk: true);
+                if (viewModel.App != null)
                 {
-                    viewModel.WindowsAppStoreInfo.StoreAppScreenshots = 
-                        db.WindowsAppStoreScreenshots.Where(s => s.StoreAppInfoMsAppId == viewModel.WindowsAppStoreInfo.MsAppId).ToList();
-                }
-                else
-                {
-                    viewModel.App.Screenshots = db.AppScreenshots.Where(s => s.AppId == viewModel.App.Id).ToList();
                     var recommendations = from r in db.AppRecommendations
                                           where r.AppId == viewModel.App.Id
                                           orderby r.DateTime descending
@@ -484,27 +494,20 @@ namespace ReferEngine.Common.Data
             });
         }
 
-        internal static IList<WindowsAppStoreInfo> FindStoreApps(string term, int count)
+        internal static IList<WindowsAppStoreInfo> GetWindowsAppStoreInfos(string term, int count)
         {
             return (IList<WindowsAppStoreInfo>) DbConnector.Execute(db =>
                 {
                     var lowercaseTerm = term.ToLower();
 
-                    var matches = from a in db.WindowsAppStoreInfos
-                                  where a.Name.ToLower().StartsWith(lowercaseTerm)
-                                  select a;
-
+                    var matches = QueryForWindowsAppStoreInfos(db, i => i.Name.ToLower().StartsWith(lowercaseTerm));
                     if (matches.Count() >= count)
                     {
                         return matches.Take(count).ToList();
                     }
 
-                    var containsMatches = from a in db.WindowsAppStoreInfos
-                                          where a.Name.ToLower().Contains(lowercaseTerm)
-                                          select a;
-
+                    var containsMatches = QueryForWindowsAppStoreInfos(db, i => i.Name.ToLower().Contains(lowercaseTerm));
                     matches.ToList().AddRange(containsMatches);
-
                     return matches.Count() <= count ? matches.ToList() : matches.Take(count).ToList();
                 });
         }
@@ -551,9 +554,10 @@ namespace ReferEngine.Common.Data
             return (AppAuthorization)DbConnector.Execute(db =>
                 {
                     AppAuthorization auth = db.AppAuthorizations.Where(a => a.Token == token)
-                                              .Include(a => a.App)
                                               .Include(a => a.AppReceipt)
+                                              .Include(a => a.App)
                                               .First();
+                    auth.App = QueryForActiveApp(db, a => a.Id == auth.App.Id);
                     return auth;
                 });
         }
@@ -566,6 +570,17 @@ namespace ReferEngine.Common.Data
         internal static Invite GetInvite(string email)
         {
             return (Invite) DbConnector.Execute(db => db.Invites.FirstOrDefault(i => i.Email.Equals(email, StringComparison.InvariantCultureIgnoreCase)));
+        }
+
+        internal static WindowsAppStoreCategory GetWindowsAppStoreCategory(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return null;
+            return (WindowsAppStoreCategory)DbConnector.Execute(db => db.WindowsAppStoreCategories.SingleOrDefault(c => c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
+        }
+
+        internal static IList<WindowsAppStoreCategory> GetWindowsAppStoreCategories()
+        {
+            return (IList<WindowsAppStoreCategory>)DbConnector.Execute(db => db.WindowsAppStoreCategories.ToList());
         }
 
         internal static App SetAppAsInActive(App app)
@@ -606,16 +621,6 @@ namespace ReferEngine.Common.Data
                 db.SaveChanges();
                 return null;
             });
-        }
-
-        internal static AppScreenshot AddAppScreenshot(AppScreenshot appScreenshot)
-        {
-            return (AppScreenshot)DbConnector.Execute(db =>
-                {
-                    AppScreenshot screenshot = db.AppScreenshots.Add(appScreenshot);
-                    db.SaveChanges();
-                    return screenshot;
-                });
         }
 
         internal static void AddAppReceipt(AppReceipt receipt)
@@ -726,7 +731,7 @@ namespace ReferEngine.Common.Data
                 });
         }
 
-        internal static void AddOrUpdateAppWebLinks(IList<WindowsAppStoreLink> appWebLinks)
+        internal static void AddOrUpdateWindowsAppStoreLinks(IList<WindowsAppStoreLink> windowsAppStoreLinks)
         {
             DbConnector.Execute(db =>
                 {
@@ -735,7 +740,7 @@ namespace ReferEngine.Common.Data
 
                     while (true)
                     {
-                        var currentSet = appWebLinks.Skip(skip).Take(take);
+                        var currentSet = windowsAppStoreLinks.Skip(skip).Take(take);
                         skip += take;
                         foreach (var appWebLink in currentSet)
                         {
@@ -776,20 +781,93 @@ namespace ReferEngine.Common.Data
                 });
         }
 
-        internal static void AddWindowsAppStoreInfo(WindowsAppStoreInfo storeAppInfo)
+        internal static void UpdateWindowsAppStoreLink(WindowsAppStoreLink windowsAppStoreLink)
         {
             DbConnector.Execute(db =>
+            {
+                db.WindowsAppStoreLinks.Attach(windowsAppStoreLink);
+                db.SaveChanges();
+                return null;
+            });
+        }
+
+        internal static void DeleteWindowsAppStoreLink(WindowsAppStoreLink windowsAppStoreLink)
+        {
+            DbConnector.Execute(db =>
+            {
+                db.WindowsAppStoreLinks.Attach(windowsAppStoreLink);
+                db.WindowsAppStoreLinks.Remove(windowsAppStoreLink);
+                db.SaveChanges();
+                return null;
+            });
+            
+        }
+
+        internal static bool AddOrUpdateWindowsAppStoreInfo(WindowsAppStoreInfo storeAppInfo, string category, string logoLink, IList<ImageInfo> images)
+        {
+            return (bool) DbConnector.Execute(db =>
+            {
+                string categoryName = category.Trim();
+                WindowsAppStoreCategory windowsAppStoreCategory = db.WindowsAppStoreCategories.SingleOrDefault(c => c.Name.Equals(categoryName, StringComparison.InvariantCultureIgnoreCase));
+                if (windowsAppStoreCategory == null)
                 {
-                    var existing = db.WindowsAppStoreInfos.Where(i => i.MsAppId.Equals(storeAppInfo.MsAppId));
-                    if (existing.Any())
+                    windowsAppStoreCategory = new WindowsAppStoreCategory { Name = categoryName };
+                    db.WindowsAppStoreCategories.Add(windowsAppStoreCategory);
+                }
+                storeAppInfo.Category = windowsAppStoreCategory;
+
+                var existing = QueryForWindowsAppStoreInfo(db, i => i.MsAppId.Equals(storeAppInfo.MsAppId), nullOk: true);
+                if (existing != null)
+                {
+                    var newImages = images.Where(image => existing.CloudinaryImages.All(c => c.OriginalLink != image.Link));
+                    var removedImages = existing.CloudinaryImages.Where(cloudinaryImage => images.All(i => i.Link != cloudinaryImage.OriginalLink));
+
+                    foreach (CloudinaryImage cloudinaryImage in removedImages)
                     {
-                        db.WindowsAppStoreInfos.Remove(existing.First());
+                        existing.CloudinaryImages.Remove(cloudinaryImage);
+                        CloudinaryConnector.DeleteImage(cloudinaryImage);
+                        db.CloudinaryImages.Remove(cloudinaryImage);
                     }
 
+                    foreach (ImageInfo newImage in newImages)
+                    {
+                        CloudinaryImage cloudinaryImage = CloudinaryConnector.UploadRemoteImage(newImage);
+                        existing.CloudinaryImages.Add(cloudinaryImage);
+                    }
+
+                    if (existing.LogoImage == null)
+                    {
+                        CloudinaryImage logoImage = CloudinaryConnector.UploadRemoteImage(new ImageInfo { Link = logoLink });
+                        existing.LogoImage = logoImage;
+                        
+                    }
+                    else if (logoLink != existing.LogoImage.OriginalLink)
+                    {
+                        CloudinaryConnector.DeleteImage(existing.LogoImage);
+                        db.CloudinaryImages.Remove(existing.LogoImage);
+
+                        CloudinaryImage logoImage = CloudinaryConnector.UploadRemoteImage(new ImageInfo { Link = logoLink });
+                        existing.LogoImage = logoImage;
+                    }
+
+                    existing.Update(storeAppInfo);
+                    db.SaveChanges();
+                    return false;
+                }
+                else
+                {
+                    foreach (ImageInfo imageInfo in images)
+                    {
+                        CloudinaryImage cloudinaryImage = CloudinaryConnector.UploadRemoteImage(imageInfo);
+                        storeAppInfo.CloudinaryImages.Add(cloudinaryImage);
+                    }
+                    CloudinaryImage logoImage = CloudinaryConnector.UploadRemoteImage(new ImageInfo {Link = logoLink});
+                    storeAppInfo.LogoImage = logoImage;
                     db.WindowsAppStoreInfos.Add(storeAppInfo);
                     db.SaveChanges();
-                    return null;
-                });
+                    return true;
+                }
+            });
         }
 
         internal static void AddUserRole(User user, string roleName)
@@ -807,7 +885,7 @@ namespace ReferEngine.Common.Data
         {
             return (App) DbConnector.Execute(db =>
                 {
-                    WindowsAppStoreInfo appInfo = db.WindowsAppStoreInfos.Single(i => i.MsAppId == msAppId);
+                    WindowsAppStoreInfo appInfo = QueryForWindowsAppStoreInfo(db, i => i.MsAppId == msAppId);
                     AppRewardPlan rewardPlan = db.AppRewardPlans.Single(p => p.Type == AppRewardPlanType.None);
                     App app = new App
                         {
@@ -815,43 +893,23 @@ namespace ReferEngine.Common.Data
                             Copyright = appInfo.Copyright,
                             ShortDescription = appInfo.DescriptionHtml,
                             Description = appInfo.DescriptionHtml,
-                            LogoLink50 = appInfo.LogoLink,
+                            LogoImage = appInfo.LogoImage,
                             PackageFamilyName = appInfo.PackageFamilyName,
                             Platform = "Windows",
                             Publisher = appInfo.Developer,
+                            Category =  appInfo.Category,
                             RewardPlan = rewardPlan,
                             AppStoreLink = appInfo.AppStoreLink,
                             UserId = user.Id,
                             IsActive = true,
-                            Screenshots = new List<AppScreenshot>(),
-                            BackgroundColor = appInfo.BackgroundColor
+                            CloudinaryImages = appInfo.CloudinaryImages,
+                            BackgroundColor = appInfo.BackgroundColor,
+                            BackgroundImage = new CloudinaryImage { Id = "app_default_background_pjr3qo", Format = "jpg" }
                         };
                     app.ComputeVerificationCode();
                     App addedApp = db.Apps.Add(app);
                     db.SaveChanges();
                     user.Apps.Add(addedApp);
-                    var screenshotInfo =
-                        db.WindowsAppStoreScreenshots.Where(s => s.StoreAppInfoMsAppId == appInfo.MsAppId).ToList();
-                    for (int i = 0; i < screenshotInfo.Count(); i++)
-                    {
-                        WindowsAppStoreScreenshot storeAppScreenshot = screenshotInfo.ElementAt(i);
-                        ImageUploadResult imageUploadResult = ImageData.UploadRemote(storeAppScreenshot.Link,
-                                                                                     "app-" + app.Id + "-screenshot-" +
-                                                                                     i);
-
-                        if (imageUploadResult.StatusCode == HttpStatusCode.OK)
-                        {
-                            AppScreenshot screenshot = new AppScreenshot
-                                {
-                                    AppId = app.Id,
-                                    Description = storeAppScreenshot.Caption,
-                                    Link = imageUploadResult.SecureUri.AbsoluteUri,
-                                    Height = imageUploadResult.Height,
-                                    Width = imageUploadResult.Width
-                                };
-                            app.Screenshots.Add(screenshot);
-                        }
-                    }
                     db.SaveChanges();
 
                     CacheOperations.User.Remove(user);
@@ -898,27 +956,6 @@ namespace ReferEngine.Common.Data
                 {
                     db.FacebookPageViews.Add(facebookPageView);
                     db.SaveChanges();
-                    return null;
-                });
-        }
-
-        internal static void AddWindowsAppStoreScreenshot(WindowsAppStoreScreenshot storeAppScreenshot)
-        {
-            DbConnector.Execute(db =>
-                {
-                    var existing = db.WindowsAppStoreScreenshots.FirstOrDefault(i => i.Link == storeAppScreenshot.Link);
-                    if (existing == null)
-                    {
-                        try
-                        {
-                            db.WindowsAppStoreScreenshots.Add(storeAppScreenshot);
-                            db.SaveChanges();
-                        }
-                        catch (DbUpdateException e)
-                        {
-                            Trace.TraceError(e.Message);
-                        }
-                    }
                     return null;
                 });
         }

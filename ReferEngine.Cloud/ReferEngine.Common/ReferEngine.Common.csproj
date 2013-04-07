@@ -164,7 +164,7 @@
     <Compile Include="Data\DataOperations.cs" />
     <Compile Include="Data\DatabaseOperations.cs" />
     <Compile Include="Data\FacebookOperations.cs" />
-    <Compile Include="Data\ImageData.cs" />
+    <Compile Include="Data\CloudinaryConnector.cs" />
     <Compile Include="Data\IpCheckOperations.cs" />
     <Compile Include="Migrations\201302071841012_IpAddressLocation.cs" />
     <Compile Include="Migrations\201302071841012_IpAddressLocation.Designer.cs">
@@ -274,10 +274,53 @@
     <Compile Include="Migrations\201304030124519_InviteUpdates.Designer.cs">
       <DependentUpon>201304030124519_InviteUpdates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201304052013042_CloudinaryImages.cs" />
+    <Compile Include="Migrations\201304052013042_CloudinaryImages.Designer.cs">
+      <DependentUpon>201304052013042_CloudinaryImages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201304052020082_CollectionOfImages.cs" />
+    <Compile Include="Migrations\201304052020082_CollectionOfImages.Designer.cs">
+      <DependentUpon>201304052020082_CollectionOfImages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201304052029341_Cloudinary2.cs" />
+    <Compile Include="Migrations\201304052029341_Cloudinary2.Designer.cs">
+      <DependentUpon>201304052029341_Cloudinary2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201304052033371_Cloudinary3.cs" />
+    <Compile Include="Migrations\201304052033371_Cloudinary3.Designer.cs">
+      <DependentUpon>201304052033371_Cloudinary3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201304052041008_Cloudinary4.cs" />
+    <Compile Include="Migrations\201304052041008_Cloudinary4.Designer.cs">
+      <DependentUpon>201304052041008_Cloudinary4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201304052216533_AppCloudinaryImages.cs" />
+    <Compile Include="Migrations\201304052216533_AppCloudinaryImages.Designer.cs">
+      <DependentUpon>201304052216533_AppCloudinaryImages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201304052254223_CloudinaryImageFormat.cs" />
+    <Compile Include="Migrations\201304052254223_CloudinaryImageFormat.Designer.cs">
+      <DependentUpon>201304052254223_CloudinaryImageFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201304062017485_Categories.cs" />
+    <Compile Include="Migrations\201304062017485_Categories.Designer.cs">
+      <DependentUpon>201304062017485_Categories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201304062022305_AppCategory.cs" />
+    <Compile Include="Migrations\201304062022305_AppCategory.Designer.cs">
+      <DependentUpon>201304062022305_AppCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201304062132496_DeleteDownLinks.cs" />
+    <Compile Include="Migrations\201304062132496_DeleteDownLinks.Designer.cs">
+      <DependentUpon>201304062132496_DeleteDownLinks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\AppRewardPlan.cs" />
     <Compile Include="Models\ChartUnitResult.cs" />
+    <Compile Include="Models\CloudinaryImage.cs" />
+    <Compile Include="Models\ImageInfo.cs" />
     <Compile Include="Models\Invite.cs" />
+    <Compile Include="Models\WindowsAppStoreCategory.cs" />
     <Compile Include="Models\WindowsAppStoreScreenshot.cs" />
     <Compile Include="Models\FacebookPageViewInfo.cs" />
     <Compile Include="Models\FacebookPageView.cs" />
@@ -345,7 +388,6 @@
     <Compile Include="Utilities\RSAPKCS1SHA256SignatureDescription.cs" />
     <Compile Include="Models\AppReceipt.cs" />
     <Compile Include="Models\Friendship.cs" />
-    <Compile Include="Models\AppScreenshot.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\AppRecommendation.cs" />
@@ -474,6 +516,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201304030124519_InviteUpdates.resx">
       <DependentUpon>201304030124519_InviteUpdates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304052013042_CloudinaryImages.resx">
+      <DependentUpon>201304052013042_CloudinaryImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304052020082_CollectionOfImages.resx">
+      <DependentUpon>201304052020082_CollectionOfImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304052029341_Cloudinary2.resx">
+      <DependentUpon>201304052029341_Cloudinary2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304052033371_Cloudinary3.resx">
+      <DependentUpon>201304052033371_Cloudinary3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304052041008_Cloudinary4.resx">
+      <DependentUpon>201304052041008_Cloudinary4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304052216533_AppCloudinaryImages.resx">
+      <DependentUpon>201304052216533_AppCloudinaryImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304052254223_CloudinaryImageFormat.resx">
+      <DependentUpon>201304052254223_CloudinaryImageFormat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304062017485_Categories.resx">
+      <DependentUpon>201304062017485_Categories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304062022305_AppCategory.resx">
+      <DependentUpon>201304062022305_AppCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304062132496_DeleteDownLinks.resx">
+      <DependentUpon>201304062132496_DeleteDownLinks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

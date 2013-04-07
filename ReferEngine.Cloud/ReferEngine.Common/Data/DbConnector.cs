@@ -19,10 +19,10 @@ namespace ReferEngine.Common.Data
                     _connectionStringNames = new List<string> { "west", "east", "asia" };
                     break;
                 case Util.ReferEngineServiceConfiguration.TestCloud:
-                    _connectionStringNames = new List<string> { "west_test", "east_test", "asia_test" };
+                    _connectionStringNames = new List<string> { "west_test" };
                     break;
                 case Util.ReferEngineServiceConfiguration.Local:
-                    _connectionStringNames = new List<string> { "west_local", "east_local", "asia_local" };
+                    _connectionStringNames = new List<string> { "west_local" };
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

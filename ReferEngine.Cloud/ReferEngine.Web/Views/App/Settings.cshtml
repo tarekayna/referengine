@@ -1,5 +1,4 @@
-﻿@using ReferEngine.Common.Data
-@using ReferEngine.Common.Models
+﻿@using ReferEngine.Common.Models
 @model bool?
 
 @{
@@ -45,7 +44,7 @@
                         <div class="control-group">
                             <label class="control-label">Logo</label>
                             <div class="controls">
-                                <img class="img-polaroid" src="@app.LogoLink50" />
+                                <img class="img-polaroid" src="@app.LogoImage.GetLink()" />
                             </div>
                             <br />
                             <label class="control-label">App Name</label>
@@ -96,9 +95,12 @@
                             <br />
                             <label class="control-label">High Quality Logo</label>
                             <div class="controls">
-                                <a href="@ImageData.GetLink(app.LogoLinkHighQuality)">
-                                    <img class="img-polaroid" src="@ImageData.GetLink(app.LogoLinkHighQuality, "w_400")" id="logo-high-quality"/>
-                                </a>
+                                @if (app.HighQualityLogoImage != null)
+                                {
+                                    <a href="@app.HighQualityLogoImage.GetLink()">
+                                        <img class="img-polaroid" src="@app.HighQualityLogoImage.GetLink("w_400")" id="logo-high-quality"/>
+                                    </a>
+                                }
                             </div>
                             <br />
                             <label class="control-label">Vimeo Video Link</label>
@@ -121,15 +123,15 @@
                 <section id="screenshots">
                     <h3>Screenshots</h3>
                     <hr />
-                    @for (int i = 0; i < @app.Screenshots.Count; i++)
+                    @for (int i = 0; i < @app.CloudinaryImages.Count; i++)
                     {
                         if (i%3 == 0)
                         {
                             @:<div class="row">
                         }
                         
-                        <a href="@ImageData.GetLink(app.Screenshots.ElementAt(i).Link)" target="_blank">
-                            <img src="@ImageData.GetLink(app.Screenshots.ElementAt(i).Link, "w_200")" class="img-polaroid">
+                        <a href="@app.CloudinaryImages.ElementAt(i).GetLink()" target="_blank">
+                            <img src="@app.CloudinaryImages.ElementAt(i).GetLink("w_200")" class="img-polaroid">
                         </a>
                         
                         if ((i+1)%3 == 0)

@@ -918,9 +918,6 @@
     <Content Include="Views\App\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\App\UploadScreenshots.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

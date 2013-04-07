@@ -1,37 +1,22 @@
-﻿	<div class="row">
-	    <ul class="portfolio-area da-thumbs">
-	        
-            @{
-                IList<string> categories = new List<string>();
-                categories.Add("Games");
-                categories.Add("Social");
-                categories.Add("Entertainment");
-                categories.Add("Photo");
-                categories.Add("Music & Video");
-                categories.Add("Sports");
-                categories.Add("Books & Reference");
-                categories.Add("News & Weather");
-                categories.Add("Health & Fitness");
-                categories.Add("Food & Dining");
-                categories.Add("Lifestyle");
-                categories.Add("Shopping");
-                categories.Add("Travel");
-            }
-            
-            @foreach (string category in categories)
-            {
-	            <li class="portfolio-item2" data-id="id-0" data-type="web">
-	                <div class="span3">
-	                    <div class="thumbnail">
-	                        <div class="image-wrapp">
-	                            <img src="~/areas/assets/img/dummies/work1.jpg" style="height: 90px; width: 270px"  alt="Portfolio name" title="" />
-	                        </div>
-	                        <div class="caption">
-	                            <h2><a href="#">@category</a></h2>
-	                        </div>
-	                    </div>
-	                </div>
-	            </li>  
-            }
-	    </ul>
-	</div>
+﻿@using ReferEngine.Common.Models
+@model IList<WindowsAppStoreCategory>
+
+<div class="row">
+    <ul class="portfolio-area da-thumbs">    
+        @foreach (WindowsAppStoreCategory category in Model)
+        {
+            <li class="portfolio-item2" data-id="id-0" data-type="web">
+                <div class="span3">
+                    <div class="thumbnail">
+                        <div class="image-wrapp">
+                            <img src="~/areas/assets/img/dummies/work1.jpg" style="height: 90px; width: 270px"  alt="Portfolio name" title="" />
+                        </div>
+                        <div class="caption">
+                            <h2><a href="~/appstore/windows/@category.Name">@category.Name</a></h2>
+                        </div>
+                    </div>
+                </div>
+            </li>  
+        }
+    </ul>
+</div>

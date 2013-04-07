@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
@@ -14,25 +15,22 @@ namespace ReferEngine.Web.Areas.AppStore.Controllers
         {
             UserAgentProperties userAgentProperties = new UserAgentProperties(Request.UserAgent);
 
-            if (category == null)
+            WindowsAppStoreCategory windowsAppStoreCategory = DataOperations.GetWindowsAppStoreCategory(category);
+            if (windowsAppStoreCategory == null)
             {
-                return View("WindowsStore");
-            }
-
-            if (name == null)
-            {
-                return View("WindowsCategory");
+                IList<WindowsAppStoreCategory> categories = DataOperations.GetWindowsAppStoreCategories();
+                return View("WindowsStore", categories);
             }
 
             string appName = name.Replace('-', ' ');
             WindowsAppViewModel windowsAppViewModel = DataOperations.GetWindowsAppViewModelByName(appName);
-            if (windowsAppViewModel != null)
+            if (windowsAppViewModel == null)
             {
-                windowsAppViewModel.UserAgentProperties = userAgentProperties;
-                return View("WindowsApp", windowsAppViewModel);
+                return View("WindowsCategory", windowsAppStoreCategory);
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            windowsAppViewModel.UserAgentProperties = userAgentProperties;
+            return View("WindowsApp", windowsAppViewModel);
         }
 
         [HttpPost]

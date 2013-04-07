@@ -30,7 +30,7 @@
     <body>
         <div id="re-ctnr">
             <header>
-                @HtmlHelperExtensions.Image(Html, viewProperties.CurrentApp.LogoLink50, viewProperties.CurrentApp.Name, "app-logo")
+                @HtmlHelperExtensions.Image(Html, viewProperties.CurrentApp.LogoImage.GetLink(), viewProperties.CurrentApp.Name, "app-logo")
                 <div class="app-name">@viewProperties.CurrentApp.Name</div>
                 @Html.Partial("_LogoMark30")
                 <h4 class="logo-text">Refer Engine</h4>

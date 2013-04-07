@@ -95,6 +95,8 @@ namespace ReferEngine.Web.App_Start
                                    "~/css/AppStore/docs.css",
                                    "~/css/AppStore/prettyPhoto.css",
                                    "~/css/AppStore/prettify.css",
+                                   "~/css/AppStore/overwrite.css",
+                                   "~/css/AppStore/boxtile.css",
                                    "~/css/AppStore/style.css",
                                    "~/css/AppStore/success.css",
                                    "~/css/bootstrap-notify.css"),

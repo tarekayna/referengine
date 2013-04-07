@@ -21,7 +21,6 @@ namespace ReferEngine.Common.Data
         public DbSet<RecommendationPageView> RecommendationPageViews { get; set; }
         public DbSet<Friendship> Friendships { get; set; }
         public DbSet<Person> People { get; set; }
-        public DbSet<AppScreenshot> AppScreenshots { get; set; }
         public DbSet<PrivateBetaSignup> PrivateBetaSignups { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Membership> Memberships { get; set; }
@@ -35,14 +34,14 @@ namespace ReferEngine.Common.Data
         public DbSet<Invite> Invites { get; set; }
         public DbSet<WindowsAppStoreLink> WindowsAppStoreLinks { get; set; }
         public DbSet<WindowsAppStoreInfo> WindowsAppStoreInfos { get; set; }
-        public DbSet<WindowsAppStoreScreenshot> WindowsAppStoreScreenshots { get; set; }
+        public DbSet<WindowsAppStoreCategory> WindowsAppStoreCategories { get; set; }
+        public DbSet<CloudinaryImage> CloudinaryImages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {
             mb.Entity<App>().Property(a => a.AppStoreLink).IsRequired();
             mb.Entity<App>().Property(a => a.Description).IsRequired();
             mb.Entity<App>().Property(a => a.UserId).IsRequired();
-            mb.Entity<App>().Property(a => a.LogoLink50).IsRequired();
             mb.Entity<App>().Property(a => a.Name).IsRequired();
             mb.Entity<App>().Property(a => a.PackageFamilyName).IsRequired();
             mb.Entity<App>().Property(a => a.Publisher).IsRequired();
@@ -73,11 +72,6 @@ namespace ReferEngine.Common.Data
             mb.Entity<AppRecommendation>().Property(r => r.DateTime).IsRequired();
             mb.Entity<AppRecommendation>().Property(r => r.UserMessage).IsOptional();
 
-            mb.Entity<AppScreenshot>().Property(s => s.Description).IsRequired();
-            mb.Entity<AppScreenshot>().Property(s => s.Height).IsRequired();
-            mb.Entity<AppScreenshot>().Property(s => s.Width).IsRequired();
-            mb.Entity<AppScreenshot>().Property(s => s.Size).IsRequired();
-
             mb.Entity<PrivateBetaSignup>().HasKey(s => s.Email);
             mb.Entity<PrivateBetaSignup>().Property(s => s.Email)
                         .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
@@ -88,11 +82,9 @@ namespace ReferEngine.Common.Data
 
             mb.Entity<WindowsAppStoreLink>().HasKey(l => l.Link);
 
-            mb.Entity<WindowsAppStoreInfo>().HasKey(i => i.MsAppId);
+            mb.Entity<WindowsAppStoreInfo>().HasKey(i => i.MsAppId).HasMany(i => i.CloudinaryImages);
 
             mb.Entity<Invite>().HasKey(i => i.Email);
-
-            mb.Entity<WindowsAppStoreScreenshot>().HasKey(i => i.Link);
 
             mb.Entity<AppAutoShowOptions>().HasKey(o => o.AppId);
             mb.Entity<AppAutoShowOptions>().Property(s => s.AppId)

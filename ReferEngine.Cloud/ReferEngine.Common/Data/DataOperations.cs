@@ -49,17 +49,6 @@ namespace ReferEngine.Common.Data
             return DatabaseOperations.GetAppReceipt(id);
         }
 
-        public static AppScreenshot GetAppScreenshot(long appId, string description)
-        {
-            AppScreenshot screenshot = CacheOperations.GetAppScreenshot(appId, description);
-            if (screenshot == null)
-            {
-                screenshot = DatabaseOperations.GetAppScreenshot(appId, description);
-                CacheOperations.AddAppScreenshot(screenshot);
-            }
-            return screenshot;
-        }
-
         public static FacebookOperations GetFacebookOperations(string token)
         {
             return CacheOperations.GetFacebookOperations(token);
@@ -174,9 +163,9 @@ namespace ReferEngine.Common.Data
             return DatabaseOperations.GetAppActionLocations(app, timeRange, who);
         }
 
-        public static IList<WindowsAppStoreInfo> FindStoreApps(string term, int count)
+        public static IList<WindowsAppStoreInfo> GetWindowsAppStoreInfos(string term, int count)
         {
-            return DatabaseOperations.FindStoreApps(term, count);
+            return DatabaseOperations.GetWindowsAppStoreInfos(term, count);
         }
 
         public static WindowsAppStoreInfo GetWindowsAppStoreInfo(string msAppId)
@@ -257,11 +246,6 @@ namespace ReferEngine.Common.Data
             DatabaseOperations.AddApp(app);
         }
 
-        public static AppScreenshot AddAppScreenshot(AppScreenshot appScreenshot)
-        {
-            return DatabaseOperations.AddAppScreenshot(appScreenshot);
-        }
-
         public static void AddAppReceipt(AppReceipt receipt)
         {
             DatabaseOperations.AddAppReceipt(receipt);
@@ -292,14 +276,34 @@ namespace ReferEngine.Common.Data
             DatabaseOperations.AddWindowsAppStoreLink(appWebLink);
         }
 
-        public static void AddOrUpdateAppWebLinks(IList<WindowsAppStoreLink> appWebLinks)
+        public static void AddOrUpdateWindowsAppStoreLinks(IList<WindowsAppStoreLink> windowsAppStoreLinks)
         {
-            DatabaseOperations.AddOrUpdateAppWebLinks(appWebLinks);
+            DatabaseOperations.AddOrUpdateWindowsAppStoreLinks(windowsAppStoreLinks);
         }
 
-        public static void AddWindowsAppStoreInfo(WindowsAppStoreInfo storeAppInfo)
+        public static void UpdateWindowsAppStoreLink(WindowsAppStoreLink windowsAppStoreLink)
         {
-            DatabaseOperations.AddWindowsAppStoreInfo(storeAppInfo);
+            DatabaseOperations.UpdateWindowsAppStoreLink(windowsAppStoreLink);
+        }
+
+        public static void DeleteWindowsAppStoreLink(WindowsAppStoreLink windowsAppStoreLink)
+        {
+            DatabaseOperations.DeleteWindowsAppStoreLink(windowsAppStoreLink);
+        }
+
+        public static bool AddOrUpdateWindowsAppStoreInfo(WindowsAppStoreInfo storeAppInfo, string category, string logoLink, IList<ImageInfo> images)
+        {
+            return DatabaseOperations.AddOrUpdateWindowsAppStoreInfo(storeAppInfo, category, logoLink, images);
+        }
+
+        public static WindowsAppStoreCategory GetWindowsAppStoreCategory(string name)
+        {
+            return DatabaseOperations.GetWindowsAppStoreCategory(name);
+        }
+
+        public static IList<WindowsAppStoreCategory> GetWindowsAppStoreCategories()
+        {
+            return DatabaseOperations.GetWindowsAppStoreCategories();
         }
 
         public static void AddUserRole(User user, string roleName)
@@ -332,11 +336,6 @@ namespace ReferEngine.Common.Data
         public static void AddFacebookPageView(FacebookPageView facebookPageView)
         {
             DatabaseOperations.AddFacebookPageView(facebookPageView);
-        }
-
-        public static void AddWindowsAppStoreScreenshot(WindowsAppStoreScreenshot storeAppScreenshot)
-        {
-            DatabaseOperations.AddWindowsAppStoreScreenshot(storeAppScreenshot);
         }
 
         public static void AddInvite(Invite invite)

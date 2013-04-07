@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ReferEngine.Common.Models
 {
@@ -9,11 +10,10 @@ namespace ReferEngine.Common.Models
         public double Rating { get; set; }
         public int NumberOfRatings { get; set; }
         public double Price { get; set; }
-        public string Category { get; set; }
+        public WindowsAppStoreCategory Category { get; set; }
         public string AgeRating { get; set; }
         public string Developer { get; set; }
         public string Copyright { get; set; }
-        public string LogoLink { get; set; }
         public string DescriptionHtml { get; set; }
         public string FeaturesHtml { get; set; }
         public string WebsiteLink { get; set; }
@@ -26,7 +26,13 @@ namespace ReferEngine.Common.Models
         public string PackageFamilyName { get; set; }
         public string AppStoreLink { get; set; }
         public string BackgroundColor { get; set; }
-        public IEnumerable<WindowsAppStoreScreenshot> StoreAppScreenshots { get; set; }
+        public CloudinaryImage LogoImage { get; set; }
+        public virtual ICollection<CloudinaryImage> CloudinaryImages { get; private set; }
+
+        public WindowsAppStoreInfo()
+        {
+            CloudinaryImages = new Collection<CloudinaryImage>();
+        }
 
         public void SetRating(string starRatingText)
         {
@@ -71,27 +77,27 @@ namespace ReferEngine.Common.Models
             }
         }
 
-        public bool IsIdentical(WindowsAppStoreInfo storeAppInfo)
+        public void Update(WindowsAppStoreInfo info)
         {
-            return Name.Equals(storeAppInfo.Name) &&
-                   Rating.Equals(storeAppInfo.Rating) &&
-                   NumberOfRatings.Equals(storeAppInfo.NumberOfRatings) &&
-                   Price.Equals(storeAppInfo.Price) &&
-                   Category.Equals(storeAppInfo.Category) &&
-                   AgeRating.Equals(storeAppInfo.AgeRating) &&
-                   Developer.Equals(storeAppInfo.Developer) &&
-                   Copyright.Equals(storeAppInfo.Copyright) &&
-                   LogoLink.Equals(storeAppInfo.LogoLink) &&
-                   DescriptionHtml.Equals(storeAppInfo.DescriptionHtml) &&
-                   FeaturesHtml.Equals(storeAppInfo.FeaturesHtml) &&
-                   WebsiteLink.Equals(storeAppInfo.WebsiteLink) &&
-                   SupportLink.Equals(storeAppInfo.SupportLink) &&
-                   PrivacyPolicyLink.Equals(storeAppInfo.PrivacyPolicyLink) &&
-                   ReleaseNotes.Equals(storeAppInfo.ReleaseNotes) &&
-                   Architecture.Equals(storeAppInfo.Architecture) &&
-                   Languages.Equals(storeAppInfo.Languages) &&
-                   MsAppId.Equals(storeAppInfo.MsAppId) &&
-                   PackageFamilyName.Equals(storeAppInfo.PackageFamilyName);
+            Name = info.Name;
+            Rating = info.Rating;
+            NumberOfRatings = info.NumberOfRatings;
+            Price = info.Price;
+            Category = info.Category;
+            AgeRating = info.AgeRating;
+            Developer = info.Developer;
+            Copyright = info.Copyright;
+            DescriptionHtml = info.DescriptionHtml;
+            FeaturesHtml = info.FeaturesHtml;
+            WebsiteLink = info.WebsiteLink;
+            SupportLink = info.SupportLink;
+            PrivacyPolicyLink = info.PrivacyPolicyLink;
+            ReleaseNotes = info.ReleaseNotes;
+            Architecture = info.Architecture;
+            Languages = info.Languages;
+            PackageFamilyName = info.PackageFamilyName;
+            AppStoreLink = info.AppStoreLink;
+            BackgroundColor = info.BackgroundColor;
         }
     }
 }
