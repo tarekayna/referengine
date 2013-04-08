@@ -262,9 +262,9 @@ namespace ReferEngine.WorkerCloud.WinApps
                                                 numberOfUpdatedApps++;
                                             }
                                         }
-                                        catch (SqlException e)
+                                        catch (Exception e)
                                         {
-                                            Emailer.SendExceptionEmail(e, "WinAppsWorker SqlException");
+                                            Emailer.SendExceptionEmail(e, "WinAppsWorker Exception: " + storeAppInfo.MsAppId);
                                         }
                                     }
                                     else
