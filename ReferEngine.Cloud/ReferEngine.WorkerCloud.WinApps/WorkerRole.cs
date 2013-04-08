@@ -6,6 +6,7 @@ using ReferEngine.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -102,6 +103,7 @@ namespace ReferEngine.WorkerCloud.WinApps
         {
             while (true)
             {
+                Trace.TraceInformation("Resume WinAppsWorker");
                 DateTime startTime = DateTime.UtcNow;
                 int numberOfLinks = 0;
                 int numberOfLiveLinks = 0;
