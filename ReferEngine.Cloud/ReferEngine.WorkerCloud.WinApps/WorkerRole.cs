@@ -264,8 +264,21 @@ namespace ReferEngine.WorkerCloud.WinApps
                                         }
                                         catch (SqlException e)
                                         {
-                                            Emailer.SendPlainTextEmail("tarek@referengine.com",
-                                                                       "WinAppsWorker Exception", e.Message);
+                                            Emailer.SendExceptionEmail(e, "WinAppsWorker SqlException");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        numberOfDownLinks++;
+                                        windowsAppStoreLink.NumberOfConsecutiveFailures++;
+                                        if (windowsAppStoreLink.NumberOfConsecutiveFailures == 5)
+                                        {
+                                            DataOperations.DeleteWindowsAppStoreLink(windowsAppStoreLink);
+                                            numberOfDeletedLinks++;
+                                        }
+                                        else
+                                        {
+                                            DataOperations.UpdateWindowsAppStoreLink(windowsAppStoreLink);
                                         }
                                     }
                                 }
@@ -311,7 +324,7 @@ namespace ReferEngine.WorkerCloud.WinApps
                 body.AppendLine("Number of Updated Apps: " + numberOfUpdatedApps);
                 body.AppendLine();
                 body.AppendLine(".نحنا بأمرك أستاذ");
-                Emailer.SendPlainTextEmail("tarek@referengine.com", "Good news everyone!", body.ToString());
+                Emailer.SendEmail("tarek@referengine.com", "Good news everyone!", body.ToString());
 
                 TimeSpan sleepTime = TimeSpan.FromHours(24).Subtract(DateTime.UtcNow.Subtract(startTime));
                 Thread.Sleep(sleepTime);

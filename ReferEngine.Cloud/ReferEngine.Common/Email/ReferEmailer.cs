@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Specialized;
 using System.Net;
 using System.Net.Mail;
@@ -43,7 +44,7 @@ namespace ReferEngine.Common.Email
 
             const string subject = "ReferEngine.com Invite Request";
 
-            SendPlainTextEmail(privateBetaSignup.Email, subject, body.ToString());
+            SendEmail(privateBetaSignup.Email, subject, body.ToString());
         }
 
         public static void SendRecommendationThankYouEmail(App app, Person person)
@@ -62,7 +63,7 @@ namespace ReferEngine.Common.Email
             body.AppendLine("Founder and Developer, ReferEngine.com");
 
             string subject = string.Format("{0} Recommendation", app.Name);
-            SendPlainTextEmail(person.Email, subject, body.ToString());
+            SendEmail(person.Email, subject, body.ToString());
         }
 
         public static void SendInviteEmail(Invite invite)
@@ -84,7 +85,7 @@ namespace ReferEngine.Common.Email
             body.AppendLine("Founder and Developer, ReferEngine.com");
 
             string subject = string.Format("Invitation to Refer Engine's Private Beta");
-            SendPlainTextEmail(invite.Email, subject, body.ToString());
+            SendEmail(invite.Email, subject, body.ToString());
         }
 
         public static void SendConfirmationCodeEmail(ConfirmationCodeModel model)
@@ -108,16 +109,16 @@ namespace ReferEngine.Common.Email
             body.AppendLine("Tarek from ReferEngine.com");
 
             string subject = string.Format("ReferEngine: Please Confirm Registration");
-            SendPlainTextEmail(model.Email, subject, body.ToString());
+            SendEmail(model.Email, subject, body.ToString());
         }
 
-        public static void SendPlainTextEmail(string to, string subject, string body)
+        public static void SendEmail(string to, string subject, string body, bool isHtml = false)
         {
             var toMailAddress = new MailAddress(to);
             var mailMessage = new MailMessage(From, toMailAddress)
             {
                 Body = body,
-                IsBodyHtml = false,
+                IsBodyHtml = isHtml,
                 Sender = From,
                 Subject = subject
             };
@@ -164,15 +165,31 @@ namespace ReferEngine.Common.Email
             Exception ex = e;
             while (ex != null)
             {
-                builder.AppendLine(e.Message);
+                builder.AppendLine(BoldedParagraph("Message"));
+                builder.AppendLine(ex.Message);
                 builder.AppendLine();
-                builder.AppendLine(e.StackTrace);
+                builder.AppendLine(BoldedParagraph("Source"));
+                builder.AppendLine(ex.Source);
+                builder.AppendLine();
+                builder.AppendLine(BoldedParagraph("Data"));
+                foreach (DictionaryEntry dictionaryEntry in ex.Data)
+                {
+                    builder.AppendLine(dictionaryEntry.Key + ": " + dictionaryEntry.Value);
+                }
+                builder.AppendLine();
+                builder.AppendLine(BoldedParagraph("Stack"));
+                builder.AppendLine(ex.StackTrace);
                 builder.AppendLine();
                 builder.AppendLine();
                 ex = ex.InnerException;
             }
 
-            SendPlainTextEmail("tarek@referengine.com", subject ?? "Exception", builder.ToString());
+            SendEmail("tarek@referengine.com", subject ?? "Exception", builder.ToString(), isHtml: true);
+        }
+
+        public static string BoldedParagraph(string content)
+        {
+            return "<p style='font-weight: bold'>" + content + "</p>";
         }
     }
 }

@@ -15,7 +15,7 @@ namespace ReferEngine.Web.Controllers
                 body += "Email = " + email + "\n";
                 body += "Subject = " + subject + "\n";
                 body += "Message = " + message + "\n";
-                Emailer.SendPlainTextEmail("tarek@referengine.com", "Contact From ReferEngine.com", body);
+                Emailer.SendEmail("tarek@referengine.com", "Contact From ReferEngine.com", body);
                 return Json(new {success = true});
             }
 
