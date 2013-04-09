@@ -6,10 +6,11 @@ using ReferEngine.Common.Utilities;
 using ReferEngine.Common.ViewModels.AppStore.Windows;
 using System.Net;
 using System.Web.Mvc;
+using ReferEngine.Web.Controllers;
 
 namespace ReferEngine.Web.Areas.AppStore.Controllers
 {
-    public class WindowsController : Controller
+    public class WindowsController : BaseController
     {
         public ActionResult Index(string platform, string category = null, string name = null)
         {

@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using ReferEngine.Common.Email;
+using ReferEngine.Common.Tracing;
 using ReferEngine.Common.Utilities;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,7 @@ namespace ReferEngine.Common.Data
                 }
                 catch (Exception e)
                 {
-                    Emailer.SendExceptionEmail(e, "Database Exception");
+                    Tracer.Trace(TraceMessage.Exception(e));
                 }
             }
 

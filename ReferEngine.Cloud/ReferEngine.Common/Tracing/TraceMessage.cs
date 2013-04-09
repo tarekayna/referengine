@@ -29,30 +29,46 @@ namespace ReferEngine.Common.Tracing
         public string Message { get; set; }
         public string RoleInstanceId { get; set; }
         public string RoleName { get; set; }
-        public TraceMessageCategory Category { get; set; }
-        public IDictionary<string, string> Properties { get; set; }
+        public TraceMessageCategory Category 
+        { 
+            get
+            {
+                return string.IsNullOrEmpty(CategoryString) ? TraceMessageCategory.Info : (TraceMessageCategory)Enum.Parse(typeof(TraceMessageCategory), CategoryString);
+            }
+        }
+        public string CategoryString { get; set; }
+        private IDictionary<string, string> _properties;
+        public string PropertiesString { get; set; }
+        public IEnumerable<KeyValuePair<string, string>> Properties
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(PropertiesString))
+                {
+                    return new Dictionary<string, string>();
+                }
+                var result = (Dictionary<string, string>)Json.Decode(PropertiesString, typeof(Dictionary<string, string>));
+                return result;
+            }
+        }
 
         public TraceMessage() { }
-        public TraceMessage(string message, TraceMessageCategory category, IDictionary<string, string> properties = null)
+        public TraceMessage(string message, TraceMessageCategory category)
         {
             Message = message;
-            Category = category;
-            Properties = properties ?? new Dictionary<string, string>();
+            CategoryString = category.GetStringValue();
             Time = DateTime.UtcNow;
             RoleInstanceId = RoleEnvironment.CurrentRoleInstance.Id;
             RoleName = RoleEnvironment.CurrentRoleInstance.Role.Name;
-
             PartitionKey = RoleEnvironment.CurrentRoleInstance.Role.Name;
             RowKey = (DateTime.MaxValue.Ticks - Time.Ticks).ToString("d19");
         }
 
         public TraceMessage AddProperty(string key, object value)
         {
-            if (Properties == null)
-            {
-                Properties = new Dictionary<string, string>();
-            }
-            Properties.Add(key, value.ToString());
+            if (_properties == null) _properties = new Dictionary<string, string>();
+            _properties.Add(key, value.ToString());
+            PropertiesString = Json.Encode(_properties);
             return this;
         }
 

@@ -128,6 +128,12 @@ namespace ReferEngine.WorkerCloud.WinApps
                     //IList<WindowsAppStoreLink> windowsAppStoreLinks = DataOperations.GetWindowsAppStoreLinks();
 
                     IList<WindowsAppStoreLink> windowsAppStoreLinks = new List<WindowsAppStoreLink>();
+
+                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/wow-engineer/1586f767-2ae2-4b1b-a9bb-543714486652" });
+                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/vedic-patri/621e45bd-a207-4a7f-a93a-58ed48b3a821/m/ROW" });
+                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/windows-media-player-8/6ead7ee1-3f23-46e4-b60b-06605e09ed43/m/ROW" });
+                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/trendwatcher/7d6e52bc-2bc3-428e-b4fe-74d015b04f6e/m/ROW" });
+                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/wow-herbalist/8eb2ba67-2a03-42b1-9022-d029c10ae144" });
                     windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-US/app/blu-graphing-calculator/764cce31-8f93-48a6-b4fc-008eb78e50d4" });
                     windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-US/app/skype/5e19cc61-8994-4797-bdc7-c21263f6282b" });
 
@@ -137,9 +143,9 @@ namespace ReferEngine.WorkerCloud.WinApps
                     {
                         var windowsAppStoreLink = windowsAppStoreLinks.ElementAt(i);
 
-                        if (i%100 == 0)
+                        if (i%1000 == 0 && i != 0)
                         {
-                            Tracer.Trace(TraceMessage.Info("Requesting WindowsAppStoreLinks #"));
+                            Tracer.Trace(TraceMessage.Info("Requesting WindowsAppStoreLinks #" + i));
                         }
 
                         HttpWebRequest httpWebRequest = WebRequest.CreateHttp(windowsAppStoreLink.Link);

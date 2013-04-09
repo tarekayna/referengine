@@ -33,53 +33,52 @@
                         }
                     </ul>
                 </div>  
+                <div class="pull-right">
+                    Current UTC Time: @DateTime.UtcNow.ToShortDateString() @DateTime.UtcNow.ToShortTimeString()
+                </div>
             </div>
+        </div>
+        <div class="row">
             @if (Model.TraceMessages != null)
             {
                 <div class="span12">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>
-                                
-                                </th>
+                                <th>Date/Time</th>
+                                <th>Message</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (TraceMessage traceMessage in Model.TraceMessages)
                             {
-                                string color;
-                                switch (traceMessage.Category)
-                                {
-                                    case TraceMessageCategory.Error:
-                                        color = "red";
-                                        break;
-                                    case TraceMessageCategory.Warning:
-                                        color = "orange";
-                                        break;
-                                    case TraceMessageCategory.Success:
-                                        color = "green";
-                                        break;
-                                    case TraceMessageCategory.Info:
-                                        color = "black";
-                                        break;
-                                    default:
-                                        throw new ArgumentOutOfRangeException();
-                                }
-                                <tr style="color: @color;">
+                                string className = string.IsNullOrEmpty(traceMessage.CategoryString) ? "" :
+                                                       traceMessage.CategoryString.ToLower();
+                                <tr class="@className">
                                     <td>
                                         @traceMessage.Time.ToString()
                                     </td>
                                     <td>
                                         @traceMessage.Message
-                                    </td>
-                                    <td>
                                         @if (traceMessage.Properties != null)
                                         {
-                                            foreach (var keyValuePair in traceMessage.Properties)
-                                            {
-                                                <p>@keyValuePair.Key = @keyValuePair.Value</p>
-                                            }
+                                            <div class="accordion" id="accordion2">
+                                                <div class="accordion-group">
+                                                    <div class="accordion-heading">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                                                            Properties
+                                                        </a>
+                                                    </div>
+                                                    <div id="collapseOne" class="accordion-body collapse in">
+                                                        <div class="accordion-inner">
+                                                            @foreach (var keyValuePair in traceMessage.Properties)
+                                                            {
+                                                                <p>@keyValuePair.Key = @keyValuePair.Value</p>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         }
                                     </td>
                                 </tr>
