@@ -822,14 +822,16 @@ namespace ReferEngine.Common.Data
                     var newImages = images.Where(image => existing.CloudinaryImages.All(c => c.OriginalLink != image.Link));
                     var removedImages = existing.CloudinaryImages.Where(cloudinaryImage => images.All(i => i.Link != cloudinaryImage.OriginalLink));
 
-                    foreach (CloudinaryImage cloudinaryImage in removedImages)
+                    var removedImagesList = removedImages.ToList();
+                    foreach (CloudinaryImage cloudinaryImage in removedImagesList)
                     {
                         existing.CloudinaryImages.Remove(cloudinaryImage);
                         CloudinaryConnector.DeleteImage(cloudinaryImage);
                         db.CloudinaryImages.Remove(cloudinaryImage);
                     }
 
-                    foreach (ImageInfo newImage in newImages)
+                    var newImagesList = newImages.ToList();
+                    foreach (ImageInfo newImage in newImagesList)
                     {
                         CloudinaryImage cloudinaryImage = CloudinaryConnector.UploadRemoteImage(newImage);
                         existing.CloudinaryImages.Add(cloudinaryImage);

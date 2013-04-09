@@ -32,61 +32,57 @@
                             <li><a href="@link">@role</a></li>
                         }
                     </ul>
-                </div>  
-                <div class="pull-right">
-                    Current UTC Time: @DateTime.UtcNow.ToShortDateString() @DateTime.UtcNow.ToShortTimeString()
                 </div>
             </div>
         </div>
+        <hr/>
         <div class="row">
+            <div class="span2">@DateTime.UtcNow.ToString()</div>
+        </div>
             @if (Model.TraceMessages != null)
             {
-                <div class="span12">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Date/Time</th>
-                                <th>Message</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (TraceMessage traceMessage in Model.TraceMessages)
+                for (int i = 0; i < Model.TraceMessages.Count(); i++)
+                {
+                    const string idFormat = "collapse{0}";
+                    string id = string.Format(idFormat, i);
+                    var traceMessage = Model.TraceMessages.ElementAt(i);
+                    string className = string.IsNullOrEmpty(traceMessage.CategoryString) ? "" :
+                                           "text-" + traceMessage.CategoryString.ToLower();
+                    className = className == "text-info" ? "" : className;
+                    <hr/>
+                    <div class="row @className">
+                        <div class="span2">@traceMessage.Time.ToString()</div>
+                        <div class="span8">
+                            <p>@traceMessage.Message</p>
+                        </div>
+                        <div class="span2">
+                            @if (traceMessage.Properties != null && traceMessage.Properties.Any())
                             {
-                                string className = string.IsNullOrEmpty(traceMessage.CategoryString) ? "" :
-                                                       traceMessage.CategoryString.ToLower();
-                                <tr class="@className">
-                                    <td>
-                                        @traceMessage.Time.ToString()
-                                    </td>
-                                    <td>
-                                        @traceMessage.Message
-                                        @if (traceMessage.Properties != null)
-                                        {
-                                            <div class="accordion" id="accordion2">
-                                                <div class="accordion-group">
-                                                    <div class="accordion-heading">
-                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                                                            Properties
-                                                        </a>
-                                                    </div>
-                                                    <div id="collapseOne" class="accordion-body collapse in">
-                                                        <div class="accordion-inner">
-                                                            @foreach (var keyValuePair in traceMessage.Properties)
-                                                            {
-                                                                <p>@keyValuePair.Key = @keyValuePair.Value</p>
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                    </td>
-                                </tr>
+                                <button type="button" class="btn" data-toggle="collapse" data-target="#@id">
+                                    View Properties
+                                </button>
                             }
-                        </tbody>
-                    </table>
-                </div>
-            }
-        </div>
+                        </div>
+                    </div>
+                    if (traceMessage.Properties != null && traceMessage.Properties.Any())
+                    {
+                        <div class="row">
+                            <div class="span12 collapse" id="@id">
+                                <table class="table table-hover table-condensed">
+                                    @for (var j = 0; j < traceMessage.Properties.Count(); j++)
+                                    {
+                                        bool noTopBorder = j == 0;
+                                        var keyValuePair = traceMessage.Properties.ElementAt(j);
+                                        <tr>
+                                            <td @if(noTopBorder){<text>style="border-top: none"</text>}>@keyValuePair.Key</td>
+                                            <td @if(noTopBorder){<text>style="border-top: none"</text>}>@keyValuePair.Value</td>
+                                        </tr>
+                                    }
+                                </table>                                
+                            </div>
+                        </div>
+                    }                
+                }
+            } 
     </div>
 </div>

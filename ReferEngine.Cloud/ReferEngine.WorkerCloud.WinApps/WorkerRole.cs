@@ -8,7 +8,6 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Xml;
 using ReferEngine.Common.Tracing;
@@ -49,13 +48,7 @@ namespace ReferEngine.WorkerCloud.WinApps
                 }
             }
 
-            try
-            {
-                DataOperations.AddOrUpdateWindowsAppStoreLinks(windowsAppStoreLinks);
-            }
-            catch (SqlException)
-            {
-            }
+            DataOperations.AddOrUpdateWindowsAppStoreLinks(windowsAppStoreLinks);   
             return true;
         }
 
@@ -163,7 +156,7 @@ namespace ReferEngine.WorkerCloud.WinApps
                                 }
                                 catch (IOException e)
                                 {
-                                    Console.WriteLine(e);
+                                    Tracer.Trace(TraceMessage.Exception(e));
                                 }
                                 if (!string.IsNullOrEmpty(response))
                                 {
