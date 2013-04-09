@@ -99,13 +99,13 @@
       <HintPath>..\packages\Microsoft.WindowsAzure.Caching.1.8.1.0\lib\net35-full\Microsoft.ApplicationServer.Caching.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Data.Edm, Version=5.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Data.Edm, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Data.Edm.5.0.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.4.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.OData, Version=5.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Data.OData, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Data.OData.5.0.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Data.OData.5.4.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -188,9 +188,9 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Spatial, Version=5.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Spatial, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\System.Spatial.5.0.2\lib\net40\System.Spatial.dll</HintPath>
+      <HintPath>..\packages\System.Spatial.5.4.0\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
@@ -438,6 +438,7 @@
     <Content Include="TypeScript\AppStore\Windows\WindowsApp.min.js.map">
       <DependentUpon>WindowsApp.js</DependentUpon>
     </Content>
+    <Content Include="Views\Admin\TraceLogs.cshtml" />
     <TypeScriptCompile Include="TypeScript\AppStore\Windows\WindowsApp.ts" />
     <Content Include="TypeScript\AppStore\Windows\WindowsApp.js">
       <DependentUpon>WindowsApp.ts</DependentUpon>
@@ -614,6 +615,7 @@
     <Compile Include="Models\Account\RegisterModel.cs" />
     <Compile Include="Models\Account\UserProfile.cs" />
     <Compile Include="Models\Admin\AdminViewModel.cs" />
+    <Compile Include="Models\Admin\TraceLogsViewModel.cs" />
     <Compile Include="Models\Common\PageTitleViewModel.cs" />
     <Compile Include="Models\Common\ViewProperties.cs" />
     <Compile Include="Models\Error\ErrorViewModel.cs" />

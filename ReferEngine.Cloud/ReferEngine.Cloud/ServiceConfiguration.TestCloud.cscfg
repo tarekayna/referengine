@@ -15,6 +15,7 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" value="1" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" value="30" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" value="DefaultEndpointsProtocol=https;AccountName=referenginecachetest;AccountKey=oxpQdMHF9Z0yOqos70odJaR1/8hJQpRy1grEhRukimIDDwuaWbWTYgR76N08lwq5VGodsluL1AttLwBdLgvApw==" />
+      <Setting name="TracerConnectionString" value="DefaultEndpointsProtocol=https;AccountName=tracedatatest;AccountKey=L+aCTcmNsCXSAtbZeoqCfDnELQhyl4CpjVE0UpA4ElukBLRIshyLBHBcou0/tB6Pn+ncwb620GnZiu3UDD/Jbg==" />
     </ConfigurationSettings>
     <Certificates>
       <Certificate name="ReferEngineTestCertificate" thumbprint="A88DE6FD7709982CF9C59414A359E9E16E4035FF" thumbprintAlgorithm="sha1" />

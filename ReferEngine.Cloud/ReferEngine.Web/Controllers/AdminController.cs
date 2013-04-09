@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Email;
 using ReferEngine.Common.Models;
+using ReferEngine.Common.Tracing;
 using ReferEngine.Web.Models.Admin;
 
 namespace ReferEngine.Web.Controllers
@@ -20,6 +21,17 @@ namespace ReferEngine.Web.Controllers
         public ActionResult WindowsAppInvites()
         {
             return View();
+        }
+
+        public ActionResult TraceLogs(string role)
+        {
+            TraceLogsViewModel viewModel = new TraceLogsViewModel();
+            if (!string.IsNullOrEmpty(role))
+            {
+                viewModel.Role = role;
+                viewModel.TraceMessages = Tracer.GetTraceMessages(role);
+            }
+            return View(viewModel);
         }
 
         [HttpPost]

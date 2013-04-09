@@ -7,6 +7,7 @@
     </Imports>
     <ConfigurationSettings>
       <Setting name="CurrentServiceConfiguration" />
+      <Setting name="TracerConnectionString" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

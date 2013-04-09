@@ -34,54 +34,57 @@
                     </ul>
                 </div>  
             </div>
-            <div class="span12">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
+            @if (Model.TraceMessages != null)
+            {
+                <div class="span12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
                                 
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (TraceMessage traceMessage in Model.TraceMessages)
-                        {
-                            string color;
-                            switch (traceMessage.Category)
-                            {
-                                case TraceMessageCategory.Error:
-                                    color = "red";
-                                    break;
-                                case TraceMessageCategory.Warning:
-                                    color = "orange";
-                                    break;
-                                case TraceMessageCategory.Success:
-                                    color = "green";
-                                    break;
-                                case TraceMessageCategory.Info:
-                                    color = "black";
-                                    break;
-                                default:
-                                    throw new ArgumentOutOfRangeException();
-                            }
-                            <tr style="color: @color;">
-                                <td>
-                                    @traceMessage.Time.ToString()
-                                </td>
-                                <td>
-                                    @traceMessage.Message
-                                </td>
-                                <td>
-                                    @foreach (var keyValuePair in traceMessage.Properties)
-                                    {
-                                        <p>@keyValuePair.Key = @keyValuePair.Value</p>
-                                    }
-                                </td>
+                                </th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            @foreach (TraceMessage traceMessage in Model.TraceMessages)
+                            {
+                                string color;
+                                switch (traceMessage.Category)
+                                {
+                                    case TraceMessageCategory.Error:
+                                        color = "red";
+                                        break;
+                                    case TraceMessageCategory.Warning:
+                                        color = "orange";
+                                        break;
+                                    case TraceMessageCategory.Success:
+                                        color = "green";
+                                        break;
+                                    case TraceMessageCategory.Info:
+                                        color = "black";
+                                        break;
+                                    default:
+                                        throw new ArgumentOutOfRangeException();
+                                }
+                                <tr style="color: @color;">
+                                    <td>
+                                        @traceMessage.Time.ToString()
+                                    </td>
+                                    <td>
+                                        @traceMessage.Message
+                                    </td>
+                                    <td>
+                                        @foreach (var keyValuePair in traceMessage.Properties)
+                                        {
+                                            <p>@keyValuePair.Key = @keyValuePair.Value</p>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
         </div>
     </div>
 </div>

@@ -1,18 +1,17 @@
 ﻿using HtmlAgilityPack;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using ReferEngine.Common.Data;
-using ReferEngine.Common.Email;
 using ReferEngine.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Xml;
+using ReferEngine.Common.Tracing;
 
 namespace ReferEngine.WorkerCloud.WinApps
 {
@@ -103,7 +102,8 @@ namespace ReferEngine.WorkerCloud.WinApps
         {
             while (true)
             {
-                Trace.TraceInformation("Resume WinAppsWorker");
+                Tracer.Trace(TraceMessage.Info("Resume WinAppsWorker"));
+
                 DateTime startTime = DateTime.UtcNow;
                 int numberOfLinks = 0;
                 int numberOfLiveLinks = 0;
@@ -117,23 +117,31 @@ namespace ReferEngine.WorkerCloud.WinApps
                     const string appStoreSiteMap = "http://apps.microsoft.com/windows/sitemap/sitemap_{0}.xml";
                     int sitemapIndex = 1;
                     string url = string.Format(appStoreSiteMap, sitemapIndex);
-                    while (ProcessStoreSitemap(url))
-                    {
-                        sitemapIndex++;
-                        url = string.Format(appStoreSiteMap, sitemapIndex);
-                    }
+                    //while (ProcessStoreSitemap(url))
+                    //{
+                    //    Tracer.Trace(TraceMessage.Info("ProcessStoreSitemap").AddProperty("url", url));
+                    //    sitemapIndex++;
+                    //    url = string.Format(appStoreSiteMap, sitemapIndex);
+                    //}
 
                     // Now that we got all the links, time to scrape
-                    IList<WindowsAppStoreLink> windowsAppStoreLinks = DataOperations.GetWindowsAppStoreLinks();
+                    //IList<WindowsAppStoreLink> windowsAppStoreLinks = DataOperations.GetWindowsAppStoreLinks();
 
-                    //IList<WindowsAppStoreLink> windowsAppStoreLinks = new List<WindowsAppStoreLink>();
-                    //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-US/app/blu-graphing-calculator/764cce31-8f93-48a6-b4fc-008eb78e50d4" });
-                    //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-US/app/skype/5e19cc61-8994-4797-bdc7-c21263f6282b" });
+                    IList<WindowsAppStoreLink> windowsAppStoreLinks = new List<WindowsAppStoreLink>();
+                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-US/app/blu-graphing-calculator/764cce31-8f93-48a6-b4fc-008eb78e50d4" });
+                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-US/app/skype/5e19cc61-8994-4797-bdc7-c21263f6282b" });
 
                     numberOfLinks = windowsAppStoreLinks.Count();
 
-                    foreach (var windowsAppStoreLink in windowsAppStoreLinks)
+                    for (int i = 0; i < windowsAppStoreLinks.Count; i++)
                     {
+                        var windowsAppStoreLink = windowsAppStoreLinks.ElementAt(i);
+
+                        if (i%100 == 0)
+                        {
+                            Tracer.Trace(TraceMessage.Info("Requesting WindowsAppStoreLinks #"));
+                        }
+
                         HttpWebRequest httpWebRequest = WebRequest.CreateHttp(windowsAppStoreLink.Link);
                         HttpWebResponse httpWebResponse = (HttpWebResponse) httpWebRequest.GetResponse();
                         if (httpWebResponse.StatusCode == HttpStatusCode.OK)
@@ -266,7 +274,7 @@ namespace ReferEngine.WorkerCloud.WinApps
                                         }
                                         catch (Exception e)
                                         {
-                                            Emailer.SendExceptionEmail(e, "WinAppsWorker Exception: " + storeAppInfo.MsAppId);
+                                            Tracer.Trace(TraceMessage.Exception(e).AddProperty("WindowsAppStoreLink", windowsAppStoreLink.Link));
                                         }
                                     }
                                     else
@@ -306,27 +314,18 @@ namespace ReferEngine.WorkerCloud.WinApps
                 }
                 catch (Exception e)
                 {
-                    Emailer.SendExceptionEmail(e, "WinApps Worker Exception");
+                    Tracer.Trace(TraceMessage.Exception(e));
                 }
 
-                StringBuilder body = new StringBuilder();
-                body.AppendLine("مرحبا");
-                body.AppendLine();
-                body.AppendLine("هيدا تقرير من عامل تجميع تطبيقات الويندوز");
-                body.AppendLine();
-                body.AppendLine("Start time: " + startTime.ToShortTimeString());
-                body.AppendLine("End time: " + DateTime.UtcNow.ToShortTimeString());
-                body.AppendLine();
-                body.AppendLine("Number of Links: " + numberOfLinks);
-                body.AppendLine("    - Live:      " + numberOfLiveLinks);
-                body.AppendLine("    - Down:      " + numberOfDownLinks);
-                body.AppendLine("    - Deleted:   " + numberOfDeletedLinks);
-                body.AppendLine();
-                body.AppendLine("Number of New Apps: " + numberOfNewApps);
-                body.AppendLine("Number of Updated Apps: " + numberOfUpdatedApps);
-                body.AppendLine();
-                body.AppendLine(".نحنا بأمرك أستاذ");
-                Emailer.SendEmail("tarek@referengine.com", "Good news everyone!", body.ToString());
+                Tracer.Trace(TraceMessage.Success("WinAppsWorker Finished")
+                                         .AddProperty("Number of Links", numberOfLinks)
+                                         .AddProperty("Start Time", startTime.ToShortTimeString())
+                                         .AddProperty("End Time", DateTime.UtcNow.ToShortTimeString())
+                                         .AddProperty("Number of Live Links", numberOfLiveLinks)
+                                         .AddProperty("Number of Down Links", numberOfDownLinks)
+                                         .AddProperty("Number of Deleted Links", numberOfDeletedLinks)
+                                         .AddProperty("Number of Newly Added Apps", numberOfNewApps)
+                                         .AddProperty("Number of Updated Apps", numberOfUpdatedApps));
 
                 TimeSpan sleepTime = TimeSpan.FromHours(24).Subtract(DateTime.UtcNow.Subtract(startTime));
                 Thread.Sleep(sleepTime);

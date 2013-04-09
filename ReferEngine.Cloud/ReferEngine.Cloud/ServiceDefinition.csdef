@@ -22,6 +22,7 @@
       <Setting name="StorageConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
       <Setting name="CurrentServiceConfiguration" />
+      <Setting name="TracerConnectionString" />
     </ConfigurationSettings>
     <Certificates>
       <Certificate name="ReferEngineTestCertificate" storeLocation="LocalMachine" storeName="My" />
