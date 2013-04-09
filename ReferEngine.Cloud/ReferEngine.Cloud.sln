@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Common", "Refer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Workers.DataWriter", "ReferEngine.Workers.DataWriter\ReferEngine.Workers.DataWriter.csproj", "{15B3E0D2-6217-493A-A690-158C497F5318}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Workers.Pinger", "ReferEngine.Workers.Pinger\ReferEngine.Workers.Pinger.csproj", "{3374D4A7-04C1-46DF-8E53-F78023EDB6BC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Common.UnitTests", "ReferEngine.Common.UnitTests\ReferEngine.Common.UnitTests.csproj", "{DC20B55F-C0BE-4270-B3BD-46DF2E20CEB3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Nuget.Windows.Javascript", "ReferEngine.Nuget.Windows.Javascript\ReferEngine.Nuget.Windows.Javascript.csproj", "{64539744-C2CD-4C1C-AF0E-307CA206E59E}"
@@ -30,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		UpdateDatabase_Production_West.ps1 = UpdateDatabase_Production_West.ps1
 		UpdateDatabase_West_Local.ps1 = UpdateDatabase_West_Local.ps1
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.WorkerCloud.Pinger", "ReferEngine.WorkerCloud.Pinger\ReferEngine.WorkerCloud.Pinger.csproj", "{FE07B25C-DE2B-41C2-BAD0-533780730E08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,6 @@ Global
 		{15B3E0D2-6217-493A-A690-158C497F5318}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15B3E0D2-6217-493A-A690-158C497F5318}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15B3E0D2-6217-493A-A690-158C497F5318}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3374D4A7-04C1-46DF-8E53-F78023EDB6BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3374D4A7-04C1-46DF-8E53-F78023EDB6BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3374D4A7-04C1-46DF-8E53-F78023EDB6BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3374D4A7-04C1-46DF-8E53-F78023EDB6BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DC20B55F-C0BE-4270-B3BD-46DF2E20CEB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC20B55F-C0BE-4270-B3BD-46DF2E20CEB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC20B55F-C0BE-4270-B3BD-46DF2E20CEB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -73,6 +69,10 @@ Global
 		{BBF7AF39-0EC8-45D5-8D9D-4D2BC7C35BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBF7AF39-0EC8-45D5-8D9D-4D2BC7C35BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBF7AF39-0EC8-45D5-8D9D-4D2BC7C35BC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE07B25C-DE2B-41C2-BAD0-533780730E08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE07B25C-DE2B-41C2-BAD0-533780730E08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE07B25C-DE2B-41C2-BAD0-533780730E08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE07B25C-DE2B-41C2-BAD0-533780730E08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

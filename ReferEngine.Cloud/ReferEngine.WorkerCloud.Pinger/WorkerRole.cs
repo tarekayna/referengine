@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using ReferEngine.Common.Tracing;
 using ReferEngine.Common.Utilities;
 
-namespace ReferEngine.Workers.Pinger
+namespace ReferEngine.WorkerCloud.Pinger
 {
     public class WorkerRole : RoleEntryPoint
     {
@@ -29,7 +29,7 @@ namespace ReferEngine.Workers.Pinger
                     }
                     catch (Exception e)
                     {
-                        Trace.TraceError(e.Message);
+                        Tracer.Trace(TraceMessage.Exception(e));
                     }
                     finally
                     {

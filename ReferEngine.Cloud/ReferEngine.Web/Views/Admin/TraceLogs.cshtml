@@ -15,14 +15,7 @@
             <div class="span12">                                
                 <div class="btn-group">
                     <button class="btn dropdown-toggle" data-toggle="dropdown">
-                        @if (string.IsNullOrEmpty(Model.Role))
-                        {
-                            <span>Roles</span>
-                        }
-                        else
-                        {
-                            <span>@Model.Role</span>
-                        }
+                        <span>@Model.Role</span>
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
@@ -35,9 +28,28 @@
                 </div>
             </div>
         </div>
-        <hr/>
+        <hr style="margin: 12px"/>
         <div class="row">
-            <div class="span2">@DateTime.UtcNow.ToString()</div>
+            <div class="span3">@DateTime.UtcNow.ToString()</div>
+            <div class="span2 offset7">
+                @if (Model.CurrentPage > 1)
+                {
+                    <div class="pull-left">
+                    @{
+                        var prevPage = Model.CurrentPage - 1;
+                        var link = "tracelogs?role=" + Model.Role + "&page=" + prevPage;
+                    }
+                        <a class="btn" href="@link"><i class="icon-arrow-left"></i></a>
+                    </div>
+                }
+                <div class="pull-right">
+                    @{
+                        var nextPage = Model.CurrentPage + 1;
+                        var nextLink = "tracelogs?role=" + Model.Role + "&page=" + nextPage;
+                    }
+                        <a class="btn" href="@nextLink"><i class="icon-arrow-right"></i></a>
+                </div>
+            </div>
         </div>
             @if (Model.TraceMessages != null)
             {
@@ -49,10 +61,10 @@
                     string className = string.IsNullOrEmpty(traceMessage.CategoryString) ? "" :
                                            "text-" + traceMessage.CategoryString.ToLower();
                     className = className == "text-info" ? "" : className;
-                    <hr/>
+                    <hr style="margin: 12px"/>
                     <div class="row @className">
-                        <div class="span2">@traceMessage.Time.ToString()</div>
-                        <div class="span8">
+                        <div class="span3">@traceMessage.Time.ToString()</div>
+                        <div class="span7">
                             <p>@traceMessage.Message</p>
                         </div>
                         <div class="span2">

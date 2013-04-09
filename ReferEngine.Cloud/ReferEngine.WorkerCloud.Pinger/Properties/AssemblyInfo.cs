@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ReferEngine.Workers.Pinger")]
+[assembly: AssemblyTitle("ReferEngine.WorkerCloud.Pinger")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ReferEngine.Workers.Pinger")]
+[assembly: AssemblyProduct("ReferEngine.WorkerCloud.Pinger")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("631f388e-12be-4f2d-8bfa-b7e622bd6b8d")]
+[assembly: Guid("ae381316-7fdf-449b-a3a7-3091faa73d4a")]
 
 // Version information for an assembly consists of the following four values:
 //

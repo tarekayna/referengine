@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Microsoft.WindowsAzure;
+using System.Linq;
 using Microsoft.WindowsAzure.Storage.Table;
 using CloudStorageAccount = Microsoft.WindowsAzure.Storage.CloudStorageAccount;
 
@@ -60,11 +62,19 @@ namespace ReferEngine.Common.Tracing
             return _roles;
         }
 
-        public static IEnumerable<TraceMessage> GetTraceMessages(string role)
+        public static IEnumerable<TraceMessage> GetTraceMessages(string role, int page, int pageSize)
         {
+            int take = pageSize*page;
+            int skip = pageSize*(page - 1);
             TableQuery<TraceMessage> query = new TableQuery<TraceMessage>();
-            query.Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, role));
-            return Table.ExecuteQuery(query);
+            query.Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, role)).Take(take);
+            IEnumerable<TraceMessage> list = new List<TraceMessage>(Table.ExecuteQuery(query));
+            if (list.Count() <= skip)
+            {
+                return new List<TraceMessage>();
+            }
+            list = list.Skip(skip);
+            return list;
         }
     }
 }

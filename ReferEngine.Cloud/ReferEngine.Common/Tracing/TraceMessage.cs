@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Web.Helpers;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage.Table;
-using Microsoft.WindowsAzure.StorageClient;
 using ReferEngine.Common.Utilities;
 
 namespace ReferEngine.Common.Tracing

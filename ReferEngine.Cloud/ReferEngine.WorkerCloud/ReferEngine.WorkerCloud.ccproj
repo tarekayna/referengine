@@ -38,6 +38,14 @@
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ReferEngine.WorkerCloud.Pinger\ReferEngine.WorkerCloud.Pinger.csproj">
+      <Name>ReferEngine.WorkerCloud.Pinger</Name>
+      <Project>{fe07b25c-de2b-41c2-bad0-533780730e08}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>ReferEngine.WorkerCloud.Pinger</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
     <ProjectReference Include="..\ReferEngine.WorkerCloud.WinApps\ReferEngine.WorkerCloud.WinApps.csproj">
       <Name>ReferEngine.WorkerCloud.WinApps</Name>
       <Project>{bbf7af39-0ec8-45d5-8d9d-4d2bc7c35bc2}</Project>

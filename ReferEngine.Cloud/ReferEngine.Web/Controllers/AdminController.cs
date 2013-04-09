@@ -23,14 +23,12 @@ namespace ReferEngine.Web.Controllers
             return View();
         }
 
-        public ActionResult TraceLogs(string role)
+        public ActionResult TraceLogs(string role = "ReferEngine.WorkerCloud.WinApps", int page = 1, int pageSize = 50)
         {
             TraceLogsViewModel viewModel = new TraceLogsViewModel();
-            if (!string.IsNullOrEmpty(role))
-            {
-                viewModel.Role = role;
-                viewModel.TraceMessages = Tracer.GetTraceMessages(role);
-            }
+            viewModel.Role = role;
+            viewModel.CurrentPage = page;
+            viewModel.TraceMessages = Tracer.GetTraceMessages(role, page, pageSize);
             return View(viewModel);
         }
 
