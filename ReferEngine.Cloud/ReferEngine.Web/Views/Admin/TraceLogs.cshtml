@@ -1,0 +1,87 @@
+﻿@using ReferEngine.Common.Tracing
+@model ReferEngine.Web.Models.Admin.TraceLogsViewModel
+
+@*@section scripts {
+    <script data-main="/typescript/admin/windowsAppInvites.js" type="text/javascript" src="~/typescript/lib/require.js"></script> 
+}*@
+
+@{
+    var roles = Tracer.GetRoles();
+}
+
+<div id="content">
+    <div class="container">
+        <div class="row">
+            <div class="span12">                                
+                <div class="btn-group">
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        @if (string.IsNullOrEmpty(Model.Role))
+                        {
+                            <span>Roles</span>
+                        }
+                        else
+                        {
+                            <span>@Model.Role</span>
+                        }
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        @foreach (string role in roles)
+                        {
+                            string link = "~/admin/tracelogs?role=" + role;
+                            <li><a href="@link">role</a></li>
+                        }
+                    </ul>
+                </div>  
+            </div>
+            <div class="span12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (TraceMessage traceMessage in Model.TraceMessages)
+                        {
+                            string color;
+                            switch (traceMessage.Category)
+                            {
+                                case TraceMessageCategory.Error:
+                                    color = "red";
+                                    break;
+                                case TraceMessageCategory.Warning:
+                                    color = "orange";
+                                    break;
+                                case TraceMessageCategory.Success:
+                                    color = "green";
+                                    break;
+                                case TraceMessageCategory.Info:
+                                    color = "black";
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                            <tr style="color: @color;">
+                                <td>
+                                    @traceMessage.Time.ToString()
+                                </td>
+                                <td>
+                                    @traceMessage.Message
+                                </td>
+                                <td>
+                                    @foreach (var keyValuePair in traceMessage.Properties)
+                                    {
+                                        <p>@keyValuePair.Key = @keyValuePair.Value</p>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
