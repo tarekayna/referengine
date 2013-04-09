@@ -117,25 +117,24 @@ namespace ReferEngine.WorkerCloud.WinApps
                     const string appStoreSiteMap = "http://apps.microsoft.com/windows/sitemap/sitemap_{0}.xml";
                     int sitemapIndex = 1;
                     string url = string.Format(appStoreSiteMap, sitemapIndex);
-                    //while (ProcessStoreSitemap(url))
-                    //{
-                    //    Tracer.Trace(TraceMessage.Info("ProcessStoreSitemap").AddProperty("url", url));
-                    //    sitemapIndex++;
-                    //    url = string.Format(appStoreSiteMap, sitemapIndex);
-                    //}
+                    while (ProcessStoreSitemap(url))
+                    {
+                        Tracer.Trace(TraceMessage.Info("ProcessStoreSitemap").AddProperty("url", url));
+                        sitemapIndex++;
+                        url = string.Format(appStoreSiteMap, sitemapIndex);
+                    }
 
                     // Now that we got all the links, time to scrape
-                    //IList<WindowsAppStoreLink> windowsAppStoreLinks = DataOperations.GetWindowsAppStoreLinks();
+                    IList<WindowsAppStoreLink> windowsAppStoreLinks = DataOperations.GetWindowsAppStoreLinks();
 
-                    IList<WindowsAppStoreLink> windowsAppStoreLinks = new List<WindowsAppStoreLink>();
-
-                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/wow-engineer/1586f767-2ae2-4b1b-a9bb-543714486652" });
-                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/vedic-patri/621e45bd-a207-4a7f-a93a-58ed48b3a821/m/ROW" });
-                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/windows-media-player-8/6ead7ee1-3f23-46e4-b60b-06605e09ed43/m/ROW" });
-                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/trendwatcher/7d6e52bc-2bc3-428e-b4fe-74d015b04f6e/m/ROW" });
-                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/wow-herbalist/8eb2ba67-2a03-42b1-9022-d029c10ae144" });
-                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-US/app/blu-graphing-calculator/764cce31-8f93-48a6-b4fc-008eb78e50d4" });
-                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-US/app/skype/5e19cc61-8994-4797-bdc7-c21263f6282b" });
+                    //IList<WindowsAppStoreLink> windowsAppStoreLinks = new List<WindowsAppStoreLink>();
+                    //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/wow-engineer/1586f767-2ae2-4b1b-a9bb-543714486652" });
+                    //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/vedic-patri/621e45bd-a207-4a7f-a93a-58ed48b3a821/m/ROW" });
+                    //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/windows-media-player-8/6ead7ee1-3f23-46e4-b60b-06605e09ed43/m/ROW" });
+                    //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/trendwatcher/7d6e52bc-2bc3-428e-b4fe-74d015b04f6e/m/ROW" });
+                    //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/wow-herbalist/8eb2ba67-2a03-42b1-9022-d029c10ae144" });
+                    //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-US/app/blu-graphing-calculator/764cce31-8f93-48a6-b4fc-008eb78e50d4" });
+                    //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-US/app/skype/5e19cc61-8994-4797-bdc7-c21263f6282b" });
 
                     numberOfLinks = windowsAppStoreLinks.Count();
 
@@ -333,8 +332,7 @@ namespace ReferEngine.WorkerCloud.WinApps
                                          .AddProperty("Number of Newly Added Apps", numberOfNewApps)
                                          .AddProperty("Number of Updated Apps", numberOfUpdatedApps));
 
-                TimeSpan sleepTime = TimeSpan.FromHours(24).Subtract(DateTime.UtcNow.Subtract(startTime));
-                Thread.Sleep(sleepTime);
+                Thread.Sleep(TimeSpan.FromHours(24));
             }
 // ReSharper disable FunctionNeverReturns
         }
