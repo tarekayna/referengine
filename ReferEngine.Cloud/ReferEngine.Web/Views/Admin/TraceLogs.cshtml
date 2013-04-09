@@ -28,8 +28,8 @@
                     <ul class="dropdown-menu">
                         @foreach (string role in roles)
                         {
-                            string link = "~/admin/tracelogs?role=" + role;
-                            <li><a href="@link">role</a></li>
+                            string link = "/admin/tracelogs?role=" + role;
+                            <li><a href="@link">@role</a></li>
                         }
                     </ul>
                 </div>  
@@ -74,9 +74,12 @@
                                         @traceMessage.Message
                                     </td>
                                     <td>
-                                        @foreach (var keyValuePair in traceMessage.Properties)
+                                        @if (traceMessage.Properties != null)
                                         {
-                                            <p>@keyValuePair.Key = @keyValuePair.Value</p>
+                                            foreach (var keyValuePair in traceMessage.Properties)
+                                            {
+                                                <p>@keyValuePair.Key = @keyValuePair.Value</p>
+                                            }
                                         }
                                     </td>
                                 </tr>
