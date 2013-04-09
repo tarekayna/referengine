@@ -9,7 +9,7 @@
       <Setting name="TracerConnectionString" />
     </ConfigurationSettings>
   </WorkerRole>
-  <WorkerRole name="ReferEngine.WorkerCloud.Pinger" vmsize="ExtraLarge">
+  <WorkerRole name="ReferEngine.WorkerCloud.Pinger" vmsize="ExtraSmall">
     <Imports>
     </Imports>
     <ConfigurationSettings>
