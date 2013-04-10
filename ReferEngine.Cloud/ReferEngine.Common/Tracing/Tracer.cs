@@ -62,17 +62,19 @@ namespace ReferEngine.Common.Tracing
             return _roles;
         }
 
-        public static IEnumerable<TraceMessage> GetTraceMessages(string role, int page, int pageSize)
+        public static IEnumerable<TraceMessage> GetTraceMessages(string role, int page, int requestedPageSize)
         {
-            int take = pageSize*page;
-            int skip = pageSize*(page - 1);
+            int pageSize = requestedPageSize > 100 ? 100 : requestedPageSize;
+            int take = pageSize * page;
+            int skip = pageSize * (page - 1);
             TableQuery<TraceMessage> query = new TableQuery<TraceMessage>();
-            query.Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, role)).Take(take);
+            query.Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, role));
             IEnumerable<TraceMessage> list = new List<TraceMessage>(Table.ExecuteQuery(query));
             if (list.Count() <= skip)
             {
                 return new List<TraceMessage>();
             }
+            list = list.Take(take);
             list = list.Skip(skip);
             return list;
         }
