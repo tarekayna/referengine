@@ -1,21 +1,38 @@
-﻿@model ReferEngine.Common.ViewModels.AppStore.Windows.WindowsCategoryViewModel
+﻿@using ReferEngine.Common.Utilities;
+@model ReferEngine.Common.ViewModels.AppStore.Windows.WindowsCategoryViewModel
 
 @{
-    string categoryLinkSection = Model.Category.Name.ToLower().Replace(' ', '-');
+    string categoryLinkPart = Util.ConvertStringToUrlPart(Model.Category.Name);
 }
 
 <div class="row">
     <ul class="portfolio-area da-thumbs">    
         @foreach (var appInfo in Model.AppStoreInfos)
         {
+            string appLinkPart = Util.ConvertStringToUrlPart(appInfo.Name);
             <li class="portfolio-item2" data-id="id-0" data-type="web">
                 <div class="span3">
                     <div class="thumbnail">
                         <div class="image-wrapp">
-                            <img src="~/areas/assets/img/dummies/work1.jpg" style="height: 90px; width: 270px"  alt="Portfolio name" title="" />
+                            @if (appInfo.CloudinaryImages != null && appInfo.CloudinaryImages.Any())
+                            {
+                                <img src="@appInfo.CloudinaryImages.First().GetLink("h_90,w_270,c_fill")" alt="@appInfo.Name" title="" />
+                            }
+                            else
+                            {
+                                <img src="~/areas/assets/img/dummies/work1.jpg" style="height: 90px; width: 270px"  alt="@appInfo.Name" title="" />
+                            }
                         </div>
-                        <div class="caption">
-                            <h2><a href="~/appstore/windows/@categoryLinkSection/@appInfo.Name.ToLower().Replace(' ', '-')">@appInfo.Name</a></h2>
+                        <div class="caption" style="background-color: @appInfo.BackgroundColor">
+                            @if (appInfo.LogoImage != null)
+                            {
+                                <img src="@appInfo.LogoImage.GetLink()"/>
+                            }
+                            <h2>
+                                <a href="~/appstore/windows/@categoryLinkPart/@appLinkPart" style="color: white">
+                                    @Html.Raw(appInfo.Name)
+                                </a>
+                            </h2>
                         </div>
                     </div>
                 </div>
@@ -26,5 +43,5 @@
 
 @section Navigation
 {
-    > <a href="~/appstore/windows/@categoryLinkSection" style="color: #FFF">@Model.Category.Name</a>
+    > <a href="~/appstore/windows/@categoryLinkPart" style="color: #FFF">@Model.Category.Name</a>
 }

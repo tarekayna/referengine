@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
+using System.Web;
 using System.Xml;
 using ReferEngine.Common.Models;
 using Microsoft.WindowsAzure.ServiceRuntime;
@@ -77,10 +78,7 @@ namespace ReferEngine.Common.Utilities
                         throw new InvalidDataException(string.Format("Invalid currentServiceConfiguration: {0}",
                                                                      currentServiceConfiguration));
                     }
-                    else
-                    {
-                        return ReferEngineServiceConfiguration.Local;
-                    }
+                    return ReferEngineServiceConfiguration.Local;
                 }
                 catch (TypeInitializationException e)
                 {
@@ -235,6 +233,28 @@ namespace ReferEngine.Common.Utilities
                 }
             }
             return hashBuilder.ToString();
+        }
+        
+        public static string ConvertStringToUrlPart(string str)
+        {
+            if (string.IsNullOrEmpty(str)) return null;
+            string result = str;
+            result = result.ToLower();
+            result = result.Replace(" & ", "-and-");
+            result = result.Replace(' ', '-');
+            result = HttpUtility.UrlEncode(result);
+            return result;
+        }
+
+        public static string ConvertUrlPartToString(string urlPart)
+        {
+            if (string.IsNullOrEmpty(urlPart)) return null;
+            string result = urlPart;
+            result = HttpUtility.UrlDecode(result);
+            if (string.IsNullOrEmpty(result)) return null;
+            result = result.Replace('-', ' ');
+            result = result.Replace(" and ", " & ");
+            return result;
         }
     }
 }

@@ -22,7 +22,8 @@ namespace ReferEngine.Web.Areas.AppStore.Controllers
                 IList<WindowsAppStoreCategory> categories = DataOperations.GetWindowsAppStoreCategories();
                 return View("WindowsStore", categories);
             }
-            string categoryName = category.Replace('-', ' ').Replace("and", "&");
+
+            string categoryName = Util.ConvertUrlPartToString(category);
             var windowsAppStoreCategory = DataOperations.GetWindowsAppStoreCategory(categoryName);
             if (windowsAppStoreCategory == null)
             {
@@ -33,7 +34,7 @@ namespace ReferEngine.Web.Areas.AppStore.Controllers
             WindowsAppViewModel windowsAppViewModel = null;
             if (!string.IsNullOrEmpty(name))
             {
-                string appName = name.Replace('-', ' ');
+                string appName = Util.ConvertUrlPartToString(name);
                 windowsAppViewModel = DataOperations.GetWindowsAppViewModelByName(appName);
             }
             if (windowsAppViewModel == null)

@@ -1,4 +1,5 @@
 ﻿@using ReferEngine.Common.Models
+@using ReferEngine.Common.Utilities;
 @model ReferEngine.Common.ViewModels.AppStore.Windows.WindowsAppViewModel
 
 @{
@@ -6,14 +7,16 @@
     bool supportsProtocolLaunching = Model.UserAgentProperties.SupportsProtocolLaunching;
     WindowsAppStoreInfo appInfo = Model.WindowsAppStoreInfo;
 
-    string categoryLinkSection = Model.WindowsAppStoreInfo.Category.Name.ToLower().Replace(' ', '-');
-    string appLinkSection = Model.WindowsAppStoreInfo.Category.Name.ToLower().Replace(' ', '-');
+    string categoryLinkPart = Util.ConvertStringToUrlPart(Model.WindowsAppStoreInfo.Category.Name);
+    string appLinkPart = Util.ConvertStringToUrlPart(Model.WindowsAppStoreInfo.Category.Name);
 }
 
 @section Navigation
 {
-    > <a href="~/appstore/windows/@categoryLinkSection" style="color: #FFF">@Model.WindowsAppStoreInfo.Category.Name</a>
-    > <a href="~/appstore/windows/@appLinkSection" style="color: #FFF">@Model.WindowsAppStoreInfo.Name</a>
+@* ReSharper disable Html.PathError *@
+    > <a href="~/appstore/windows/@categoryLinkPart" style="color: #FFF">@Model.WindowsAppStoreInfo.Category.Name</a>
+    > <a href="~/appstore/windows/@appLinkPart" style="color: #FFF">@Model.WindowsAppStoreInfo.Name</a>
+@* ReSharper restore Html.PathError *@
 }
 
 @section ScriptsAfterBody

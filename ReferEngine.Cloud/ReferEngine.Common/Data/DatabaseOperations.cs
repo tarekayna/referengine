@@ -506,7 +506,11 @@ namespace ReferEngine.Common.Data
 
                     int take = numberOfApps;
                     int skip = numberOfApps*(pageNumber - 1);
-                    viewModel.AppStoreInfos = db.WindowsAppStoreInfos.Where(a => a.Category.Id == viewModel.Category.Id).OrderByDescending(a => a.Rating).Skip(skip).Take(take).ToList();
+                    viewModel.AppStoreInfos = QueryForWindowsAppStoreInfos(db, a => a.Category.Id == viewModel.Category.Id)
+                                                .OrderByDescending(a => a.Rating)
+                                                .Skip(skip)
+                                                .Take(take)
+                                                .ToList();
                 }
                 return viewModel;
             });
