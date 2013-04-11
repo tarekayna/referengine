@@ -874,7 +874,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\AppStore\Models\" />
     <Folder Include="js\recommend\" />
     <Folder Include="Models\InAppScript\" />
   </ItemGroup>

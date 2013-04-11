@@ -317,6 +317,10 @@
     <Compile Include="Migrations\201304062132496_DeleteDownLinks.Designer.cs">
       <DependentUpon>201304062132496_DeleteDownLinks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201304102257405_ParentCategoryName.cs" />
+    <Compile Include="Migrations\201304102257405_ParentCategoryName.Designer.cs">
+      <DependentUpon>201304102257405_ParentCategoryName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\AppRewardPlan.cs" />
     <Compile Include="Models\ChartUnitResult.cs" />
@@ -401,6 +405,7 @@
     <Compile Include="Data\ServiceBusOperations.cs" />
     <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="Utilities\Verifier.cs" />
+    <Compile Include="ViewModels\AppStore\Windows\WindowsCategoryViewModel.cs" />
     <Compile Include="ViewModels\AppStore\Windows\WindowsAppViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -551,6 +556,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201304062132496_DeleteDownLinks.resx">
       <DependentUpon>201304062132496_DeleteDownLinks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304102257405_ParentCategoryName.resx">
+      <DependentUpon>201304102257405_ParentCategoryName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

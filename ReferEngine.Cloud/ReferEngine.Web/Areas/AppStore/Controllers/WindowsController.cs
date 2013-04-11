@@ -12,28 +12,41 @@ namespace ReferEngine.Web.Areas.AppStore.Controllers
 {
     public class WindowsController : BaseController
     {
-        public ActionResult Index(string platform, string category = null, string name = null)
+        public ActionResult Index(string platform, string category = null, string name = null, int numberOfApps = 20, int page = 1)
         {
+            int actualNumberOfApps = numberOfApps > 50 ? 50 : numberOfApps;
             UserAgentProperties userAgentProperties = new UserAgentProperties(Request.UserAgent);
-
-            WindowsAppStoreCategory windowsAppStoreCategory = DataOperations.GetWindowsAppStoreCategory(category);
+            
+            if (string.IsNullOrEmpty(category))
+            {
+                IList<WindowsAppStoreCategory> categories = DataOperations.GetWindowsAppStoreCategories();
+                return View("WindowsStore", categories);
+            }
+            string categoryName = category.Replace('-', ' ').Replace("and", "&");
+            var windowsAppStoreCategory = DataOperations.GetWindowsAppStoreCategory(categoryName);
             if (windowsAppStoreCategory == null)
             {
                 IList<WindowsAppStoreCategory> categories = DataOperations.GetWindowsAppStoreCategories();
                 return View("WindowsStore", categories);
             }
 
-            string appName = name.Replace('-', ' ');
-            WindowsAppViewModel windowsAppViewModel = DataOperations.GetWindowsAppViewModelByName(appName);
+            WindowsAppViewModel windowsAppViewModel = null;
+            if (!string.IsNullOrEmpty(name))
+            {
+                string appName = name.Replace('-', ' ');
+                windowsAppViewModel = DataOperations.GetWindowsAppViewModelByName(appName);
+            }
             if (windowsAppViewModel == null)
             {
-                return View("WindowsCategory", windowsAppStoreCategory);
+                WindowsCategoryViewModel windowsCategoryViewModel = DataOperations.GetWindowsCategoryViewModel(categoryName, actualNumberOfApps, page);
+                return View("WindowsCategory", windowsCategoryViewModel);
             }
 
             windowsAppViewModel.UserAgentProperties = userAgentProperties;
             return View("WindowsApp", windowsAppViewModel);
         }
 
+        // appstore/windows/a/getapprecommendations
         [HttpPost]
         public ActionResult GetAppRecommendations(long appId, string page)
         {

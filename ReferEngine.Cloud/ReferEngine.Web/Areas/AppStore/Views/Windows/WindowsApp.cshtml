@@ -5,6 +5,15 @@
     bool isWindows8 = Model.UserAgentProperties.IsWindows8;
     bool supportsProtocolLaunching = Model.UserAgentProperties.SupportsProtocolLaunching;
     WindowsAppStoreInfo appInfo = Model.WindowsAppStoreInfo;
+
+    string categoryLinkSection = Model.WindowsAppStoreInfo.Category.Name.ToLower().Replace(' ', '-');
+    string appLinkSection = Model.WindowsAppStoreInfo.Category.Name.ToLower().Replace(' ', '-');
+}
+
+@section Navigation
+{
+    > <a href="~/appstore/windows/@categoryLinkSection" style="color: #FFF">@Model.WindowsAppStoreInfo.Category.Name</a>
+    > <a href="~/appstore/windows/@appLinkSection" style="color: #FFF">@Model.WindowsAppStoreInfo.Name</a>
 }
 
 @section ScriptsAfterBody

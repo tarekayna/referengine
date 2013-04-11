@@ -1,5 +1,30 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@model ReferEngine.Common.ViewModels.AppStore.Windows.WindowsCategoryViewModel
+
+@{
+    string categoryLinkSection = Model.Category.Name.ToLower().Replace(' ', '-');
 }
 
-<h2>Index</h2>
+<div class="row">
+    <ul class="portfolio-area da-thumbs">    
+        @foreach (var appInfo in Model.AppStoreInfos)
+        {
+            <li class="portfolio-item2" data-id="id-0" data-type="web">
+                <div class="span3">
+                    <div class="thumbnail">
+                        <div class="image-wrapp">
+                            <img src="~/areas/assets/img/dummies/work1.jpg" style="height: 90px; width: 270px"  alt="Portfolio name" title="" />
+                        </div>
+                        <div class="caption">
+                            <h2><a href="~/appstore/windows/@categoryLinkSection/@appInfo.Name.ToLower().Replace(' ', '-')">@appInfo.Name</a></h2>
+                        </div>
+                    </div>
+                </div>
+            </li>  
+        }
+    </ul>
+</div>
+
+@section Navigation
+{
+    > <a href="~/appstore/windows/@categoryLinkSection" style="color: #FFF">@Model.Category.Name</a>
+}

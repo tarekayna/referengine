@@ -46,7 +46,7 @@ class People {
         Notification.show("Error: could not update people view", Notification.NotificationType.error);
     }
     static refresh() {
-        $.ajax("../GetAppRecommendations", {
+        $.ajax("../a/GetAppRecommendations", {
             type: "POST",
             data: {
                 appId: re.appId,

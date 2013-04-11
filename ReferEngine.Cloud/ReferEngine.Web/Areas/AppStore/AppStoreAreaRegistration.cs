@@ -16,7 +16,7 @@ namespace ReferEngine.Web.Areas.AppStore
         {
             context.MapRoute(
                 "AppStore_action",
-                "AppStore/{controller}/{action}"
+                "AppStore/{controller}/a/{action}"
             );
 
             context.MapRoute(

@@ -494,6 +494,24 @@ namespace ReferEngine.Common.Data
             });
         }
 
+        internal static WindowsCategoryViewModel GetWindowsCategoryViewModel(string name, int numberOfApps, int pageNumber)
+        {
+            return (WindowsCategoryViewModel)DbConnector.Execute(db =>
+            {
+                WindowsCategoryViewModel viewModel = new WindowsCategoryViewModel();
+                viewModel.Category = db.WindowsAppStoreCategories.FirstOrDefault(c => c.Name == name && string.IsNullOrEmpty(c.ParentCategoryName));
+                if (viewModel.Category != null)
+                {
+                    viewModel.SubCategories = db.WindowsAppStoreCategories.Where(c => c.ParentCategoryName == viewModel.Category.Name).ToList();
+
+                    int take = numberOfApps;
+                    int skip = numberOfApps*(pageNumber - 1);
+                    viewModel.AppStoreInfos = db.WindowsAppStoreInfos.Where(a => a.Category.Id == viewModel.Category.Id).OrderByDescending(a => a.Rating).Skip(skip).Take(take).ToList();
+                }
+                return viewModel;
+            });
+        }
+
         internal static IList<WindowsAppStoreInfo> GetWindowsAppStoreInfos(string term, int count)
         {
             return (IList<WindowsAppStoreInfo>) DbConnector.Execute(db =>
@@ -580,7 +598,16 @@ namespace ReferEngine.Common.Data
 
         internal static IList<WindowsAppStoreCategory> GetWindowsAppStoreCategories()
         {
-            return (IList<WindowsAppStoreCategory>)DbConnector.Execute(db => db.WindowsAppStoreCategories.ToList());
+            return (IList<WindowsAppStoreCategory>)DbConnector.Execute(db => db.WindowsAppStoreCategories.Where(c => string.IsNullOrEmpty(c.ParentCategoryName)).ToList());
+        }
+
+        internal static IList<WindowsAppStoreCategory> GetWindowsAppStoreSubCategories(int parentCategoryId)
+        {
+            return (IList<WindowsAppStoreCategory>)DbConnector.Execute(db =>
+            {
+                var parentCategory = db.WindowsAppStoreCategories.SingleOrDefault(c => c.Id == parentCategoryId);
+                return parentCategory != null ? db.WindowsAppStoreCategories.Where(c => c.ParentCategoryName == parentCategory.Name).ToList() : null;
+            });
         }
 
         internal static App SetAppAsInActive(App app)
@@ -803,19 +830,39 @@ namespace ReferEngine.Common.Data
             
         }
 
-        internal static bool AddOrUpdateWindowsAppStoreInfo(WindowsAppStoreInfo storeAppInfo, string category, string logoLink, IList<ImageInfo> images)
+        internal static bool AddOrUpdateWindowsAppStoreInfo(WindowsAppStoreInfo storeAppInfo, string categoryString, string logoLink, IList<ImageInfo> images)
         {
             return (bool) DbConnector.Execute(db =>
             {
-                string categoryName = category.Trim();
-                WindowsAppStoreCategory windowsAppStoreCategory = db.WindowsAppStoreCategories.SingleOrDefault(c => c.Name.Equals(categoryName, StringComparison.InvariantCultureIgnoreCase));
-                if (windowsAppStoreCategory == null)
+                string[] categories = categoryString.Replace("&amp;", "&").Trim().Split('/');
+                int numberOfCategories = categories.Count();
+                if (numberOfCategories != 1 || numberOfCategories != 2)
                 {
-                    windowsAppStoreCategory = new WindowsAppStoreCategory { Name = categoryName };
-                    db.WindowsAppStoreCategories.Add(windowsAppStoreCategory);
+                    throw new InvalidOperationException("Number of categories: " + numberOfCategories);
                 }
-                storeAppInfo.Category = windowsAppStoreCategory;
-
+                string categoryName = categories.Last().Trim();
+                string parentyCategoryName = numberOfCategories == 2 ? categories.First().Trim() : null;
+                WindowsAppStoreCategory category;
+                if (string.IsNullOrEmpty(parentyCategoryName))
+                {
+                    category = db.WindowsAppStoreCategories.SingleOrDefault(c => c.Name.Equals(categoryName, StringComparison.InvariantCultureIgnoreCase)
+                                                                   && string.IsNullOrEmpty(c.ParentCategoryName));
+                }
+                else
+                {
+                    category = db.WindowsAppStoreCategories.SingleOrDefault(c => c.Name.Equals(categoryName, StringComparison.InvariantCultureIgnoreCase)
+                                                                   && c.ParentCategoryName.Equals(parentyCategoryName, StringComparison.InvariantCultureIgnoreCase));
+                }
+                if (category == null)
+                {
+                    category = new WindowsAppStoreCategory
+                    {
+                        Name = categoryName,
+                        ParentCategoryName = parentyCategoryName
+                    };
+                }
+                storeAppInfo.Category = category;
+                
                 var existing = QueryForWindowsAppStoreInfo(db, i => i.MsAppId.Equals(storeAppInfo.MsAppId), nullOk: true);
                 if (existing != null)
                 {

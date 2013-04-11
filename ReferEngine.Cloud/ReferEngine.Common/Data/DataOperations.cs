@@ -187,6 +187,20 @@ namespace ReferEngine.Common.Data
             return viewModel;
         }
 
+        public static WindowsCategoryViewModel GetWindowsCategoryViewModel(string name, int numberOfApps, int pageNumber)
+        {
+            WindowsCategoryViewModel viewModel = CacheOperations.WindowsCategoryViewModel.Get(name);
+            if (viewModel == null)
+            {
+                viewModel = DatabaseOperations.GetWindowsCategoryViewModel(name, numberOfApps, pageNumber);
+                if (viewModel != null)
+                {
+                    CacheOperations.WindowsCategoryViewModel.Add(viewModel);
+                }
+            }
+            return viewModel;
+        }
+
         public static IList<PersonRecommendationUnitResult> GetAppRecommendationsPeople(App app, int count, int start)
         {
             return DatabaseOperations.GetAppRecommendationsPeople(app, count, start);

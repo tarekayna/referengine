@@ -41,7 +41,7 @@ define(["require", "exports", "../../common/notifications"], function(require, e
             Notification.show("Error: could not update people view", Notification.NotificationType.error);
         };
         People.refresh = function refresh() {
-            $.ajax("../GetAppRecommendations", {
+            $.ajax("../a/GetAppRecommendations", {
                 type: "POST",
                 data: {
                     appId: re.appId,

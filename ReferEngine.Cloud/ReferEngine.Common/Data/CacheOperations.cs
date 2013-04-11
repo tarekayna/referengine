@@ -162,6 +162,27 @@ namespace ReferEngine.Common.Data
         }
     }
 
+    internal class WindowsCategoryViewModelCacheEntity : CachedEntity<WindowsCategoryViewModel>
+    {
+        public static string KeyFormat = "WindowsCategoryViewModel-name-{0}";
+        public WindowsCategoryViewModelCacheEntity(DataCache cache) : base(cache, KeyFormat) { }
+
+        public void Remove(WindowsCategoryViewModel viewModel)
+        {
+            base.Remove(viewModel.Category.Name);
+        }
+
+        public WindowsCategoryViewModel Get(string name)
+        {
+            return base.Get(name);
+        }
+
+        public void Add(WindowsCategoryViewModel viewModel)
+        {
+            base.Add(viewModel, DefaultTimeout, viewModel.Category.Name);
+        }
+    }
+
     internal class AppByPackageAndVerificationCacheEntity : CachedEntity<App>
     {
         public static string KeyFormat = "app-pkgver-{0}{1}";
@@ -239,6 +260,12 @@ namespace ReferEngine.Common.Data
         public static WindowsAppViewModelByNameCacheEntity WindowsAppViewModelByName
         {
             get { return _windowsAppViewModelByName ?? (_windowsAppViewModelByName = new WindowsAppViewModelByNameCacheEntity(Cache)); }
+        }
+
+        private static WindowsCategoryViewModelCacheEntity _windowsCategoryViewModel;
+        public static WindowsCategoryViewModelCacheEntity WindowsCategoryViewModel
+        {
+            get { return _windowsCategoryViewModel ?? (_windowsCategoryViewModel = new WindowsCategoryViewModelCacheEntity(Cache)); }
         }
 
         private static AppByPackageAndVerificationCacheEntity _appByPackageAndVerification;

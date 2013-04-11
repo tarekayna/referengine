@@ -94,7 +94,7 @@ namespace ReferEngine.WorkerCloud.WinApps
         {
             while (true)
             {
-                Tracer.Trace(TraceMessage.Info("Resume WinAppsWorker"));
+                Tracer.Trace(TraceMessage.Info("Good morning. WinAppsWorker here."));
 
                 DateTime startTime = DateTime.UtcNow;
                 int numberOfLinks = 0;
@@ -111,7 +111,10 @@ namespace ReferEngine.WorkerCloud.WinApps
                     string url = string.Format(appStoreSiteMap, sitemapIndex);
                     while (ProcessStoreSitemap(url))
                     {
-                        Tracer.Trace(TraceMessage.Info("ProcessStoreSitemap").AddProperty("url", url));
+                        if (sitemapIndex%5 == 0)
+                        {
+                            Tracer.Trace(TraceMessage.Info("ProcessStoreSitemap").AddProperty("url", url));
+                        }
                         sitemapIndex++;
                         url = string.Format(appStoreSiteMap, sitemapIndex);
                     }
@@ -136,7 +139,7 @@ namespace ReferEngine.WorkerCloud.WinApps
 
                         if (i%1000 == 0 && i != 0)
                         {
-                            Tracer.Trace(TraceMessage.Info("Requesting WindowsAppStoreLinks #" + i));
+                            Tracer.Trace(TraceMessage.Info("# of Updated Apps: " + i));
                         }
 
                         HttpWebRequest httpWebRequest = WebRequest.CreateHttp(windowsAppStoreLink.Link);
@@ -324,7 +327,9 @@ namespace ReferEngine.WorkerCloud.WinApps
                                          .AddProperty("Number of Newly Added Apps", numberOfNewApps)
                                          .AddProperty("Number of Updated Apps", numberOfUpdatedApps));
 
-                Thread.Sleep(TimeSpan.FromHours(24));
+                var sleepTime = TimeSpan.FromHours(24);
+                Tracer.Trace(TraceMessage.Success("Sleeping... will wake up at " + DateTime.UtcNow.Add(sleepTime).ToString()));
+                Thread.Sleep(sleepTime);
             }
 // ReSharper disable FunctionNeverReturns
         }

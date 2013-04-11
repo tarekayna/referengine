@@ -5,6 +5,7 @@
     <ul class="portfolio-area da-thumbs">    
         @foreach (WindowsAppStoreCategory category in Model)
         {
+            string categoryLinkSection = Url.Encode(category.Name.ToLower().Replace("&", "and").Replace(' ', '-'));
             <li class="portfolio-item2" data-id="id-0" data-type="web">
                 <div class="span3">
                     <div class="thumbnail">
@@ -12,7 +13,7 @@
                             <img src="~/areas/assets/img/dummies/work1.jpg" style="height: 90px; width: 270px"  alt="Portfolio name" title="" />
                         </div>
                         <div class="caption">
-                            <h2><a href="~/appstore/windows/@category.Name">@category.Name</a></h2>
+                            <h2><a href="~/appstore/windows/@categoryLinkSection">@category.Name</a></h2>
                         </div>
                     </div>
                 </div>
