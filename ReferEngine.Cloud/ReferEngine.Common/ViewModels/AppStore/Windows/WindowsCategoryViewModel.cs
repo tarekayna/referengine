@@ -14,9 +14,6 @@ namespace ReferEngine.Common.ViewModels.AppStore.Windows
         [DataMember]
         public IList<WindowsAppStoreCategory> SubCategories { get; set; }
 
-        [DataMember]
-        public IList<WindowsAppStoreInfo> AppStoreInfos { get; set; }
-
         public UserAgentProperties UserAgentProperties { get; set; }
     }
 }

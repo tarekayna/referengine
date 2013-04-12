@@ -5,41 +5,77 @@
     string categoryLinkPart = Util.ConvertStringToUrlPart(Model.Category.Name);
 }
 
+@section ScriptsAfterBody
+{
+    <script data-main="/typescript/appstore/windows/windowsCategory.js" type="text/javascript" src="~/typescript/lib/require.js"></script>
+}
+
 <div class="row">
+    <ul class="portfolio-area da-thumbs">
+        <!-- ko foreach: Apps -->
+            <li class="portfolio-item2" data-id="id-0" data-type="web">
+                <div class="span4">
+                    <div class="thumbnail">
+                        <a data-bind="attr: {href: Link}">
+                            <div class="image-wrapp">
+                                @*@if (appInfo.CloudinaryImages != null && appInfo.CloudinaryImages.Any())
+                                {
+                                    <img src="@appInfo.CloudinaryImages.First().GetLink("h_120,w_370,c_fill")" alt="@appInfo.Name" title="" />
+                                }*@
+                            </div>
+                            <div data-bind="style: {'background-color': Info.BackgroundColor}" style="height: 50px; overflow: hidden; padding: 10px">
+                                @*<img data-bind="attr: {src: }" src="@appInfo.LogoImage.GetLink()" style="float: left; "/>*@
+                                <h3 style="margin-left: 60px; margin-top: 0; text-overflow: ellipsis;
+                                            -ms-text-overflow: ellipsis; -o-text-overflow: ellipsis;
+                                            white-space: nowrap; overflow: hidden " data-bind="html: Info.Name">
+                                </h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </li>  
+        <!-- /ko -->
+    </ul>
+</div>
+
+@*<div class="row">
     <ul class="portfolio-area da-thumbs">    
         @foreach (var appInfo in Model.AppStoreInfos)
         {
             string appLinkPart = Util.ConvertStringToUrlPart(appInfo.Name);
             <li class="portfolio-item2" data-id="id-0" data-type="web">
-                <div class="span3">
+                <div class="span4">
                     <div class="thumbnail">
-                        <div class="image-wrapp">
-                            @if (appInfo.CloudinaryImages != null && appInfo.CloudinaryImages.Any())
-                            {
-                                <img src="@appInfo.CloudinaryImages.First().GetLink("h_90,w_270,c_fill")" alt="@appInfo.Name" title="" />
-                            }
-                            else
-                            {
-                                <img src="~/areas/assets/img/dummies/work1.jpg" style="height: 90px; width: 270px"  alt="@appInfo.Name" title="" />
-                            }
-                        </div>
-                        <div class="caption" style="background-color: @appInfo.BackgroundColor">
-                            @if (appInfo.LogoImage != null)
-                            {
-                                <img src="@appInfo.LogoImage.GetLink()"/>
-                            }
-                            <h2>
-                                <a href="~/appstore/windows/@categoryLinkPart/@appLinkPart" style="color: white">
+                        <a href="~/appstore/windows/@categoryLinkPart/@appLinkPart" style="color: white">
+                            <div class="image-wrapp">
+                                @if (appInfo.CloudinaryImages != null && appInfo.CloudinaryImages.Any())
+                                {
+                                    <img src="@appInfo.CloudinaryImages.First().GetLink("h_120,w_370,c_fill")" alt="@appInfo.Name" title="" />
+                                }
+                                else
+                                {
+                                    <img src="~/areas/assets/img/dummies/work1.jpg" style="height: 90px; width: 270px"  alt="@appInfo.Name" title="" />
+                                }
+                            </div>
+                            <div style="background-color: @appInfo.BackgroundColor;  height: 50px; overflow: hidden;
+                                padding: 10px">
+                                @if (appInfo.LogoImage != null)
+                                {
+                                    <img src="@appInfo.LogoImage.GetLink()" style="float: left; "/>
+                                }
+                                <h3 style="margin-left: 60px; margin-top: 0; text-overflow: ellipsis;
+                                          -ms-text-overflow: ellipsis; -o-text-overflow: ellipsis;
+                                           white-space: nowrap; overflow: hidden ">
                                     @Html.Raw(appInfo.Name)
-                                </a>
-                            </h2>
-                        </div>
+                                </h3>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </li>  
         }
     </ul>
-</div>
+</div>*@
 
 @section Navigation
 {
