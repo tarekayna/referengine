@@ -163,9 +163,9 @@ namespace ReferEngine.Common.Data
             return DatabaseOperations.GetAppActionLocations(app, timeRange, who);
         }
 
-        public static IList<WindowsAppStoreInfo> GetWindowsAppStoreInfos(string term, int count)
+        public static IList<WindowsAppStoreInfo> GetWindowsAppStoreInfos(string searchTerm, string category, string parentCategory, int page, int numberOfApps)
         {
-            return DatabaseOperations.GetWindowsAppStoreInfos(term, count);
+            return DatabaseOperations.GetWindowsAppStoreInfos(searchTerm, category, parentCategory, page, numberOfApps);
         }
 
         public static WindowsAppStoreInfo GetWindowsAppStoreInfo(string msAppId)

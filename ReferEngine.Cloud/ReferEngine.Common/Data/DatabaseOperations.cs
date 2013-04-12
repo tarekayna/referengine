@@ -503,34 +503,49 @@ namespace ReferEngine.Common.Data
                 if (viewModel.Category != null)
                 {
                     viewModel.SubCategories = db.WindowsAppStoreCategories.Where(c => c.ParentCategoryName == viewModel.Category.Name).ToList();
-
-                    int take = numberOfApps;
-                    int skip = numberOfApps*(pageNumber - 1);
-                    viewModel.AppStoreInfos = QueryForWindowsAppStoreInfos(db, a => a.Category.Id == viewModel.Category.Id)
-                                                .OrderByDescending(a => a.Rating)
-                                                .Skip(skip)
-                                                .Take(take)
-                                                .ToList();
                 }
                 return viewModel;
             });
         }
 
-        internal static IList<WindowsAppStoreInfo> GetWindowsAppStoreInfos(string term, int count)
+        internal static IList<WindowsAppStoreInfo> GetWindowsAppStoreInfos(string searchTerm, string category, string parentCategory, int page, int numberOfApps)
         {
             return (IList<WindowsAppStoreInfo>) DbConnector.Execute(db =>
                 {
-                    var lowercaseTerm = term.ToLower();
-
-                    var matches = QueryForWindowsAppStoreInfos(db, i => i.Name.ToLower().StartsWith(lowercaseTerm));
-                    if (matches.Count() >= count)
+                    if (!string.IsNullOrEmpty(searchTerm))
                     {
-                        return matches.Take(count).ToList();
-                    }
+                        var lowercaseTerm = searchTerm.ToLower();
 
-                    var containsMatches = QueryForWindowsAppStoreInfos(db, i => i.Name.ToLower().Contains(lowercaseTerm));
-                    matches.ToList().AddRange(containsMatches);
-                    return matches.Count() <= count ? matches.ToList() : matches.Take(count).ToList();
+                        var matches = QueryForWindowsAppStoreInfos(db, i => i.Name.ToLower().StartsWith(lowercaseTerm));
+                        if (matches.Count() >= numberOfApps)
+                        {
+                            return matches.Take(numberOfApps).ToList();
+                        }
+
+                        var containsMatches = QueryForWindowsAppStoreInfos(db, i => i.Name.ToLower().Contains(lowercaseTerm));
+                        matches.ToList().AddRange(containsMatches);
+                        return matches.Count() <= numberOfApps ? matches.ToList() : matches.Take(numberOfApps).ToList();
+                    }
+                    else
+                    {
+                        WindowsAppStoreCategory windowsAppStoreCategory;
+                        if (string.IsNullOrEmpty(parentCategory))
+                        {
+                            windowsAppStoreCategory = db.WindowsAppStoreCategories.Single(c => string.IsNullOrEmpty(c.ParentCategoryName) &&
+                                                                                c.Name.Equals(category, StringComparison.InvariantCultureIgnoreCase));
+                        }
+                        else
+                        {
+                            windowsAppStoreCategory = db.WindowsAppStoreCategories.Single(c => c.ParentCategoryName.Equals(parentCategory, StringComparison.InvariantCultureIgnoreCase)
+                                && c.Name.Equals(category, StringComparison.InvariantCultureIgnoreCase));
+                        }
+                        int take = numberOfApps;
+                        int skip = numberOfApps * (page - 1);
+                        return QueryForWindowsAppStoreInfos(db, a => a.Category.Id == windowsAppStoreCategory.Id)
+                                                    .OrderByDescending(a => a.Rating)
+                                                    .Skip(skip)
+                                                    .Take(take);
+                    }
                 });
         }
 

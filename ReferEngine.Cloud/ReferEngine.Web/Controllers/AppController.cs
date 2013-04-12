@@ -35,7 +35,7 @@ namespace ReferEngine.Web.Controllers
             Verifier.IsNotNullOrEmpty(name, "name");
             Verifier.IsNotNullOrEmpty(platform, "platform");
 
-            var infos = DataOperations.GetWindowsAppStoreInfos(name, 10);
+            var infos = DataOperations.GetWindowsAppStoreInfos(name, null, null, 1, 10);
 
             return Json(infos);
         }

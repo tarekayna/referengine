@@ -403,6 +403,13 @@
     <Content Include="Areas\assets\img\slides\nivo\img4.jpg" />
     <Content Include="Areas\assets\img\slides\nivo\loading.gif" />
     <Content Include="Areas\assets\img\small-avatar.png" />
+    <TypeScriptCompile Include="TypeScript\AppStore\Windows\WindowsCategory.ts" />
+    <Content Include="TypeScript\AppStore\Windows\WindowsCategory.js">
+      <DependentUpon>WindowsCategory.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\AppStore\Windows\WindowsCategory.min.js">
+      <DependentUpon>WindowsCategory.ts</DependentUpon>
+    </Content>
     <Content Include="TypeScript\lib\application.js" />
     <Content Include="TypeScript\lib\camera\camera.min.js" />
     <Content Include="TypeScript\lib\camera\jquery.mobile.customized.min.js" />

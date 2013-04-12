@@ -325,6 +325,7 @@
     <Compile Include="Models\AppRewardPlan.cs" />
     <Compile Include="Models\ChartUnitResult.cs" />
     <Compile Include="Models\CloudinaryImage.cs" />
+    <Compile Include="Models\WindowsAppStoreInfoClientSide.cs" />
     <Compile Include="Models\ImageInfo.cs" />
     <Compile Include="Models\Invite.cs" />
     <Compile Include="Models\WindowsAppStoreCategory.cs" />

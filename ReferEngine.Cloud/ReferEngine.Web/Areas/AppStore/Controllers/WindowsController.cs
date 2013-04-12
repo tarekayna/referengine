@@ -6,6 +6,7 @@ using ReferEngine.Common.Utilities;
 using ReferEngine.Common.ViewModels.AppStore.Windows;
 using System.Net;
 using System.Web.Mvc;
+using System.Linq;
 using ReferEngine.Web.Controllers;
 
 namespace ReferEngine.Web.Areas.AppStore.Controllers
@@ -45,6 +46,16 @@ namespace ReferEngine.Web.Areas.AppStore.Controllers
 
             windowsAppViewModel.UserAgentProperties = userAgentProperties;
             return View("WindowsApp", windowsAppViewModel);
+        }
+
+        // appstore/windows/a/getapps
+        [HttpPost]
+        public ActionResult GetApps(string searchTerm = null, string category = null, string parentCategory = null, int page = 1, int numberOfApps = 20)
+        {
+            int actualNumberOfApps = numberOfApps < 1 || numberOfApps > 100 ? 20 : numberOfApps;
+            var apps = DataOperations.GetWindowsAppStoreInfos(searchTerm, category, parentCategory, page, actualNumberOfApps);
+            List<WindowsAppStoreInfoClientSide> result = apps.Select(a => new WindowsAppStoreInfoClientSide(a)).ToList();
+            return Json(result);
         }
 
         // appstore/windows/a/getapprecommendations

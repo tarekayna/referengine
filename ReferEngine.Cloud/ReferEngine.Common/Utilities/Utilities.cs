@@ -253,6 +253,7 @@ namespace ReferEngine.Common.Utilities
             result = HttpUtility.UrlDecode(result);
             if (string.IsNullOrEmpty(result)) return null;
             result = result.Replace('-', ' ');
+            result = result.Replace("   ", " - ");
             result = result.Replace(" and ", " & ");
             return result;
         }
