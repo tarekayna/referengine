@@ -25,7 +25,8 @@ namespace ReferEngine.Common.Utilities
             Local
         }
 
-        public static string CurrentServiceConfigurationString {
+        public static string CurrentServiceConfigurationString
+        {
             get
             {
                 switch (CurrentServiceConfiguration)
@@ -88,7 +89,7 @@ namespace ReferEngine.Common.Utilities
             }
         }
 
-        public static string ElmahConnectionString 
+        public static string ElmahConnectionString
         {
             get
             {
@@ -96,18 +97,24 @@ namespace ReferEngine.Common.Utilities
                 switch (CurrentServiceConfiguration)
                 {
                     case ReferEngineServiceConfiguration.ProductionCloud:
-                        return string.Format(format, "referengineelmah", "1pMOMS7/z4OfTpO3/DJd6MCfH8NkxQac02Sdis+RPYYNO1puLTQvOA8LIMZDIrygVzqI40RAjw72cdOw4574pA==");
+                        return string.Format(format, "referengineelmah",
+                                             "1pMOMS7/z4OfTpO3/DJd6MCfH8NkxQac02Sdis+RPYYNO1puLTQvOA8LIMZDIrygVzqI40RAjw72cdOw4574pA==");
                     case ReferEngineServiceConfiguration.TestCloud:
-                        return string.Format(format, "referengineelmahtest", "5eZciKKweFBSB1POEoQJLKfbGXOhXnYG9tn0FQrst2A3aeQATvAM1LOSlAYwzuSyPyXL1dSyLIRzfSAA70oZdQ==");
+                        return string.Format(format, "referengineelmahtest",
+                                             "5eZciKKweFBSB1POEoQJLKfbGXOhXnYG9tn0FQrst2A3aeQATvAM1LOSlAYwzuSyPyXL1dSyLIRzfSAA70oZdQ==");
                     case ReferEngineServiceConfiguration.Local:
-                        return string.Format(format, "referengineelmahlocal", "oDE32DOEW6k3ckzjdY8Hge0bXvKDVoekRkvIaWzAYugib4ZHONF7y2CZtBO8udhHuhghVj1H9IA8zEkSPQs/TA==");
+                        return string.Format(format, "referengineelmahlocal",
+                                             "oDE32DOEW6k3ckzjdY8Hge0bXvKDVoekRkvIaWzAYugib4ZHONF7y2CZtBO8udhHuhghVj1H9IA8zEkSPQs/TA==");
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
             }
         }
 
-        public static string GoogleApiKey { get { return "AIzaSyAav8gLq0y-uDuWDWZS7DfkVKUkesWMfeg"; } }
+        public static string GoogleApiKey
+        {
+            get { return "AIzaSyAav8gLq0y-uDuWDWZS7DfkVKUkesWMfeg"; }
+        }
 
         public static bool TryConvertToInt(string str, out int result)
         {
@@ -145,7 +152,7 @@ namespace ReferEngine.Common.Utilities
         {
             try
             {
-                CryptoConfig.AddAlgorithm(typeof(RSAPKCS1SHA256SignatureDescription),
+                CryptoConfig.AddAlgorithm(typeof (RSAPKCS1SHA256SignatureDescription),
                                           "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256");
 
                 X509Certificate2 verificationCertificate = RetrieveCertificate(receipt.CertificateId);
@@ -167,7 +174,8 @@ namespace ReferEngine.Common.Utilities
         private static X509Certificate2 RetrieveCertificate(string certificateId)
         {
             // http://msdn.microsoft.com/en-us/library/windows/apps/windows.applicationmodel.store.currentapp.getappreceiptasync.aspx
-            String certificateUrl = String.Format("https://go.microsoft.com/fwlink/?LinkId=246509&cid={0}", certificateId);
+            String certificateUrl = String.Format("https://go.microsoft.com/fwlink/?LinkId=246509&cid={0}",
+                                                  certificateId);
 
             HttpWebRequest httpWebRequest = WebRequest.CreateHttp(certificateUrl);
             WebResponse webResponse = httpWebRequest.GetResponse();
@@ -194,7 +202,7 @@ namespace ReferEngine.Common.Utilities
                 return false;
             }
 
-            signedXml.LoadXml((XmlElement)signatureNode);
+            signedXml.LoadXml((XmlElement) signatureNode);
             return signedXml.CheckSignature(certificate, true);
         }
 
@@ -234,12 +242,28 @@ namespace ReferEngine.Common.Utilities
             }
             return hashBuilder.ToString();
         }
+
+        private static string[][] replaceSets = 
+            {
+                new[] {"!", "_a_"},
+                new[] {"?", "_b_"},
+                new[] {".", "_c_"},
+                new[] {"'", "_d_"},
+                new[] {"/", "_e_"},
+                new[] {"?", "_f_"},
+                new[] {"\\", "_g_"}
+            };
         
         public static string ConvertStringToUrlPart(string str)
         {
             if (string.IsNullOrEmpty(str)) return null;
             string result = str;
+            result = HttpUtility.HtmlDecode(str);
             result = result.ToLower();
+            foreach (var replaceSet in replaceSets)
+            {
+                result = result.Replace(replaceSet[0], replaceSet[1]);
+            }
             result = result.Replace(" & ", "-and-");
             result = result.Replace(' ', '-');
             result = HttpUtility.UrlEncode(result);
@@ -251,6 +275,10 @@ namespace ReferEngine.Common.Utilities
             if (string.IsNullOrEmpty(urlPart)) return null;
             string result = urlPart;
             result = HttpUtility.UrlDecode(result);
+            foreach (var replaceSet in replaceSets)
+            {
+                result = result.Replace(replaceSet[1], replaceSet[0]);
+            }
             if (string.IsNullOrEmpty(result)) return null;
             result = result.Replace('-', ' ');
             result = result.Replace("   ", " - ");

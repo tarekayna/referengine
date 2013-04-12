@@ -11,36 +11,8 @@
 }
 
 <div class="row">
-    <ul class="portfolio-area da-thumbs">
-        <!-- ko foreach: Apps -->
-            <li class="portfolio-item2" data-id="id-0" data-type="web">
-                <div class="span4">
-                    <div class="thumbnail">
-                        <a data-bind="attr: {href: Link}">
-                            <div class="image-wrapp">
-                                @*@if (appInfo.CloudinaryImages != null && appInfo.CloudinaryImages.Any())
-                                {
-                                    <img src="@appInfo.CloudinaryImages.First().GetLink("h_120,w_370,c_fill")" alt="@appInfo.Name" title="" />
-                                }*@
-                            </div>
-                            <div data-bind="style: {'background-color': Info.BackgroundColor}" style="height: 50px; overflow: hidden; padding: 10px">
-                                @*<img data-bind="attr: {src: }" src="@appInfo.LogoImage.GetLink()" style="float: left; "/>*@
-                                <h3 style="margin-left: 60px; margin-top: 0; text-overflow: ellipsis;
-                                            -ms-text-overflow: ellipsis; -o-text-overflow: ellipsis;
-                                            white-space: nowrap; overflow: hidden " data-bind="html: Info.Name">
-                                </h3>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </li>  
-        <!-- /ko -->
-    </ul>
-</div>
-
-@*<div class="row">
     <ul class="portfolio-area da-thumbs">    
-        @foreach (var appInfo in Model.AppStoreInfos)
+        @foreach (var appInfo in Model.WindowsAppStoreInfos)
         {
             string appLinkPart = Util.ConvertStringToUrlPart(appInfo.Name);
             <li class="portfolio-item2" data-id="id-0" data-type="web">
@@ -75,7 +47,7 @@
             </li>  
         }
     </ul>
-</div>*@
+</div>
 
 @section Navigation
 {
