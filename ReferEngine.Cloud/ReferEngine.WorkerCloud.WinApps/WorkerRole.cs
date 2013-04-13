@@ -111,7 +111,7 @@ namespace ReferEngine.WorkerCloud.WinApps
                     string url = string.Format(appStoreSiteMap, sitemapIndex);
                     while (ProcessStoreSitemap(url))
                     {
-                        if (sitemapIndex%5 == 0)
+                        if (sitemapIndex % 5 == 0)
                         {
                             Tracer.Trace(TraceMessage.Info("ProcessStoreSitemap").AddProperty("url", url));
                         }
@@ -137,7 +137,7 @@ namespace ReferEngine.WorkerCloud.WinApps
                     {
                         var windowsAppStoreLink = windowsAppStoreLinks.ElementAt(i);
 
-                        if (i%1000 == 0 && i != 0)
+                        if (i%2500 == 0 && i != 0)
                         {
                             Tracer.Trace(TraceMessage.Info("# of Updated Apps: " + i));
                         }

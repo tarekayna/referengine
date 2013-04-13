@@ -871,7 +871,7 @@ namespace ReferEngine.Common.Data
             {
                 string[] categories = categoryString.Replace("&amp;", "&").Trim().Split('/');
                 int numberOfCategories = categories.Count();
-                if (numberOfCategories != 1 || numberOfCategories != 2)
+                if (numberOfCategories != 1 && numberOfCategories != 2)
                 {
                     throw new InvalidOperationException("Number of categories: " + numberOfCategories);
                 }
