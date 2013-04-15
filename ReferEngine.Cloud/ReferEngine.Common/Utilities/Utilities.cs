@@ -245,12 +245,13 @@ namespace ReferEngine.Common.Utilities
 
         private static string[][] replaceSets = 
             {
+                new[] {" ", "-"},
+                new[] {"&", "_and_"},
                 new[] {"!", "_a_"},
                 new[] {"?", "_b_"},
                 new[] {".", "_c_"},
                 new[] {"'", "_d_"},
                 new[] {"/", "_e_"},
-                new[] {"?", "_f_"},
                 new[] {"\\", "_g_"},
                 new[] {":", "_h_"},
                 new[] {"<", "_i_"},
@@ -267,8 +268,6 @@ namespace ReferEngine.Common.Utilities
             {
                 result = result.Replace(replaceSet[0], replaceSet[1]);
             }
-            result = result.Replace(" & ", "-and-");
-            result = result.Replace(' ', '-');
             result = HttpUtility.UrlEncode(result);
             return result;
         }
@@ -283,9 +282,6 @@ namespace ReferEngine.Common.Utilities
                 result = result.Replace(replaceSet[1], replaceSet[0]);
             }
             if (string.IsNullOrEmpty(result)) return null;
-            result = result.Replace('-', ' ');
-            result = result.Replace("   ", " - ");
-            result = result.Replace(" and ", " & ");
             return result;
         }
     }

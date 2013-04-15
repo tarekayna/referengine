@@ -1,4 +1,5 @@
-﻿using Microsoft.ServiceBus.Messaging;
+﻿using System.Globalization;
+using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using ReferEngine.Common.Data;
@@ -29,7 +30,7 @@ namespace ReferEngine.Workers.DataWriter
                     }
                     else
                     {
-                        Trace.WriteLine("Processing", message.SequenceNumber.ToString());
+                        Trace.WriteLine("Processing", message.SequenceNumber.ToString(CultureInfo.InvariantCulture));
 
                         switch (message.ContentType)
                         {
@@ -131,7 +132,7 @@ namespace ReferEngine.Workers.DataWriter
             DiagnosticMonitorConfiguration diagnosticMonitorConfiguration = DiagnosticMonitor.GetDefaultInitialConfiguration();
             diagnosticMonitorConfiguration.Logs.ScheduledTransferPeriod = TimeSpan.FromMinutes(5);
             diagnosticMonitorConfiguration.Logs.ScheduledTransferLogLevelFilter = LogLevel.Verbose;
-            var diagnosticMonitor = DiagnosticMonitor.Start("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString", diagnosticMonitorConfiguration);
+            DiagnosticMonitor.Start("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString", diagnosticMonitorConfiguration);
 
             IsStopped = false;
             return base.OnStart();
