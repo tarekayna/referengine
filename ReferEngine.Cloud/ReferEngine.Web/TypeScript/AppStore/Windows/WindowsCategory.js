@@ -15,7 +15,6 @@ define(["require", "exports", "../../common/notifications"], function(require, e
             if(!Page.isInitialized) {
                 Page.viewModel = new ViewModel();
                 ko.applyBindings(Page.viewModel);
-                Page.GetApps(null, 'Education', null, 1, 18);
                 Page.isInitialized = true;
             }
         };

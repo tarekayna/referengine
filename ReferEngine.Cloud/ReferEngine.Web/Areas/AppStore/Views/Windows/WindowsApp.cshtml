@@ -3,6 +3,7 @@
 @model ReferEngine.Common.ViewModels.AppStore.Windows.WindowsAppViewModel
 
 @{
+    ViewBag.Title = Model.WindowsAppStoreInfo.Name;
     bool isWindows8 = Model.UserAgentProperties.IsWindows8;
     bool supportsProtocolLaunching = Model.UserAgentProperties.SupportsProtocolLaunching;
     WindowsAppStoreInfo appInfo = Model.WindowsAppStoreInfo;
@@ -14,8 +15,8 @@
 @section Navigation
 {
 @* ReSharper disable Html.PathError *@
-    > <a href="~/appstore/windows/@categoryLinkPart" style="color: #FFF">@Model.WindowsAppStoreInfo.Category.Name</a>
-    > <a href="~/appstore/windows/@appLinkPart" style="color: #FFF">@Model.WindowsAppStoreInfo.Name</a>
+    > <a href="~/app-store/windows/@categoryLinkPart" style="color: #FFF">@Model.WindowsAppStoreInfo.Category.Name</a>
+    > <a href="~/app-store/windows/@appLinkPart" style="color: #FFF">@Model.WindowsAppStoreInfo.Name</a>
 @* ReSharper restore Html.PathError *@
 }
 
@@ -28,7 +29,7 @@
             window.re["appId"] = "@Model.App.Id";
         </script>
 
-        <script data-main="/typescript/appstore/windows/windowsApp.js" type="text/javascript" src="~/typescript/lib/require.js"></script>
+        <script data-main="/typescript/app-store/windows/windowsApp.js" type="text/javascript" src="~/typescript/lib/require.js"></script>
     }
 }
 

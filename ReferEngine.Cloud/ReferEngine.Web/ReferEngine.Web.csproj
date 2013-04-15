@@ -534,6 +534,7 @@
     <Content Include="Areas\AppStore\Views\Windows\WindowsCategory.cshtml" />
     <Content Include="Areas\AppStore\Views\_ViewStart.cshtml" />
     <Content Include="Areas\AppStore\Views\Shared\_AppStoreLayout.cshtml" />
+    <Content Include="Areas\AppStore\Views\Windows\_WindowsCategoryTile.cshtml" />
     <None Include="Less\app\dashboard.less" />
     <Content Include="Less\app\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>

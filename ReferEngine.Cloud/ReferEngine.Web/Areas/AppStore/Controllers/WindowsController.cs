@@ -13,7 +13,18 @@ namespace ReferEngine.Web.Areas.AppStore.Controllers
 {
     public class WindowsController : BaseController
     {
-        public ActionResult Index(string platform, string category = null, string name = null, int numberOfApps = 20, int page = 1)
+        public ActionResult ParentCategory(string category, string parentCategory,
+                            int numberOfApps = 18, int page = 1)
+        {
+            int actualNumberOfApps = numberOfApps > 50 ? 50 : numberOfApps;
+            var windowsAppStoreCategory = DataOperations.GetWindowsAppStoreCategory(category, parentCategory);
+            var windowsCategoryViewModel = DataOperations.GetWindowsCategoryViewModel(windowsAppStoreCategory,
+                                                            actualNumberOfApps, page);
+            return View("WindowsCategory", windowsCategoryViewModel);
+
+        }
+
+        public ActionResult Category(string category = null, string name = null, int numberOfApps = 18, int page = 1)
         {
             int actualNumberOfApps = numberOfApps > 50 ? 50 : numberOfApps;
             UserAgentProperties userAgentProperties = new UserAgentProperties(Request.UserAgent);
@@ -25,7 +36,7 @@ namespace ReferEngine.Web.Areas.AppStore.Controllers
             }
 
             string categoryName = Util.ConvertUrlPartToString(category);
-            var windowsAppStoreCategory = DataOperations.GetWindowsAppStoreCategory(categoryName);
+            var windowsAppStoreCategory = DataOperations.GetWindowsAppStoreCategory(categoryName, null);
             if (windowsAppStoreCategory == null)
             {
                 IList<WindowsAppStoreCategory> categories = DataOperations.GetWindowsAppStoreCategories();
@@ -40,7 +51,8 @@ namespace ReferEngine.Web.Areas.AppStore.Controllers
             }
             if (windowsAppViewModel == null)
             {
-                WindowsCategoryViewModel windowsCategoryViewModel = DataOperations.GetWindowsCategoryViewModel(categoryName, actualNumberOfApps, page);
+                var windowsCategoryViewModel = DataOperations.GetWindowsCategoryViewModel(windowsAppStoreCategory, 
+                                                                actualNumberOfApps, page);
                 return View("WindowsCategory", windowsCategoryViewModel);
             }
 

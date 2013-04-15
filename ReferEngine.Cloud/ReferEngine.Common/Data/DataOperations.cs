@@ -187,15 +187,16 @@ namespace ReferEngine.Common.Data
             return viewModel;
         }
 
-        public static WindowsCategoryViewModel GetWindowsCategoryViewModel(string name, int numberOfApps, int pageNumber)
+        public static WindowsCategoryViewModel GetWindowsCategoryViewModel(WindowsAppStoreCategory category,
+                                                                           int numberOfApps, int pageNumber)
         {
-            WindowsCategoryViewModel viewModel = CacheOperations.WindowsCategoryViewModel.Get(name);
+            WindowsCategoryViewModel viewModel = CacheOperations.WindowsCategoryViewModel.Get(category, numberOfApps, pageNumber);
             if (viewModel == null)
             {
-                viewModel = DatabaseOperations.GetWindowsCategoryViewModel(name, numberOfApps, pageNumber);
+                viewModel = DatabaseOperations.GetWindowsCategoryViewModel(category, numberOfApps, pageNumber);
                 if (viewModel != null)
                 {
-                    CacheOperations.WindowsCategoryViewModel.Add(viewModel);
+                    CacheOperations.WindowsCategoryViewModel.Add(viewModel, numberOfApps, pageNumber);
                 }
             }
             return viewModel;
@@ -310,9 +311,9 @@ namespace ReferEngine.Common.Data
             return DatabaseOperations.AddOrUpdateWindowsAppStoreInfo(storeAppInfo, category, logoLink, images);
         }
 
-        public static WindowsAppStoreCategory GetWindowsAppStoreCategory(string name)
+        public static WindowsAppStoreCategory GetWindowsAppStoreCategory(string name, string parentCategoryName)
         {
-            return DatabaseOperations.GetWindowsAppStoreCategory(name);
+            return DatabaseOperations.GetWindowsAppStoreCategory(name, parentCategoryName);
         }
 
         public static IList<WindowsAppStoreCategory> GetWindowsAppStoreCategories()

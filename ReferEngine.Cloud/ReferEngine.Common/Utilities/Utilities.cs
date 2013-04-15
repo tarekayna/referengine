@@ -251,7 +251,10 @@ namespace ReferEngine.Common.Utilities
                 new[] {"'", "_d_"},
                 new[] {"/", "_e_"},
                 new[] {"?", "_f_"},
-                new[] {"\\", "_g_"}
+                new[] {"\\", "_g_"},
+                new[] {":", "_h_"},
+                new[] {"<", "_i_"},
+                new[] {">", "_j_"}
             };
         
         public static string ConvertStringToUrlPart(string str)

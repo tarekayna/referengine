@@ -23,7 +23,6 @@ class Page {
         if (!isInitialized) {
             viewModel = new ViewModel();
             ko.applyBindings(viewModel);
-            GetApps(null, 'Education', null, 1, 18);
             isInitialized = true;
         }
     }

@@ -164,7 +164,7 @@ namespace ReferEngine.Common.Data
 
     internal class WindowsCategoryViewModelCacheEntity : CachedEntity<WindowsCategoryViewModel>
     {
-        public static string KeyFormat = "WindowsCategoryViewModel-name-{0}";
+        public static string KeyFormat = "WindowsCategoryViewModel-{0}-{1}-{2}-{3}";
         public WindowsCategoryViewModelCacheEntity(DataCache cache) : base(cache, KeyFormat) { }
 
         public void Remove(WindowsCategoryViewModel viewModel)
@@ -172,14 +172,15 @@ namespace ReferEngine.Common.Data
             base.Remove(viewModel.Category.Name);
         }
 
-        public WindowsCategoryViewModel Get(string name)
+        public WindowsCategoryViewModel Get(WindowsAppStoreCategory category, int numberOfApps, int pageNumber)
         {
-            return base.Get(name);
+            return base.Get(category.Name, category.ParentCategoryName, numberOfApps.ToString(), pageNumber.ToString());
         }
 
-        public void Add(WindowsCategoryViewModel viewModel)
+        public void Add(WindowsCategoryViewModel viewModel, int numberOfApps, int pageNumber)
         {
-            base.Add(viewModel, DefaultTimeout, viewModel.Category.Name);
+            base.Add(viewModel, DefaultTimeout, viewModel.Category.Name,
+                     viewModel.Category.ParentCategoryName, numberOfApps.ToString(), pageNumber.ToString());
         }
     }
 

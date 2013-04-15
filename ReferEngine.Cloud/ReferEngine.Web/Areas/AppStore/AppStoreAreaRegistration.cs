@@ -16,13 +16,19 @@ namespace ReferEngine.Web.Areas.AppStore
         {
             context.MapRoute(
                 "AppStore_action",
-                "AppStore/{controller}/a/{action}"
+                "app-store/{controller}/a/{action}"
+            );
+
+            context.MapRoute(
+                "AppStore_SubCategory_default",
+                "app-store/{controller}/s/{parentCategory}/{category}",
+                new { action = "ParentCategory" }
             );
 
             context.MapRoute(
                 "AppStore_default",
-                "AppStore/{controller}/{category}/{name}",
-                new { action = "Index", category = UrlParameter.Optional, name = UrlParameter.Optional }
+                "app-store/{controller}/{category}/{name}",
+                new { action = "Category", category = UrlParameter.Optional, name = UrlParameter.Optional }
             );
         }
     }

@@ -109,20 +109,21 @@ namespace ReferEngine.WorkerCloud.WinApps
                     const string appStoreSiteMap = "http://apps.microsoft.com/windows/sitemap/sitemap_{0}.xml";
                     int sitemapIndex = 1;
                     string url = string.Format(appStoreSiteMap, sitemapIndex);
-                    while (ProcessStoreSitemap(url))
-                    {
-                        if (sitemapIndex % 5 == 0)
-                        {
-                            Tracer.Trace(TraceMessage.Info("ProcessStoreSitemap").AddProperty("url", url));
-                        }
-                        sitemapIndex++;
-                        url = string.Format(appStoreSiteMap, sitemapIndex);
-                    }
+                    //while (ProcessStoreSitemap(url))
+                    //{
+                    //    if (sitemapIndex % 5 == 0)
+                    //    {
+                    //        Tracer.Trace(TraceMessage.Info("ProcessStoreSitemap").AddProperty("url", url));
+                    //    }
+                    //    sitemapIndex++;
+                    //    url = string.Format(appStoreSiteMap, sitemapIndex);
+                    //}
 
                     // Now that we got all the links, time to scrape
-                    IList<WindowsAppStoreLink> windowsAppStoreLinks = DataOperations.GetWindowsAppStoreLinks();
+                    //IList<WindowsAppStoreLink> windowsAppStoreLinks = DataOperations.GetWindowsAppStoreLinks();
 
-                    //IList<WindowsAppStoreLink> windowsAppStoreLinks = new List<WindowsAppStoreLink>();
+                    IList<WindowsAppStoreLink> windowsAppStoreLinks = new List<WindowsAppStoreLink>();
+                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/appy-geek/f39fcc92-5236-4f57-8357-f0903d9a22ee" });
                     //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/wow-engineer/1586f767-2ae2-4b1b-a9bb-543714486652" });
                     //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/vedic-patri/621e45bd-a207-4a7f-a93a-58ed48b3a821/m/ROW" });
                     //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/windows-media-player-8/6ead7ee1-3f23-46e4-b60b-06605e09ed43/m/ROW" });

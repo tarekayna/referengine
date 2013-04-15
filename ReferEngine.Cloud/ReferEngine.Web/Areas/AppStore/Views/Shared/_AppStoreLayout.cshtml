@@ -1,213 +1,100 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Refer Engine | Windows Store</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+        @if (ViewBag.Title == null)
+        {
+            <text>Windows Store | Refer Engine</text>
+        }
+        else
+        {
+            <text>@ViewBag.Title | Windows Store | Refer Engine</text>
+        }
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="ReferEngine.com">
+    @if (IsSectionDefined("HeaderMeta"))
+    {
+        @RenderSection("HeaderMeta")
+    }
+    else
+    {
         <meta name="description" content="">
-        <meta name="author" content="">
-	    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
-	    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic' rel='stylesheet' type='text/css'>
-        @Styles.Render("~/bundles/css/appstore")
-        @Html.Partial("_FavIcon")
-    </head>
-    <body>
-<header>
-<!-- Navbar
-    ================================================== -->
-<div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container">
-			<a class="brand logo" href="~/">
-                <img src="~/img/logo-web-header.png" alt="" />
-			</a>
-			<!-- top menu -->
-			<div>
-				<nav>
-				<ul class="nav topnav">
-					<li class="dropdown success">
-					<a href="index.html"><i class="icon-home icon-white"></i> Home</a>
-					<ul class="dropdown-menu">
-						<li><a href="index_alt1.html">Index alt 1</a></li>
-						<li><a href="index_alt2.html">Index alt 2</a></li>
-					</ul>
-					</li>
-					<li class="dropdown primary">
-					<a href="#"><i class="icon-star icon-white"></i> Features</a>
-					<ul class="dropdown-menu">
-						<li><a href="overview.html">Overview</a></li>
-						<li><a href="scaffolding.html">Scaffolding</a></li>
-						<li><a href="base-css.html">Base CSS</a></li>
-						<li><a href="components.html">Components</a></li>
-						<li><a href="javascript.html">Javascripts</a></li>
-						<li class="dropdown"><a href="#">3rd level</a>
-						<ul class="dropdown-menu sub-menu">
-							<li><a href="#">Example menu</a></li>
-							<li><a href="#">Example menu</a></li>
-							<li><a href="#">Example menu</a></li>
-						</ul>
-						</li>
-					</ul>
-					</li>
-					<li class="dropdown danger">
-					<a href="#"><i class="icon-leaf icon-white"></i> Pages</a>
-					<ul class="dropdown-menu">
-						<li><a href="about.html">About us</a></li>
-						<li><a href="services.html">Our services</a></li>
-						<li><a href="pricingtable.html">Pricing table</a></li>
-						<li><a href="faq.html">F.A.Q</a></li>
-						<li><a href="fullwidth.html">Fullwidth</a></li>
-						<li><a href="404.html">404</a></li>
-					</ul>
-					</li>
-					<li class="dropdown warning active">
-					<a href="#"><i class="icon-camera icon-white"></i> Portfolio</a>
-					<ul class="dropdown-menu">
-						<li class="dropdown"><a href="#">Portfolio type 1</a>
-						<ul class="dropdown-menu sub-menu">
-							<li><a href="portfolio-alt1-2cols.html">2 columns</a></li>
-							<li><a href="portfolio-alt1-3cols.html">3 columns</a></li>
-							<li><a href="portfolio-alt1-4cols.html">4 columns</a></li>
-						</ul>
-						</li>
-						<li class="dropdown"><a href="#">Portfolio type 2</a>
-						<ul class="dropdown-menu sub-menu">
-							<li><a href="portfolio-alt2-2cols.html">2 columns</a></li>
-							<li><a href="portfolio-alt2-3cols.html">3 columns</a></li>
-							<li><a href="portfolio-alt2-4cols.html">4 columns</a></li>
-						</ul>
-						</li>
-						<li><a href="portfolio-alt3.html">Portfolio type 3</a></li>
-						<li><a href="portfolio-detail.html">Portfolio detail</a></li>
-					</ul>
-					</li>
-					<li class="dropdown info">
-					<a href="#"><i class="icon-bullhorn icon-white"></i> Blog</a>
-					<ul class="dropdown-menu">
-						<li><a href="blog_left_sidebar.html">Blog left sidebar</a></li>
-						<li><a href="blog_right_sidebar.html">Blog right sidebar</a></li>
-						<li><a href="post_left_sidebar.html">Post left sidebar</a></li>
-						<li><a href="post_right_sidebar.html">Post right sidebar</a></li>
-					</ul>
-					</li>
-					<li class="inverse">
-					<a href="contact.html"><i class="icon-envelope icon-white"></i> Contact</a>
-					</li>
-				</ul>
-				</nav>
-			</div>
-			<!-- end menu -->
-		</div>
-	</div>
-</div>
-</header>
-<!-- Subhead
-================================================== -->
-<section id="subintro">
-    <div class="jumbotron subhead" id="overview" style="padding: 0; margin-bottom: 10px">
-	<div class="container">
-		<div class="row" style="margin-bottom: 0">
-			<div class="span8">
-			    <h3 style="padding-top: 5px"><i class="m-icon-big-swapright m-icon-white"></i> 
-			        <a href="~/appstore/windows" style="color: white">Windows Store</a>
-                    @RenderSection("Navigation", false)
-			    </h3>
-			</div>
-			<div class="span4">
-				<div class="input-append pull-right">
-					<form class="form-search">
-						<input type="text" class="input-medium search-query">
-						<button type="submit" class="btn btn-inverse">Search</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-</section>
+    }
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic' rel='stylesheet' type='text/css'>
+    @Styles.Render("~/bundles/app-store")
+    @Html.Partial("_FavIcon")
+</head>
+<body>
+    <header>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand logo" href="~/">
+                        <img src="~/img/logo-web-header.png" alt="Refer Engine Logo" height="35" width="200" />
+                    </a>
+                    <div>
+                        <nav>
+                            <ul class="nav topnav">
+                                <li class="primary">
+                                    <a href="~/app-store/windows"><i class="icon-envelope icon-white"></i>Windows Store</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section id="subintro">
+        <div class="jumbotron subhead" id="overview" style="padding: 0; margin-bottom: 10px">
+            <div class="container">
+                <div class="row" style="margin-bottom: 0">
+                    <div class="span8">
+                        <h3 style="padding-top: 5px"><i class="m-icon-big-swapright m-icon-white"></i>
+                            <a href="~/app-store/windows" style="color: white">Windows Store</a>
+                            @RenderSection("Navigation", false)
+                        </h3>
+                    </div>
+                    <div class="span4">
+                        <div class="input-append pull-right">
+                            <form class="form-search">
+                                <input type="text" class="input-medium search-query">
+                                <button type="submit" class="btn btn-inverse">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <section id="maincontent">
         <div class="container">
             @RenderBody()
         </div>
     </section>
-
-    <!-- Footer
- ================================================== -->
     <footer class="footer">
         <div class="container">
             <div class="row">
                 <div class="span3">
                     <div class="widget">
-                        <h4>About us</h4>
-                        <address>
-                            <strong>Scaffold company, Inc.</strong><br>
-                                                                   445 Mypark Ave, Suite 800<br>
-                                                                                            Jakarta, Indonesia 14210<br>
-                                                                                                                    <abbr title="Phone">P:</abbr> (123) 456-7890 </address>
-                        <address>
-                            <strong>Contact us</strong><br>
-                                                       <a href="mailto:#">hello@websitename.com</a>
-                        </address>
-                    </div>
-                </div>
-                <div class="span3">
-                    <div class="widget">
-                        <h4>Browse pages</h4>
+                        <h4>Quick Links</h4>
                         <ul class="nav nav-list regular">
-                            <li class="nav-header">More from us</li>
-                            <li><a href="#">Work for us</a></li>
-                            <li><a href="#">Creative process</a></li>
-                            <li><a href="#">Case study</a></li>
-                            <li class="nav-header">Quick links</li>
-                            <li><a href="#">Scaffold awwards</a></li>
-                            <li><a href="#">Meet the team</a></li>
+                            <li><a href="~/">Home</a></li>
+                            <li><a href="~/app-store/windows">Windows Store</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="span3">
                     <div class="widget">
-                        <h4>Latest tweets</h4>
-                        <div class="twitter">
-                        </div>
-                        <script type="text/javascript">
-                            //$(document).ready(function(){
-                            //    //TWITTER
-                            //    $(".twitter").tweet({
-                            //        join_text: "auto",
-                            //        username: "wrapbootstrap",
-                            //        avatar_size: 20,
-                            //        count: 2,
-                            //        auto_join_text_default: "we said,",
-                            //        auto_join_text_ed: "we",
-                            //        auto_join_text_ing: "we were",
-                            //        auto_join_text_reply: "we replied",
-                            //        auto_join_text_url: "we were checking out",
-                            //        loading_text: "loading tweets..."
-                            //    });
-                            //});
-                        </script>
-                    </div>
-                </div>
-                <div class="span3">
-                    <div class="widget">
-                        <h4>Get email updates</h4>
-                        <form class="form-horizontal" action="#" method="post">
-                            <fieldset>
-                                <p>
-                                    Sign up for email updates and we'll plant a tree for you through Trees for the Future.
-                                </p>
-                                <div class="input-prepend input-append">
-                                    <input class="span2" id="appendedPrependedInput" type="text" placeholder="Email">
-                                    <button class="btn btn-inverse" type="submit">Subscribe!</button>
-                                </div>
-                            </fieldset>
-                        </form>
-                        <ul class="social_small">
-                            <li class="facebook first"><a href="#" title="Facebook">Facebook</a></li>
-                            <li class="twitt"><a href="#" title="Twitter">Twitter</a></li>
-                            <li class="googleplus"><a href="#" title="google plus">Google plus</a></li>
-                            <li class="flickr"><a href="#" title="flickr">Flickr</a></li>
-                            <li class="dribbble"><a href="#" title="Dribbble">Dribbble</a></li>
+                        <h4>Company</h4>
+                        <ul class="nav nav-list regular">
+                            <li><a href="~/about/privacy">Privacy Policy</a></li>
+                            <li><a href="~/about/terms">Terms of Use</a></li>
+                            <li><a href="~/about/use">Acceptable Use Policy</a></li>
+                            <li><a href="~/about/copyright">Copyright</a></li>
                         </ul>
                     </div>
                 </div>
@@ -218,15 +105,15 @@
                 <div class="row">
                     <div class="span6">
                         <p>
-                            &copy; Apexa Inc. 2013 - All right reserved
+                            &copy; Apexa Inc. 2013 - Refer Engine ™ - All right reserved
                         </p>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
-    
-    @Scripts.Render("~/bundles/libs/appstore")
+
+    @Scripts.Render("~/bundles/libs/app-store")
     @RenderSection("ScriptsAfterBody", required: false)
 </body>
 </html>

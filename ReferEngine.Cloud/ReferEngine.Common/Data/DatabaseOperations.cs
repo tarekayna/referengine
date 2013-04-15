@@ -45,7 +45,8 @@ namespace ReferEngine.Common.Data
                           .ToList();
         }
 
-        private static WindowsAppStoreInfo QueryForWindowsAppStoreInfo(DatabaseContext db, Expression<Func<WindowsAppStoreInfo, bool>> expression, bool nullOk = false)
+        private static WindowsAppStoreInfo QueryForWindowsAppStoreInfo(DatabaseContext db, 
+            Expression<Func<WindowsAppStoreInfo, bool>> expression, bool nullOk = false)
         {
             var q = db.WindowsAppStoreInfos.Where(expression)
                             .Include(i => i.CloudinaryImages)
@@ -54,13 +55,26 @@ namespace ReferEngine.Common.Data
             return nullOk ? q.FirstOrDefault() : q.First();
         }
 
-        private static IList<WindowsAppStoreInfo> QueryForWindowsAppStoreInfos(DatabaseContext db, Expression<Func<WindowsAppStoreInfo, bool>> expression)
+        private static IList<WindowsAppStoreInfo> QueryForWindowsAppStoreInfos(DatabaseContext db, 
+                        Expression<Func<WindowsAppStoreInfo, bool>> expression,
+                        int take,
+                        int skip,
+                        Expression<Func<WindowsAppStoreInfo, double>> orderByExpression = null,
+                        bool desc = false)
         {
-            return db.WindowsAppStoreInfos.Where(expression)
-                     .Include(i => i.CloudinaryImages)
-                     .Include(i => i.LogoImage)
-                     .Include(i => i.Category)
-                     .ToList();
+            var result = db.WindowsAppStoreInfos.Where(expression);
+            if (orderByExpression != null)
+            {
+                result = desc ? result.OrderByDescending(orderByExpression) : result.OrderBy(orderByExpression);
+            }
+
+            result = result.Skip(skip);
+            result = result.Take(take);
+
+            result = result.Include(i => i.CloudinaryImages)
+                           .Include(i => i.LogoImage)
+                           .Include(i => i.Category);
+            return result.ToList();
         }
 
         internal static App GetApp(long id)
@@ -248,7 +262,6 @@ namespace ReferEngine.Common.Data
                     return result;
                 });    
             }
-            else
             {
                 var db = dbContext;
                 var result = new List<PersonRecommendationUnitResult>();
@@ -496,73 +509,75 @@ namespace ReferEngine.Common.Data
             });
         }
 
-        internal static WindowsCategoryViewModel GetWindowsCategoryViewModel(string name, int numberOfApps, int pageNumber)
+        internal static WindowsCategoryViewModel GetWindowsCategoryViewModel(WindowsAppStoreCategory category, int numberOfApps, int pageNumber)
         {
             return (WindowsCategoryViewModel)DbConnector.Execute(db =>
             {
-                WindowsCategoryViewModel viewModel = new WindowsCategoryViewModel();
-                viewModel.Category = db.WindowsAppStoreCategories.FirstOrDefault(c => c.Name == name && string.IsNullOrEmpty(c.ParentCategoryName));
+                WindowsCategoryViewModel viewModel = new WindowsCategoryViewModel {PageNumber = pageNumber};
+                viewModel.Category = category;
                 if (viewModel.Category != null)
                 {
-                    viewModel.SubCategories =
-                        db.WindowsAppStoreCategories.Where(c => c.ParentCategoryName == viewModel.Category.Name)
-                          .ToList();
+                    if (!viewModel.Category.HasParent)
+                    {
+                        viewModel.SubCategories = db.WindowsAppStoreCategories
+                                                    .Where(c => c.ParentCategoryName == viewModel.Category.Name)
+                                                    .ToList();
+                    }
+                    else
+                    {
+                        viewModel.SubCategories = new List<WindowsAppStoreCategory>();
+                    }
 
-                    viewModel.WindowsAppStoreInfos = GetWindowsAppStoreInfosImpl(null, viewModel.Category.Name,
-                                                                                 viewModel.Category.ParentCategoryName,
-                                                                                 1,
-                                                                                 18, db);
+                    viewModel.WindowsAppStoreInfos = GetWindowsAppStoreInfosImpl(null, viewModel.Category, pageNumber,
+                                                                                 numberOfApps, db);
                 }
 
                 return viewModel;
             });
         }
 
-        internal static IList<WindowsAppStoreInfo> GetWindowsAppStoreInfosImpl(string searchTerm, string category,
-                                                                           string parentCategory, int page,
-                                                                           int numberOfApps, DatabaseContext db)
+        internal static IList<WindowsAppStoreInfo> GetWindowsAppStoreInfosImpl(string searchTerm, 
+                                                                    WindowsAppStoreCategory category, int page,
+                                                                    int numberOfApps, DatabaseContext db)
         {
+            int take = numberOfApps;
+            int skip = numberOfApps * (page - 1);
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 var lowercaseTerm = searchTerm.ToLower();
 
-                var matches = QueryForWindowsAppStoreInfos(db, i => i.Name.ToLower().StartsWith(lowercaseTerm));
+                var matches = QueryForWindowsAppStoreInfos(db, i => i.Name.ToLower().StartsWith(lowercaseTerm), take, skip);
                 if (matches.Count() >= numberOfApps)
                 {
                     return matches.Take(numberOfApps).ToList();
                 }
 
-                var containsMatches = QueryForWindowsAppStoreInfos(db, i => i.Name.ToLower().Contains(lowercaseTerm));
+                var containsMatches = QueryForWindowsAppStoreInfos(db, i => i.Name.ToLower().Contains(lowercaseTerm), take, skip);
                 matches.ToList().AddRange(containsMatches);
                 return matches.Count() <= numberOfApps ? matches.ToList() : matches.Take(numberOfApps).ToList();
             }
-            else
-            {
-                WindowsAppStoreCategory windowsAppStoreCategory;
-                if (string.IsNullOrEmpty(parentCategory))
-                {
-                    windowsAppStoreCategory = db.WindowsAppStoreCategories.Single(c => string.IsNullOrEmpty(c.ParentCategoryName) &&
-                                                                        c.Name.Equals(category, StringComparison.InvariantCultureIgnoreCase));
-                }
-                else
-                {
-                    windowsAppStoreCategory = db.WindowsAppStoreCategories.Single(c => c.ParentCategoryName.Equals(parentCategory, StringComparison.InvariantCultureIgnoreCase)
-                        && c.Name.Equals(category, StringComparison.InvariantCultureIgnoreCase));
-                }
-                int take = numberOfApps;
-                int skip = numberOfApps * (page - 1);
-                return QueryForWindowsAppStoreInfos(db, a => a.Category.Id == windowsAppStoreCategory.Id)
-                                            .OrderByDescending(a => a.Rating)
-                                            .Skip(skip)
-                                            .Take(take)
-                                            .ToList();
-            }
-            
+            return QueryForWindowsAppStoreInfos(db, a => a.Category.Id == category.Id, take, skip, a => a.Rating, true).ToList();
         }
 
-        internal static IList<WindowsAppStoreInfo> GetWindowsAppStoreInfos(string searchTerm, string category, string parentCategory, int page, int numberOfApps)
+        internal static IList<WindowsAppStoreInfo> GetWindowsAppStoreInfos(string searchTerm, string categoryName, 
+                                string parentCategory, int page, int numberOfApps)
         {
-            return (IList<WindowsAppStoreInfo>) DbConnector.Execute(db => GetWindowsAppStoreInfosImpl(searchTerm, category, parentCategory, page, numberOfApps, db));
+            return (IList<WindowsAppStoreInfo>) DbConnector.Execute(db =>
+                {
+                    WindowsAppStoreCategory category;
+                    if (string.IsNullOrEmpty(parentCategory))
+                    {
+                        category = db.WindowsAppStoreCategories.SingleOrDefault(c => c.Name == categoryName &&
+                                                                                     string.IsNullOrEmpty(parentCategory));
+                    }
+                    else
+                    {
+                        category = db.WindowsAppStoreCategories.SingleOrDefault(c => c.Name == categoryName &&
+                                                                                     c.ParentCategoryName == parentCategory);
+                    }
+                    return GetWindowsAppStoreInfosImpl(searchTerm, category, page, numberOfApps, db);
+                }
+            );
         }
 
         internal static IpAddressLocation GetIpAddressLocation(string ipAddress)
@@ -625,10 +640,24 @@ namespace ReferEngine.Common.Data
             return (Invite) DbConnector.Execute(db => db.Invites.FirstOrDefault(i => i.Email.Equals(email, StringComparison.InvariantCultureIgnoreCase)));
         }
 
-        internal static WindowsAppStoreCategory GetWindowsAppStoreCategory(string name)
+        internal static WindowsAppStoreCategory GetWindowsAppStoreCategory(string name, string parentCategoryName)
         {
             if (string.IsNullOrEmpty(name)) return null;
-            return (WindowsAppStoreCategory)DbConnector.Execute(db => db.WindowsAppStoreCategories.SingleOrDefault(c => c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
+            return (WindowsAppStoreCategory) DbConnector.Execute(db =>
+                {
+                    if (string.IsNullOrEmpty(parentCategoryName))
+                    {
+                        return db.WindowsAppStoreCategories.SingleOrDefault(
+                                c =>
+                                c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) &&
+                                string.IsNullOrEmpty(c.ParentCategoryName));
+                    }
+  
+                    return db.WindowsAppStoreCategories.SingleOrDefault(
+                            c =>
+                            c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) &&
+                            c.ParentCategoryName.Equals(parentCategoryName, StringComparison.InvariantCultureIgnoreCase));
+                });
         }
 
         internal static IList<WindowsAppStoreCategory> GetWindowsAppStoreCategories()
@@ -803,8 +832,9 @@ namespace ReferEngine.Common.Data
                     while (true)
                     {
                         var currentSet = windowsAppStoreLinks.Skip(skip).Take(take);
+                        var appStoreLinks = currentSet as WindowsAppStoreLink[] ?? currentSet.ToArray();
                         skip += take;
-                        foreach (var appWebLink in currentSet)
+                        foreach (var appWebLink in appStoreLinks)
                         {
                             try
                             {
@@ -834,7 +864,7 @@ namespace ReferEngine.Common.Data
                             Trace.TraceError(e.Message);
                         }
 
-                        if (currentSet.Count() < take)
+                        if (appStoreLinks.Count() < take)
                         {
                             break;
                         }
@@ -897,7 +927,7 @@ namespace ReferEngine.Common.Data
                     };
                 }
                 storeAppInfo.Category = category;
-                
+
                 var existing = QueryForWindowsAppStoreInfo(db, i => i.MsAppId.Equals(storeAppInfo.MsAppId), nullOk: true);
                 if (existing != null)
                 {
@@ -923,7 +953,7 @@ namespace ReferEngine.Common.Data
                     {
                         CloudinaryImage logoImage = CloudinaryConnector.UploadRemoteImage(new ImageInfo { Link = logoLink });
                         existing.LogoImage = logoImage;
-                        
+
                     }
                     else if (logoLink != existing.LogoImage.OriginalLink)
                     {
@@ -938,7 +968,6 @@ namespace ReferEngine.Common.Data
                     db.SaveChanges();
                     return false;
                 }
-                else
                 {
                     foreach (ImageInfo imageInfo in images)
                     {
