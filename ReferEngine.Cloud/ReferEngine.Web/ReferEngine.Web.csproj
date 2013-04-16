@@ -404,6 +404,7 @@
     <Content Include="Areas\assets\img\slides\nivo\loading.gif" />
     <Content Include="Areas\assets\img\small-avatar.png" />
     <TypeScriptCompile Include="TypeScript\AppStore\Windows\WindowsCategory.ts" />
+    <Content Include="img\logo-web-header.svg" />
     <Content Include="TypeScript\AppStore\Windows\WindowsCategory.js">
       <DependentUpon>WindowsCategory.ts</DependentUpon>
     </Content>
@@ -535,6 +536,10 @@
     <Content Include="Areas\AppStore\Views\_ViewStart.cshtml" />
     <Content Include="Areas\AppStore\Views\Shared\_AppStoreLayout.cshtml" />
     <Content Include="Areas\AppStore\Views\Windows\_WindowsCategoryTile.cshtml" />
+    <Content Include="Areas\Developer\Views\Web.config" />
+    <Content Include="Areas\Developer\Views\DeveloperHome\Index.cshtml" />
+    <Content Include="Areas\Developer\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Developer\Views\Shared\_Layout.cshtml" />
     <None Include="Less\app\dashboard.less" />
     <Content Include="Less\app\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>
@@ -599,6 +604,8 @@
     </None>
     <Compile Include="Areas\AppStore\AppStoreAreaRegistration.cs" />
     <Compile Include="Areas\AppStore\Controllers\WindowsController.cs" />
+    <Compile Include="Areas\Developer\Controllers\DeveloperHomeController.cs" />
+    <Compile Include="Areas\Developer\DeveloperAreaRegistration.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -882,6 +889,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Developer\Models\" />
     <Folder Include="js\recommend\" />
     <Folder Include="Models\InAppScript\" />
   </ItemGroup>

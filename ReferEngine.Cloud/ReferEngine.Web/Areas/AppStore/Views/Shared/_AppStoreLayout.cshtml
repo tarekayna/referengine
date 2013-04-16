@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using ReferEngine.Common.Models
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -29,29 +30,54 @@
 </head>
 <body>
     <header>
-        <div class="navbar navbar-fixed-top">
+        <div class="navbar navbar-static-top">
             <div class="navbar-inner">
                 <div class="container">
                     <a class="brand logo" href="~/">
-                        <img src="~/img/logo-web-header.png" alt="Refer Engine Logo" height="35" width="200" />
+                        @{
+                            CloudinaryImage logoImage = new CloudinaryImage {Id = "logo_web_header_j3ofmj", Format = "png"};
+                        }
+                        <img src="@logoImage.GetLink()" alt="Refer Engine Logo" height="35" width="200" />
                     </a>
-                    <div>
+                    @*<div>
                         <nav>
                             <ul class="nav topnav">
                                 <li class="primary">
                                     <a href="~/app-store/windows">Windows Store</a>
                                 </li>
-                       @*         <li class="danger">
+                                <li class="success">
+                                    <a href="~/app-store/windows">iOS App Store</a>
+                                </li>
+                                <li class="info">
                                     <a href="~/developers">Developers</a>
-                                </li>*@
+                                </li>
                             </ul>
                         </nav>
+                    </div>*@
+                    
+                    
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right">
+                            @*<li><a href="~/howitworks">How it works</a></li>*@
+                            <li class="primary"><a href="~/app-store/windows">Windows Store</a></li>
+                            <li><a href="~/pricing">Pricing</a></li>
+                            <li><a href="~/contact">Contact</a></li>
+                            <li><a>|</a></li>
+                            <li>
+                                <div class="btn-group" id="login-group">
+                                    <a class="btn" id="log-in-hdr" href="~/account/login">Log In</a>
+                                    <a class="btn btn-success" href="#private-beta" role="button" 
+                                        data-toggle="modal" id="request-invite-hdr">Request an Invite</a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
+
         </div>
     </header>
-    <section id="subintro">
+    <section id="subintro" style="margin-top: 0">
         <div class="jumbotron subhead" id="overview" style="padding: 0; margin-bottom: 10px">
             <div class="container">
                 <div class="row" style="margin-bottom: 0">
