@@ -3,21 +3,38 @@
 @model ReferEngine.Common.ViewModels.AppStore.Windows.WindowsAppViewModel
 
 @{
-    ViewBag.Title = Model.WindowsAppStoreInfo.Name;
+    WindowsAppStoreInfo appInfo = Model.WindowsAppStoreInfo;
+    WindowsAppStoreCategory category = appInfo.Category;
+    IHtmlString appName = @Html.Raw(appInfo.Name);
+    ViewBag.Title = appName + " | " + category.Name;
+    ViewBag.Title += category.HasParent ? " | " + category.ParentCategoryName : "";
+    
+    string color = appInfo.BackgroundColor ?? "#00AFF0";
+
     bool isWindows8 = Model.UserAgentProperties.IsWindows8;
     bool supportsProtocolLaunching = Model.UserAgentProperties.SupportsProtocolLaunching;
-    WindowsAppStoreInfo appInfo = Model.WindowsAppStoreInfo;
+}
 
-    string categoryLinkPart = Util.ConvertStringToUrlPart(Model.WindowsAppStoreInfo.Category.Name);
-    string appLinkPart = Util.ConvertStringToUrlPart(Model.WindowsAppStoreInfo.Category.Name);
+@section HeaderMeta
+{
+    <meta name="description" content="@appInfo.DescriptionHtml">
 }
 
 @section Navigation
 {
-@* ReSharper disable Html.PathError *@
-    > <a href="~/app-store/windows/@categoryLinkPart" style="color: #FFF">@Model.WindowsAppStoreInfo.Category.Name</a>
-    > <a href="~/app-store/windows/@appLinkPart" style="color: #FFF">@Model.WindowsAppStoreInfo.Name</a>
-@* ReSharper restore Html.PathError *@
+    @if (category.HasParent)
+    {
+        <text>
+            > <a href="~/app-store/windows/@Util.ConvertStringToUrlPart(category.ParentCategoryName)" style="color: #FFF">@category.ParentCategoryName</a>
+            > <a href="~/app-store/windows/@category.LinkPart" style="color: #FFF">@category.Name</a>
+        </text>
+    }
+    else
+    {
+        <text>> <a href="~/app-store/windows/@category.LinkPart" style="color: #FFF">@category.Name</a></text>
+    }
+
+    > <a href="~/app-store/windows/@appInfo.LinkPart" style="color: #FFF">@appName</a>
 }
 
 @section ScriptsAfterBody
@@ -44,7 +61,7 @@
             {
                 if (supportsProtocolLaunching)
                 {
-                    storeLink = "ms-windows-store:PDP?PFN=" + Model.WindowsAppStoreInfo.PackageFamilyName;
+                    storeLink = "ms-windows-store:PDP?PFN=" + appInfo.PackageFamilyName;
                 }
                 else
                 {
@@ -62,11 +79,7 @@
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="250px"
                      height="150px" viewBox="0 0 250 150" enable-background="new 0 0 250 150" xml:space="preserve">
                     <g id="Layer_2">
-                        @{
-                            string bgColor = !string.IsNullOrEmpty(Model.WindowsAppStoreInfo.BackgroundColor) ?
-                                                 Model.WindowsAppStoreInfo.BackgroundColor : "#00AFF0";
-                        }
-                        <rect fill="@bgColor" width="250" height="150"/>
+                        <rect fill="@color" width="250" height="150"/>
                     </g>
                     <g id="Layer_1">
                         <g>
@@ -113,7 +126,7 @@
     <div class="span8">
         <article class="blog-post">
             <div class="tooltip-demo headline">
-                <h4>@appInfo.Name</h4>
+                <h4>@appName</h4>
                 <span class="comment"><a href="#recommendations">@Model.NumberOfRecommendations verified recommendations</a></span>
             </div>
             <div class="clearfix">
@@ -209,7 +222,7 @@
                         Launch the Windows Store
                     </li>
                     <li>
-                        Search for "@Model.WindowsAppStoreInfo.Name"<br />
+                        Search for "@appInfo.Name"<br />
                         <small>Hint: You can start typing at the homepage of the Windows Store to start searching</small>
                     </li>
                 </ol>
@@ -231,7 +244,7 @@
                     </li>
                     <li>
                         Type or Copy paste this: <br />
-                        <code>start ms-windows-store:PDP?PFN=@Model.WindowsAppStoreInfo.PackageFamilyName</code>
+                        <code>start ms-windows-store:PDP?PFN=@appInfo.PackageFamilyName</code>
                     </li>
                     <li>
                         Hit Enter
@@ -253,23 +266,11 @@ else if (!isWindows8)
         </div>
         <div class="modal-body">
             <p>
-                @Model.WindowsAppStoreInfo.Name is a Windows 8 application.
-                You need to be on a Windows 8 PC to open the Windows Store and view @Model.WindowsAppStoreInfo.Name.
+                @appInfo.Name is a Windows 8 application.
+                You need to be on a Windows 8 PC to open the Windows Store and view @appInfo.Name.
             </p>
         </div>
     </div>      
-}
-
-@{
-    string color;
-    if (string.IsNullOrEmpty(Model.WindowsAppStoreInfo.BackgroundColor))
-    {
-        color = "@color";
-    }
-    else
-    {
-        color = Model.WindowsAppStoreInfo.BackgroundColor;
-    }
 }
 
 <style>

@@ -21,8 +21,8 @@ namespace ReferEngine.Web.Areas.AppStore
 
             context.MapRoute(
                 "AppStore_SubCategory_default",
-                "app-store/{controller}/s/{parentCategory}/{category}",
-                new { action = "ParentCategory" }
+                "app-store/{controller}/s/{parentCategory}/{category}/{name}",
+                new { action = "ParentCategory", name = UrlParameter.Optional }
             );
 
             context.MapRoute(

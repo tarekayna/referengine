@@ -245,7 +245,8 @@ namespace ReferEngine.Common.Utilities
 
         private static string[][] replaceSets = 
             {
-                new[] {" ", "-"},
+                new[] {"-", "_l_"},
+                new[] {" ", "_-_"},
                 new[] {"&", "_and_"},
                 new[] {"!", "_a_"},
                 new[] {"?", "_b_"},
@@ -255,7 +256,8 @@ namespace ReferEngine.Common.Utilities
                 new[] {"\\", "_g_"},
                 new[] {":", "_h_"},
                 new[] {"<", "_i_"},
-                new[] {">", "_j_"}
+                new[] {">", "_j_"},
+                new[] {"+", "_p_"}
             };
         
         public static string ConvertStringToUrlPart(string str)

@@ -20,7 +20,7 @@ namespace ReferEngine.Common.Models
                 string linkPart = string.Empty;
                 if (HasParent)
                 {
-                    linkPart = Util.ConvertStringToUrlPart(ParentCategoryName) + "/s/";
+                    linkPart = "s/" + Util.ConvertStringToUrlPart(ParentCategoryName) + "/";
                 }
                 linkPart += Util.ConvertStringToUrlPart(Name);
                 return linkPart;

@@ -13,15 +13,32 @@ namespace ReferEngine.Web.Areas.AppStore.Controllers
 {
     public class WindowsController : BaseController
     {
-        public ActionResult ParentCategory(string category, string parentCategory,
+        public ActionResult ParentCategory(string category, string parentCategory, string name,
                             int numberOfApps = 18, int page = 1)
         {
-            int actualNumberOfApps = numberOfApps > 50 ? 50 : numberOfApps;
-            var windowsAppStoreCategory = DataOperations.GetWindowsAppStoreCategory(category, parentCategory);
-            var windowsCategoryViewModel = DataOperations.GetWindowsCategoryViewModel(windowsAppStoreCategory,
-                                                            actualNumberOfApps, page);
-            return View("WindowsCategory", windowsCategoryViewModel);
+            if (!string.IsNullOrEmpty(name))
+            {
+                string appName = Util.ConvertUrlPartToString(name);
+                WindowsAppViewModel windowsAppViewModel = DataOperations.GetWindowsAppViewModelByName(appName);
+                if (windowsAppViewModel != null)
+                {
+                    windowsAppViewModel.UserAgentProperties = new UserAgentProperties(Request.UserAgent);
+                    return View("WindowsApp", windowsAppViewModel);
+                }
+            }
 
+            int actualNumberOfApps = numberOfApps > 50 ? 50 : numberOfApps;
+            string categoryName = Util.ConvertUrlPartToString(category);
+            string parentCategoryName = Util.ConvertUrlPartToString(parentCategory);
+            var windowsAppStoreCategory = DataOperations.GetWindowsAppStoreCategory(categoryName, parentCategoryName);
+            if (windowsAppStoreCategory != null)
+            {
+                var windowsCategoryViewModel = DataOperations.GetWindowsCategoryViewModel(windowsAppStoreCategory,
+                                                                                          actualNumberOfApps, page);
+                return View("WindowsCategory", windowsCategoryViewModel);
+            }
+
+            throw new InvalidOperationException(string.Format("Category: {0}, ParentCategory: {1}, AppName: {2}", category, parentCategory, name));
         }
 
         public ActionResult Category(string category = null, string name = null, int numberOfApps = 18, int page = 1)

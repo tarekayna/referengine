@@ -5,11 +5,11 @@
     <title>
         @if (ViewBag.Title == null)
         {
-            <text>Windows Store | Refer Engine</text>
+            <text>Windows Store Apps | Refer Engine</text>
         }
         else
         {
-            <text>@ViewBag.Title | Windows Store | Refer Engine</text>
+            <text>@ViewBag.Title | Windows Store Apps | Refer Engine</text>
         }
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     }
     else
     {
-        <meta name="description" content="">
+        <meta name="description" content="Discover, rate and share Windows Store apps.">
     }
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic' rel='stylesheet' type='text/css'>
@@ -39,8 +39,11 @@
                         <nav>
                             <ul class="nav topnav">
                                 <li class="primary">
-                                    <a href="~/app-store/windows"><i class="icon-envelope icon-white"></i>Windows Store</a>
+                                    <a href="~/app-store/windows">Windows Store</a>
                                 </li>
+                       @*         <li class="danger">
+                                    <a href="~/developers">Developers</a>
+                                </li>*@
                             </ul>
                         </nav>
                     </div>
@@ -54,7 +57,7 @@
                 <div class="row" style="margin-bottom: 0">
                     <div class="span8">
                         <h3 style="padding-top: 5px"><i class="m-icon-big-swapright m-icon-white"></i>
-                            <a href="~/app-store/windows" style="color: white">Windows Store</a>
+                            <a href="~/app-store/windows" style="color: white">Windows Store Apps</a>
                             @RenderSection("Navigation", false)
                         </h3>
                     </div>

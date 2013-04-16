@@ -3,7 +3,15 @@
 
 @{
     ViewBag.Title = Model.Category.Name;
-    string categoryLinkPart = Util.ConvertStringToUrlPart(Model.Category.Name);
+    if (Model.Category.HasParent)
+    {
+        ViewBag.Title += " | " + Model.Category.ParentCategoryName;
+    }
+}
+
+@section HeaderMeta
+{
+        <meta name="description" content="Discover, rate and share Windows Store @Model.Category.Name apps.">
 }
 
 <div class="row">
@@ -22,14 +30,14 @@
         {
             var prevPage = Model.PageNumber - 1;
             var link = Model.Category.LinkPart + "?page=" + prevPage;
-            <a class="btn" href="@link"><i class="icon-arrow-left"></i></a>
+            <a class="btn" href="~/app-store/windows/@link"><i class="icon-arrow-left"></i></a>
         }
             <a class="btn disabled">@Model.PageNumber</a>
         @{
             var nextPage = Model.PageNumber + 1;
             var nextLink = Model.Category.LinkPart + "?page=" + nextPage;
         }
-            <a class="btn" href="@nextLink"><i class="icon-arrow-right"></i></a>
+            <a class="btn" href="~/app-store/windows/@nextLink"><i class="icon-arrow-right"></i></a>
         </div>
     </div>
 </div>
@@ -37,11 +45,10 @@
     <ul class="portfolio-area da-thumbs">    
         @foreach (var appInfo in Model.WindowsAppStoreInfos)
         {
-            string appLinkPart = Util.ConvertStringToUrlPart(appInfo.Name);
             <li class="portfolio-item2" data-id="id-0" data-type="web">
                 <div class="span4">
                     <div class="thumbnail">
-                        <a href="~/app-store/windows/@categoryLinkPart/@appLinkPart" style="color: white">
+                        <a href="~/app-store/windows/@appInfo.LinkPart" style="color: white">
                             <div class="image-wrapp">
                                 @if (appInfo.CloudinaryImages != null && appInfo.CloudinaryImages.Any())
                                 {
@@ -75,5 +82,15 @@
 
 @section Navigation
 {
-    > <a href="~/app-store/windows/@categoryLinkPart" style="color: #FFF">@Model.Category.Name</a>
+    @if (Model.Category.HasParent)
+    {
+        <text>
+            > <a href="~/app-store/windows/@Util.ConvertStringToUrlPart(Model.Category.ParentCategoryName)" style="color: #FFF">@Model.Category.ParentCategoryName</a>
+            > <a href="~/app-store/windows/@Model.Category.LinkPart" style="color: #FFF">@Model.Category.Name</a>
+        </text>
+    }
+    else
+    {
+        <text>> <a href="~/app-store/windows/@Model.Category.LinkPart" style="color: #FFF">@Model.Category.Name</a></text>
+    }
 }
