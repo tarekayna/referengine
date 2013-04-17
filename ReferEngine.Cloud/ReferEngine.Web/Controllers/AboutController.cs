@@ -26,10 +26,25 @@ namespace ReferEngine.Web.Controllers
             return View();
         }
 
+        public ActionResult Contact()
+        {
+            return View();
+        }
+
         public ActionResult Rules(long id)
         {
             App app = DataOperations.GetApp(id);
             return View(app);
+        }
+
+        public ActionResult BluGraphingCalculator()
+        {
+            return View();
+        }
+
+        public ActionResult BluGraphingCalculatorPrivacy()
+        {
+            return View();
         }
     }
 }

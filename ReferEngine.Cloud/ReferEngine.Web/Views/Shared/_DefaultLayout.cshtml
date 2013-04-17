@@ -1,0 +1,130 @@
+﻿@using ReferEngine.Common.Models
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+        @if (ViewBag.Title == null)
+        {
+            <text>Windows Store Apps | Refer Engine</text>
+        }
+        else
+        {
+            <text>@ViewBag.Title | Windows Store Apps | Refer Engine</text>
+        }
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="ReferEngine.com">
+    @if (IsSectionDefined("HeaderMeta"))
+    {
+        @RenderSection("HeaderMeta")
+    }
+    else
+    {
+        <meta name="description" content="Discover, rate and share Windows Store apps.">
+    }
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic' rel='stylesheet' type='text/css'>
+    @Styles.Render("~/bundles/app-store")
+    @Html.Partial("_FavIcon")
+</head>
+<body>
+    <header>
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand logo" href="~/">
+                        @{
+                            CloudinaryImage logoImage = new CloudinaryImage {Id = "logo_web_header_j3ofmj", Format = "png"};
+                        }
+                        <img src="@logoImage.GetLink()" alt="Refer Engine Logo" height="35" width="200" />
+                    </a>
+                    <div>
+                        <nav>
+                            <ul class="nav topnav">
+                                <li class="primary">
+                                    <a href="~/app-store/windows">Windows Store Apps</a>
+                                </li>
+                                <li class="success">
+                                    <a href="~/app-store/windows">iPhone and iPad Apps</a>
+                                </li>
+                                <li class="info">
+                                    <a href="~/developer">Developers</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </header>
+    <section id="subintro" style="margin-top: 0">
+        <div class="jumbotron subhead" id="overview" style="padding: 0; margin-bottom: 10px">
+            <div class="container">
+                <div class="row" style="margin-bottom: 0">
+                    <div class="span8">
+                        <h3 style="padding-top: 5px"><i class="m-icon-big-swapright m-icon-white"></i>
+                            @RenderSection("Navigation", false)
+                        </h3>
+                    </div>
+                    <div class="span4">
+                        <div class="input-append pull-right">
+                            <form class="form-search">
+                                <input type="text" class="input-medium search-query">
+                                <button type="submit" class="btn btn-inverse">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="maincontent">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="span3">
+                    <div class="widget">
+                        <h4>Quick Links</h4>
+                        <ul class="nav nav-list regular">
+                            <li><a href="~/">Home</a></li>
+                            <li><a href="~/app-store/windows">Windows Store</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="span3">
+                    <div class="widget">
+                        <h4>Company</h4>
+                        <ul class="nav nav-list regular">
+                            <li><a href="~/about/privacy">Privacy Policy</a></li>
+                            <li><a href="~/about/terms">Terms of Use</a></li>
+                            <li><a href="~/about/use">Acceptable Use Policy</a></li>
+                            <li><a href="~/about/copyright">Copyright</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="verybottom">
+            <div class="container">
+                <div class="row">
+                    <div class="span6">
+                        <p>
+                            &copy; Apexa Inc. 2013 - Refer Engine ™ - All right reserved
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/libs/app-store")
+    @RenderSection("ScriptsAfterBody", required: false)
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -2,7 +2,11 @@
     ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
     viewProperties.PageTitle = "Privacy Policy";
 }
-@Html.Partial("_PageHeader", new PageTitleViewModel("Privacy Policy"))
+
+@section Navigation 
+{
+    Privacy Policy
+}
 
 <div id="content">
 <div class="container">

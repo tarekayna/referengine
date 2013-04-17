@@ -403,6 +403,11 @@
     <Content Include="Areas\assets\img\slides\nivo\img4.jpg" />
     <Content Include="Areas\assets\img\slides\nivo\loading.gif" />
     <Content Include="Areas\assets\img\small-avatar.png" />
+    <Content Include="Views\Shared\_DefaultLayout.cshtml" />
+    <Content Include="Views\Home\_ViewStart.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\_HomeCleanLayout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
     <TypeScriptCompile Include="TypeScript\AppStore\Windows\WindowsCategory.ts" />
     <Content Include="img\logo-web-header.svg" />
     <Content Include="TypeScript\AppStore\Windows\WindowsCategory.js">
@@ -441,8 +446,8 @@
     <Content Include="js\lib\require.js" />
     <Content Include="js\home.js" />
     <Content Include="js\shared\layout-not-auth.js" />
-    <Content Include="Views\Home\BluGraphingCalculator.cshtml" />
-    <Content Include="Views\Home\BluGraphingCalculatorPrivacy.cshtml" />
+    <Content Include="Views\About\BluGraphingCalculator.cshtml" />
+    <Content Include="Views\About\BluGraphingCalculatorPrivacy.cshtml" />
     <Content Include="TypeScript\AppStore\Windows\WindowsApp.min.js.map">
       <DependentUpon>WindowsApp.js</DependentUpon>
     </Content>
@@ -534,12 +539,11 @@
     <Content Include="Areas\AppStore\Views\Windows\WindowsStore.cshtml" />
     <Content Include="Areas\AppStore\Views\Windows\WindowsCategory.cshtml" />
     <Content Include="Areas\AppStore\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\AppStore\Views\Shared\_AppStoreLayout.cshtml" />
     <Content Include="Areas\AppStore\Views\Windows\_WindowsCategoryTile.cshtml" />
     <Content Include="Areas\Developer\Views\Web.config" />
     <Content Include="Areas\Developer\Views\DeveloperHome\Index.cshtml" />
     <Content Include="Areas\Developer\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Developer\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Developer\Views\Shared\_DeveloperLayout.cshtml" />
     <None Include="Less\app\dashboard.less" />
     <Content Include="Less\app\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>
@@ -556,7 +560,7 @@
     <Content Include="TypeScript\recommend\windows\client\export-messaging.js" />
     <Content Include="Views\Shared\_PageHeader.cshtml" />
     <Content Include="Views\Shared\_PrivateBeta.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\About\Contact.cshtml" />
     <TypeScriptCompile Include="TypeScript\recommend\windows\server\pleaseUpdate.ts" />
     <Content Include="TypeScript\recommend\windows\server\pleaseUpdate.js">
       <DependentUpon>pleaseUpdate.ts</DependentUpon>
@@ -861,9 +865,9 @@
     <Content Include="Views\About\Privacy.cshtml" />
     <Content Include="Views\About\Use.cshtml" />
     <Content Include="Views\About\Copyright.cshtml" />
-    <Content Include="Views\Shared\fb\_Layout.cshtml" />
+    <Content Include="Views\Facebook\_FacebookLayout.cshtml" />
     <Content Include="Views\Facebook\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Pricing.cshtml" />
+    <Content Include="Areas\Developer\Views\DeveloperHome\Pricing.cshtml" />
     <Content Include="Views\About\Rules.cshtml" />
     <Content Include="Views\Shared\_MixPanel.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -882,13 +886,12 @@
     <Content Include="Views\Shared\_CrazyEgg.cshtml" />
     <Content Include="Views\App\Dashboard.cshtml" />
     <Content Include="Views\Shared\_MINIPROFILER UPDATED Layout.cshtml" />
-    <Content Include="Views\Video\TeamVideo.cshtml" />
-    <Content Include="Views\Video\ProductVideo.cshtml" />
     <Content Include="Views\Shared\_SetJavaScriptGlobalVariables.cshtml" />
     <Content Include="Views\Shared\_LiveChat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\AppStore\Views\Shared\" />
     <Folder Include="Areas\Developer\Models\" />
     <Folder Include="js\recommend\" />
     <Folder Include="Models\InAppScript\" />
@@ -908,10 +911,7 @@
     <Content Include="Views\App\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\win8\recommend\_Layout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Recommend\win8\_RecommendWin8Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_FavIcon.cshtml" />

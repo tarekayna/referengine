@@ -30,24 +30,24 @@ namespace ReferEngine.Web.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
-        public ActionResult Pricing()
+        public ActionResult About()
         {
             return View();
         }
 
         public ActionResult Contact()
         {
-            return View();
+            return RedirectToAction("Contact", "About");
         }
 
         public ActionResult BluGraphingCalculator()
         {
-            return View();
+            return RedirectToAction("BluGraphingCalculator", "About");
         }
 
         public ActionResult BluGraphingCalculatorPrivacy()
         {
-            return View();
+            return RedirectToAction("BluGraphingCalculatorPrivacy", "About");
         }
     }
 }

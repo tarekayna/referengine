@@ -1,0 +1,97 @@
+﻿@using ReferEngine.Common.Models
+@{
+    const string pageTitle = "Refer Engine | App Stores Gone Social";
+    const string pageDescription = "Refer Engine rebuilds app stores for iOS, iPhone, iPad, Android, Windows 8, Windows Phone and other app platforms in a more social way.";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@pageTitle</title>
+    <meta name="description" content="@pageDescription">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Refer Engine">
+    <meta property="og:title" content="@pageTitle"/>
+    <meta property="og:url" content="@Request.Url"/>
+    <meta property="og:description" content="@pageDescription"/>
+    <meta property="og:image" content="https://cloudinary-a.akamaihd.net/referengine/image/upload/logo_mark_500_qg2mad.png" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <style>
+        body
+        {
+            font-family: 'Open Sans';
+        }
+
+        .tm
+        {
+            font-size: 16px;
+        }
+
+        a
+        {
+            text-decoration: none;
+        }
+
+            a:visited
+            {
+                color: black;
+            }
+
+        .bottom-menu
+        {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            min-height: 50px;
+            color: #FFF;
+            background-color: #000;
+        }
+
+            .bottom-menu ul
+            {
+                list-style: none;
+            }
+
+            .bottom-menu li
+            {
+                float: right;
+            }
+
+                .bottom-menu li a
+                {
+                    padding: 10px 15px;
+                    color: #ccc;
+                }
+    </style>
+    @Html.Partial("_FavIcon")
+</head>
+    <body>
+        
+        <div style="text-align: center; padding-top: 50px">
+            <div class="brand logo" style="text-decoration: none; font-size: 24px">
+                @{
+                    var logoImage = new CloudinaryImage { Id = "logo_mark_500_qg2mad", Format = "png" };
+                }
+                <img src="@logoImage.GetLink("h_40,w_40")" alt="Refer Engine Logo" height="40" width="40" 
+                     style="border: 0"/>
+                <div>Refer Engine <span class="tm">&#153;</span></div>
+            </div>
+        </div>
+        
+        @RenderBody()
+
+        <div class="bottom-menu">
+            <ul>
+                <li><a>About</a></li>
+                <li><a href="~/developer">Developers</a></li>
+                <li><a href="~/app-store/windows">Windows Store Apps</a></li>
+                <li><a>iPhone and iPad Apps</a></li>
+                <li><a>Andriod Apps</a></li>
+            </ul>
+        </div>
+
+        @Html.Partial("_GoogleAnalytics")
+    </body>
+</html>
