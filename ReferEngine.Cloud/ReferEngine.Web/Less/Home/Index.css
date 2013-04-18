@@ -1,0 +1,42 @@
+﻿body {
+  font-family: 'Open Sans';
+}
+.tm {
+  font-size: 14px;
+}
+a {
+  text-decoration: none;
+}
+a:visited {
+  color: black;
+}
+.bottom-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  min-height: 50px;
+  color: #FFF;
+  background-color: #000;
+}
+.bottom-menu ul {
+  list-style: none;
+}
+.bottom-menu li {
+  float: right;
+}
+.bottom-menu li a {
+  padding: 10px 15px;
+  color: #ccc;
+}
+.text-center {
+  text-align: center;
+}
+.clean-logo {
+  padding-top: 50px;
+  text-decoration: none;
+  font-size: 24px;
+}
+.clean-logo img {
+  border: 0;
+}

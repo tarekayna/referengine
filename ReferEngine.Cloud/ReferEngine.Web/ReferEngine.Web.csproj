@@ -403,11 +403,18 @@
     <Content Include="Areas\assets\img\slides\nivo\img4.jpg" />
     <Content Include="Areas\assets\img\slides\nivo\loading.gif" />
     <Content Include="Areas\assets\img\small-avatar.png" />
+    <Content Include="Less\Home\Index.css">
+      <DependentUpon>Index.less</DependentUpon>
+    </Content>
+    <Content Include="Less\Home\Index.min.css">
+      <DependentUpon>Index.less</DependentUpon>
+    </Content>
     <Content Include="Views\Shared\_DefaultLayout.cshtml" />
     <Content Include="Views\Home\_ViewStart.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\_HomeCleanLayout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
     <TypeScriptCompile Include="TypeScript\AppStore\Windows\WindowsCategory.ts" />
     <Content Include="img\logo-web-header.svg" />
     <Content Include="TypeScript\AppStore\Windows\WindowsCategory.js">
@@ -642,6 +649,13 @@
     <Compile Include="Models\Recommend\Win8\RecommendViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="TypeScript\lib\SinglePage.ts" />
+    <Compile Include="Resources\Links.cs" />
+    <Compile Include="Resources\ViewResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Images.cs" />
     <Compile Include="WebRole.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -789,6 +803,7 @@
       <DependentUpon>main.less</DependentUpon>
     </Content>
     <Content Include="Less\web\main.less" />
+    <Content Include="Less\Home\Index.less" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -941,6 +956,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ViewResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ViewResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

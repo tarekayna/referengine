@@ -6,18 +6,14 @@
     WindowsAppStoreInfo appInfo = Model.WindowsAppStoreInfo;
     WindowsAppStoreCategory category = appInfo.Category;
     IHtmlString appName = @Html.Raw(appInfo.Name);
-    ViewBag.Title = appName + " | " + category.Name;
-    ViewBag.Title += category.HasParent ? " | " + category.ParentCategoryName : "";
+    ViewBag.Title = appName + ViewResources.TitleSeparator + category.Name;
+    ViewBag.Title += category.HasParent ? ViewResources.TitleSeparator + category.ParentCategoryName : "";
+    ViewBag.PageDescription = appInfo.DescriptionHtml;
     
     string color = appInfo.BackgroundColor ?? "#00AFF0";
 
     bool isWindows8 = Model.UserAgentProperties.IsWindows8;
     bool supportsProtocolLaunching = Model.UserAgentProperties.SupportsProtocolLaunching;
-}
-
-@section HeaderMeta
-{
-    <meta name="description" content="@appInfo.DescriptionHtml">
 }
 
 @section Navigation

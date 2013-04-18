@@ -8,7 +8,6 @@ namespace ReferEngine.Web.Models.Common
 {
     public class ViewProperties
     {
-        public bool UseJQueryValidate { get; set; }
         public bool UseJQueryUi { get; set; }
         public App CurrentApp { get; set; }
         public User CurrentUser { get; set; }

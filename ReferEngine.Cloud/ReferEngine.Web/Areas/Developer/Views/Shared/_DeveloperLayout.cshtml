@@ -149,9 +149,7 @@
                         <a class="brand" href="~/"><img src="~/img/logo-web-header.png" alt="@baseTitle" /></a>
                         <div class="nav-collapse collapse">
                             <ul class="nav pull-right">
-                                @*<li><a href="~/howitworks">How it works</a></li>*@
-                                <li><a href="~/pricing">Pricing</a></li>
-                                <li><a href="~/contact">Contact</a></li>
+                                <li>@Links.Pricing(ViewResources.Pricing)</li>
                                 <li><a>|</a></li>
                                 <li>
                                     <div class="btn-group" id="login-group">
@@ -169,31 +167,7 @@
 
         @RenderBody()
     
-        <div id="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="span3">
-                        <h4>Quick Links</h4>
-                        <ul>
-                            <li><a href="~/">Home</a></li>
-                            @*<li><a href="~/howitworks">How it works</a></li>*@
-                            <li><a href="~/pricing">Pricing</a></li>
-                            <li><a href="~/contact">Contact</a></li>
-                        </ul>			
-                    </div>
-                    <div class="span3">		
-                        <h4>Company</h4>
-                        <ul>
-                            @*<li><a href="~/about">About Us</a></li>*@
-                            <li><a href="~/about/privacy">Privacy Policy</a></li>
-                            <li><a href="~/about/terms">Terms of Use</a></li>
-                            <li><a href="~/about/use">Acceptable Use Policy</a></li>
-                            <li><a href="~/about/copyright">Copyright</a></li>
-                        </ul>	
-                    </div>  
-                </div>	  
-            </div>	  
-        </div>
+        @Html.Partial("_Footer")
         
         <div id="copywrite">
             <div class="container">
@@ -206,8 +180,7 @@
         </div>
     
 
-        @Scripts.Render("~/bundles/libs/base")
-        @Scripts.Render("~/bundles/libs/jquery-validate")
+        @Scripts.Render("~/bundles/developerLayout")
         @Html.Partial("_MixPanel")
 
         @if (viewProperties != null && viewProperties.UseJQueryUi)
@@ -217,12 +190,6 @@
 
         @RenderSection("scripts", required: false)
         
-        @{
-            if (viewProperties != null)
-            {
-                viewProperties.UseJQueryValidate = true;
-            }
-        }
         @Html.Partial("_PrivateBeta")
         
         

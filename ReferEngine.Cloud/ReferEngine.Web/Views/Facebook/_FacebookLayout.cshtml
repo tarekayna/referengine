@@ -33,12 +33,7 @@
         @RenderBody()
 
         @Html.Partial("_MixPanel")
-        @Scripts.Render("~/bundles/libs/base")
-        
-        @if (viewProperties.UseJQueryValidate)
-        {
-            @Scripts.Render("~/bundles/libs/jquery-validate")
-        }
+        @Scripts.Render("~/bundles/developerLayout")
         
         @if (viewProperties.UseJQueryUi)
         {

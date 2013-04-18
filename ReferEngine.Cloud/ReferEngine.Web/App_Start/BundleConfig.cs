@@ -26,13 +26,14 @@ namespace ReferEngine.Web.App_Start
             #region Script Bundles
             List<BundleInfo> scriptBundles = new List<BundleInfo>
                 {
-                    new BundleInfo("~/bundles/libs/base",
+                    new BundleInfo("~/bundles/developerLayout",
                                    "~/typescript/lib/jquery-1.8.3.js",
                                    "~/typescript/lib/bootstrap.js",
                                    "~/typescript/lib/bootstrap-notify.js"),
 
-                    new BundleInfo("~/bundles/libs/app-store",
+                    new BundleInfo("~/bundles/defaultLayout",
                                    "~/typescript/lib/jquery-1.8.3.js",
+                                   "~/js/lib/jquery-validate.js",
                                    "~/typescript/lib/bootstrap.js",
                                    "~/typescript/lib/bootstrap-notify.js",
                                    "~/typescript/lib/jquery.easing.1.3.js",
@@ -48,9 +49,6 @@ namespace ReferEngine.Web.App_Start
                                    "~/typescript/lib/hover/jquery-hover-effect.js",
                                    "~/typescript/lib/hover/setting.js",
                                    "~/typescript/lib/custom.js"),
-                                   
-                    new BundleInfo("~/bundles/libs/jquery-validate",
-                                   "~/js/lib/jquery-validate.js"),
                                    
                     new BundleInfo("~/bundles/libs/jquery-ui",
                                    "~/js/lib/jquery-ui-1.10.0.custom.js"),
@@ -89,7 +87,7 @@ namespace ReferEngine.Web.App_Start
                                    "~/css/base.css",
                                    "~/css/blue.css"),
                                    
-                    new BundleInfo("~/bundles/app-store",
+                    new BundleInfo("~/bundles/defaultLayout",
                                    "~/css/bootstrap.css",
                                    "~/css/bootstrap-responsive.css",
                                    "~/css/AppStore/docs.css",
@@ -103,6 +101,9 @@ namespace ReferEngine.Web.App_Start
 
                     new BundleInfo("~/bundles/less/web",
                                    "~/less/web/main.css"),
+
+                    new BundleInfo("~/bundles/home",
+                                   "~/less/home/index.css"),
 
                     new BundleInfo("~/bundles/less/recommend/win8/intro",
                                    "~/less/recommend/win8/intro.css"),

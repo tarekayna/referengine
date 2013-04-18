@@ -1,31 +1,33 @@
-﻿@using ReferEngine.Common.Models
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>
-        @if (ViewBag.Title == null)
-        {
-            <text>Windows Store Apps | Refer Engine</text>
+        @{
+            string title = ViewResources.WindowsStoreApps +
+                           ViewResources.TitleSeparator +
+                           ViewResources.ReferEngine;
+            if (ViewBag.Title != null)
+            {
+                title = ViewBag.Title +
+                        ViewResources.TitleSeparator +
+                        title;
+            }
         }
-        else
-        {
-            <text>@ViewBag.Title | Windows Store Apps | Refer Engine</text>
-        }
+        @title
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="ReferEngine.com">
-    @if (IsSectionDefined("HeaderMeta"))
-    {
-        @RenderSection("HeaderMeta")
+    @{
+        string pageDescription = ViewResources.MainDescription;
+        if (ViewBag.PageDescription != null)
+        {
+            pageDescription = ViewBag.PageDescription + pageDescription;
+        }
     }
-    else
-    {
-        <meta name="description" content="Discover, rate and share Windows Store apps.">
-    }
-    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
+    <meta name="description" content="@pageDescription">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic' rel='stylesheet' type='text/css'>
-    @Styles.Render("~/bundles/app-store")
+    @Styles.Render("~/bundles/defaultLayout")
     @Html.Partial("_FavIcon")
 </head>
 <body>
@@ -34,10 +36,7 @@
             <div class="navbar-inner">
                 <div class="container">
                     <a class="brand logo" href="~/">
-                        @{
-                            CloudinaryImage logoImage = new CloudinaryImage {Id = "logo_web_header_j3ofmj", Format = "png"};
-                        }
-                        <img src="@logoImage.GetLink()" alt="Refer Engine Logo" height="35" width="200" />
+                        @Images.LogoWebHeader.Height(35).Width(35).Alt(ViewResources.ReferEngine).Attribute("style", "width: 200px; height: 35px").ToHtmlString("w_400,h_70")
                     </a>
                     <div>
                         <nav>
@@ -56,7 +55,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </header>
     <section id="subintro" style="margin-top: 0">
@@ -72,7 +70,7 @@
                         <div class="input-append pull-right">
                             <form class="form-search">
                                 <input type="text" class="input-medium search-query">
-                                <button type="submit" class="btn btn-inverse">Search</button>
+                                <button type="submit" class="btn btn-inverse">@ViewResources.Search</button>
                             </form>
                         </div>
                     </div>
@@ -85,46 +83,20 @@
             @RenderBody()
         </div>
     </section>
-    <footer class="footer">
+    @Html.Partial("_Footer")
+    <div class="verybottom">
         <div class="container">
             <div class="row">
-                <div class="span3">
-                    <div class="widget">
-                        <h4>Quick Links</h4>
-                        <ul class="nav nav-list regular">
-                            <li><a href="~/">Home</a></li>
-                            <li><a href="~/app-store/windows">Windows Store</a></li>
-                            <li><a href="~/developer">Developers</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="span3">
-                    <div class="widget">
-                        <h4>Company</h4>
-                        <ul class="nav nav-list regular">
-                            <li><a href="~/about/privacy">Privacy Policy</a></li>
-                            <li><a href="~/about/terms">Terms of Use</a></li>
-                            <li><a href="~/about/use">Acceptable Use Policy</a></li>
-                            <li><a href="~/about/copyright">Copyright</a></li>
-                        </ul>
-                    </div>
+                <div class="span6">
+                    <p>
+                        @ViewResources.FooterCopyrightStatement
+                    </p>
                 </div>
             </div>
         </div>
-        <div class="verybottom">
-            <div class="container">
-                <div class="row">
-                    <div class="span6">
-                        <p>
-                            &copy; Apexa Inc. 2013 - Refer Engine ™ - All right reserved
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    </div>
 
-    @Scripts.Render("~/bundles/libs/app-store")
+    @Scripts.Render("~/bundles/bundles/defaultLayout")
     @RenderSection("ScriptsAfterBody", required: false)
     @RenderSection("Scripts", required: false)
 </body>

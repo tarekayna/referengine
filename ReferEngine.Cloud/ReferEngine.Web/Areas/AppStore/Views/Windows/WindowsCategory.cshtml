@@ -5,13 +5,9 @@
     ViewBag.Title = Model.Category.Name;
     if (Model.Category.HasParent)
     {
-        ViewBag.Title += " | " + Model.Category.ParentCategoryName;
+        ViewBag.Title += ViewResources.TitleSeparator + Model.Category.ParentCategoryName;
     }
-}
-
-@section HeaderMeta
-{
-        <meta name="description" content="Discover, rate and share Windows Store @Model.Category.Name apps.">
+    ViewBag.PageDescription = Model.Category.Name;
 }
 
 <div class="row">
