@@ -28,10 +28,11 @@ namespace ReferEngine.Web.App_Start
                 {
                     new BundleInfo("~/bundles/developerLayout",
                                    "~/typescript/lib/jquery-1.8.3.js",
+                                   "~/js/lib/jquery-validate.js",
                                    "~/typescript/lib/bootstrap.js",
                                    "~/typescript/lib/bootstrap-notify.js"),
 
-                    new BundleInfo("~/bundles/defaultLayout",
+                    new BundleInfo("~/bundles/js/defaultLayout",
                                    "~/typescript/lib/jquery-1.8.3.js",
                                    "~/js/lib/jquery-validate.js",
                                    "~/typescript/lib/bootstrap.js",
@@ -87,7 +88,7 @@ namespace ReferEngine.Web.App_Start
                                    "~/css/base.css",
                                    "~/css/blue.css"),
                                    
-                    new BundleInfo("~/bundles/defaultLayout",
+                    new BundleInfo("~/bundles/css/defaultLayout",
                                    "~/css/bootstrap.css",
                                    "~/css/bootstrap-responsive.css",
                                    "~/css/AppStore/docs.css",

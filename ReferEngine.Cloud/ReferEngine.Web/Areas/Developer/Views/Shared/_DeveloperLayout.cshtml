@@ -178,7 +178,6 @@
                 </div>
             </div>	  
         </div>
-    
 
         @Scripts.Render("~/bundles/developerLayout")
         @Html.Partial("_MixPanel")
@@ -191,7 +190,6 @@
         @RenderSection("scripts", required: false)
         
         @Html.Partial("_PrivateBeta")
-        
         
         @if (Request.IsAuthenticated && viewProperties != null && viewProperties.CurrentUser != null)
         {

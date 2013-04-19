@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -25,79 +30,227 @@
             pageDescription = ViewBag.PageDescription + pageDescription;
         }
     }
-    <meta name="description" content="@pageDescription">
+    <meta name="description" content="@pageDescription" />
+    <meta property="og:title" content="@title"/> 
+    <meta property="og:url" content="@Request.Url"/> 
+    <meta property="og:description" content="@pageDescription"/> 
+    <!-- TODO -->
+    <meta property="og:image" content="https://www.referengine.com/img/logo-mark-50.png"/>     
+    
+
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic' rel='stylesheet' type='text/css'>
-    @Styles.Render("~/bundles/defaultLayout")
+    @Styles.Render("~/bundles/css/defaultLayout")
+    @RenderSection("Styles", required: false)
     @Html.Partial("_FavIcon")
 </head>
-<body>
-    <header>
-        <div class="navbar navbar-static-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="brand logo" href="~/">
-                        @Images.LogoWebHeader.Height(35).Width(35).Alt(ViewResources.ReferEngine).Attribute("style", "width: 200px; height: 35px").ToHtmlString("w_400,h_70")
-                    </a>
-                    <div>
-                        <nav>
-                            <ul class="nav topnav">
-                                <li class="primary">
-                                    <a href="~/app-store/windows">Windows Store Apps</a>
-                                </li>
-                                @*<li class="success">
-                                    <a href="~/app-store/windows">iPhone and iPad Apps</a>
-                                </li>*@
-                                <li class="info">
-                                    <a href="~/developer">Developers</a>
-                                </li>
+    <body>
+        
+        <div class='notifications top-right'></div>
+
+@*        @if (Request.IsAuthenticated && viewProperties != null && viewProperties.CurrentUser != null)
+        {
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="btn btn-primary btn-dropnav" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>		
+
+                        <ul class="nav pull-left">
+                            @if (viewProperties.CurrentUser.Apps != null && viewProperties.CurrentUser.Apps.Count > 0)
+                            {
+                                <div class="btn-group">
+                                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                        @if (viewProperties.CurrentApp == null)
+                                        {
+                                            <span>Your Apps</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@viewProperties.CurrentApp.Name</span>
+                                        }
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @for (int i = 0; i < viewProperties.CurrentUser.Apps.Count; i++)
+                                        {
+                                            <li>
+                                                <a tabindex="-1" href="~/app/dashboard/@viewProperties.CurrentUser.Apps[i].Id">@viewProperties.CurrentUser.Apps[i].Name</a>
+                                            </li>
+                                        }
+                                        <li class="divider"></li>
+                                        <li><a href="~/app/new"><i class="icon-plus-sign"></i> Add New App</a></li>
+                                    </ul>
+                                </div>
+                            }
+                            else
+                            {
+                                <a href="~/app/new" class="btn"><i class="icon-plus-sign"></i> Add New App</a>
+                            }                           
+                        </ul>
+
+                        <div class="nav-collapse collapse">
+                            @if (viewProperties.CurrentApp != null)
+                            {
+                                <ul class="nav pull-left">
+                                    <li @if(viewProperties.ActiveMenuItem == "Dashboard"){<text>class="active"</text>}>
+                                        <a href="~/app/dashboard/@viewProperties.CurrentApp.Id">Dashboard</a>
+                                    </li>
+                                    <li @if(viewProperties.ActiveMenuItem == "Settings"){<text>class="active"</text>}>
+                                        <a href="~/app/settings/@viewProperties.CurrentApp.Id">Settings</a>
+                                    </li>
+                                </ul>
+                            }
+                            <ul class="nav pull-right">
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <div class="btn-group">
+                                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                            <span>Admin</span>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="~/admin/inviterequests">Invite Requests</a></li>
+                                            <li><a href="~/admin/windowsappinvites">Windows App Invites</a></li>
+                                            <li><a href="~/admin/admin">Admin Panel</a></li>
+                                            <li><a href="~/admin/tracelogs">Trace Logs</a></li>
+                                            <li><a href="~/admin/errors" target="_blank">Server Errors</a></li>
+                                        </ul>
+                                    </div>                                    
+                                }
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm"}))
+                                {
+                                    <div class="btn-group">
+                                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                            <span>@viewProperties.CurrentUser.FirstName @viewProperties.CurrentUser.LastName</span>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="~/account/manage"><i class="icon-wrench"></i> Account</a></li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                @Html.AntiForgeryToken()
+                                                <a href=" javascript:document.getElementById('logoutForm').submit() "><i class="icon-off"></i> Sign Out</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                }
                             </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <section id="subintro" style="margin-top: 0">
-        <div class="jumbotron subhead" id="overview" style="padding: 0; margin-bottom: 10px">
-            <div class="container">
-                <div class="row" style="margin-bottom: 0">
-                    <div class="span8">
-                        <h3 style="padding-top: 5px"><i class="m-icon-big-swapright m-icon-white"></i>
-                            @RenderSection("Navigation", false)
-                        </h3>
-                    </div>
-                    <div class="span4">
-                        <div class="input-append pull-right">
-                            <form class="form-search">
-                                <input type="text" class="input-medium search-query">
-                                <button type="submit" class="btn btn-inverse">@ViewResources.Search</button>
-                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <section id="maincontent">
-        <div class="container">
-            @RenderBody()
-        </div>
-    </section>
-    @Html.Partial("_Footer")
-    <div class="verybottom">
-        <div class="container">
-            <div class="row">
-                <div class="span6">
-                    <p>
-                        @ViewResources.FooterCopyrightStatement
-                    </p>
+        }
+        else
+        {
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="btn btn-primary btn-dropnav" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>		
+                        <a class="brand" href="~/"><img src="~/img/logo-web-header.png" alt="" /></a>
+                        <div class="nav-collapse collapse">
+                            <ul class="nav pull-right">
+                                <li>@Links.Pricing(ViewResources.Pricing)</li>
+                                <li><a>|</a></li>
+                                <li>
+                                    <div class="btn-group" id="login-group">
+                                        <a class="btn" id="log-in-hdr" href="~/account/login">Log In</a>
+                                        <a class="btn btn-success" href="#private-beta" role="button" 
+                                           data-toggle="modal" id="request-invite-hdr">Request an Invite</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        }*@
 
-    @Scripts.Render("~/bundles/bundles/defaultLayout")
-    @RenderSection("ScriptsAfterBody", required: false)
-    @RenderSection("Scripts", required: false)
-</body>
+        <header>
+            <div class="navbar navbar-static-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="brand logo" href="~/">
+                            @Images.LogoWebHeader.Height(35).Width(35).Alt(ViewResources.ReferEngine).Attribute("style", "width: 200px; height: 35px").ToHtmlString("w_400,h_70")
+                        </a>
+                        <div>
+                            <nav>
+                                <ul class="nav topnav">
+                                    <li class="primary">
+                                        <a href="~/app-store/windows">Windows Store Apps</a>
+                                    </li>
+                                    @*<li class="success">
+                                    <a href="~/app-store/windows">iPhone and iPad Apps</a>
+                                </li>*@
+                                    <li class="info">
+                                        <a href="~/developer">Developers</a>
+                                    </li>
+                                    <li><a>|</a></li>
+                                    <li>
+                                        <div class="btn-group" id="login-group">
+                                            <a class="btn" id="log-in-hdr" href="~/account/login">Log In</a>
+                                            <a class="btn btn-success" href="#private-beta" role="button" 
+                                               data-toggle="modal" id="request-invite-hdr">Request an Invite</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section id="subintro" style="margin-top: 0">
+            <div class="jumbotron subhead" id="overview" style="padding: 0; margin-bottom: 10px">
+                <div class="container">
+                    <div class="row" style="margin-bottom: 0">
+                        <div class="span8">
+                            <h3 style="padding-top: 5px"><i class="m-icon-big-swapright m-icon-white"></i>
+                                @RenderSection("Navigation", false)
+                            </h3>
+                        </div>
+                        <div class="span4">
+                            <div class="input-append pull-right">
+                                <form class="form-search">
+                                    <input type="text" class="input-medium search-query">
+                                    <button type="submit" class="btn btn-inverse">@ViewResources.Search</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="maincontent">
+            <div class="container">
+                @RenderBody()
+            </div>
+        </section>
+        @Html.Partial("_Footer")
+
+        @Scripts.Render("~/bundles/js/defaultLayout")
+        @RenderSection("ScriptsAfterBody", required: false)
+        @RenderSection("Scripts", required: false)
+        @Html.Partial("_MixPanel")
+    
+        @Html.Partial("_PrivateBeta")
+            
+        @if (Request.IsAuthenticated && viewProperties != null && viewProperties.CurrentUser != null)
+        {
+            //@Scripts.Render("~/js/shared/layout-auth")
+        }
+        else
+        {
+            @Scripts.Render("~/js/shared/layout-not-auth")
+        }
+    
+        @StackExchange.Profiling.MiniProfiler.RenderIncludes()
+        @Html.Partial("_GoogleAnalytics")
+    </body>
 </html>
