@@ -409,6 +409,30 @@
     <Content Include="Less\Home\Index.min.css">
       <DependentUpon>Index.less</DependentUpon>
     </Content>
+    <Content Include="Less\Shared\bootstrap.referengine.css">
+      <DependentUpon>bootstrap.referengine.less</DependentUpon>
+    </Content>
+    <Content Include="Less\Shared\bootstrap.referengine.min.css">
+      <DependentUpon>bootstrap.referengine.less</DependentUpon>
+    </Content>
+    <Content Include="Less\Shared\bootstrap\bootstrap.css">
+      <DependentUpon>bootstrap.less</DependentUpon>
+    </Content>
+    <Content Include="Less\Shared\bootstrap\bootstrap.min.css">
+      <DependentUpon>bootstrap.less</DependentUpon>
+    </Content>
+    <Content Include="Less\Shared\bootstrap\variables.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
+    <Content Include="Less\Shared\bootstrap\variables.min.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
+    <Content Include="Less\Shared\Copy of defaultLayout.css">
+      <DependentUpon>bootstrap.referengine.less</DependentUpon>
+    </Content>
+    <Content Include="Less\Shared\Copy of defaultLayout.min.css">
+      <DependentUpon>bootstrap.referengine.less</DependentUpon>
+    </Content>
     <Content Include="Less\Shared\defaultLayout.css">
       <DependentUpon>defaultLayout.less</DependentUpon>
     </Content>
@@ -422,7 +446,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Account\_ViewStart.cshtml" />
-    <Content Include="Views\App\_ViewStart.cshtml" />
     <TypeScriptCompile Include="TypeScript\AppStore\Windows\WindowsCategory.ts" />
     <Content Include="img\logo-web-header.svg" />
     <Content Include="TypeScript\AppStore\Windows\WindowsCategory.js">
@@ -809,6 +832,48 @@
     <Content Include="Less\web\main.less" />
     <Content Include="Less\Home\Index.less" />
     <Content Include="Less\Shared\defaultLayout.less" />
+    <Content Include="Less\Shared\bootstrap.referengine.less" />
+    <Content Include="Less\Shared\bootstrap\accordion.less" />
+    <Content Include="Less\Shared\bootstrap\alerts.less" />
+    <Content Include="Less\Shared\bootstrap\bootstrap.less" />
+    <Content Include="Less\Shared\bootstrap\breadcrumbs.less" />
+    <Content Include="Less\Shared\bootstrap\button-groups.less" />
+    <Content Include="Less\Shared\bootstrap\buttons.less" />
+    <Content Include="Less\Shared\bootstrap\carousel.less" />
+    <Content Include="Less\Shared\bootstrap\close.less" />
+    <Content Include="Less\Shared\bootstrap\code.less" />
+    <Content Include="Less\Shared\bootstrap\component-animations.less" />
+    <Content Include="Less\Shared\bootstrap\dropdowns.less" />
+    <Content Include="Less\Shared\bootstrap\forms.less" />
+    <Content Include="Less\Shared\bootstrap\grid.less" />
+    <Content Include="Less\Shared\bootstrap\hero-unit.less" />
+    <Content Include="Less\Shared\bootstrap\labels-badges.less" />
+    <Content Include="Less\Shared\bootstrap\layouts.less" />
+    <Content Include="Less\Shared\bootstrap\media.less" />
+    <Content Include="Less\Shared\bootstrap\mixins.less" />
+    <Content Include="Less\Shared\bootstrap\modals.less" />
+    <Content Include="Less\Shared\bootstrap\navbar.less" />
+    <Content Include="Less\Shared\bootstrap\navs.less" />
+    <Content Include="Less\Shared\bootstrap\pager.less" />
+    <Content Include="Less\Shared\bootstrap\pagination.less" />
+    <Content Include="Less\Shared\bootstrap\popovers.less" />
+    <Content Include="Less\Shared\bootstrap\progress-bars.less" />
+    <Content Include="Less\Shared\bootstrap\reset.less" />
+    <Content Include="Less\Shared\bootstrap\responsive-1200px-min.less" />
+    <Content Include="Less\Shared\bootstrap\responsive-767px-max.less" />
+    <Content Include="Less\Shared\bootstrap\responsive-768px-979px.less" />
+    <Content Include="Less\Shared\bootstrap\responsive-navbar.less" />
+    <Content Include="Less\Shared\bootstrap\responsive-utilities.less" />
+    <Content Include="Less\Shared\bootstrap\responsive.less" />
+    <Content Include="Less\Shared\bootstrap\scaffolding.less" />
+    <Content Include="Less\Shared\bootstrap\sprites.less" />
+    <Content Include="Less\Shared\bootstrap\tables.less" />
+    <Content Include="Less\Shared\bootstrap\thumbnails.less" />
+    <Content Include="Less\Shared\bootstrap\tooltip.less" />
+    <Content Include="Less\Shared\bootstrap\type.less" />
+    <Content Include="Less\Shared\bootstrap\utilities.less" />
+    <Content Include="Less\Shared\bootstrap\variables.less" />
+    <Content Include="Less\Shared\bootstrap\wells.less" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -189,12 +189,16 @@ header nav {
 }
 
 .navbar .nav > li > a {
-  float: none;
-  padding: 30px 15px 30px;
-  /*color: #777777;*/
-  text-decoration: none;
-  text-shadow: none;
+    float: none;
+    padding: 15px;
+    text-decoration: none;
     font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+}
+
+.navbar .nav > li > a:hover {
+    color: inherit;
 }
 
 /*.navbar .nav > li > a:hover {
@@ -236,10 +240,6 @@ header .topnav .dropdown-submenu > .dropdown-menu {
 .dropdown-menu .sub-menu {left:100%;position:absolute;top:0;visibility:hidden;margin-top:-1px;}
 .dropdown-menu li:hover .sub-menu {visibility:visible;}
 
-ul.topnav  li.active a {
-
-}
-
 ul.topnav  .dropdown-menu {
   border: 1px solid #eee;
   background:#fff;
@@ -270,15 +270,8 @@ ul.topnav .dropdown-menu li > a {
 .navbar .nav .active > a,
 .navbar .nav .active > a:hover,
 .navbar .nav .active > a:focus {
-	background-image: url(../img/icons/add.png);
-	background-position: center 15px;
-	background-repeat: no-repeat;
-	-webkit-transition: all 0.2s ease;
-	-moz-transition: all 0.2s ease-in-out;
-	-o-transition: all 0.2s ease-in-out;
-	-ms-transition: all 0.2s ease-in-out;
-	transition: all 0.2s ease-in-out;
-	color:#fff;
+    text-decoration: underline;
+    background-color: inherit;
 }
 
 /* assign template color scheme to menu bg */

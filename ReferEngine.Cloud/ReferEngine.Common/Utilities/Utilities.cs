@@ -257,7 +257,8 @@ namespace ReferEngine.Common.Utilities
                 new[] {":", "_h_"},
                 new[] {"<", "_i_"},
                 new[] {">", "_j_"},
-                new[] {"+", "_p_"}
+                new[] {"+", "_p_"},
+                new[] {"*", "_s_"}
             };
         
         public static string ConvertStringToUrlPart(string str)
