@@ -409,12 +409,6 @@
     <Content Include="Less\Home\Index.min.css">
       <DependentUpon>Index.less</DependentUpon>
     </Content>
-    <Content Include="Less\Shared\bootstrap.referengine.css">
-      <DependentUpon>bootstrap.referengine.less</DependentUpon>
-    </Content>
-    <Content Include="Less\Shared\bootstrap.referengine.min.css">
-      <DependentUpon>bootstrap.referengine.less</DependentUpon>
-    </Content>
     <Content Include="Less\Shared\bootstrap\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
     </Content>
@@ -426,12 +420,6 @@
     </Content>
     <Content Include="Less\Shared\bootstrap\variables.min.css">
       <DependentUpon>variables.less</DependentUpon>
-    </Content>
-    <Content Include="Less\Shared\Copy of defaultLayout.css">
-      <DependentUpon>bootstrap.referengine.less</DependentUpon>
-    </Content>
-    <Content Include="Less\Shared\Copy of defaultLayout.min.css">
-      <DependentUpon>bootstrap.referengine.less</DependentUpon>
     </Content>
     <Content Include="Less\Shared\defaultLayout.css">
       <DependentUpon>defaultLayout.less</DependentUpon>
@@ -832,7 +820,6 @@
     <Content Include="Less\web\main.less" />
     <Content Include="Less\Home\Index.less" />
     <Content Include="Less\Shared\defaultLayout.less" />
-    <Content Include="Less\Shared\bootstrap.referengine.less" />
     <Content Include="Less\Shared\bootstrap\accordion.less" />
     <Content Include="Less\Shared\bootstrap\alerts.less" />
     <Content Include="Less\Shared\bootstrap\bootstrap.less" />
