@@ -23,7 +23,7 @@
     </Certificates>
   </Role>
   <Role name="ReferEngine.Workers.DataWriter">
-    <Instances count="2" />
+    <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="Microsoft.ServiceBus.ConnectionString" value="Endpoint=sb://referenginedatawritebus.servicebus.windows.net;SharedSecretIssuer=owner;SharedSecretValue=gyFFjJOT98wjzS77VRhZGic8YooQhQTSOcv9VSjSzW4=" />
