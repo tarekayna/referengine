@@ -40,6 +40,7 @@
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic' rel='stylesheet' type='text/css'>
     @Styles.Render("~/bundles/css/defaultLayout")
+    @Html.Partial("_SetJavaScriptGlobalVariables")
     @RenderSection("Styles", required: false)
     @Html.Partial("_FavIcon")
 </head>
@@ -182,13 +183,13 @@
                         <div>
                             <nav>
                                 <ul class="nav topnav">
-                                    <li class="primary">
+                                    <li>
                                         <a href="~/app-store/windows">Windows Store Apps</a>
                                     </li>
                                     @*<li class="success">
                                     <a href="~/app-store/windows">iPhone and iPad Apps</a>
                                 </li>*@
-                                    <li class="info">
+                                    <li>
                                         <a href="~/developer">Developers</a>
                                     </li>
                                     <li><a>|</a></li>

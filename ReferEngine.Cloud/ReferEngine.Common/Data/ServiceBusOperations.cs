@@ -34,9 +34,9 @@ namespace ReferEngine.Common.Data
                                                            messagingFactorySettings);
 
             // Add Queues by Priority
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppAuthorization", typeof(AppAuthorization)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "FacebookOperations", typeof(FacebookOperations)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "AppRecommendation", typeof(AppRecommendation)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "AppAuthorization", typeof(AppAuthorization)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "PrivateBetaSignup", typeof(PrivateBetaSignup)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "AppReceipt", typeof(AppReceipt)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "FacebookPageViewInfo", typeof(FacebookPageViewInfo)));
@@ -93,8 +93,8 @@ namespace ReferEngine.Common.Data
             public BrokeredMessage Receive()
             {
                 TimeSpan timeSpan = TimeSpan.FromMinutes(0);
-                BrokeredMessage message = Client.Receive(timeSpan);
-                //BrokeredMessage message = Client.Receive(timeSpan) ?? DeadLetterClient.Receive(timeSpan);
+                //BrokeredMessage message = Client.Receive(timeSpan);
+                BrokeredMessage message = Client.Receive(timeSpan) ?? DeadLetterClient.Receive(timeSpan);
 
                 if (message != null)
                 {
@@ -127,6 +127,7 @@ namespace ReferEngine.Common.Data
             switch (Util.CurrentServiceConfiguration)
             {
                 case Util.ReferEngineServiceConfiguration.ProductionCloud:
+                case Util.ReferEngineServiceConfiguration.Local:
                     accessInfo.Namespace = "datawrite-production";
                     accessInfo.Issuer = "owner";
                     accessInfo.Key = "HTrzqkC+7jWm35xqW/OM7wuFdfMUYfPQ8AZ60Jrjk20=";
@@ -136,11 +137,11 @@ namespace ReferEngine.Common.Data
                     accessInfo.Issuer = "owner";
                     accessInfo.Key = "z2R6UQcSxeJFy29u/WE6sLy+XPiGpvjPBzFZEULgGjU=";
                     break;
-                case Util.ReferEngineServiceConfiguration.Local:
-                    accessInfo.Namespace = "datawrite-local";
-                    accessInfo.Issuer = "owner";
-                    accessInfo.Key = "fGFQ+s3q85Wesyey4p1RD+TTnyY0dXBsoifBmOHuTvY=";
-                    break;
+                //case Util.ReferEngineServiceConfiguration.Local:
+                //    accessInfo.Namespace = "datawrite-local";
+                //    accessInfo.Issuer = "owner";
+                //    accessInfo.Key = "fGFQ+s3q85Wesyey4p1RD+TTnyY0dXBsoifBmOHuTvY=";
+                //    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

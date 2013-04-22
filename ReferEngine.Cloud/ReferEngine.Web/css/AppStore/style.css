@@ -191,19 +191,20 @@ header nav {
 .navbar .nav > li > a {
   float: none;
   padding: 30px 15px 30px;
-  color: #777777;
+  /*color: #777777;*/
   text-decoration: none;
   text-shadow: none;
+    font-size: 16px;
 }
 
-.navbar .nav > li > a:hover {
+/*.navbar .nav > li > a:hover {
 	padding-right:30px;
 	-webkit-transition: all 0.2s ease;
 	-moz-transition: all 0.2s ease-in-out;
 	-o-transition: all 0.2s ease-in-out;
 	-ms-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
-}
+}*/
 
 header .topnav .dropdown-submenu > .dropdown-menu {
   top: 0;
@@ -1340,7 +1341,6 @@ footer a:hover {
 
 footer .verybottom {
 	padding-top:30px;
-	background:#0f0f0f;
 }
 
 footer .nav-list li, footer .nav-list li a, footer .nav-list li.nav-header {

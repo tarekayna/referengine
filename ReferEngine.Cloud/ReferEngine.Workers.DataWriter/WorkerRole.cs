@@ -1,14 +1,12 @@
-﻿using System.Globalization;
-using Microsoft.ServiceBus.Messaging;
-using Microsoft.WindowsAzure.Diagnostics;
+﻿using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Email;
 using ReferEngine.Common.Models;
 using System;
-using System.Diagnostics;
 using System.Net;
 using System.Threading;
+using ReferEngine.Common.Tracing;
 using ReferEngine.Workers.DataWriter.Properties;
 
 namespace ReferEngine.Workers.DataWriter
@@ -30,7 +28,7 @@ namespace ReferEngine.Workers.DataWriter
                     }
                     else
                     {
-                        Trace.WriteLine("Processing", message.SequenceNumber.ToString(CultureInfo.InvariantCulture));
+                        Tracer.Trace(new TraceMessage("Processing Message " + message.SequenceNumber, TraceMessageCategory.Info));
 
                         switch (message.ContentType)
                         {
@@ -70,9 +68,9 @@ namespace ReferEngine.Workers.DataWriter
                                     {
                                         facebookPostId = Convert.ToInt64(viewInfo.ActionId);
                                     }
-                                    catch (Exception)
+                                    catch (Exception e)
                                     {
-                                        Trace.TraceWarning("Invalid ActionId: " + viewInfo.ActionId);
+                                        Tracer.Trace(TraceMessage.Exception(e));
                                     }
 
                                     AppRecommendation recommendation = DataOperations.GetAppRecommendation(facebookPostId);
@@ -96,13 +94,13 @@ namespace ReferEngine.Workers.DataWriter
                 {
                     // What to do? Message took too long.
                     // It's ok, process it again.
-                    Trace.WriteLine("MessageLockLostException: " + e.Message);
+                    Tracer.Trace(TraceMessage.Exception(e));
                 }
                 catch (MessagingException e)
                 {
                     if (!e.IsTransient)
                     {
-                        Trace.WriteLine(e.Message);
+                        Tracer.Trace(TraceMessage.Exception(e));
                         throw;
                     }
 
@@ -112,13 +110,13 @@ namespace ReferEngine.Workers.DataWriter
                 {
                     if (!IsStopped)
                     {
-                        Trace.WriteLine(e.Message);
+                        Tracer.Trace(TraceMessage.Exception(e));
                         throw;
                     }
                 }
                 catch (Exception e)
                 {
-                    Trace.TraceError(e.Message, e);
+                    Tracer.Trace(TraceMessage.Exception(e));
                 }
             }
         }
@@ -128,11 +126,6 @@ namespace ReferEngine.Workers.DataWriter
             ServicePointManager.DefaultConnectionLimit = Environment.ProcessorCount;
 
             ServiceBusOperations.Initialize();
-
-            DiagnosticMonitorConfiguration diagnosticMonitorConfiguration = DiagnosticMonitor.GetDefaultInitialConfiguration();
-            diagnosticMonitorConfiguration.Logs.ScheduledTransferPeriod = TimeSpan.FromMinutes(5);
-            diagnosticMonitorConfiguration.Logs.ScheduledTransferLogLevelFilter = LogLevel.Verbose;
-            DiagnosticMonitor.Start("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString", diagnosticMonitorConfiguration);
 
             IsStopped = false;
             return base.OnStart();

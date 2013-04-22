@@ -98,7 +98,8 @@ namespace ReferEngine.Web.App_Start
                                    "~/css/AppStore/boxtile.css",
                                    "~/css/AppStore/style.css",
                                    "~/css/AppStore/success.css",
-                                   "~/css/bootstrap-notify.css"),
+                                   "~/css/bootstrap-notify.css",
+                                   "~/less/shared/defaultLayout.css"),
 
                     new BundleInfo("~/bundles/less/web",
                                    "~/less/web/main.css"),

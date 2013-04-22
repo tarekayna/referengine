@@ -66,6 +66,7 @@ namespace ReferEngine.Web.Resources
     public static class Images
     {
         public static ImageTag LogoWebHeader { get { return new ImageTag("logo_web_header_oza9ph", "png"); } }
-        public static ImageTag LogoMark{ get { return new ImageTag("logo_mark_500_qg2mad", "png"); }}
+        public static ImageTag LogoMark { get { return new ImageTag("logo_mark_500_qg2mad", "png"); } }
+        public static ImageTag ClockIcon { get { return new ImageTag("Clock_bomh7l", "png"); } }
     }
 }
