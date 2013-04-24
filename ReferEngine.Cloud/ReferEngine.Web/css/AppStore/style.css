@@ -20,7 +20,7 @@ iframe, embed, object {
 
 /* custom template style */
 
-.well:hover {
+/*.well:hover {
 	-webkit-transition: all 0.2s ease;
 	-moz-transition: all 0.2s ease-in-out;
 	-o-transition: all 0.2s ease-in-out;
@@ -35,7 +35,7 @@ iframe, embed, object {
 }
 .well.box:hover {
 	margin-top:-2px;
-}
+}*/
 
 .dottedwell {
   min-height: 20px;

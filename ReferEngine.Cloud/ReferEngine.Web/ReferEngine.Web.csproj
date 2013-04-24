@@ -280,7 +280,6 @@
     <Content Include="css\AppStore\docs.css" />
     <Content Include="css\AppStore\flexslider.css" />
     <Content Include="css\AppStore\nivo-slider.css" />
-    <Content Include="css\AppStore\overwrite.css" />
     <Content Include="css\AppStore\prettyPhoto.css" />
     <Content Include="css\AppStore\style.css" />
     <Content Include="img\avatar.png" />
@@ -414,6 +413,24 @@
     </Content>
     <Content Include="Less\Shared\bootstrap\bootstrap.min.css">
       <DependentUpon>bootstrap.less</DependentUpon>
+    </Content>
+    <Content Include="Less\Shared\bootstrap\defaultLayout.css">
+      <DependentUpon>referengine.overrides.less</DependentUpon>
+    </Content>
+    <Content Include="Less\Shared\bootstrap\defaultLayout.min.css">
+      <DependentUpon>referengine.overrides.less</DependentUpon>
+    </Content>
+    <Content Include="Less\Shared\bootstrap\referengine.overrides.css">
+      <DependentUpon>referengine.overrides.less</DependentUpon>
+    </Content>
+    <Content Include="Less\Shared\bootstrap\referengine.overrides.min.css">
+      <DependentUpon>referengine.overrides.less</DependentUpon>
+    </Content>
+    <Content Include="Less\Shared\bootstrap\responsive.css">
+      <DependentUpon>responsive.less</DependentUpon>
+    </Content>
+    <Content Include="Less\Shared\bootstrap\responsive.min.css">
+      <DependentUpon>responsive.less</DependentUpon>
     </Content>
     <Content Include="Less\Shared\bootstrap\variables.css">
       <DependentUpon>variables.less</DependentUpon>
@@ -861,6 +878,7 @@
     <Content Include="Less\Shared\bootstrap\utilities.less" />
     <Content Include="Less\Shared\bootstrap\variables.less" />
     <Content Include="Less\Shared\bootstrap\wells.less" />
+    <Content Include="Less\Shared\bootstrap\referengine.overrides.less" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

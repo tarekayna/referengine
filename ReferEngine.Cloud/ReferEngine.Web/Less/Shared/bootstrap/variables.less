@@ -25,6 +25,7 @@
 @green:                 #46a546;
 @red:                   #9d261d;
 @yellow:                #ffc40d;
+@metroYellow:           #ffbb00;
 @orange:                #f89406;
 @pink:                  #c3325f;
 @purple:                #7a43b6;
@@ -95,13 +96,13 @@
 @btnInfoBackground:                 #5bc0de;
 @btnInfoBackgroundHighlight:        #2f96b4;
 
-@btnSuccessBackground:              #62c462;
+@btnSuccessBackground:              #7cbb00;
 @btnSuccessBackgroundHighlight:     #51a351;
 
-@btnWarningBackground:              lighten(@orange, 15%);
-@btnWarningBackgroundHighlight:     @orange;
+@btnWarningBackground:              lighten(@metroYellow, 15%);
+@btnWarningBackgroundHighlight:     @metroYellow;
 
-@btnDangerBackground:               #ee5f5b;
+@btnDangerBackground:               #ec4f13;
 @btnDangerBackgroundHighlight:      #bd362f;
 
 @btnInverseBackground:              #444;
@@ -182,9 +183,12 @@
 @navbarCollapseDesktopWidth:      @navbarCollapseWidth + 1;
 
 @navbarHeight:                    40px;
-@navbarBackgroundHighlight:       #ffffff;
-@navbarBackground:                darken(@navbarBackgroundHighlight, 5%);
-@navbarBorder:                    darken(@navbarBackground, 12%);
+@navbarBackgroundHighlight:       #fff;
+@navbarBackground:                #fff;
+@navbarBorder:                    #fff;
+@navbarVerticalDividerColor:      darken(@navbarBackgroundHighlight, 5%);
+/*@navbarBackground:                darken(@navbarBackgroundHighlight, 5%);
+@navbarBorder:                    darken(@navbarBackground, 12%);*/
 
 @navbarText:                      #777;
 @navbarLinkColor:                 #777;

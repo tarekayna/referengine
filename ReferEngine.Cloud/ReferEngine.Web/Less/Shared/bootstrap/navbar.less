@@ -20,8 +20,7 @@
 // Gradient is applied to its own element because overflow visible is not honored by IE when filter is present
 .navbar-inner {
   min-height: @navbarHeight;
-  padding-left:  20px;
-  padding-right: 20px;
+  padding:  10px 20px;
   /*#gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);*/
   border: 1px solid @navbarBorder;
   .border-radius(@baseBorderRadius);
@@ -85,8 +84,8 @@
 .navbar .divider-vertical {
   height: @navbarHeight;
   margin: 0 9px;
-  border-left: 1px solid @navbarBackground;
-  border-right: 1px solid @navbarBackgroundHighlight;
+  border-left: 1px solid @navbarVerticalDividerColor;
+  border-right: 1px solid @navbarVerticalDividerColor;
 }
 
 // Buttons in navbar

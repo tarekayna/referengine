@@ -16,6 +16,26 @@
     bool supportsProtocolLaunching = Model.UserAgentProperties.SupportsProtocolLaunching;
 }
 
+@section MetaTags
+{
+    <meta name="msApplication-ID"content="microsoft.build.App"/>
+    <meta name="msApplication-PackageFamilyName"content="@Model.App"/>
+    <meta property="fb:app_id"             content="368842109866922" /> 
+    <meta property="og:type"               content="referengine:app" /> 
+    <meta property="og:url"                content="@string.Format("https://www.ReferEngine.com/fb/app/{0}/{1}", @Model.App.Platform, @Model.App.Name.ToLower().Replace(' ', '-'))" />
+    <meta property="og:title"              content="@Model.App.Name" />
+    <meta property="og:description"        content="@Model.App.Description" /> 
+    <meta property="referengine:platform"  content="@Model.App.Platform" />
+    @if (Model.App.HighQualityLogoImage != null)
+    {
+        <meta property="og:image" content="Model.App.HighQualityLogoImage.GetLink()" />
+    }
+    @foreach (var img in Model.App.CloudinaryImages)
+    {
+        <meta property="og:image" content="@img.GetLink()" />
+    }
+}
+
 @section Navigation
 {
     <a href="~/app-store/windows" style="color: white">Windows Store Apps</a>

@@ -5,45 +5,46 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>
+    <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# referengine: http://ogp.me/ns/fb/referengine#">    
+        @RenderSection("MetaTags", required: false)
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>
+            @{
+                string title = ViewResources.WindowsStoreApps +
+                               ViewResources.TitleSeparator +
+                               ViewResources.ReferEngine;
+                if (ViewBag.Title != null)
+                {
+                    title = ViewBag.Title +
+                            ViewResources.TitleSeparator +
+                            title;
+                }
+            }
+            @title
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="ReferEngine.com">
         @{
-            string title = ViewResources.WindowsStoreApps +
-                           ViewResources.TitleSeparator +
-                           ViewResources.ReferEngine;
-            if (ViewBag.Title != null)
+            string pageDescription = ViewResources.MainDescription;
+            if (ViewBag.PageDescription != null)
             {
-                title = ViewBag.Title +
-                        ViewResources.TitleSeparator +
-                        title;
+                pageDescription = ViewBag.PageDescription + pageDescription;
             }
         }
-        @title
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="ReferEngine.com">
-    @{
-        string pageDescription = ViewResources.MainDescription;
-        if (ViewBag.PageDescription != null)
-        {
-            pageDescription = ViewBag.PageDescription + pageDescription;
-        }
-    }
-    <meta name="description" content="@pageDescription" />
-    <meta property="og:title" content="@title"/> 
-    <meta property="og:url" content="@Request.Url"/> 
-    <meta property="og:description" content="@pageDescription"/> 
-    <!-- TODO -->
-    <meta property="og:image" content="https://www.referengine.com/img/logo-mark-50.png"/>     
+        <meta name="description" content="@pageDescription" />
+        <meta property="og:title" content="@title"/> 
+        <meta property="og:url" content="@Request.Url"/> 
+        <meta property="og:description" content="@pageDescription"/> 
+        <!-- TODO -->
+        <meta property="og:image" content="https://www.referengine.com/img/logo-mark-50.png"/>     
     
 
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic' rel='stylesheet' type='text/css'>
-    @Styles.Render("~/bundles/css/defaultLayout")
-    @Html.Partial("_SetJavaScriptGlobalVariables")
-    @RenderSection("Styles", required: false)
-    @Html.Partial("_FavIcon")
-</head>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic' rel='stylesheet' type='text/css'>
+        @Styles.Render("~/bundles/css/defaultLayout")
+        @Html.Partial("_SetJavaScriptGlobalVariables")
+        @RenderSection("Styles", required: false)
+        @Html.Partial("_FavIcon")
+    </head>
     <body>
         <div class='notifications top-right'></div>
         
@@ -151,7 +152,7 @@
                         </a>
                         <ul class="nav topnav">
                             <li>@Links.Pricing(ViewResources.Pricing)</li>
-                            <li><a>|</a></li>
+                            <li class="divider-vertical"></li>
                             <div class="btn-group" id="login-group">
                                 <a class="btn btn-primary" id="log-in-hdr" href="~/account/login">Log In</a>
                                 <a class="btn btn-success" href="#private-beta" role="button" 
@@ -172,7 +173,7 @@
                                 @RenderSection("Navigation", false)
                             </h3>
                         </div>
-                        <div class="span4">
+                        <div class="span3 pull-right">
                             <div class="input-append pull-right">
                                 <form class="form-search">
                                     <input type="text" class="input-medium search-query">

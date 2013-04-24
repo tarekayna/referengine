@@ -1,82 +1,136 @@
-﻿ [class^="m-icon-"] {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-   
-  margin-top: 0px;
-  line-height: 14px;
-  
-  vertical-align: top;
-  background-image: url(../img/icons/syncfusion-icons.png);
-  background-position: 0 0;
-  background-repeat: no-repeat; 
-  
-}
-[class^="m-icon-big-"] {
-  display: inline-block;
-  width: 30px;
-  height: 30px; 
-  margin: 6px;
-  vertical-align: top;
-  background-image: url(../img/icons/syncfusion-icons.png);
-  background-position: 0 0px;
-  background-repeat: no-repeat; 
-}
-.m-icon-white {
-  background-image: url(../img/icons/syncfusion-icons-white.png);
-}
-[class^="big-"]:last-child {
-  *margin-left: 0;
-}
-.m-icon-swapright {
-  background-position: -27px -10px;
-}
-.m-icon-swapdown {
-  background-position: -68px -10px;
-}
-.m-icon-swapleft {
-  background-position: -8px -10px;
-}
-.m-icon-swapup {
-  background-position: -47px -10px;
-}
-.m-icon-big-swapright{
-  background-position: -42px -28px;
-}
-.m-icon-big-swapdown{
-  background-position: -115px -28px;
-}
-.m-icon-big-swapleft{
-  background-position: -6px -28px;
-}
-.m-icon-big-swapup{
-  background-position: -78px -28px;
-}
+﻿@headerFontSize: 14px;
 
-.btn-large [class^="m-icon-big-"],
-.btn-large [class*=" m-icon-big-"] {
+.navbar
+{
+    .brand
+    {
+        padding: 0;
 
-	vertical-align: inherit;
-}
+        img {
+            margin-top: 5px;
+        }
+    }
 
 
-.dropdown-menu .disabled > a:hover {
-  text-decoration: none;
-  background-color: transparent;
-  background-image: none;
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-  cursor: default;
+    .nav {
+        margin: 5px 0 0;
+
+        > li {
+            > a {
+                color: #394755;
+                padding: 10px;
+
+                &:not(.btn) {
+                    font-size: @headerFontSize;
+                }
+            }
+
+            &.active > a {
+                color: #394755;
+            }
+        }
+
+        .btn,
+        .btn-group li {
+            font-size: @headerFontSize;
+        }
+    }
 }
 
-.btn:hover {
-  color: #333333;
-  text-decoration: none;
-  background-position: 0 -15px;
+#footer {
+    padding-top: 0;
+    margin-top: 20px;
+}
+#try-button a {
+    margin-top: 20px;
 }
 
-.btn:focus {
-  outline: thin dotted #333;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
+#login-group {
+    margin: 5px 0 5px 20px;
 }
+
+#logoutForm {
+    display: inline-block;
+    margin: 0;
+}
+
+.control-group
+{
+    .controls {
+        &.static {
+            margin-top: 4px;
+        }
+    }
+}
+
+
+/*/* Sidenav for Docs
+-------------------------------------------------- 
+
+.bs-docs-sidenav {
+  width: 228px;
+  margin: 0 0;
+  padding: 0;
+  background-color: #fff;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+     -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+          box-shadow: 0 1px 4px rgba(0,0,0,.065);
+}
+.bs-docs-sidenav > li > a {
+  display: block;
+  width: 190px \9;
+  margin: 0 0 -1px;
+  padding: 8px 14px;
+  border: 1px solid #e5e5e5;
+}
+.bs-docs-sidenav > li:first-child > a {
+  -webkit-border-radius: 6px 6px 0 0;
+     -moz-border-radius: 6px 6px 0 0;
+          border-radius: 6px 6px 0 0;
+}
+.bs-docs-sidenav > li:last-child > a {
+  -webkit-border-radius: 0 0 6px 6px;
+     -moz-border-radius: 0 0 6px 6px;
+          border-radius: 0 0 6px 6px;
+}
+.bs-docs-sidenav > .active > a {
+  position: relative;
+  z-index: 2;
+  padding: 9px 15px;
+  border: 0;
+  text-shadow: 0 1px 0 rgba(0,0,0,.15);
+  -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+     -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+          box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+}
+/* Chevrons 
+.bs-docs-sidenav .icon-chevron-right {
+  float: right;
+  margin-top: 2px;
+  margin-right: -6px;
+  opacity: .25;
+}
+.bs-docs-sidenav > li > a:hover {
+  background-color: #f5f5f5;
+}
+.bs-docs-sidenav a:hover .icon-chevron-right {
+  opacity: .5;
+}
+.bs-docs-sidenav .active .icon-chevron-right,
+.bs-docs-sidenav .active a:hover .icon-chevron-right {
+  background-image: url(../img/glyphicons-halflings-white.png);
+  opacity: 1;
+}
+.bs-docs-sidenav.affix {
+  top: 40px;
+}
+.bs-docs-sidenav.affix-bottom {
+  position: absolute;
+  top: auto;
+  bottom: 270px;
+}*/
+
 
