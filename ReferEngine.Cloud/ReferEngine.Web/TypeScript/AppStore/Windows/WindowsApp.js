@@ -12,7 +12,8 @@ define(["require", "exports", "../../common/notifications"], function(require, e
     })();    
     var PeopleViewModel = (function () {
         function PeopleViewModel() {
-            this.PeopleData = ko.observableArray();
+            this.Recommenders = ko.observableArray();
+            this.RecommendersLoaded = ko.observable(false);
         }
         return PeopleViewModel;
     })();    
@@ -31,27 +32,32 @@ define(["require", "exports", "../../common/notifications"], function(require, e
             if(!People.isInitialized) {
                 People.init();
             }
-            People.viewModel.PeopleData.removeAll();
+            People.viewModel.Recommenders.removeAll();
             for(var i = 0; i < data.length; i++) {
-                People.viewModel.PeopleData.push(data[i]);
+                People.viewModel.Recommenders.push(data[i]);
             }
-            Notification.show("Success: people view updated", Notification.NotificationType.success);
+            Notification.show("Success: recommendations updated", Notification.NotificationType.success);
+            People.viewModel.RecommendersLoaded(true);
         };
         People.onDataRequestError = function onDataRequestError(e) {
-            Notification.show("Error: could not update people view", Notification.NotificationType.error);
+            Notification.show("Error: could not update recommendations", Notification.NotificationType.error);
         };
         People.refresh = function refresh() {
-            $.ajax("../a/GetAppRecommendations", {
-                type: "POST",
-                data: {
-                    appId: re.appId,
-                    page: 1
-                },
-                dataType: "json",
-                error: People.onDataRequestError,
-                success: People.onDataRequestSuccess
-            });
-            Notification.show("Updating people view...", Notification.NotificationType.info);
+            if(re.appId != -1) {
+                $.ajax("../a/GetAppRecommendations", {
+                    type: "POST",
+                    data: {
+                        appId: re.appId,
+                        page: 1
+                    },
+                    dataType: "json",
+                    error: People.onDataRequestError,
+                    success: People.onDataRequestSuccess
+                });
+                Notification.show("Updating recommendations...", Notification.NotificationType.info);
+            } else {
+                People.viewModel.RecommendersLoaded(true);
+            }
         };
         return People;
     })();    

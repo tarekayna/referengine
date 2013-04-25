@@ -18,9 +18,11 @@ class Page {
 
 class PeopleViewModel {
     constructor() {
-        this.PeopleData = ko.observableArray();
+        this.Recommenders = ko.observableArray();
+        this.RecommendersLoaded = ko.observable(false);
     }
-    PeopleData: any;
+    Recommenders: any;
+    RecommendersLoaded: any;
 }
 
 class People {
@@ -36,28 +38,34 @@ class People {
     }
     static onDataRequestSuccess(data, textStatus, jqXhr) {
         if (!People.isInitialized) People.init();
-        viewModel.PeopleData.removeAll();
+        viewModel.Recommenders.removeAll();
         for (var i = 0; i < data.length; i++) {
-            viewModel.PeopleData.push(data[i]);
+            viewModel.Recommenders.push(data[i]);
         }
-        Notification.show("Success: people view updated", Notification.NotificationType.success);
+        Notification.show("Success: recommendations updated", Notification.NotificationType.success);
+        viewModel.RecommendersLoaded(true);
     }
     static onDataRequestError(e) {
-        Notification.show("Error: could not update people view", Notification.NotificationType.error);
+        Notification.show("Error: could not update recommendations", Notification.NotificationType.error);
     }
-    static refresh() {
-        $.ajax("../a/GetAppRecommendations", {
-            type: "POST",
-            data: {
-                appId: re.appId,
-                page: 1
-            },
-            dataType: "json",
-            error: onDataRequestError,
-            success: onDataRequestSuccess
-        });
+    static refresh() { 
+        if (re.appId != -1) {
+            $.ajax("../a/GetAppRecommendations", {
+                type: "POST",
+                data: {
+                    appId: re.appId,
+                    page: 1
+                },
+                dataType: "json",
+                error: onDataRequestError,
+                success: onDataRequestSuccess
+            });
 
-        Notification.show("Updating people view...", Notification.NotificationType.info);
+            Notification.show("Updating recommendations...", Notification.NotificationType.info);
+        }
+        else {
+            viewModel.RecommendersLoaded(true); 
+        }
     }
 }
 

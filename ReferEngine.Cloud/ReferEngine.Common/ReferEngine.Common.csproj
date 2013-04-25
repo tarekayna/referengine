@@ -389,6 +389,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Tracing\TraceMessage.cs" />
     <Compile Include="Tracing\Tracer.cs" />
+    <Compile Include="Utilities\HsbColor.cs" />
     <Compile Include="Utilities\RequireHttpsPermanentRemoteAttribute.cs" />
     <Compile Include="Utilities\DateTimeExtensions.cs" />
     <Compile Include="Utilities\EnumExtensions.cs" />

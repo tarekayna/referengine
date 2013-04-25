@@ -921,7 +921,7 @@
     margin-right: 0;
     margin-left: 0;
   }
-  .modal {
+  .modal:not(.modal-inline) {
     top: 10px;
     left: 10px;
     right: 10px;

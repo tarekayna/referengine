@@ -6,8 +6,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# referengine: http://ogp.me/ns/fb/referengine#">    
-        @RenderSection("MetaTags", required: false)
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        @RenderSection("MetaTags", required: false)
         <title>
             @{
                 string title = ViewResources.WindowsStoreApps +
@@ -151,12 +151,13 @@
                             @Images.LogoWebHeader.Height(35).Width(35).Alt(ViewResources.ReferEngine).Attribute("style", "width: 200px; height: 35px").ToHtmlString("w_400,h_70")
                         </a>
                         <ul class="nav topnav">
-                            <li>@Links.Pricing(ViewResources.Pricing)</li>
+                            <li>@Links.WindowsAppStore(ViewResources.WindowsStoreApps)</li>
+                            <li>@Links.Developer(ViewResources.Developers)</li>
                             <li class="divider-vertical"></li>
                             <div class="btn-group" id="login-group">
                                 <a class="btn btn-primary" id="log-in-hdr" href="~/account/login">Log In</a>
                                 <a class="btn btn-success" href="#private-beta" role="button" 
-                                    data-toggle="modal" id="request-invite-hdr">Request an Invite</a>
+                                   data-toggle="modal" id="request-invite-hdr">Request an Invite</a>
                             </div>
                         </ul>
                     </div>
@@ -169,18 +170,18 @@
                 <div class="container">
                     <div class="row" style="margin-bottom: 0">
                         <div class="span8">
-                            <h3 style="padding-top: 5px"><i class="m-icon-big-swapright m-icon-white"></i>
+                            <h4>
                                 @RenderSection("Navigation", false)
-                            </h3>
+                            </h4>
                         </div>
-                        <div class="span3 pull-right">
+@*                        <div class="span3 pull-right">
                             <div class="input-append pull-right">
                                 <form class="form-search">
                                     <input type="text" class="input-medium search-query">
                                     <button type="submit" class="btn btn-inverse">@ViewResources.Search</button>
                                 </form>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
             </div>

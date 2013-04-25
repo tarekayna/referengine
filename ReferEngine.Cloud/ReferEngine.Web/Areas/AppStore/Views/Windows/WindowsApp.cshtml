@@ -1,5 +1,5 @@
 ﻿@using ReferEngine.Common.Models
-@using ReferEngine.Common.Utilities;
+@using U = ReferEngine.Common.Utilities
 @model ReferEngine.Common.ViewModels.AppStore.Windows.WindowsAppViewModel
 
 @{
@@ -10,27 +10,44 @@
     ViewBag.Title += category.HasParent ? ViewResources.TitleSeparator + category.ParentCategoryName : "";
     ViewBag.PageDescription = appInfo.DescriptionHtml;
     
-    string color = appInfo.BackgroundColor ?? "#00AFF0";
-
+    string colorHtml = appInfo.BackgroundColor ?? "#00AFF0";
+    System.Drawing.Color color = System.Drawing.ColorTranslator.FromHtml(colorHtml);
+    U.HsbColor hsbColor = U.HsbColor.FromColor(color);
+    U.HsbColor darkerHsbColor = new U.HsbColor(hsbColor.H, hsbColor.S, hsbColor.B * 0.8);
+    string darkerColorHtml = System.Drawing.ColorTranslator.ToHtml(darkerHsbColor.Color);
+    U.HsbColor brighterHsbColor = new U.HsbColor(hsbColor.H, hsbColor.S, hsbColor.B * 1.2);
+    string brighterColorHtml = System.Drawing.ColorTranslator.ToHtml(brighterHsbColor.Color);
+    
     bool isWindows8 = Model.UserAgentProperties.IsWindows8;
     bool supportsProtocolLaunching = Model.UserAgentProperties.SupportsProtocolLaunching;
 }
 
 @section MetaTags
 {
-    <meta name="msApplication-ID"content="microsoft.build.App"/>
-    <meta name="msApplication-PackageFamilyName"content="@Model.App"/>
+    @{
+        string url = U.Util.BaseUrl + "app-store/windows/" + Model.WindowsAppStoreInfo.LinkPart;
+    }
+
+    <meta name="msApplication-ID"               content="microsoft.build.App"/>
+    <meta name="msApplication-PackageFamilyName" content="@Model.WindowsAppStoreInfo.PackageFamilyName"/>
     <meta property="fb:app_id"             content="368842109866922" /> 
     <meta property="og:type"               content="referengine:app" /> 
-    <meta property="og:url"                content="@string.Format("https://www.ReferEngine.com/fb/app/{0}/{1}", @Model.App.Platform, @Model.App.Name.ToLower().Replace(' ', '-'))" />
-    <meta property="og:title"              content="@Model.App.Name" />
-    <meta property="og:description"        content="@Model.App.Description" /> 
-    <meta property="referengine:platform"  content="@Model.App.Platform" />
-    @if (Model.App.HighQualityLogoImage != null)
+    <meta property="og:url"                content="@url" />
+    <meta property="og:title"              content="@Model.WindowsAppStoreInfo.Name" />
+    <meta property="og:description"        content="@HttpUtility.HtmlDecode(Model.WindowsAppStoreInfo.DescriptionHtml)" /> 
+    <meta property="referengine:platform"  content="Windows 8" />
+    @if (Model.App != null)
     {
-        <meta property="og:image" content="Model.App.HighQualityLogoImage.GetLink()" />
+        if (Model.App.VimeoLink != null)
+        {
+            <meta property="og:video" content="@Model.App.VimeoLink" />
+        }
+        if (Model.App.HighQualityLogoImage != null)
+        {
+            <meta property="og:image" content="@Model.App.HighQualityLogoImage.GetLink()" />
+        }
     }
-    @foreach (var img in Model.App.CloudinaryImages)
+    @foreach (var img in Model.WindowsAppStoreInfo.CloudinaryImages)
     {
         <meta property="og:image" content="@img.GetLink()" />
     }
@@ -38,33 +55,36 @@
 
 @section Navigation
 {
+    @*@{ ImageTag tag = new ImageTag("windows_logo_icon_30_gu56g7", "png"); }
+    @tag.ToHtmlString()*@
     <a href="~/app-store/windows" style="color: white">Windows Store Apps</a>
     @if (category.HasParent)
     {
         <text>
-            > <a href="~/app-store/windows/@Util.ConvertStringToUrlPart(category.ParentCategoryName)" style="color: #FFF">@category.ParentCategoryName</a>
-            > <a href="~/app-store/windows/@category.LinkPart" style="color: #FFF">@category.Name</a>
+            &nbsp;&nbsp;-&nbsp;&nbsp; <a href="~/app-store/windows/@U.Util.ConvertStringToUrlPart(category.ParentCategoryName)" style="color: #FFF">@category.ParentCategoryName</a>
+            &nbsp;&nbsp;-&nbsp;&nbsp; <a href="~/app-store/windows/@category.LinkPart" style="color: #FFF">@category.Name</a>
         </text>
     }
     else
     {
-        <text>> <a href="~/app-store/windows/@category.LinkPart" style="color: #FFF">@category.Name</a></text>
+        <text>&nbsp;&nbsp;-&nbsp;&nbsp; <a href="~/app-store/windows/@category.LinkPart" style="color: #FFF">@category.Name</a></text>
     }
 
-    > <a href="~/app-store/windows/@appInfo.LinkPart" style="color: #FFF">@appName</a>
+    &nbsp;&nbsp;-&nbsp;&nbsp; <a href="~/app-store/windows/@appInfo.LinkPart" style="color: #FFF">@appName</a>
 }
 
 @section ScriptsAfterBody
 {
-    @if (Model.App != null)
-    {
-        <script>
-            window.re = {};
-            window.re["appId"] = "@Model.App.Id";
-        </script>
-
-        <script data-main="/typescript/app-store/windows/windowsApp.js" type="text/javascript" src="~/typescript/lib/require.js"></script>
+    @{
+        string jsUrl = U.Util.BaseUrl + "typescript/appstore/windows/windowsApp.js";
+        double appId = Model.App != null ? Model.App.Id : -1;
     }
+    <script>
+        window.re = {};
+        window.re["appId"] = "@appId";
+    </script>
+
+    <script data-main="@jsUrl" type="text/javascript" src="~/typescript/lib/require.js"></script>
 }
 
 <div class="row">
@@ -91,53 +111,91 @@
                 storeLink = "#notWin8";
                 showDataToggle = true;
             }
-            <a class="text-center" href="@storeLink" @if (showDataToggle) { <text>role = "button" data-toggle = "modal"</text> }>
-@* ReSharper disable Html.TagNotResolved *@
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="250px"
-                     height="150px" viewBox="0 0 250 150" enable-background="new 0 0 250 150" xml:space="preserve">
+            <a class="text-center" href="@storeLink" @if (showDataToggle)
+                                                     { <text>role = "button" data-toggle = "modal"</text> }>
+                @* ReSharper disable Html.TagNotResolved *@
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="338px"
+                     height="150px" viewBox="0 0 338 150" enable-background="new 0 0 338 150" xml:space="preserve">
+                    <defs>
+                        <linearGradient id="bgGradient" x1="0%" y1="0%" x2="0%" y2="100%" spreadMethod="pad">
+                            <stop offset="10%" stop-color="@brighterColorHtml" stop-opacity="1"></stop>
+                            <stop offset="90%" stop-color="@colorHtml" stop-opacity="1"></stop>
+                        </linearGradient>
+                    </defs>
                     <g id="Layer_2">
-                        <rect fill="@color" width="250" height="150"/>
+                        <rect fill="url(#bgGradient)" width="338" height="150"></rect>
                     </g>
                     <g id="Layer_1">
-                        <g>
+                        <g transform="translate(50.5)">
                             <g id="bag_18_">
                                 <g id="handles_18_">
                                     <path fill="#FFFFFF" d="M117.249,27.803c-3.407,1.198-5.897,2.221-5.897,8.727v3.131l2.041-0.411v-2.704
-					            c-0.051-4.414,1.097-5.337,4.074-6.622C117.453,29.091,117.379,28.385,117.249,27.803z"/>
+					            c-0.051-4.414,1.097-5.337,4.074-6.622C117.453,29.091,117.379,28.385,117.249,27.803z"></path>
                                     <path fill="#FFFFFF" d="M123.182,26.411c0.135,0.63,0.242,1.315,0.314,2.052c5.334-0.767,5.232,1.433,5.232,6.026v1.697
-					            l2.018-0.415v-1.283C130.746,27.356,129.633,25.445,123.182,26.411z"/>
+					            l2.018-0.415v-1.283C130.746,27.356,129.633,25.445,123.182,26.411z"></path>
                                     <path fill="#FFFFFF" d="M102.162,41.498v-9.382c-0.065-5.811,2.937-7.59,8.478-8.889c8.347-1.958,8.877,3.424,8.877,6.847v7.953
-					            l2.045-0.413V30.25c-0.021-6.479-2.041-11.331-11.331-9.226c-5.002,1.135-10.11,2.411-10.11,10.899v9.98L102.162,41.498z"/>
+					            l2.045-0.413V30.25c-0.021-6.479-2.041-11.331-11.331-9.226c-5.002,1.135-10.11,2.411-10.11,10.899v9.98L102.162,41.498z"></path>
                                 </g>
                                 <path fill="#FFFFFF" d="M140.961,36.202L84.807,47.429v40.84l56.154,11.229l11.225-4.084V40.285L140.961,36.202z M109.34,79.822
 				            l-12.459-1.756V67.723h12.459V79.822z M109.34,66.154H96.881V56.64l12.459-1.759V66.154z M126.613,82.215l-15.708-2.295V67.723
-				            h15.708V82.215z M126.613,66.154h-15.708V54.789l15.708-2.3V66.154z"/>
+				            h15.708V82.215z M126.613,66.154h-15.708V54.789l15.708-2.3V66.154z"></path>
                             </g>
                         </g>
-                        <text transform="matrix(1 0 0 1 21.209 131.6768)" fill="#FFFFFF" font-family="'Segoe UI Semilight'" font-size="14">Download from the Windows Store</text>
+                        <text transform="matrix(1 0 0 1 50.5 131.6768)" fill="#FFFFFF" font-family="'Segoe UI Light', 'Open Sans'" font-size="16">Download from the Windows Store</text>
                     </g>
                 </svg>
-@* ReSharper restore Html.TagNotResolved *@
+                @* ReSharper restore Html.TagNotResolved *@
             </a>
-@*            <div class="widget">
-                <h4 class="heading-success"><span class="btn btn-large btn-success">
-                                                <i class="m-icon-big-swapdown m-icon-white"></i>
-                                            </span>&nbsp;&nbsp;Author detail</h4>
-                <img src="~/areas/assets/img/avatar.png" class="alignleft" alt="" />
+            <div class="widget">
+                <h4 class="heading">
+                    <span class="btn" style="padding: 5px">
+                        @*<i class="m-icon-big-swapdown m-icon-white"></i>*@
+                        @{
+                            var thumbsUpImage = new ImageTag("thumbs_up_icon_30_puu2vr", "png");
+                        }
+                        @thumbsUpImage.ToHtmlString()
+                    </span>&nbsp;&nbsp;Verified Recommendations
+                </h4>
+                <div data-bind="visible: !RecommendersLoaded">
+                    Loading recommendations...
+                </div>
+                <div data-bind="visible: RecommendersLoaded() && Recommenders().length == 0">
+                    No recommendations yet.
+                </div>
+                <div data-bind="visible: RecommendersLoaded() && Recommenders().length > 0">
+                    <!-- ko foreach: Recommenders -->
+                        <li class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object" data-bind="attr: { src: PictureUrl }" alt="" />
+                            </a>
+                            <div class="media-body">
+                                <h5 class="media-heading" style="font-size: 13px">
+                                    <span data-bind="text: Name" style="font-weight: bold !important; color: #3b5998"></span>
+                                    recommended @Model.WindowsAppStoreInfo.Name.
+                                </h5>                         
+                                <p style="font-size: 11px; color: #999; margin-top: -5px !important; margin-left: 20px">
+                                    <span data-bind="text: Time"></span>
+                                </p>
+                            </div>
+                        </li>
+                    <!-- /ko -->
+                </div>
+                @*<img src="~/areas/assets/img/avatar.png" class="alignleft" alt="" />
                 <h5>John doe</h5>
                 <p>
                     Donec ullamcorper nulla non metus auctor fringilla commodo luctus
-                </p>
-                <a href="#">Profile detail..</a>
+                </p>*@
             </div>
             <div class="widget">
-                <h4 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;Project detail</h4>
+                <h4 class="heading">
+                    <span class="btn btn-mini"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;App Details
+                </h4>
                 <ul class="project-detal">
-                    <li><label>Category :</label> @appInfo.Category</li>
+                    <li><label>Category :</label> @appInfo.Category.Name</li>
                     <li><label>Publisher:</label> @appInfo.Developer</li>
                     <li><label><a href="@appInfo.SupportLink">Support Link</a></label></li>
                 </ul>
-            </div>*@
+            </div>
         </aside>
     </div>
     <div class="span8">
@@ -161,18 +219,28 @@
                                 var image = appInfo.CloudinaryImages.ElementAt(i);
                                 <div class="@MvcHtmlString.Create(i == 0 ? "active" : "") item">
                                     <img alt="@image.Description" src="@image.GetLink()" />
-                                    <p>@image.Description</p>
+                                    <p>@Html.Raw(image.Description)</p>
                                 </div>
                             }
                         }
                         else
                         {
+                            bool renderedActive = false;
+                            if (Model.App.VimeoLink != null)
+                            {
+                                renderedActive = true;
+                                <div class="js-video item active">
+@* ReSharper disable Html.Obsolete *@
+                                    <iframe src="@Model.App.VimeoLink" width="732" height="412" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+@* ReSharper restore Html.Obsolete *@
+                                </div>
+                            }
                             for (int i = 0; i < Model.App.CloudinaryImages.Count(); i++)
                             {
                                 var image = Model.App.CloudinaryImages.ElementAt(i);
-                                <div class="@MvcHtmlString.Create(i == 0 ? "active" : "") item">
+                                <div class="@MvcHtmlString.Create(i == 0 && !renderedActive ? "active" : "") item">
                                     <img alt="@image.Description" src="@image.GetLink()" />
-                                    <p>@image.Description</p>
+                                    <p>@Html.Raw(image.Description)</p>
                                 </div>
                             }
                         }
@@ -183,31 +251,6 @@
                 <p>@Html.Raw(appInfo.DescriptionHtml)</p>
             </div>
         </article>
-        
-        @if (Model.App != null)
-        {
-            <section id="recommendations">
-                <h4>Latest Recommendations</h4>
-                <ul class="media-list">
-                    <!-- ko foreach: PeopleData -->
-                    <li class="media">
-                        <a class="pull-left" href="#">
-                            <img class="media-object" data-bind="attr: { src: PictureUrl }" alt="" />
-                        </a>
-                        <div class="media-body">
-                            <h5 class="media-heading" style="font-size: 13px">
-                                <span data-bind="text: Name" style="font-weight: bold !important; color: #3b5998"></span>
-                                recommended @Model.App.Name.
-                            </h5>                         
-                            <p style="font-size: 11px; color: #999; margin-top: -5px !important; margin-left: 20px">
-                                <span data-bind="text: Time"></span>
-                            </p>
-                        </div>
-                    </li>
-                    <!-- /ko -->      
-                </ul>
-            </section>
-        }
     </div>
 </div>
 
@@ -292,240 +335,253 @@ else if (!isWindows8)
 
 <style>
     
-a {
-	color: @color;
-}
+    a {
+        color: @colorHtml;
+    }
 
-a:hover {
-	color:#77b201;
-}
+    a:hover {
+        color:#77b201;
+    }
 
-.btn-link:hover {
-  color: #77b201;
-}
+    .btn-link:hover {
+        color: #77b201;
+    }
 
-.color {
-	background: @color;
-	color:#fff;
-}
+    .color {
+        background: @colorHtml;
+        color:#fff;
+    }
 
-textarea:focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="datetime"]:focus,
-input[type="datetime-local"]:focus,
-input[type="date"]:focus,
-input[type="month"]:focus,
-input[type="time"]:focus,
-input[type="week"]:focus,
-input[type="number"]:focus,
-input[type="email"]:focus,
-input[type="url"]:focus,
-input[type="search"]:focus,
-input[type="tel"]:focus,
-input[type="color"]:focus,
-.uneditable-input:focus {
-  border-color: @color;
-  outline: 0;
-  outline: thin dotted \9;
-  /* IE6-9 */
+    textarea:focus,
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="datetime"]:focus,
+    input[type="datetime-local"]:focus,
+    input[type="date"]:focus,
+    input[type="month"]:focus,
+    input[type="time"]:focus,
+    input[type="week"]:focus,
+    input[type="number"]:focus,
+    input[type="email"]:focus,
+    input[type="url"]:focus,
+    input[type="search"]:focus,
+    input[type="tel"]:focus,
+    input[type="color"]:focus,
+    .uneditable-input:focus {
+        border-color: @colorHtml;
+        outline: 0;
+        outline: thin dotted \9;
+        /* IE6-9 */
 
-}
+    }
 
 /* header */
 
 
-header .navbar .navbar-inner li.active {
-	border-top: 5px solid #fff;
-	background: @color;
-	margin-top:-5px;
-}
+    header .navbar .navbar-inner li.active {
+        border-top: 5px solid #fff;
+        background: @colorHtml;
+        margin-top:-5px;
+    }
 
-header .navbar .navbar-inner nav li.blob  {
-	border-top: 5px solid @color;
-	margin-top:-5px;
-}
+    header .navbar .navbar-inner nav li.blob  {
+        border-top: 5px solid @colorHtml;
+        margin-top:-5px;
+    }
 
-.dropdown-menu li > a:hover,
-.dropdown-menu li > a:focus,
-.dropdown-submenu:hover > a {
-  background: @color;
-}
+    .dropdown-menu li > a:hover,
+    .dropdown-menu li > a:focus,
+    .dropdown-submenu:hover > a {
+        background: @colorHtml;
+    }
 
-.dropdown-menu li > a:hover,
-.dropdown-menu li > a:focus,
-.dropdown-submenu:hover > a {
-  background-color: @color;
-}
+    .dropdown-menu li > a:hover,
+    .dropdown-menu li > a:focus,
+    .dropdown-submenu:hover > a {
+        background-color: @colorHtml;
+    }
 
-.dropdown-menu .active > a,
-.dropdown-menu .active > a:hover {
-  background-color: @color;
-}
+    .dropdown-menu .active > a,
+    .dropdown-menu .active > a:hover {
+        background-color: @colorHtml;
+    }
 
 /* breadcrumb */
-.breadcrumb {
-	border-left:5px solid @color;
-}
+    .breadcrumb {
+        border-left:5px solid @colorHtml;
+    }
 
 
 /* accordion */
-.accordion-group {
-  border: 1px solid @color;
-}
-.accordion-inner {
-  border-top: 1px solid @color;
-}
-.accordion-heading {
-  background-color: @color;
-}
+    .accordion-group {
+        border: 1px solid @colorHtml;
+    }
+    .accordion-inner {
+        border-top: 1px solid @colorHtml;
+    }
+    .accordion-heading {
+        background-color: @colorHtml;
+    }
 
 /* flexslider */
-.flex-direction-nav li a:hover {
-	background:@color;
+    .flex-direction-nav li a:hover {
+        background:@colorHtml;
 	
-}
+    }
 
 /* carousel */
-.carousel-control {
-  background: @color;
-}
+    .carousel-control {
+        background: @colorHtml;
+    }
 
 
 @*/* eislide */
 .es-nav .es-nav-prev{
     right: 17px;
-    background:@color @Html.Raw(@"url(../img/icons/arrow-left.png) no-repeat right top;")
+    background:@colorHtml @Html.Raw(@"url(../img/icons/arrow-left.png) no-repeat right top;")
 }
-.es-nav .es-nav-next{background: @color url(../img/icons/arrow-right.png) no-repeat left top;}*@
+.es-nav .es-nav-next{background: @colorHtml url(../img/icons/arrow-right.png) no-repeat left top;}*@
 
 /* button */
-.btn-link {
-	color: @color;
-}
+    .btn-link {
+        color: @colorHtml;
+    }
 
-.nav .dropdown-toggle .caret {
-  margin-top: 6px;
-  border-top-color: @color;
-  border-bottom-color: @color;
-}
+    .nav .dropdown-toggle .caret {
+        margin-top: 6px;
+        border-top-color: @colorHtml;
+        border-bottom-color: @colorHtml;
+    }
 
 /* pagination */
-.pagination ul > li > a,
-.pagination ul > li > span {
-  background-color: @color;
-  border: 1px solid @color;
-  color:#fff;
-  border-left-width: 0;
-}
+    .pagination ul > li > a,
+    .pagination ul > li > span {
+        background-color: @colorHtml;
+        border: 1px solid @colorHtml;
+        color:#fff;
+        border-left-width: 0;
+    }
 
 
 /* tabs */
-.nav-pills > .active > a,
-.nav-pills > .active > a:hover {
-  color: #ffffff;
-  background-color: @color;
-}
+    .nav-pills > .active > a,
+    .nav-pills > .active > a:hover {
+        color: #ffffff;
+        background-color: @colorHtml;
+    }
 
 
-.nav-tabs > .active > a,
-.nav-tabs > .active > a:hover {
-  background-color: @color;
-  color:#fff;
-  border: none;
-  border-bottom-color: transparent;
-  cursor: default;
-}
+    .nav-tabs > .active > a,
+    .nav-tabs > .active > a:hover {
+        background-color: @colorHtml;
+        color:#fff;
+        border: none;
+        border-bottom-color: transparent;
+        cursor: default;
+    }
 
 /* label */
-.label-orange,
-.badge-orange {
-  background-color: @color;
-}
+    .label-orange,
+    .badge-orange {
+        background-color: @colorHtml;
+    }
 
 
 /* nav */
-.nav-list > .active > a,
-.nav-list > .active > a:hover {
-  background: @color;
-}
+    .nav-list > .active > a,
+    .nav-list > .active > a:hover {
+        background: @colorHtml;
+    }
 
 
-.nav-pills > .active > a,
-.nav-pills > .active > a:hover {
-  background: @color;
-}
+    .nav-pills > .active > a,
+    .nav-pills > .active > a:hover {
+        background: @colorHtml;
+    }
 
-.nav .dropdown-toggle .caret {
-  border-top-color: @color;
-  border-bottom-color: @color;
-}
+    .nav .dropdown-toggle .caret {
+        border-top-color: @colorHtml;
+        border-bottom-color: @colorHtml;
+    }
 
 /* custom progress bar according template skin */
-.progress-orange .bar,
-.progress .bar-orange {
-  background: @color;
-}
+    .progress-orange .bar,
+    .progress .bar-orange {
+        background: @colorHtml;
+    }
 
-.progress-orange.progress-striped .bar,
-.progress-striped .bar-orange {
-  background: @color;
-}
+    .progress-orange.progress-striped .bar,
+    .progress-striped .bar-orange {
+        background: @colorHtml;
+    }
 
 /* form */
-.contact-form input:focus {
-  border-color: @color;
-}
+    .contact-form input:focus {
+        border-color: @colorHtml;
+    }
 
 /* article */
-article .headline h4 a {
-	color:@color;
-}
+    article .headline h4 a {
+        color:@colorHtml;
+    }
 
-article.last-post {
-	background: @color;
-}
+    article.last-post {
+        background: @colorHtml;
+    }
 
-ul.time-post li.year{
-	border-bottom:1px solid @color;
-}
+    ul.time-post li.year{
+        border-bottom:1px solid @colorHtml;
+    }
 
-section#subintro {
-	background: @color;
-}
+    section#subintro {
+        background: @brighterColorHtml;
+    }
 
 
-footer.footer {
-	background:@color;
-}
+    footer.footer {
+        background:@colorHtml;
+    }
 
  /* 404 */
  
 
-.error-body{
-	background:@color;
-	padding:20px;
-	text-align:center;
-}
+    .error-body{
+        background:@colorHtml;
+        padding:20px;
+        text-align:center;
+    }
 
 
 /* misc */
-a.thumbnail:hover {
-  border-color: @color;
-}
+    a.thumbnail:hover {
+        border-color: @colorHtml;
+    }
 
-ul.filter li.active a:hover, a.zoom:hover, a.link_post:hover, .flex-control-nav li a:hover, .flex-control-nav li a.active{
-	background: @color;
-}
+    ul.filter li.active a:hover, a.zoom:hover, a.link_post:hover, .flex-control-nav li a:hover, .flex-control-nav li a.active{
+        background: @colorHtml;
+    }
 
-.thumbnail h4 a:hover, .thumbnail .meta  span a:hover, ul.recent li h6 a:hover, ul.post-meta li a:hover, .media-body span, .media-body .media-heading a:hover, form label span, article.last-post h5 a:hover{
-	color: @color;
-	text-decoration:none;
-}
+    .thumbnail h4 a:hover, .thumbnail .meta  span a:hover, ul.recent li h6 a:hover, ul.post-meta li a:hover, .media-body span, .media-body .media-heading a:hover, form label span, article.last-post h5 a:hover{
+        color: @colorHtml;
+        text-decoration:none;
+    }
 
 /* nivo */
-.nivo-directionNav a, .nivo-controlNav a.active, .nivo-controlNav a:hover{
-	background-color:@color;
-}
+    .nivo-directionNav a, .nivo-controlNav a.active, .nivo-controlNav a:hover{
+        background-color:@colorHtml;
+    }
+
+    .widget .heading {
+        border-bottom: 1px solid @darkerColorHtml;
+    }
+
+    .widget .heading .btn {
+        background-color: @darkerColorHtml;
+        background-image: -moz-linear-gradient(top, @brighterColorHtml, @darkerColorHtml);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@brighterColorHtml), to(@darkerColorHtml));
+        background-image: -webkit-linear-gradient(top, @brighterColorHtml, @darkerColorHtml);
+        background-image: -o-linear-gradient(top, @brighterColorHtml, @darkerColorHtml);
+        background-image: linear-gradient(to bottom, @brighterColorHtml, @darkerColorHtml);
+    }
 
 </style>

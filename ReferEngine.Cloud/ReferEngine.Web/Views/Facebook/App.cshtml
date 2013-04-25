@@ -153,8 +153,12 @@
 	    <div class="span10 offset1 txt-middle">
             <div id="imageCarousel" class="carousel slide">
                 <div class="carousel-inner">
+                    @{
+                        bool renderedActive = false;
+                    }
                     @if (Model.App.VimeoLink != null)
                     {
+                        renderedActive = true;
                         <div class="js-video item active">
                             <iframe src="@Model.App.VimeoLink" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
                         </div>
@@ -162,7 +166,7 @@
                     @for (int i = 0; i < Model.App.CloudinaryImages.Count; i++)
                     {
                         CloudinaryImage image = Model.App.CloudinaryImages.ElementAt(i);
-                        <div class="@MvcHtmlString.Create(i == 0 && Model.App.VimeoLink == null ? "active" : "") item">
+                        <div class="@MvcHtmlString.Create(i == 0 && !renderedActive ? "active" : "") item">
                             <img alt="@image.Description" src="@image.GetLink()">
                             <p>@image.Description</p>
                         </div>

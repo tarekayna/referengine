@@ -25,6 +25,24 @@ namespace ReferEngine.Common.Utilities
             Local
         }
 
+        public static string BaseUrl
+        {
+            get
+            {
+                switch (CurrentServiceConfiguration)
+                {
+                    case ReferEngineServiceConfiguration.ProductionCloud:
+                        return "https://www.referengine.com/";
+                    case ReferEngineServiceConfiguration.TestCloud:
+                        return "https://www.referengine-test.com/";
+                    case ReferEngineServiceConfiguration.Local:
+                        return "http://127.0.0.1:81/";
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         public static string CurrentServiceConfigurationString
         {
             get

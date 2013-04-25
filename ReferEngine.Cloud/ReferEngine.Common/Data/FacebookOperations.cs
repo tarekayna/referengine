@@ -119,9 +119,9 @@ namespace ReferEngine.Common.Data
 
         // BUG: Do I need to change to require app token?
 
-        public async Task<AppRecommendation> PostAppRecommendationAsync(AppRecommendation appRecommendation)
+        public async Task<AppRecommendation> PostAppRecommendationAsync(App app, AppRecommendation appRecommendation)
         {
-            string appParameter = string.Format("http://apps.facebook.com/referengine/app/{0}", appRecommendation.AppId);
+            string appParameter = string.Format("https://www.referengine-test.com/app-store/windows/{0}", app.LinkPart);
             var parameters = new Dictionary<string, object>();
             parameters["app"] = appParameter;
             parameters["access_token"] = AccessToken.Token;

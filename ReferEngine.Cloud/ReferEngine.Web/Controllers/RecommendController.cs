@@ -304,7 +304,7 @@ namespace ReferEngine.Web.Controllers
                                             IpAddress = System.Web.HttpContext.Current.Request.UserHostAddress
                                         };
 
-            var postedRecommendation = await facebookOperations.PostAppRecommendationAsync(recommendation);
+            var postedRecommendation = await facebookOperations.PostAppRecommendationAsync(appAuthorization.App, recommendation);
 
             try
             {

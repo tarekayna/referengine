@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
+using ReferEngine.Common.Utilities;
 
 namespace ReferEngine.Common.Models
 {
@@ -80,6 +81,16 @@ namespace ReferEngine.Common.Models
 
         [DataMember]
         public virtual ICollection<CloudinaryImage> CloudinaryImages { get; set; }
+
+        public string LinkPart
+        {
+            get
+            {
+                string linkPart = Category.LinkPart + "/";
+                linkPart += Util.ConvertStringToUrlPart(Name);
+                return linkPart;
+            }
+        }
 
         public void ComputeVerificationCode()
         {
