@@ -1,0 +1,40 @@
+﻿@model ReferEngine.Web.Areas.AppStore.ViewModels.WindowsStoreNavigationViewModel
+@using ReferEngine.Common.Utilities
+
+@{
+    var category = Model.WindowsAppStoreCategory;
+    var app = Model.WindowsAppStoreInfo;
+    const string separator = "<span class=\"nav-sep\">|</span>";
+}
+
+@Links.WindowsAppStore(ViewResources.WindowsStoreApps)
+
+@if (category != null)
+{
+    if (category.HasParent)
+    {
+        <text>
+            @Html.Raw(separator)
+            <a href="~/app-store/windows/@Util.ConvertStringToUrlPart(category.ParentCategoryName)">
+                @category.ParentCategoryName
+            </a>
+            @Html.Raw(separator)
+            <a href="~/app-store/windows/@category.LinkPart">
+                @category.Name
+            </a>
+        </text>
+    }
+    else
+    {
+        <text>
+            @Html.Raw(separator)
+            <a href="~/app-store/windows/@category.LinkPart">@category.Name</a>
+        </text>
+    }
+}
+
+@if (app != null)
+{
+    @Html.Raw(separator)
+    <a href="~/app-store/windows/@app.LinkPart">@app.Name</a>
+}

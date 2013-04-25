@@ -38,6 +38,15 @@
 .control-group .controls.static {
   margin-top: 4px;
 }
+#subintro a,
+#subintro a:visited,
+#subintro a:link,
+#subintro a:active {
+  color: #FFF;
+}
+#subintro .nav-sep {
+  padding: 0 10px;
+}
 /*/* Sidenav for Docs
 -------------------------------------------------- 
 

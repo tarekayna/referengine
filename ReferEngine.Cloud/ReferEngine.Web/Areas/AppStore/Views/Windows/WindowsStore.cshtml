@@ -1,5 +1,6 @@
 ﻿@model IList<WindowsAppStoreCategory>
 @using ReferEngine.Common.Models
+@using ReferEngine.Web.Areas.AppStore.ViewModels
 
 <div class="row">
     <ul class="portfolio-area da-thumbs">    
@@ -12,5 +13,5 @@
 
 @section Navigation
 {
-    <a href="~/app-store/windows" style="color: white">Windows Store Apps</a>
+    @Html.Partial("_WindowsStoreNavigation", new WindowsStoreNavigationViewModel())
 }

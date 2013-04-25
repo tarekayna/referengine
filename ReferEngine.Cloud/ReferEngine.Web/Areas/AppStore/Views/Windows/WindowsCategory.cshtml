@@ -1,4 +1,5 @@
 ﻿@using ReferEngine.Common.Utilities;
+@using ReferEngine.Web.Areas.AppStore.ViewModels
 @model ReferEngine.Common.ViewModels.AppStore.Windows.WindowsCategoryViewModel
 
 @{
@@ -8,6 +9,17 @@
         ViewBag.Title += ViewResources.TitleSeparator + Model.Category.ParentCategoryName;
     }
     ViewBag.PageDescription = Model.Category.Name;
+}
+
+@section Navigation
+{
+    @{
+        var navigationViewModel = new WindowsStoreNavigationViewModel
+            {
+                WindowsAppStoreCategory = Model.Category
+            };
+    }
+    @Html.Partial("_WindowsStoreNavigation", navigationViewModel)
 }
 
 <div class="row">
@@ -76,18 +88,3 @@
     </ul>
 </div>
 
-@section Navigation
-{
-    <a href="~/app-store/windows" style="color: white">Windows Store Apps</a>
-    @if (Model.Category.HasParent)
-    {
-        <text>
-            > <a href="~/app-store/windows/@Util.ConvertStringToUrlPart(Model.Category.ParentCategoryName)" style="color: #FFF">@Model.Category.ParentCategoryName</a>
-            > <a href="~/app-store/windows/@Model.Category.LinkPart" style="color: #FFF">@Model.Category.Name</a>
-        </text>
-    }
-    else
-    {
-        <text>> <a href="~/app-store/windows/@Model.Category.LinkPart" style="color: #FFF">@Model.Category.Name</a></text>
-    }
-}

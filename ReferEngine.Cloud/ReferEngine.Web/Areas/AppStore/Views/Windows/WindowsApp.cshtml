@@ -1,4 +1,5 @@
 ﻿@using ReferEngine.Common.Models
+@using ReferEngine.Web.Areas.AppStore.ViewModels
 @using U = ReferEngine.Common.Utilities
 @model ReferEngine.Common.ViewModels.AppStore.Windows.WindowsAppViewModel
 
@@ -55,22 +56,14 @@
 
 @section Navigation
 {
-    @*@{ ImageTag tag = new ImageTag("windows_logo_icon_30_gu56g7", "png"); }
-    @tag.ToHtmlString()*@
-    <a href="~/app-store/windows" style="color: white">Windows Store Apps</a>
-    @if (category.HasParent)
-    {
-        <text>
-            &nbsp;&nbsp;-&nbsp;&nbsp; <a href="~/app-store/windows/@U.Util.ConvertStringToUrlPart(category.ParentCategoryName)" style="color: #FFF">@category.ParentCategoryName</a>
-            &nbsp;&nbsp;-&nbsp;&nbsp; <a href="~/app-store/windows/@category.LinkPart" style="color: #FFF">@category.Name</a>
-        </text>
+    @{
+        var navigationViewModel = new WindowsStoreNavigationViewModel
+            {
+                WindowsAppStoreCategory = category,
+                WindowsAppStoreInfo = appInfo
+            };
     }
-    else
-    {
-        <text>&nbsp;&nbsp;-&nbsp;&nbsp; <a href="~/app-store/windows/@category.LinkPart" style="color: #FFF">@category.Name</a></text>
-    }
-
-    &nbsp;&nbsp;-&nbsp;&nbsp; <a href="~/app-store/windows/@appInfo.LinkPart" style="color: #FFF">@appName</a>
+    @Html.Partial("_WindowsStoreNavigation", navigationViewModel)
 }
 
 @section ScriptsAfterBody

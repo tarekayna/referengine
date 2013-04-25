@@ -160,6 +160,15 @@ namespace ReferEngine.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to   &gt;  .
+        /// </summary>
+        public static string NavigationSeparator {
+            get {
+                return ResourceManager.GetString("NavigationSeparator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pricing.
         /// </summary>
         public static string Pricing {

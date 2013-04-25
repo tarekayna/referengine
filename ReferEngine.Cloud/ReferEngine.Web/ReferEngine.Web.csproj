@@ -585,6 +585,7 @@
     <Content Include="Areas\Developer\Views\DeveloperHome\Index.cshtml" />
     <Content Include="Areas\Developer\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Developer\Views\Shared\_DeveloperLayout.cshtml" />
+    <Content Include="Areas\AppStore\Views\Windows\_WindowsStoreNavigation.cshtml" />
     <None Include="Less\app\dashboard.less" />
     <Content Include="Less\app\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>
@@ -649,6 +650,7 @@
     </None>
     <Compile Include="Areas\AppStore\AppStoreAreaRegistration.cs" />
     <Compile Include="Areas\AppStore\Controllers\WindowsController.cs" />
+    <Compile Include="Areas\AppStore\ViewModels\WindowsStoreNavigationViewModel.cs" />
     <Compile Include="Areas\Developer\Controllers\DeveloperHomeController.cs" />
     <Compile Include="Areas\Developer\DeveloperAreaRegistration.cs" />
     <Compile Include="Controllers\AboutController.cs" />

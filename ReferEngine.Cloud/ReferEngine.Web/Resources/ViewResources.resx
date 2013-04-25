@@ -177,4 +177,7 @@
   <data name="WindowsStoreDescription" xml:space="preserve">
     <value>Browser the most popular and newest Windows Store Apps.</value>
   </data>
+  <data name="NavigationSeparator" xml:space="preserve">
+    <value>  &gt;  </value>
+  </data>
 </root>
