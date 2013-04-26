@@ -121,7 +121,7 @@ namespace ReferEngine.Common.Data
 
         public async Task<AppRecommendation> PostAppRecommendationAsync(App app, AppRecommendation appRecommendation)
         {
-            string appParameter = string.Format("https://www.referengine-test.com/app-store/windows/{0}", app.LinkPart);
+            string appParameter = string.Format("{0}/app-store/windows/{1}", Util.BaseUrl, app.LinkPart);
             var parameters = new Dictionary<string, object>();
             parameters["app"] = appParameter;
             parameters["access_token"] = AccessToken.Token;

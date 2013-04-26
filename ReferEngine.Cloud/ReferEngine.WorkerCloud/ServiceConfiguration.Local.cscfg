@@ -14,10 +14,4 @@
       <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="FF552F5649004ED2C7CCA344CB9D47ACD4737C7D" thumbprintAlgorithm="sha1" />
     </Certificates>
   </Role>
-  <Role name="ReferEngine.WorkerCloud.Pinger">
-    <Instances count="1" />
-    <ConfigurationSettings>
-      <Setting name="CurrentServiceConfiguration" value="Local" />
-    </ConfigurationSettings>
-  </Role>
 </ServiceConfiguration>

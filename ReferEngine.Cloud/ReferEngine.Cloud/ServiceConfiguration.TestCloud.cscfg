@@ -34,6 +34,7 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2014-02-02T23:59:59.0000000-08:00" />
       <Setting name="CurrentServiceConfiguration" value="TestCloud" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+      <Setting name="TracerConnectionString" value="DefaultEndpointsProtocol=https;AccountName=tracedatatest;AccountKey=L+aCTcmNsCXSAtbZeoqCfDnELQhyl4CpjVE0UpA4ElukBLRIshyLBHBcou0/tB6Pn+ncwb620GnZiu3UDD/Jbg==" />
     </ConfigurationSettings>
     <Certificates>
       <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="FF552F5649004ED2C7CCA344CB9D47ACD4737C7D" thumbprintAlgorithm="sha1" />

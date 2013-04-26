@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="ReferEngine.PingerCloud" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="3" osVersion="*" schemaVersion="2012-10.1.8">
+  <Role name="ReferEngine.Pinger">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="CurrentServiceConfiguration" value="Local" />
+      <Setting name="TracerConnectionString" value="DefaultEndpointsProtocol=https;AccountName=tracedatalocal;AccountKey=DIj+Qrv19TTLoBNKhSfd4rHhrJjlCosHrcu08x2JaLhFf4J1RqQpKTNJaZ9tmqL1xsFuXmY/vr9oQW0kUKeQ9Q==" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>

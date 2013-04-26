@@ -26,7 +26,7 @@ namespace ReferEngine.Web.App_Start
             #region Script Bundles
             List<BundleInfo> scriptBundles = new List<BundleInfo>
                 {
-                    new BundleInfo("~/bundles/developerLayout",
+                    new BundleInfo("~/bundles/libs/base",
                                    "~/typescript/lib/jquery-1.8.3.js",
                                    "~/js/lib/jquery-validate.js",
                                    "~/typescript/lib/bootstrap.js",

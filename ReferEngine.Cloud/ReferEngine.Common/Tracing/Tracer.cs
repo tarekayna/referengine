@@ -11,9 +11,17 @@ namespace ReferEngine.Common.Tracing
 
     public static class Tracer
     {
+        private static string _connectionString;
         private static string ConnectionString
         {
-            get { return CloudConfigurationManager.GetSetting("TracerConnectionString"); }
+            get
+            {
+                if (string.IsNullOrEmpty(_connectionString))
+                {
+                    _connectionString = CloudConfigurationManager.GetSetting("TracerConnectionString");
+                }
+                return _connectionString;
+            }
         }
 
         private static string TableName
