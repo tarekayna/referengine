@@ -214,7 +214,8 @@
             @Scripts.Render("~/js/shared/layout-not-auth")
         }
     
-        @StackExchange.Profiling.MiniProfiler.RenderIncludes()
+        @*@StackExchange.Profiling.MiniProfiler.RenderIncludes()*@
+        @Html.Partial("_FacebookSdk")
         @Html.Partial("_GoogleAnalytics")
     </body>
 </html>

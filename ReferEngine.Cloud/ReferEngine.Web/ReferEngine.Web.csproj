@@ -451,6 +451,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Account\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_FacebookSdk.cshtml" />
     <TypeScriptCompile Include="TypeScript\AppStore\Windows\WindowsCategory.ts" />
     <Content Include="img\logo-web-header.svg" />
     <Content Include="TypeScript\AppStore\Windows\WindowsCategory.js">
