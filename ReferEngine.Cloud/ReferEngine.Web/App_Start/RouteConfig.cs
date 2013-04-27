@@ -10,24 +10,6 @@ namespace ReferEngine.Web.App_Start
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "FacebookMobile",
-                url: "fb/m/{id}",
-                defaults: new { controller = "FacebookMobile", action = "Index", id = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
-                name: "FacebookAppPlatform",
-                url: "fb/app/{platform}/{name}",
-                defaults: new { controller = "Facebook", action = "AppByName", id = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
-                name: "Facebook",
-                url: "fb/{action}/{id}",
-                defaults: new { controller = "Facebook", action = "Home", id = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
                 name: "Apps",
                 url: "apps/{platform}/{category}/{name}",
                 defaults: new { controller = "AppStore", action = "Index", category = UrlParameter.Optional, name = UrlParameter.Optional }
