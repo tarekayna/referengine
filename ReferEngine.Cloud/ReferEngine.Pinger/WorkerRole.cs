@@ -17,6 +17,7 @@ namespace ReferEngine.Pinger
 
         public override void Run()
         {
+            //if (Util.CurrentServiceConfiguration != Util.ReferEngineServiceConfiguration.ProductionCloud) return;
             while (true)
             {
                 Tracer.Trace(TraceMessage.Info("Good morning.. pinger here.."));
