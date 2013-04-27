@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
 }
 
@@ -159,10 +158,13 @@
                             <li>@Links.WindowsAppStore(ViewResources.WindowsStoreApps)</li>
                             <li>@Links.Developer(ViewResources.Developers)</li>
                             <li class="divider-vertical"></li>
-                            <div class="btn-group" id="login-group">
-                                <a class="btn btn-primary" id="log-in-hdr" href="~/account/login">Log In</a>
-                                <a class="btn btn-success" href="#private-beta" role="button" 
-                                   data-toggle="modal" id="request-invite-hdr">Request an Invite</a>
+                            <div>
+                                <div id="fb-button">
+                                    <fb:login-button registration-url="" />
+                                </div>
+                                <div id="fb-user">
+                                    
+                                </div>
                             </div>
                         </ul>
                     </div>
@@ -217,5 +219,31 @@
         @*@StackExchange.Profiling.MiniProfiler.RenderIncludes()*@
         @Html.Partial("_FacebookSdk")
         @Html.Partial("_GoogleAnalytics")
+
+@*        <div id="register" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Register a New Account" aria-hidden="true">
+            <div class="modal-header">
+                <h3>Sign up</h3>
+            </div>
+            <div class="modal-body">
+                <iframe src="https://www.facebook.com/plugins/registration?
+                             client_id=368842109866922&
+                             redirect_uri=https%3A%2F%2Freferengine.fwd.wf&
+                             fields=[{'name':'name'},
+                                     {'name':'email'},
+                                     {'name':'birthday'},
+                                     {'name':'gender'},
+                                     {'name':'captcha'}]"
+                    scrolling="auto"
+                    frameborder="no"
+                    style="border: none"
+                    allowtransparency="true"
+                    width="100%"
+                    height="330"></iframe>                
+            </div>
+            <div class="modal-footer">
+                <input type="submit" value="Submit Request" class="btn btn-primary" />
+            </div>
+        </div>*@
+
     </body>
 </html>

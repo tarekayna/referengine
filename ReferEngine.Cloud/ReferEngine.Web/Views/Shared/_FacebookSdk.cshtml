@@ -1,17 +1,41 @@
 ﻿<div id="fb-root"></div>
 <script>
-  window.fbAsyncInit = function() {FB.init({appId: '368842109866922',channelUrl:'//WWW.referengine.COM/facebook_channel.html',status:true,cookie:true,xfbml:true});
+    function showLoginRegisterButton() {
+        $("#fb-button").show();
+        FB.login(function (response) {
+            if (response.authResponse) {
+                // connected
+            } else {
+                // cancelled
+            }
+        });
+    }
 
-    // Additional init code here
+    window.fbAsyncInit = function () {
+        $("#fb-button").hide();
+        FB.init({ appId: '368842109866922', channelUrl: '//WWW.referengine.COM/facebook_channel.html', status: true, cookie: true, xfbml: true });
+        FB.getLoginStatus(function (response) {
+            if (response.status === 'connected') {
+                // Logged In and Connected
+                FB.api('/me', function (personResponse) {
+                    debugger;
+                    $("#fb-user").text(personResponse.name);
+                });
+            } else if (response.status === 'not_authorized') {
+                // Logged In and Not Connected
+                showLoginRegisterButton();
+            } else {
+                // Not Logged In
+                showLoginRegisterButton();
+            }
+        });
+    };
 
-  };
-
-  // Load the SDK Asynchronously
-  (function(d){
-     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement('script'); js.id = id; js.async = true;
-    @if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local)
+    (function (d) {
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement('script'); js.id = id; js.async = true;
+        @if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local)
     {
         <text>js.src = "//connect.facebook.net/en_US/all/debug.js";</text>
     }
@@ -19,6 +43,6 @@
     {
         <text>js.src = "//connect.facebook.net/en_US/all.js";</text>
     }
-     ref.parentNode.insertBefore(js, ref);
-   }(document));
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
 </script>

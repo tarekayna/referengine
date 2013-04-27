@@ -3,7 +3,6 @@
   <Role name="ReferEngine.Web">
     <Instances count="2" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=webdiagnosticstest;AccountKey=JKWu7EmsJ9zFkkGR9lr+rrv2BA69zZDJ9c42IXNgW7iD+x7uEMaeE/+vYFTdzav2++KEKX08cwAob3uuXmHAiw==" />
       <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />

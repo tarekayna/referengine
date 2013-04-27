@@ -139,12 +139,6 @@
     <Reference Include="Microsoft.WindowsFabric.Data.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.Caching.1.8.1.0\lib\net35-full\Microsoft.WindowsFabric.Data.Common.dll</HintPath>
     </Reference>
-    <Reference Include="MiniProfiler">
-      <HintPath>..\packages\MiniProfiler.2.0.2\lib\net40\MiniProfiler.dll</HintPath>
-    </Reference>
-    <Reference Include="MiniProfiler.EntityFramework">
-      <HintPath>..\packages\MiniProfiler.EF.2.0.3\lib\net40\MiniProfiler.EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -265,10 +259,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\LessTransform.cs" />
-    <Compile Include="App_Start\MiniProfiler.cs" />
     <Compile Include="App_Start\NinjectResolver.cs" />
     <Compile Include="App_Start\NinjectScope.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
@@ -585,7 +579,6 @@
     <Content Include="Areas\Developer\Views\Web.config" />
     <Content Include="Areas\Developer\Views\DeveloperHome\Index.cshtml" />
     <Content Include="Areas\Developer\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Developer\Views\Shared\_DeveloperLayout.cshtml" />
     <Content Include="Areas\AppStore\Views\Windows\_WindowsStoreNavigation.cshtml" />
     <None Include="Less\app\dashboard.less" />
     <Content Include="Less\app\dashboard.css">
@@ -984,8 +977,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\AppStore\Views\Shared\" />
-    <Folder Include="Areas\Developer\Models\" />
     <Folder Include="js\recommend\" />
     <Folder Include="Models\InAppScript\" />
   </ItemGroup>

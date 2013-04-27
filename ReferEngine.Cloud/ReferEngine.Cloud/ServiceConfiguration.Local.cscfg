@@ -3,7 +3,6 @@
   <Role name="ReferEngine.Web">
     <Instances count="2" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
@@ -18,7 +17,7 @@
       <Setting name="TracerConnectionString" value="DefaultEndpointsProtocol=https;AccountName=tracedatalocal;AccountKey=DIj+Qrv19TTLoBNKhSfd4rHhrJjlCosHrcu08x2JaLhFf4J1RqQpKTNJaZ9tmqL1xsFuXmY/vr9oQW0kUKeQ9Q==" />
     </ConfigurationSettings>
     <Certificates>
-      <Certificate name="ReferEngineTestCertificate" thumbprint="ad6316f4e279d0684106f4a88ce38bfab0315e3a" thumbprintAlgorithm="sha1" />
+      <Certificate name="ReferEngineTestCertificate" thumbprint="F8ACE24A36F93B006BFAF495F6C14FB827AC61A3" thumbprintAlgorithm="sha1" />
       <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="FF552F5649004ED2C7CCA344CB9D47ACD4737C7D" thumbprintAlgorithm="sha1" />
     </Certificates>
   </Role>
