@@ -99,7 +99,7 @@ namespace ReferEngine.Common.Utilities
                     }
                     return ReferEngineServiceConfiguration.Local;
                 }
-                catch (TypeInitializationException e)
+                catch (TypeInitializationException)
                 {
                     // Unit Testing
                     return ReferEngineServiceConfiguration.ProductionCloud;

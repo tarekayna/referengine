@@ -18,7 +18,7 @@
 <div id="content" data-spy="scroll" data-target=".nav-list">
     <div class="container">
         <div class="row">
-            <div class="span3 bs-docs-sidebar affix">
+            <div class="span3 affix">
                 <ul class="nav nav-list bs-docs-sidenav">
                     <li class="nav-header">App Settings</li>
                     <li><a href="#basic-info"><i class="icon-chevron-right"></i> Basic Info</a></li>
@@ -123,15 +123,15 @@
                 <section id="screenshots">
                     <h3>Screenshots</h3>
                     <hr />
-                    @for (int i = 0; i < @app.CloudinaryImages.Count; i++)
+                    @for (int i = 0; i < @app.AppScreenshots.Count; i++)
                     {
                         if (i%3 == 0)
                         {
                             @:<div class="row">
                         }
                         
-                        <a href="@app.CloudinaryImages.ElementAt(i).GetLink()" target="_blank">
-                            <img src="@app.CloudinaryImages.ElementAt(i).GetLink("w_200")" class="img-polaroid">
+                        <a href="@app.AppScreenshots.ElementAt(i).CloudinaryImage.GetLink()" target="_blank">
+                            <img src="@app.AppScreenshots.ElementAt(i).CloudinaryImage.GetLink("w_200")" class="img-polaroid">
                         </a>
                         
                         if ((i+1)%3 == 0)

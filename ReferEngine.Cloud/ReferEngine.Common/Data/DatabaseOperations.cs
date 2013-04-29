@@ -23,7 +23,8 @@ namespace ReferEngine.Common.Data
         {
             var q = db.Apps.Where(expression)
                            .Where(a => a.IsActive)
-                           .Include(a => a.CloudinaryImages)
+                           .Include(a => a.AppScreenshots)
+                           .Include("AppScreenshots.CloudinaryImage")
                            .Include(a => a.BackgroundImage)
                            .Include(a => a.HighQualityLogoImage)
                            .Include(a => a.LogoImage)
@@ -36,7 +37,8 @@ namespace ReferEngine.Common.Data
         {
             return db.Apps.Where(expression)
                           .Where(a => a.IsActive)
-                          .Include(a => a.CloudinaryImages)
+                          .Include(a => a.AppScreenshots) 
+                           .Include("AppScreenshots.CloudinaryImage")
                           .Include(a => a.BackgroundImage)
                           .Include(a => a.HighQualityLogoImage)
                           .Include(a => a.LogoImage)
@@ -49,7 +51,8 @@ namespace ReferEngine.Common.Data
             Expression<Func<WindowsAppStoreInfo, bool>> expression, bool nullOk = false)
         {
             var q = db.WindowsAppStoreInfos.Where(expression)
-                            .Include(i => i.CloudinaryImages)
+                            .Include(i => i.AppScreenshots)
+                           .Include("AppScreenshots.CloudinaryImage")
                             .Include(i => i.LogoImage)
                             .Include(i => i.Category);
             return nullOk ? q.FirstOrDefault() : q.First();
@@ -71,7 +74,8 @@ namespace ReferEngine.Common.Data
             result = result.Skip(skip);
             result = result.Take(take);
 
-            result = result.Include(i => i.CloudinaryImages)
+            result = result.Include(i => i.AppScreenshots)
+                           .Include("AppScreenshots.CloudinaryImage")
                            .Include(i => i.LogoImage)
                            .Include(i => i.Category);
             return result.ToList();
@@ -521,6 +525,7 @@ namespace ReferEngine.Common.Data
                     {
                         viewModel.SubCategories = db.WindowsAppStoreCategories
                                                     .Where(c => c.ParentCategoryName == viewModel.Category.Name)
+                                                    .Include(c => c.CloudinaryImage)
                                                     .ToList();
                     }
                     else
@@ -647,13 +652,17 @@ namespace ReferEngine.Common.Data
                 {
                     if (string.IsNullOrEmpty(parentCategoryName))
                     {
-                        return db.WindowsAppStoreCategories.SingleOrDefault(
-                                c =>
-                                c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) &&
-                                string.IsNullOrEmpty(c.ParentCategoryName));
+                        return db.WindowsAppStoreCategories
+                                        .Include(c => c.CloudinaryImage)        
+                                        .SingleOrDefault(
+                                            c =>
+                                            c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) &&
+                                            string.IsNullOrEmpty(c.ParentCategoryName));
                     }
   
-                    return db.WindowsAppStoreCategories.SingleOrDefault(
+                    return db.WindowsAppStoreCategories
+                            .Include(c => c.CloudinaryImage)
+                            .SingleOrDefault(
                             c =>
                             c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) &&
                             c.ParentCategoryName.Equals(parentCategoryName, StringComparison.InvariantCultureIgnoreCase));
@@ -662,7 +671,10 @@ namespace ReferEngine.Common.Data
 
         internal static IList<WindowsAppStoreCategory> GetWindowsAppStoreCategories()
         {
-            return (IList<WindowsAppStoreCategory>)DbConnector.Execute(db => db.WindowsAppStoreCategories.Where(c => string.IsNullOrEmpty(c.ParentCategoryName)).ToList());
+            return (IList<WindowsAppStoreCategory>)DbConnector.Execute(db => db.WindowsAppStoreCategories
+                .Include(c => c.CloudinaryImage)
+                .Where(c => string.IsNullOrEmpty(c.ParentCategoryName))
+                .ToList());
         }
 
         internal static IList<WindowsAppStoreCategory> GetWindowsAppStoreSubCategories(int parentCategoryId)
@@ -670,7 +682,7 @@ namespace ReferEngine.Common.Data
             return (IList<WindowsAppStoreCategory>)DbConnector.Execute(db =>
             {
                 var parentCategory = db.WindowsAppStoreCategories.SingleOrDefault(c => c.Id == parentCategoryId);
-                return parentCategory != null ? db.WindowsAppStoreCategories.Where(c => c.ParentCategoryName == parentCategory.Name).ToList() : null;
+                return parentCategory != null ? db.WindowsAppStoreCategories.Include(c => c.CloudinaryImage).Where(c => c.ParentCategoryName == parentCategory.Name).ToList() : null;
             });
         }
 
@@ -931,22 +943,23 @@ namespace ReferEngine.Common.Data
                 var existing = QueryForWindowsAppStoreInfo(db, i => i.MsAppId.Equals(storeAppInfo.MsAppId), nullOk: true);
                 if (existing != null)
                 {
-                    var newImages = images.Where(image => existing.CloudinaryImages.All(c => c.OriginalLink != image.Link));
-                    var removedImages = existing.CloudinaryImages.Where(cloudinaryImage => images.All(i => i.Link != cloudinaryImage.OriginalLink));
+                    var newScreenshots = images.Where(image => existing.AppScreenshots.All(c => c.CloudinaryImage.OriginalLink != image.Link));
+                    var removedScreenshots = existing.AppScreenshots.Where(s => images.All(i => i.Link != s.CloudinaryImage.OriginalLink));
 
-                    var removedImagesList = removedImages.ToList();
-                    foreach (CloudinaryImage cloudinaryImage in removedImagesList)
+                    var removedScreenshotsList = removedScreenshots.ToList();
+                    foreach (AppScreenshot screenshot in removedScreenshotsList)
                     {
-                        existing.CloudinaryImages.Remove(cloudinaryImage);
-                        CloudinaryConnector.DeleteImage(cloudinaryImage);
-                        db.CloudinaryImages.Remove(cloudinaryImage);
+                        existing.AppScreenshots.Remove(screenshot);
+                        db.CloudinaryImages.Remove(screenshot.CloudinaryImage);
+                        CloudinaryConnector.DeleteImage(screenshot.CloudinaryImage);
                     }
 
-                    var newImagesList = newImages.ToList();
-                    foreach (ImageInfo newImage in newImagesList)
+                    var newScreenshotsList = newScreenshots.ToList();
+                    foreach (ImageInfo newImage in newScreenshotsList)
                     {
                         CloudinaryImage cloudinaryImage = CloudinaryConnector.UploadRemoteImage(newImage);
-                        existing.CloudinaryImages.Add(cloudinaryImage);
+                        AppScreenshot appScreenshot = new AppScreenshot {CloudinaryImage = cloudinaryImage};
+                        existing.AppScreenshots.Add(appScreenshot);
                     }
 
                     if (existing.LogoImage == null)
@@ -972,7 +985,8 @@ namespace ReferEngine.Common.Data
                     foreach (ImageInfo imageInfo in images)
                     {
                         CloudinaryImage cloudinaryImage = CloudinaryConnector.UploadRemoteImage(imageInfo);
-                        storeAppInfo.CloudinaryImages.Add(cloudinaryImage);
+                        AppScreenshot appScreenshot = new AppScreenshot {CloudinaryImage = cloudinaryImage};
+                        storeAppInfo.AppScreenshots.Add(appScreenshot);
                     }
                     CloudinaryImage logoImage = CloudinaryConnector.UploadRemoteImage(new ImageInfo {Link = logoLink});
                     storeAppInfo.LogoImage = logoImage;
@@ -1015,7 +1029,7 @@ namespace ReferEngine.Common.Data
                             AppStoreLink = appInfo.AppStoreLink,
                             UserId = user.Id,
                             IsActive = true,
-                            CloudinaryImages = appInfo.CloudinaryImages,
+                            AppScreenshots = appInfo.AppScreenshots,
                             BackgroundColor = appInfo.BackgroundColor,
                             BackgroundImage = new CloudinaryImage { Id = "app_default_background_pjr3qo", Format = "jpg" }
                         };
@@ -1078,6 +1092,17 @@ namespace ReferEngine.Common.Data
             DbConnector.Execute(db =>
                 {
                     db.Invites.Add(invite);
+                    db.SaveChanges();
+                    return null;
+                });
+        }
+
+        internal static void SetWindowsCategoryImage(int categoryId, CloudinaryImage cloudinaryImage)
+        {
+            DbConnector.Execute(db =>
+                {
+                    var category = db.WindowsAppStoreCategories.Single(c => c.Id == categoryId);
+                    category.CloudinaryImage = cloudinaryImage;
                     db.SaveChanges();
                     return null;
                 });

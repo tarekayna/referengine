@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
 }
 
@@ -106,21 +105,7 @@
                             <ul class="nav pull-right">
                                 @if (User.IsInRole("Admin"))
                                 {
-                                    <li class="pull-left">
-                                        <div class="btn-group">
-                                            <button class="btn dropdown-toggle" data-toggle="dropdown">
-                                                <span>Admin</span>
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="~/admin/inviterequests">Invite Requests</a></li>
-                                                <li><a href="~/admin/windowsappinvites">Windows App Invites</a></li>
-                                                <li><a href="~/admin/admin">Admin Panel</a></li>
-                                                <li><a href="~/admin/tracelogs">Trace Logs</a></li>
-                                                <li><a href="~/admin/errors" target="_blank">Server Errors</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
+                                    <li><a href="~/admin/panel">Admin Panel</a></li>
                                 }
                                     <li class="pull-right">
                                 @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm" }))

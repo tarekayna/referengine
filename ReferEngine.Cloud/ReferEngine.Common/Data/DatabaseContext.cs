@@ -36,6 +36,7 @@ namespace ReferEngine.Common.Data
         public DbSet<WindowsAppStoreInfo> WindowsAppStoreInfos { get; set; }
         public DbSet<WindowsAppStoreCategory> WindowsAppStoreCategories { get; set; }
         public DbSet<CloudinaryImage> CloudinaryImages { get; set; }
+        public DbSet<AppScreenshot> AppScreenshots { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {
@@ -82,7 +83,7 @@ namespace ReferEngine.Common.Data
 
             mb.Entity<WindowsAppStoreLink>().HasKey(l => l.Link);
 
-            mb.Entity<WindowsAppStoreInfo>().HasKey(i => i.MsAppId).HasMany(i => i.CloudinaryImages);
+            mb.Entity<WindowsAppStoreInfo>().HasKey(i => i.MsAppId).HasMany(i => i.AppScreenshots);
 
             mb.Entity<Invite>().HasKey(i => i.Email);
 
@@ -102,7 +103,6 @@ namespace ReferEngine.Common.Data
         public class UserConfiguration : EntityTypeConfiguration<User>
         {
             public UserConfiguration()
-                : base()
             {
                 ToTable("Users");
                 HasKey(u => u.Id);
@@ -127,7 +127,6 @@ namespace ReferEngine.Common.Data
         public class MembershipConfiguration : EntityTypeConfiguration<Membership>
         {
             public MembershipConfiguration()
-                : base()
             {
                 ToTable("webpages_Membership");
                 HasKey(u => u.UserId);

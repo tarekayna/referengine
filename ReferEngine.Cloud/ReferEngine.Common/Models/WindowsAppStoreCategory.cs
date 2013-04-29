@@ -1,12 +1,22 @@
-﻿using ReferEngine.Common.Utilities;
+﻿using System.Runtime.Serialization;
+using ReferEngine.Common.Utilities;
 
 namespace ReferEngine.Common.Models
 {
+    [DataContract]
     public class WindowsAppStoreCategory
     {
+        [DataMember]
         public int Id { get; set; }
+
+        [DataMember]
         public string Name { get; set; }
+
+        [DataMember]
         public string ParentCategoryName { get; set; }
+
+        [DataMember]
+        public CloudinaryImage CloudinaryImage { get; set; }
 
         public bool HasParent
         {

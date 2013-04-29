@@ -1,5 +1,4 @@
-﻿@using ReferEngine.Common.Utilities;
-@using ReferEngine.Web.Areas.AppStore.ViewModels
+﻿@using ReferEngine.Web.Areas.AppStore.ViewModels
 @model ReferEngine.Common.ViewModels.AppStore.Windows.WindowsCategoryViewModel
 
 @{
@@ -58,9 +57,9 @@
                     <div class="thumbnail">
                         <a href="~/app-store/windows/@appInfo.LinkPart" style="color: white">
                             <div class="image-wrapp">
-                                @if (appInfo.CloudinaryImages != null && appInfo.CloudinaryImages.Any())
+                                @if (appInfo.AppScreenshots != null && appInfo.AppScreenshots.Any())
                                 {
-                                    <img src="@appInfo.CloudinaryImages.First().GetLink("h_120,w_370,c_fill")" 
+                                    <img src="@appInfo.AppScreenshots.First().CloudinaryImage.GetLink("h_120,w_370,c_fill")" 
                                         height="120" width="370" alt="@appInfo.Name" title="" />
                                 }
                                 else

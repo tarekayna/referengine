@@ -9,11 +9,11 @@ using ReferEngine.Common.Utilities;
 namespace ReferEngine.Common.Models
 {
     [DataContract]
-    public class App
+    public sealed class App
     {
         public App()
         {
-            CloudinaryImages = new Collection<CloudinaryImage>();
+            AppScreenshots = new Collection<AppScreenshot>();
         }
 
         [DataMember]
@@ -80,7 +80,7 @@ namespace ReferEngine.Common.Models
         public bool IsActive { get; set; }
 
         [DataMember]
-        public virtual ICollection<CloudinaryImage> CloudinaryImages { get; set; }
+        public ICollection<AppScreenshot> AppScreenshots { get; set; }
 
         public string LinkPart
         {

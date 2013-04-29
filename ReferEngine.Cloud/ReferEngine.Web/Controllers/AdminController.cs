@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Email;
@@ -12,6 +15,11 @@ namespace ReferEngine.Web.Controllers
     [Authorize(Roles="Admin")]
     public class AdminController : BaseController
     {
+        public ActionResult Panel()
+        {
+            return View();
+        }
+
         public ActionResult Admin()
         {
             var viewModel = new AdminViewModel();
@@ -63,6 +71,31 @@ namespace ReferEngine.Web.Controllers
             Emailer.SendInviteEmail(invite);
             DataOperations.AddInvite(invite);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        public ActionResult WindowsStoreCategories()
+        {
+            var categories = DataOperations.GetWindowsAppStoreCategories();
+            return View(categories);
+        }
+
+        [HttpPost]
+        public ActionResult UploadCategoryImage(string categoryId)
+        {
+            int windowsCategoryId = Convert.ToInt32(categoryId);
+            foreach (string file in Request.Files)
+            {
+                HttpPostedFileBase fileBase = Request.Files[file];
+                if (fileBase != null)
+                {
+                    fileBase.InputStream.Position = 0;
+                    CloudinaryImage image = CloudinaryConnector.UploadImage(fileBase.InputStream, fileBase.FileName);
+                    DataOperations.SetWindowsCategoryImage(windowsCategoryId, image);
+                    return new HttpStatusCodeResult(HttpStatusCode.OK, image.GetLink());
+                }
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
         }
     }
 }

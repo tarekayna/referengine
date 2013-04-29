@@ -357,5 +357,10 @@ namespace ReferEngine.Common.Data
         {
             DatabaseOperations.AddInvite(invite);
         }
+
+        public static void SetWindowsCategoryImage(int categoryId, CloudinaryImage cloudinaryImage)
+        {
+            DatabaseOperations.SetWindowsCategoryImage(categoryId, cloudinaryImage);
+        }
     }
 }

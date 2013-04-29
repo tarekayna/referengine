@@ -73,7 +73,7 @@ namespace ReferEngine.Common.Models
         public CloudinaryImage LogoImage { get; set; }
 
         [DataMember]
-        public virtual ICollection<CloudinaryImage> CloudinaryImages { get; private set; }
+        public virtual ICollection<AppScreenshot> AppScreenshots { get; private set; }
 
         public string LinkPart
         {
@@ -87,7 +87,7 @@ namespace ReferEngine.Common.Models
 
         public WindowsAppStoreInfo()
         {
-            CloudinaryImages = new Collection<CloudinaryImage>();
+            AppScreenshots = new Collection<AppScreenshot>();
         }
 
         public void SetRating(string starRatingText)

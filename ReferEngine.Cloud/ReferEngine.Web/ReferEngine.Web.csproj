@@ -444,6 +444,17 @@
     <Content Include="Less\Shared\defaultLayout.min.css">
       <DependentUpon>defaultLayout.less</DependentUpon>
     </Content>
+    <Content Include="Views\Admin\Panel.cshtml" />
+    <Content Include="TypeScript\admin\windowsStoreCategories.min.js.map">
+      <DependentUpon>windowsStoreCategories.js</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="TypeScript\admin\windowsStoreCategories.ts" />
+    <Content Include="TypeScript\admin\windowsStoreCategories.js">
+      <DependentUpon>windowsStoreCategories.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\admin\windowsStoreCategories.min.js">
+      <DependentUpon>windowsStoreCategories.ts</DependentUpon>
+    </Content>
     <Content Include="Views\Shared\_DefaultLayout.cshtml" />
     <Content Include="Views\Home\_ViewStart.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -451,6 +462,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Account\_ViewStart.cshtml" />
+    <Content Include="Views\Admin\WindowsStoreCategories.cshtml" />
     <TypeScriptCompile Include="TypeScript\AppStore\Windows\WindowsCategory.ts" />
     <Content Include="img\logo-web-header.svg" />
     <Content Include="TypeScript\AppStore\Windows\WindowsCategory.js">
@@ -659,7 +671,6 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\AppController.cs" />
-    <Compile Include="Controllers\FacebookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RecommendController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
@@ -681,7 +692,6 @@
     <Compile Include="Models\Common\PageTitleViewModel.cs" />
     <Compile Include="Models\Common\ViewProperties.cs" />
     <Compile Include="Models\Error\ErrorViewModel.cs" />
-    <Compile Include="Models\Facebook\FacebookAppViewModel.cs" />
     <Compile Include="Models\Recommend\Win8\RecommendViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="TypeScript\lib\SinglePage.ts" />
@@ -957,8 +967,6 @@
     <Content Include="Views\About\Privacy.cshtml" />
     <Content Include="Views\About\Use.cshtml" />
     <Content Include="Views\About\Copyright.cshtml" />
-    <Content Include="Views\Facebook\_FacebookLayout.cshtml" />
-    <Content Include="Views\Facebook\_ViewStart.cshtml" />
     <Content Include="Areas\Developer\Views\DeveloperHome\Pricing.cshtml" />
     <Content Include="Views\About\Rules.cshtml" />
     <Content Include="Views\Shared\_MixPanel.cshtml" />
@@ -986,7 +994,6 @@
     <Folder Include="Areas\AppStore\Views\Shared\" />
     <Folder Include="Areas\Developer\Models\" />
     <Folder Include="js\recommend\" />
-    <Folder Include="Models\InAppScript\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1019,9 +1026,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Recommend\win8\intro.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Facebook\App.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\App\Edit.cshtml" />
