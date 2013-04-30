@@ -10,7 +10,7 @@
     ViewBag.Title = appName + ViewResources.TitleSeparator + category.Name;
     ViewBag.Title += category.HasParent ? ViewResources.TitleSeparator + category.ParentCategoryName : "";
     ViewBag.PageDescription = appInfo.DescriptionHtml;
-    
+
     string colorHtml = appInfo.BackgroundColor ?? "#00AFF0";
     System.Drawing.Color color = System.Drawing.ColorTranslator.FromHtml(colorHtml);
     U.HsbColor hsbColor = U.HsbColor.FromColor(color);
@@ -18,8 +18,16 @@
     string darkerColorHtml = System.Drawing.ColorTranslator.ToHtml(darkerHsbColor.Color);
     U.HsbColor brighterHsbColor = new U.HsbColor(hsbColor.H, hsbColor.S, hsbColor.B * 1.2);
     string brighterColorHtml = System.Drawing.ColorTranslator.ToHtml(brighterHsbColor.Color);
-    
+
     bool isWindows8 = Model.UserAgentProperties.IsWindows8;
+}
+
+@section styles
+{
+    @Styles.Render("~/less/appstore/windows/app")
+    <style type="text/css">
+        a{color:@colorHtml}a:hover{color:#77b201}.btn-link:hover{color:#77b201}.color{background:@colorHtml;color:#fff}textarea:focus,input[type="text"]:focus,input[type="password"]:focus,input[type="datetime"]:focus,input[type="datetime-local"]:focus,input[type="date"]:focus,input[type="month"]:focus,input[type="time"]:focus,input[type="week"]:focus,input[type="number"]:focus,input[type="email"]:focus,input[type="url"]:focus,input[type="search"]:focus,input[type="tel"]:focus,input[type="color"]:focus,.uneditable-input:focus{border-color:@colorHtml;outline:0;outline:thin dotted \9}header .navbar .navbar-inner li.active{border-top:5px solid #fff;background:@colorHtml;margin-top:-5px}header .navbar .navbar-inner nav li.blob{border-top:5px solid @colorHtml;margin-top:-5px}.dropdown-menu li>a:hover,.dropdown-menu li>a:focus,.dropdown-submenu:hover>a{background:@colorHtml}.dropdown-menu li>a:hover,.dropdown-menu li>a:focus,.dropdown-submenu:hover>a{background-color:@colorHtml}.dropdown-menu .active>a,.dropdown-menu .active>a:hover{background-color:@colorHtml}.breadcrumb{border-left:5px solid @colorHtml}.accordion-group{border:1px solid @colorHtml}.accordion-inner{border-top:1px solid @colorHtml}.accordion-heading{background-color:@colorHtml}.flex-direction-nav li a:hover{background:@colorHtml}.carousel-control{background:@colorHtml}.btn-link{color:@colorHtml}.nav .dropdown-toggle .caret{margin-top:6px;border-top-color:@colorHtml;border-bottom-color:@colorHtml}.pagination ul>li>a,.pagination ul>li>span{background-color:@colorHtml;border:1px solid @colorHtml;color:#fff;border-left-width:0}.nav-pills>.active>a,.nav-pills>.active>a:hover{color:#fff;background-color:@colorHtml}.nav-tabs>.active>a,.nav-tabs>.active>a:hover{background-color:@colorHtml;color:#fff;border:none;border-bottom-color:transparent;cursor:default}.label-orange,.badge-orange{background-color:@colorHtml}.nav-list>.active>a,.nav-list>.active>a:hover{background:@colorHtml}.nav-pills>.active>a,.nav-pills>.active>a:hover{background:@colorHtml}.nav .dropdown-toggle .caret{border-top-color:@colorHtml;border-bottom-color:@colorHtml}.progress-orange .bar,.progress .bar-orange{background:@colorHtml}.progress-orange.progress-striped .bar,.progress-striped .bar-orange{background:@colorHtml}.contact-form input:focus{border-color:@colorHtml}article .headline h4 a{color:@colorHtml}article.last-post{background:@colorHtml}ul.time-post li.year{border-bottom:1px solid @colorHtml}section#subintro{background:@brighterColorHtml}footer.footer{background:@colorHtml}.error-body{background:@colorHtml;padding:20px;text-align:center}a.thumbnail:hover{border-color:@colorHtml}ul.filter li.active a:hover,a.zoom:hover,a.link_post:hover,.flex-control-nav li a:hover,.flex-control-nav li a.active{background:@colorHtml}.thumbnail h4 a:hover,.thumbnail .meta span a:hover,ul.recent li h6 a:hover,ul.post-meta li a:hover,.media-body span,.media-body .media-heading a:hover,form label span,article.last-post h5 a:hover{color:@colorHtml;text-decoration:none}.nivo-directionNav a,.nivo-controlNav a.active,.nivo-controlNav a:hover{background-color:@colorHtml}.widget .heading{border-bottom:1px solid @darkerColorHtml}.widget .heading .btn{background-color:@darkerColorHtml;background-image:-moz-linear-gradient(top,@brighterColorHtml,@darkerColorHtml);background-image:-webkit-gradient(linear,0 0,0 100%,from(@brighterColorHtml),to(@darkerColorHtml));background-image:-webkit-linear-gradient(top,@brighterColorHtml,@darkerColorHtml);background-image:-o-linear-gradient(top,@brighterColorHtml,@darkerColorHtml);background-image:linear-gradient(to bottom,@brighterColorHtml,@darkerColorHtml)}
+    </style>
 }
 
 @section MetaTags
@@ -57,10 +65,10 @@
 {
     @{
         var navigationViewModel = new WindowsStoreNavigationViewModel
-            {
-                WindowsAppStoreCategory = category,
-                WindowsAppStoreInfo = appInfo
-            };
+        {
+            WindowsAppStoreCategory = category,
+            WindowsAppStoreInfo = appInfo
+        };
     }
     @Html.Partial("_WindowsStoreNavigation", navigationViewModel)
 }
@@ -68,7 +76,6 @@
 @section ScriptsAfterBody
 {
     @{
-        string jsUrl = U.Util.BaseUrl + "typescript/appstore/windows/windowsApp.js";
         double appId = Model.App != null ? Model.App.Id : -1;
     }
     <script>
@@ -76,7 +83,7 @@
         window.re["appId"] = "@appId";
     </script>
 
-    <script data-main="@jsUrl" type="text/javascript" src="~/typescript/lib/require.js"></script>
+    <script data-main="/typescript/appstore/windows/windowsApp.js" type="text/javascript" src="~/typescript/lib/require.js"></script> 
 }
 
 <div class="row">
@@ -85,10 +92,10 @@
             @if (isWindows8)
             {
                 string storeLink = "ms-windows-store:PDP?PFN=" + appInfo.PackageFamilyName;
-                <a id="open-win8-store" data-store-link="@storeLink" style="cursor: pointer">
+                <a id="open-win8-store" data-store-link="@storeLink">
                     @Html.Partial("_WindowsStoreDownloadTile", new List<string> { brighterColorHtml, colorHtml })
                 </a>
-                <iframe style="display:none" id="open-store-frame"></iframe>                
+                <iframe class="hidden" id="open-store-frame"></iframe>                
             }
             else
             {
@@ -99,7 +106,7 @@
 
             <div class="widget" id="recommendations">
                 <h4 class="heading">
-                    <span class="btn" style="padding: 5px">
+                    <span class="btn">
                         @{
                             var thumbsUpImage = new ImageTag("thumbs_up_icon_30_puu2vr", "png");
                         }
@@ -113,28 +120,25 @@
                     No recommendations yet.
                 </div>
                 <div data-bind="visible: RecommendersLoaded() && Recommenders().length > 0">
-                    <!-- ko foreach: Recommenders -->
-                        <li class="media">
+                    <ul class="recommenders-list">
+                        <!-- ko foreach: Recommenders -->
+                        <li>
                             <a class="pull-left" href="#">
-                                <img class="media-object" data-bind="attr: { src: PictureUrl }" alt="" />
+                                <img data-bind="attr: { src: PictureUrl }" alt="" />
                             </a>
-                            <div class="media-body">
-                                <h5 class="media-heading" style="font-size: 13px">
-                                    <span data-bind="text: Name" style="font-weight: bold !important; color: #3b5998"></span>
+                            <div class="rcmd-text">
+                                <h5>
+                                    <span data-bind="text: Name" class="fb-name"></span>
                                     recommended @Model.WindowsAppStoreInfo.Name.
                                 </h5>                         
-                                <p style="font-size: 11px; color: #999; margin-top: -5px !important; margin-left: 20px">
+                                <p class="rcmd-time muted">
                                     <span data-bind="text: Time"></span>
                                 </p>
                             </div>
                         </li>
-                    <!-- /ko -->
+                        <!-- /ko -->
+                    </ul>
                 </div>
-                @*<img src="~/areas/assets/img/avatar.png" class="alignleft" alt="" />
-                <h5>John doe</h5>
-                <p>
-                    Donec ullamcorper nulla non metus auctor fringilla commodo luctus
-                </p>*@
             </div>
             <div class="widget">
                 <h4 class="heading">
@@ -216,256 +220,3 @@
         </div>
     </div>      
 }
-
-<style>
-    
-    a {
-        color: @colorHtml;
-    }
-
-    a:hover {
-        color:#77b201;
-    }
-
-    .btn-link:hover {
-        color: #77b201;
-    }
-
-    .color {
-        background: @colorHtml;
-        color:#fff;
-    }
-
-    textarea:focus,
-    input[type="text"]:focus,
-    input[type="password"]:focus,
-    input[type="datetime"]:focus,
-    input[type="datetime-local"]:focus,
-    input[type="date"]:focus,
-    input[type="month"]:focus,
-    input[type="time"]:focus,
-    input[type="week"]:focus,
-    input[type="number"]:focus,
-    input[type="email"]:focus,
-    input[type="url"]:focus,
-    input[type="search"]:focus,
-    input[type="tel"]:focus,
-    input[type="color"]:focus,
-    .uneditable-input:focus {
-        border-color: @colorHtml;
-        outline: 0;
-        outline: thin dotted \9;
-        /* IE6-9 */
-
-    }
-
-/* header */
-
-
-    header .navbar .navbar-inner li.active {
-        border-top: 5px solid #fff;
-        background: @colorHtml;
-        margin-top:-5px;
-    }
-
-    header .navbar .navbar-inner nav li.blob  {
-        border-top: 5px solid @colorHtml;
-        margin-top:-5px;
-    }
-
-    .dropdown-menu li > a:hover,
-    .dropdown-menu li > a:focus,
-    .dropdown-submenu:hover > a {
-        background: @colorHtml;
-    }
-
-    .dropdown-menu li > a:hover,
-    .dropdown-menu li > a:focus,
-    .dropdown-submenu:hover > a {
-        background-color: @colorHtml;
-    }
-
-    .dropdown-menu .active > a,
-    .dropdown-menu .active > a:hover {
-        background-color: @colorHtml;
-    }
-
-/* breadcrumb */
-    .breadcrumb {
-        border-left:5px solid @colorHtml;
-    }
-
-
-/* accordion */
-    .accordion-group {
-        border: 1px solid @colorHtml;
-    }
-    .accordion-inner {
-        border-top: 1px solid @colorHtml;
-    }
-    .accordion-heading {
-        background-color: @colorHtml;
-    }
-
-/* flexslider */
-    .flex-direction-nav li a:hover {
-        background:@colorHtml;
-	
-    }
-
-/* carousel */
-    .carousel-control {
-        background: @colorHtml;
-    }
-
-
-@*/* eislide */
-.es-nav .es-nav-prev{
-    right: 17px;
-    background:@colorHtml @Html.Raw(@"url(../img/icons/arrow-left.png) no-repeat right top;")
-}
-.es-nav .es-nav-next{background: @colorHtml url(../img/icons/arrow-right.png) no-repeat left top;}*@
-
-/* button */
-    .btn-link {
-        color: @colorHtml;
-    }
-
-    .nav .dropdown-toggle .caret {
-        margin-top: 6px;
-        border-top-color: @colorHtml;
-        border-bottom-color: @colorHtml;
-    }
-
-/* pagination */
-    .pagination ul > li > a,
-    .pagination ul > li > span {
-        background-color: @colorHtml;
-        border: 1px solid @colorHtml;
-        color:#fff;
-        border-left-width: 0;
-    }
-
-
-/* tabs */
-    .nav-pills > .active > a,
-    .nav-pills > .active > a:hover {
-        color: #ffffff;
-        background-color: @colorHtml;
-    }
-
-
-    .nav-tabs > .active > a,
-    .nav-tabs > .active > a:hover {
-        background-color: @colorHtml;
-        color:#fff;
-        border: none;
-        border-bottom-color: transparent;
-        cursor: default;
-    }
-
-/* label */
-    .label-orange,
-    .badge-orange {
-        background-color: @colorHtml;
-    }
-
-
-/* nav */
-    .nav-list > .active > a,
-    .nav-list > .active > a:hover {
-        background: @colorHtml;
-    }
-
-
-    .nav-pills > .active > a,
-    .nav-pills > .active > a:hover {
-        background: @colorHtml;
-    }
-
-    .nav .dropdown-toggle .caret {
-        border-top-color: @colorHtml;
-        border-bottom-color: @colorHtml;
-    }
-
-/* custom progress bar according template skin */
-    .progress-orange .bar,
-    .progress .bar-orange {
-        background: @colorHtml;
-    }
-
-    .progress-orange.progress-striped .bar,
-    .progress-striped .bar-orange {
-        background: @colorHtml;
-    }
-
-/* form */
-    .contact-form input:focus {
-        border-color: @colorHtml;
-    }
-
-/* article */
-    article .headline h4 a {
-        color:@colorHtml;
-    }
-
-    article.last-post {
-        background: @colorHtml;
-    }
-
-    ul.time-post li.year{
-        border-bottom:1px solid @colorHtml;
-    }
-
-    section#subintro {
-        background: @brighterColorHtml;
-    }
-
-
-    footer.footer {
-        background:@colorHtml;
-    }
-
- /* 404 */
- 
-
-    .error-body{
-        background:@colorHtml;
-        padding:20px;
-        text-align:center;
-    }
-
-
-/* misc */
-    a.thumbnail:hover {
-        border-color: @colorHtml;
-    }
-
-    ul.filter li.active a:hover, a.zoom:hover, a.link_post:hover, .flex-control-nav li a:hover, .flex-control-nav li a.active{
-        background: @colorHtml;
-    }
-
-    .thumbnail h4 a:hover, .thumbnail .meta  span a:hover, ul.recent li h6 a:hover, ul.post-meta li a:hover, .media-body span, .media-body .media-heading a:hover, form label span, article.last-post h5 a:hover{
-        color: @colorHtml;
-        text-decoration:none;
-    }
-
-/* nivo */
-    .nivo-directionNav a, .nivo-controlNav a.active, .nivo-controlNav a:hover{
-        background-color:@colorHtml;
-    }
-
-    .widget .heading {
-        border-bottom: 1px solid @darkerColorHtml;
-    }
-
-    .widget .heading .btn {
-        background-color: @darkerColorHtml;
-        background-image: -moz-linear-gradient(top, @brighterColorHtml, @darkerColorHtml);
-        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@brighterColorHtml), to(@darkerColorHtml));
-        background-image: -webkit-linear-gradient(top, @brighterColorHtml, @darkerColorHtml);
-        background-image: -o-linear-gradient(top, @brighterColorHtml, @darkerColorHtml);
-        background-image: linear-gradient(to bottom, @brighterColorHtml, @darkerColorHtml);
-    }
-
-</style>

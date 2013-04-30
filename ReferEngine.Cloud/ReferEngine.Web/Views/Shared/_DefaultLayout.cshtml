@@ -44,10 +44,10 @@
         }
 
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic' rel='stylesheet' type='text/css'>
-        @Styles.Render("~/bundles/css/defaultLayout")
         @Html.Partial("_SetJavaScriptGlobalVariables")
         @RenderSection("Styles", required: false)
         @Html.Partial("_FavIcon")
+        @Styles.Render("~/bundles/css/defaultLayout")
     </head>
     <body>
         <div class='notifications top-right'></div>
