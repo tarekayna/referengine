@@ -402,6 +402,18 @@
     <Content Include="img\slides\nivo\img4.jpg" />
     <Content Include="img\slides\nivo\loading.gif" />
     <Content Include="img\small-avatar.png" />
+    <Content Include="Less\appstore\windows\windowsApp.css">
+      <DependentUpon>windowsApp.less</DependentUpon>
+    </Content>
+    <Content Include="Less\appstore\windows\windowsApp.min.css">
+      <DependentUpon>windowsApp.less</DependentUpon>
+    </Content>
+    <Content Include="Less\appstore\windows\windowsAppCustom.css">
+      <DependentUpon>windowsAppCustom.less</DependentUpon>
+    </Content>
+    <Content Include="Less\appstore\windows\windowsAppCustom.min.css">
+      <DependentUpon>windowsAppCustom.less</DependentUpon>
+    </Content>
     <Content Include="Less\Home\Index.css">
       <DependentUpon>Index.less</DependentUpon>
     </Content>
@@ -599,6 +611,8 @@
     <Content Include="Areas\Developer\Views\Shared\_DeveloperLayout.cshtml" />
     <Content Include="Areas\AppStore\Views\Windows\_WindowsStoreNavigation.cshtml" />
     <Content Include="Areas\AppStore\Views\Windows\_WindowsStoreDownloadTile.cshtml" />
+    <Content Include="Less\appstore\windows\windowsApp.less" />
+    <Content Include="Less\appstore\windows\windowsAppCustom.less" />
     <None Include="Less\app\dashboard.less" />
     <Content Include="Less\app\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>

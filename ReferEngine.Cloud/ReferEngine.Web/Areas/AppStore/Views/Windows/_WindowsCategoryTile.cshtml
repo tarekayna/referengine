@@ -2,8 +2,9 @@
 
 <li class="portfolio-item2" data-id="id-0" data-type="web">
     <div class="span3">
-        <a href="~/app-store/windows/@Model.LinkPart">
-            <div class="thumbnail">
+        <div class="thumbnail">
+            <a href="~/app-store/windows/@Model.LinkPart">
+
                 <div class="image-wrapp">
                     @if (Model.CloudinaryImage != null)
                     {
@@ -16,10 +17,10 @@
                             style="height: 90px; width: 270px" alt="Portfolio name" title="" />
                     }
                 </div>
-                <div class="caption"  style="cursor: pointer">
-                    <h3><a href="~/app-store/windows/@Model.LinkPart">@Model.Name</a></h3>
+                <div class="caption" style="cursor: pointer">
+                    <h3>@Model.Name</h3>
                 </div>
-            </div>
-        </a>
+            </a>
+        </div>
     </div>
 </li>

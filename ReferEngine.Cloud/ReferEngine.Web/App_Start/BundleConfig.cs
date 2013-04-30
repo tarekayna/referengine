@@ -122,6 +122,9 @@ namespace ReferEngine.Web.App_Start
                     new BundleInfo("~/less/app/settings",
                                    "~/less/app/settings.css"),
 
+                    new BundleInfo("~/less/appstore/windows/app",
+                                   "~/less/appstore/windows/windowsApp.css"),
+
                     new BundleInfo("~/less/app/new",
                                    "~/css/lib/jquery-ui.css",
                                    "~/less/app/new.css"),

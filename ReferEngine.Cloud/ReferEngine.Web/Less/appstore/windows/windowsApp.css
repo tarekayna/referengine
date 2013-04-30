@@ -1,0 +1,24 @@
+﻿.hidden {
+  display: none;
+}
+#open-win8-store {
+  cursor: pointer;
+}
+#recommendations .heading .btn {
+  padding: 5px;
+}
+.recommenders-list {
+  font-size: small;
+}
+.recommenders-list h5 {
+  font-weight: bold !important;
+}
+.recommenders-list .rcmd-text {
+  margin-left: 60px;
+}
+.recommenders-list .rcmd-text .rcmd-time {
+  font-size: x-small;
+}
+.fb-name {
+  color: #3b5998;
+}
