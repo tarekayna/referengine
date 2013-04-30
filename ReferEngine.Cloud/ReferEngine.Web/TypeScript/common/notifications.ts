@@ -13,4 +13,4 @@ export function show(message: string, notificationType: string) {
         transition: "fade",
         type: notificationType
     }).show();
-}
+} 

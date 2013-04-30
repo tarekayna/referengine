@@ -7,6 +7,14 @@ define(["require", "exports", "../../common/notifications"], function(require, e
         function Page() { }
         Page.initPage = function initPage() {
             People.init();
+            var openStore = $("#open-win8-store");
+            if(openStore.length > 0) {
+                var link = openStore.first().attr("data-store-link");
+                openStore.click(function (event) {
+                    event.stopPropagation();
+                    $('#open-store-frame').attr('src', link);
+                });
+            }
         };
         return Page;
     })();    

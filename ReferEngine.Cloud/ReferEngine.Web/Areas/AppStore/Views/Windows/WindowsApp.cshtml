@@ -20,7 +20,6 @@
     string brighterColorHtml = System.Drawing.ColorTranslator.ToHtml(brighterHsbColor.Color);
     
     bool isWindows8 = Model.UserAgentProperties.IsWindows8;
-    bool supportsProtocolLaunching = Model.UserAgentProperties.SupportsProtocolLaunching;
 }
 
 @section MetaTags
@@ -83,66 +82,24 @@
 <div class="row">
     <div class="span4">
         <aside>
-            @{
-                string storeLink;
-                bool showDataToggle = false;
-            }
             @if (isWindows8)
             {
-                if (supportsProtocolLaunching)
-                {
-                    storeLink = "ms-windows-store:PDP?PFN=" + appInfo.PackageFamilyName;
-                }
-                else
-                {
-                    storeLink = "#cantOpenStore";
-                    showDataToggle = true;
-                }
+                string storeLink = "ms-windows-store:PDP?PFN=" + appInfo.PackageFamilyName;
+                <a id="open-win8-store" data-store-link="@storeLink" style="cursor: pointer">
+                    @Html.Partial("_WindowsStoreDownloadTile", new List<string> { brighterColorHtml, colorHtml })
+                </a>
+                <iframe style="display:none" id="open-store-frame"></iframe>                
             }
             else
             {
-                storeLink = "#notWin8";
-                showDataToggle = true;
+                <a class="not-win8-link" href="#notWin8" role = "button" data-toggle = "modal">
+                    @Html.Partial("_WindowsStoreDownloadTile", new List<string> { brighterColorHtml, colorHtml })
+                </a>
             }
-            <a class="text-center" href="@storeLink" @if (showDataToggle)
-                                                     { <text>role = "button" data-toggle = "modal"</text> }>
-                @* ReSharper disable Html.TagNotResolved *@
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="338px"
-                     height="150px" viewBox="0 0 338 150" enable-background="new 0 0 338 150" xml:space="preserve">
-                    <defs>
-                        <linearGradient id="bgGradient" x1="0%" y1="0%" x2="0%" y2="100%" spreadMethod="pad">
-                            <stop offset="10%" stop-color="@brighterColorHtml" stop-opacity="1"></stop>
-                            <stop offset="90%" stop-color="@colorHtml" stop-opacity="1"></stop>
-                        </linearGradient>
-                    </defs>
-                    <g id="Layer_2">
-                        <rect fill="url(#bgGradient)" width="338" height="150"></rect>
-                    </g>
-                    <g id="Layer_1">
-                        <g transform="translate(50.5)">
-                            <g id="bag_18_">
-                                <g id="handles_18_">
-                                    <path fill="#FFFFFF" d="M117.249,27.803c-3.407,1.198-5.897,2.221-5.897,8.727v3.131l2.041-0.411v-2.704
-					            c-0.051-4.414,1.097-5.337,4.074-6.622C117.453,29.091,117.379,28.385,117.249,27.803z"></path>
-                                    <path fill="#FFFFFF" d="M123.182,26.411c0.135,0.63,0.242,1.315,0.314,2.052c5.334-0.767,5.232,1.433,5.232,6.026v1.697
-					            l2.018-0.415v-1.283C130.746,27.356,129.633,25.445,123.182,26.411z"></path>
-                                    <path fill="#FFFFFF" d="M102.162,41.498v-9.382c-0.065-5.811,2.937-7.59,8.478-8.889c8.347-1.958,8.877,3.424,8.877,6.847v7.953
-					            l2.045-0.413V30.25c-0.021-6.479-2.041-11.331-11.331-9.226c-5.002,1.135-10.11,2.411-10.11,10.899v9.98L102.162,41.498z"></path>
-                                </g>
-                                <path fill="#FFFFFF" d="M140.961,36.202L84.807,47.429v40.84l56.154,11.229l11.225-4.084V40.285L140.961,36.202z M109.34,79.822
-				            l-12.459-1.756V67.723h12.459V79.822z M109.34,66.154H96.881V56.64l12.459-1.759V66.154z M126.613,82.215l-15.708-2.295V67.723
-				            h15.708V82.215z M126.613,66.154h-15.708V54.789l15.708-2.3V66.154z"></path>
-                            </g>
-                        </g>
-                        <text transform="matrix(1 0 0 1 50.5 131.6768)" fill="#FFFFFF" font-family="'Segoe UI Light', 'Open Sans'" font-size="16">Download from the Windows Store</text>
-                    </g>
-                </svg>
-                @* ReSharper restore Html.TagNotResolved *@
-            </a>
-            <div class="widget">
+
+            <div class="widget" id="recommendations">
                 <h4 class="heading">
                     <span class="btn" style="padding: 5px">
-                        @*<i class="m-icon-big-swapdown m-icon-white"></i>*@
                         @{
                             var thumbsUpImage = new ImageTag("thumbs_up_icon_30_puu2vr", "png");
                         }
@@ -200,9 +157,6 @@
             <div class="clearfix">
             </div>
             <div class="well">
-                @*<a href="#">
-		        <img src="~/areas/assets/img/dummies/big.jpg" alt="" />
-		    </a>*@
                 <div id="imageCarousel" class="carousel slide">
                     <div class="carousel-inner">
                         @if (Model.App == null)
@@ -247,70 +201,7 @@
     </div>
 </div>
 
-@if (isWindows8 && !supportsProtocolLaunching)
-{
-<div id="cantOpenStore" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 class="text-error">Oops! Browser Can't Open Windows Store</h3>
-    </div>
-    <div class="modal-body">
-        <p>
-            This browser can't open the Windows Store directly from a website. These browsers support this action: 
-            Firefox and Internet Explorer.
-        </p>
-        <h4 class="text-success">How can I get this app?</h4>
-        
-        <div class="accordion" id="accordion2">
-          <div class="accordion-group">
-            <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                The Regular Way
-              </a>
-            </div>
-            <div id="collapseOne" class="accordion-body collapse in">
-              <div class="accordion-inner">
-                <ol>
-                    <li>
-                        Launch the Windows Store
-                    </li>
-                    <li>
-                        Search for "@appInfo.Name"<br />
-                        <small>Hint: You can start typing at the homepage of the Windows Store to start searching</small>
-                    </li>
-                </ol>
-              </div>
-            </div>
-          </div>
-          <div class="accordion-group">
-            <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                The Geeky Way
-              </a>
-            </div>
-            <div id="collapseTwo" class="accordion-body collapse">
-              <div class="accordion-inner">
-                <ol>
-                    <li>
-                        Launch the Command Prompt <br/>
-                        <small>Hint: Hit WinKey + R, Type "cmd", Hit Enter</small>
-                    </li>
-                    <li>
-                        Type or Copy paste this: <br />
-                        <code>start ms-windows-store:PDP?PFN=@appInfo.PackageFamilyName</code>
-                    </li>
-                    <li>
-                        Hit Enter
-                    </li>
-                </ol>
-              </div>
-            </div>
-          </div>
-        </div>
-    </div>
-</div>        
-}
-else if (!isWindows8)
+@if (!isWindows8)
 {
     <div id="notWin8" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">

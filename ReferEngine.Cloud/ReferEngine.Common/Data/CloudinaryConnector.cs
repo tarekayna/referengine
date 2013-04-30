@@ -1,11 +1,12 @@
-﻿using CloudinaryDotNet;
+﻿using System.IO;
+using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using ReferEngine.Common.Models;
 using ImageInfo = ReferEngine.Common.Models.ImageInfo;
 
 namespace ReferEngine.Common.Data
 {
-    internal class CloudinaryConnector
+    public class CloudinaryConnector
     {
         private static Account _cloudinaryAccount;
         private static Account CloudinaryAccount
@@ -24,13 +25,6 @@ namespace ReferEngine.Common.Data
         }
 
         private static string _baseUrl = "https://cloudinary-a.akamaihd.net/referengine/image/upload/";
-
-        public static string GetAppBackgroundImage(string name, int height, int width)
-        {
-            return Cloudinary.Api.UrlImgUp
-                                 .Transform(new Transformation().Width(width).Height(height).Crop("fill").Named("Blur"))
-                                 .BuildUrl(name); 
-        }
 
         public static void DeleteImage(CloudinaryImage cloudinaryImage)
         {
@@ -54,6 +48,21 @@ namespace ReferEngine.Common.Data
                                                       Description = imageInfo.Description,
                                                       Format = uploadResult.Format
                                                   };
+            return cloudinaryImage;
+        }
+
+        public static CloudinaryImage UploadImage(Stream fileStream, string fileName, string description = null)
+        {
+            FileDescription fileDescription = new FileDescription(fileName, fileStream);
+            ImageUploadParams uploadParams = new ImageUploadParams();
+            uploadParams.File = fileDescription;
+            ImageUploadResult uploadResult = Cloudinary.Upload(uploadParams);
+            CloudinaryImage cloudinaryImage = new CloudinaryImage
+            {
+                Id = uploadResult.PublicId,
+                Description = description,
+                Format = uploadResult.Format
+            };
             return cloudinaryImage;
         }
 

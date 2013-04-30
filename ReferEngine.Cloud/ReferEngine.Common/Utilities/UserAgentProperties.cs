@@ -3,20 +3,10 @@
     public class UserAgentProperties
     {
         public bool IsWindows8 { get; private set; }
-        public bool SupportsProtocolLaunching { get; private set; }
 
         public UserAgentProperties(string userAgent)
         {
-            if (!string.IsNullOrEmpty(userAgent))
-            {
-                IsWindows8 = userAgent.Contains("Windows NT 6.2");
-                SupportsProtocolLaunching = !userAgent.Contains("Chrome") && !userAgent.Contains("Opera");
-            }
-            else
-            {
-                IsWindows8 = false;
-                SupportsProtocolLaunching = false;
-            }
+            IsWindows8 = !string.IsNullOrEmpty(userAgent) && userAgent.Contains("Windows NT 6.2");
         }
     }
 }

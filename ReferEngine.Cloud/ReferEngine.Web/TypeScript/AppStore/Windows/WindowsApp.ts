@@ -6,13 +6,22 @@ declare var google;
 declare var re;
 
 import Notification = module("../../common/notifications"); 
-
+ 
 var ko;
 var Date2;
 
 class Page {
     static initPage() {
         People.init();
+
+        var openStore = $("#open-win8-store");
+        if (openStore.length > 0) {
+            var link = openStore.first().attr("data-store-link");
+            openStore.click(function (event) {
+                event.stopPropagation();
+                $('#open-store-frame').attr('src', link);
+            });
+        }
     }
 }
 

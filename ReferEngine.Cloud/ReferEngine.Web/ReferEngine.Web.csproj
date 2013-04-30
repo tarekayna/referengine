@@ -598,6 +598,7 @@
     <Content Include="Areas\Developer\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Developer\Views\Shared\_DeveloperLayout.cshtml" />
     <Content Include="Areas\AppStore\Views\Windows\_WindowsStoreNavigation.cshtml" />
+    <Content Include="Areas\AppStore\Views\Windows\_WindowsStoreDownloadTile.cshtml" />
     <None Include="Less\app\dashboard.less" />
     <Content Include="Less\app\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>
@@ -991,7 +992,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\AppStore\Views\Shared\" />
     <Folder Include="Areas\Developer\Models\" />
     <Folder Include="js\recommend\" />
   </ItemGroup>
@@ -1002,9 +1002,6 @@
     <Content Include="css\fonts\fontawesome-webfont.eot" />
     <Content Include="css\fonts\fontawesome-webfont.ttf" />
     <Content Include="css\fonts\fontawesome-webfont.woff" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\App\Details.cshtml" />
