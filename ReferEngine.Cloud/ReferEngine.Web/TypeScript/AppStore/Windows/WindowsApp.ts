@@ -22,6 +22,8 @@ class Page {
                 $('#open-store-frame').attr('src', link);
             });
         }
+
+        $(".popover-button").popover({});
     }
 }
 

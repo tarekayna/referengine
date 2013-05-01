@@ -4,14 +4,15 @@
 #open-win8-store {
   cursor: pointer;
 }
-#recommendations .heading .btn {
+.widget .heading .btn {
   padding: 5px;
 }
 .recommenders-list {
   font-size: small;
 }
 .recommenders-list h5 {
-  font-weight: bold !important;
+  font-size: small;
+  margin-bottom: 0;
 }
 .recommenders-list .rcmd-text {
   margin-left: 60px;
@@ -21,4 +22,24 @@
 }
 .fb-name {
   color: #3b5998;
+  font-weight: 700;
+}
+.app-details header {
+  height: 50px;
+  margin-bottom: 10px;
+}
+.app-details header img {
+  margin-right: 10px;
+}
+.app-details header h4 {
+  padding-top: 12px;
+}
+.app-details .more-info h4 {
+  border-bottom: 1px solid;
+  padding-bottom: 5px;
+  margin: 15px 0;
+}
+.hey-dev {
+  font-size: x-small;
+  line-height: inherit;
 }

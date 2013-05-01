@@ -9,6 +9,14 @@
 
 @Links.WindowsAppStore(ViewResources.WindowsStoreApps)
 
+@if (!string.IsNullOrEmpty(Model.SearchTerm))
+{
+    <text>
+        @Html.Raw(separator)
+        @Model.SearchTerm
+    </text>
+}
+
 @if (category != null)
 {
     if (category.HasParent)

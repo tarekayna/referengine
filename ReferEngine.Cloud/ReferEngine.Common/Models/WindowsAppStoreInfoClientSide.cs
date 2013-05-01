@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ReferEngine.Common.Utilities;
+using System.Linq;
 
 namespace ReferEngine.Common.Models
 {
@@ -9,12 +10,26 @@ namespace ReferEngine.Common.Models
     {
         public WindowsAppStoreInfoClientSide(WindowsAppStoreInfo windowsAppStoreInfo)
         {
-            Info = windowsAppStoreInfo;
-            Link = "/appstore/windows/" + Util.ConvertStringToUrlPart(Info.Category.Name) + "/" +
-                   Util.ConvertStringToUrlPart(Info.Name);
+            Link = "/app-store/windows/" + Util.ConvertStringToUrlPart(windowsAppStoreInfo.Category.Name) + "/" +
+                   Util.ConvertStringToUrlPart(windowsAppStoreInfo.Name);
+            AppName = windowsAppStoreInfo.Name;
+            BackgroundColor = windowsAppStoreInfo.BackgroundColor;
+
+            if (windowsAppStoreInfo.LogoImage != null)
+            {
+                LogoLink = windowsAppStoreInfo.LogoImage.GetLink();
+            }
+
+            if (windowsAppStoreInfo.AppScreenshots != null && windowsAppStoreInfo.AppScreenshots.Any())
+            {
+                ScreenshotLink = windowsAppStoreInfo.AppScreenshots.First().CloudinaryImage.GetLink("h_120,w_370,c_fill");
+            }
         }
 
-        public WindowsAppStoreInfo Info { get; set; }
         public string Link { get; set; }
+        public string BackgroundColor { get; set; }
+        public string LogoLink { get; set; }
+        public string ScreenshotLink { get; set; }
+        public string AppName { get; set; }
     }
 }

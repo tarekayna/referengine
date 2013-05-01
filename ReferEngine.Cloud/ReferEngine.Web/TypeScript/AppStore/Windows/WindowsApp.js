@@ -15,6 +15,8 @@ define(["require", "exports", "../../common/notifications"], function(require, e
                     $('#open-store-frame').attr('src', link);
                 });
             }
+            $(".popover-button").popover({
+            });
         };
         return Page;
     })();    

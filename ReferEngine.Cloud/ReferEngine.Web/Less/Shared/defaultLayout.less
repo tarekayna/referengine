@@ -63,8 +63,15 @@
     }
 }
 
-#subintro
+section#subintro
 {
+    margin-top: 0;
+
+    .subhead {
+        padding: 0;
+        margin-bottom: 10px;
+    }
+
     a,
     a:visited,
     a:link,
@@ -75,8 +82,41 @@
     .nav-sep {
         padding: 0 10px;
     }
+
+    .row {
+        margin-bottom: 0;
+    }
+
+    .navigation {
+        margin-top: 8px;
+    }
+
+    .search-query {
+        width: 200px;
+        margin-right: 10px;
+    }
+
+    button.btn {
+        padding: 5px 10px;
+    }
 }
 
 .portfolio-area .thumbnail a .caption {
     color: rgb(0,156,234);
+}
+
+.popover-button {
+    cursor: pointer;
+    min-height: 25px;
+    min-width: 30px;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 5px;
+    background-color: #EEE;
+    border: 1px solid #CCC;
+    color: #AAA;
+}
+
+.navigation {
+    margin-top: 8px;
 }

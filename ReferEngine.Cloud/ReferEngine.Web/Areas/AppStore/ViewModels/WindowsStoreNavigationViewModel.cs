@@ -6,5 +6,6 @@ namespace ReferEngine.Web.Areas.AppStore.ViewModels
     {
         public WindowsAppStoreCategory WindowsAppStoreCategory { get; set; }
         public WindowsAppStoreInfo WindowsAppStoreInfo { get; set; }
+        public string SearchTerm { get; set; }
     }
 }

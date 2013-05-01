@@ -456,6 +456,12 @@
     <Content Include="Less\Shared\defaultLayout.min.css">
       <DependentUpon>defaultLayout.less</DependentUpon>
     </Content>
+    <Content Include="TypeScript\AppStore\Windows\Search.js">
+      <DependentUpon>Search.ts</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\AppStore\Windows\Search.min.js">
+      <DependentUpon>Search.ts</DependentUpon>
+    </Content>
     <Content Include="Views\Admin\Panel.cshtml" />
     <Content Include="TypeScript\admin\windowsStoreCategories.min.js.map">
       <DependentUpon>windowsStoreCategories.js</DependentUpon>
@@ -475,13 +481,13 @@
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Account\_ViewStart.cshtml" />
     <Content Include="Views\Admin\WindowsStoreCategories.cshtml" />
-    <TypeScriptCompile Include="TypeScript\AppStore\Windows\WindowsCategory.ts" />
+    <TypeScriptCompile Include="TypeScript\AppStore\Windows\Search.ts" />
     <Content Include="img\logo-web-header.svg" />
     <Content Include="TypeScript\AppStore\Windows\WindowsCategory.js">
-      <DependentUpon>WindowsCategory.ts</DependentUpon>
+      <DependentUpon>Search.ts</DependentUpon>
     </Content>
     <Content Include="TypeScript\AppStore\Windows\WindowsCategory.min.js">
-      <DependentUpon>WindowsCategory.ts</DependentUpon>
+      <DependentUpon>Search.ts</DependentUpon>
     </Content>
     <Content Include="TypeScript\lib\application.js" />
     <Content Include="TypeScript\lib\camera\camera.min.js" />
@@ -613,6 +619,7 @@
     <Content Include="Areas\AppStore\Views\Windows\_WindowsStoreDownloadTile.cshtml" />
     <Content Include="Less\appstore\windows\windowsApp.less" />
     <Content Include="Less\appstore\windows\windowsAppCustom.less" />
+    <Content Include="Areas\AppStore\Views\Windows\Search.cshtml" />
     <None Include="Less\app\dashboard.less" />
     <Content Include="Less\app\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>
@@ -677,6 +684,7 @@
     </None>
     <Compile Include="Areas\AppStore\AppStoreAreaRegistration.cs" />
     <Compile Include="Areas\AppStore\Controllers\WindowsController.cs" />
+    <Compile Include="Areas\AppStore\ViewModels\WindowsStoreSearchViewModel.cs" />
     <Compile Include="Areas\AppStore\ViewModels\WindowsStoreNavigationViewModel.cs" />
     <Compile Include="Areas\Developer\Controllers\DeveloperHomeController.cs" />
     <Compile Include="Areas\Developer\DeveloperAreaRegistration.cs" />

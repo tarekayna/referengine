@@ -7,6 +7,7 @@ using ReferEngine.Common.ViewModels.AppStore.Windows;
 using System.Net;
 using System.Web.Mvc;
 using System.Linq;
+using ReferEngine.Web.Areas.AppStore.ViewModels;
 using ReferEngine.Web.Controllers;
 
 namespace ReferEngine.Web.Areas.AppStore.Controllers
@@ -77,9 +78,17 @@ namespace ReferEngine.Web.Areas.AppStore.Controllers
             return View("WindowsApp", windowsAppViewModel);
         }
 
+        // appstore/windows/a/search
+        public ActionResult Search(string searchTerm = null, string category = null, string parentCategory = null,
+                                    int page = 1, int numberOfApps = 20)
+        {
+            return View(new WindowsStoreSearchViewModel(){SearchTerm = searchTerm, CategoryName = category,
+            ParentCategoryName = parentCategory, PageNumber = page, NumberOfApps = numberOfApps});
+        }
+
         // appstore/windows/a/getapps
         [HttpPost]
-        public ActionResult GetApps(string searchTerm = null, string category = null, string parentCategory = null, int page = 1, int numberOfApps = 20)
+        public ActionResult GetApps(string searchTerm = null, string category = null, string parentCategory = null, int page = 1, int numberOfApps = 21)
         {
             int actualNumberOfApps = numberOfApps < 1 || numberOfApps > 100 ? 20 : numberOfApps;
             var apps = DataOperations.GetWindowsAppStoreInfos(searchTerm, category, parentCategory, page, actualNumberOfApps);

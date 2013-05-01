@@ -70,6 +70,10 @@ namespace ReferEngine.Common.Data
             {
                 result = desc ? result.OrderByDescending(orderByExpression) : result.OrderBy(orderByExpression);
             }
+            else
+            {
+                result = result.OrderByDescending(a => a.Name);
+            }
 
             result = result.Skip(skip);
             result = result.Take(take);

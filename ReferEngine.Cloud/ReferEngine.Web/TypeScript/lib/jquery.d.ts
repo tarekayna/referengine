@@ -702,6 +702,8 @@ interface JQuery {
     queue(queueName?: string): any[];
     queue(queueName: string, newQueueOrCallback: any): JQuery;
     queue(newQueueOrCallback: any): JQuery;
+    
+    popover(options: any): JQuery;
 }
 
 declare var jQuery: JQueryStatic;
