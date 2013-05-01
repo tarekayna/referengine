@@ -473,7 +473,7 @@
     <Content Include="TypeScript\admin\windowsStoreCategories.min.js">
       <DependentUpon>windowsStoreCategories.ts</DependentUpon>
     </Content>
-    <Content Include="Views\Shared\_DefaultLayout.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\_ViewStart.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\_HomeCleanLayout.cshtml" />

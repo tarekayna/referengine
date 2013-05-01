@@ -35,7 +35,7 @@ namespace ReferEngine.WorkerCloud.WinApps
                 XmlNode xmlNode = xmlNodeList.Item(i);
                 if (xmlNode == null) continue;
                 string link = xmlNode.InnerText;
-                if (link.Contains("en-us") && !windowsAppStoreLinks.Any(a => a.Link.Equals(link, StringComparison.OrdinalIgnoreCase)))
+                if (link.Contains("/en-us/") && !windowsAppStoreLinks.Any(a => a.Link.Equals(link, StringComparison.OrdinalIgnoreCase)))
                 {
                     WindowsAppStoreLink appWebLink = new WindowsAppStoreLink
                     {
@@ -177,13 +177,22 @@ namespace ReferEngine.WorkerCloud.WinApps
                                         string logoLink = GetAttributeValueOfChildFromId(doc, "AppLogo", "img", "src");
                                         string category = GetInnerTextFromId(doc, "CategoryText");
                                         string dev = GetInnerTextFromId(doc, "AppDeveloper");
-                                        dev = dev.Replace("Publisher: ", "").Trim();
+                                        if (!string.IsNullOrEmpty(dev) && dev.Contains(": "))
+                                        {
+                                            dev = dev.Substring(dev.IndexOf(": ") + 2).Trim();
+                                        }
+                                        string ageRating = GetInnerTextFromId(doc, "AgeRating");
+                                        if (!string.IsNullOrEmpty(ageRating) && 
+                                            ageRating.Contains(": "))
+                                        {
+                                            ageRating = ageRating.Substring(ageRating.IndexOf(": ") + 2).Trim();
+                                        }
 
                                         var storeAppInfo = new WindowsAppStoreInfo
                                         {
                                             Name = GetInnerTextFromId(doc, "ProductTitleText"),
                                             AppStoreLink = windowsAppStoreLink.Link,
-                                            AgeRating = GetInnerTextFromId(doc, "AgeRating"),
+                                            AgeRating = ageRating,
                                             Developer = dev,
                                             Copyright = GetInnerTextFromId(doc, "AppCopyrightText"),
                                             DescriptionHtml = GetInnerHtmlFromId(doc, "DescriptionText"),
