@@ -90,7 +90,7 @@ namespace ReferEngine.Web.App_Start
                                    
                     new BundleInfo("~/bundles/css/defaultLayout",
                                    "~/less/shared/bootstrap/bootstrap.css",
-                                   //"~/less/shared/bootstrap/responsive.css",
+                                   "~/less/shared/bootstrap/responsive.css",
                                    "~/css/AppStore/docs.css",
                                    "~/css/AppStore/style.css",
                                    "~/css/AppStore/success.css",

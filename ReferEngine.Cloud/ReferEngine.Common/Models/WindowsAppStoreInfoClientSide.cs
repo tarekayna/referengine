@@ -10,8 +10,7 @@ namespace ReferEngine.Common.Models
     {
         public WindowsAppStoreInfoClientSide(WindowsAppStoreInfo windowsAppStoreInfo)
         {
-            Link = "/app-store/windows/" + Util.ConvertStringToUrlPart(windowsAppStoreInfo.Category.Name) + "/" +
-                   Util.ConvertStringToUrlPart(windowsAppStoreInfo.Name);
+            Link = "/app-store/windows/" + windowsAppStoreInfo.LinkPart;
             AppName = windowsAppStoreInfo.Name;
             BackgroundColor = windowsAppStoreInfo.BackgroundColor;
 
