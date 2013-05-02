@@ -107,25 +107,24 @@
                                 {
                                     <li><a href="~/admin/panel">Admin Panel</a></li>
                                 }
-                                    <li class="pull-right">
-                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm" }))
-                                {
+                                <li class="pull-right">
+                                    <form action="~/account/logOff" id="logoutForm" method="post">
                                         <div class="btn-group">
                                             <button class="btn dropdown-toggle" data-toggle="dropdown">
                                                 <span>@viewProperties.CurrentUser.FirstName @viewProperties.CurrentUser.LastName</span>
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a href="~/account/manage"><i class="icon-wrench"></i> Account</a></li>
+                                                <li><a href="~/account/manage"><i class="icon-wrench"></i>Account</a></li>
                                                 <li class="divider"></li>
                                                 <li>
                                                     @Html.AntiForgeryToken()
-                                                    <a href=" javascript:document.getElementById('logoutForm').submit() "><i class="icon-off"></i> Sign Out</a>
+                                                    <a href=" javascript:document.getElementById('logoutForm').submit() "><i class="icon-off"></i>Sign Out</a>
                                                 </li>
                                             </ul>
                                         </div>
-                                }
-                                    </li>
+                                    </form>
+                                </li>
                             </ul>
                         </div>
                     </div>
