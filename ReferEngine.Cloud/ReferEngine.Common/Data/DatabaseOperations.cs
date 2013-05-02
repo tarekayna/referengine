@@ -954,8 +954,11 @@ namespace ReferEngine.Common.Data
                     foreach (AppScreenshot screenshot in removedScreenshotsList)
                     {
                         existing.AppScreenshots.Remove(screenshot);
-                        CloudinaryConnector.DeleteImage(screenshot.CloudinaryImage);
-                        db.CloudinaryImages.Remove(screenshot.CloudinaryImage);
+                        if (screenshot.CloudinaryImage != null)
+                        {
+                            CloudinaryConnector.DeleteImage(screenshot.CloudinaryImage);
+                            db.CloudinaryImages.Remove(screenshot.CloudinaryImage);
+                        }
                     }
 
                     var newScreenshotsList = newScreenshots.ToList();

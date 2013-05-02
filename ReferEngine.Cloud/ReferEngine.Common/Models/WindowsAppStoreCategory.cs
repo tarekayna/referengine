@@ -36,5 +36,13 @@ namespace ReferEngine.Common.Models
                 return linkPart;
             }
         }
+
+        public string Schema
+        {
+            get
+            {
+                return Util.GetCategorySchema(HasParent ? ParentCategoryName : Name);
+            }
+        }
     }
 }

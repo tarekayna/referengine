@@ -23,6 +23,12 @@ class Page {
             });
         }
 
+        $("#star-rating").raty({
+            score: re.rating,
+            readOnly: true,
+            precision: true
+        });
+
         $(".popover-button").popover({});
     }
 }
@@ -82,7 +88,8 @@ class People {
 
 require(["../../lib/knockout",
          "../../lib/date",
-         "../../lib/daterangepicker"], function (_ko) {
+         "../../lib/daterangepicker",
+         "../../lib/jquery.raty"], function (_ko) {
              ko = _ko;
              Date2 = <any>Date;
              $(document).ready(Page.initPage);

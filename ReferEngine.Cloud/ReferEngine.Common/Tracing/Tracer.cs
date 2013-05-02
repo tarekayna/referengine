@@ -77,12 +77,12 @@ namespace ReferEngine.Common.Tracing
             int skip = pageSize * (page - 1);
             TableQuery<TraceMessage> query = new TableQuery<TraceMessage>();
             query.Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, role));
+            query.TakeCount = take;
             IEnumerable<TraceMessage> list = new List<TraceMessage>(Table.ExecuteQuery(query));
             if (list.Count() <= skip)
             {
                 return new List<TraceMessage>();
             }
-            list = list.Take(take);
             list = list.Skip(skip);
             return list;
         }

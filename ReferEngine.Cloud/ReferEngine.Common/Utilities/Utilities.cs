@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -304,6 +306,45 @@ namespace ReferEngine.Common.Utilities
             }
             if (string.IsNullOrEmpty(result)) return null;
             return result;
+        }
+
+        private static readonly Dictionary<string, string> CategorySchemas = new Dictionary<string, string>
+                {
+                    {"Education", "EducationalApplication"},
+                    {"Entertainment", "EntertainmentApplication"},
+                    {"Tools", "UtilitiesApplication"},
+                    {"Health & Fitness", "HealthApplication"},
+                    {"Lifestyle", "LifestyleApplication"},
+                    {"Food & Dining", "HomeApplication"},
+                    {"Photo", "MultimediaApplication"},
+                    {"Games", "GameApplication"},
+                    {"Travel", "TravelApplication"},
+                    {"Productivity", "UtilitiesApplication"},
+                    {"Shopping", "ShoppingApplication"},
+                    {"Social", "SocialNetworkingApplication"},
+                    {"Sports", "SportsApplication"},
+                    {"Books & Reference", "ReferenceApplication"},
+                    {"Finance", "FinanceApplication"},
+                    {"Government", "OtherApplication"},
+                    {"Business", "BusinessApplication"},
+                    {"Security", "SecurityApplication"},
+                    {"Music & Video", "MultimediaApplication"},
+                    {"News & Weather", "ReferenceApplication "}
+                }; 
+
+        public static string GetCategorySchema(string categoryName)
+        {
+            // http://support.google.com/webmasters/bin/answer.py?hl=en&answer=1645527
+            string supportedName = "OtherApplication";
+            if (
+                CategorySchemas.Any(
+                    keyValuePair => categoryName.Equals(keyValuePair.Key, StringComparison.OrdinalIgnoreCase)))
+            {
+                supportedName = CategorySchemas.First(
+                    keyValuePair => categoryName.Equals(keyValuePair.Key, StringComparison.OrdinalIgnoreCase)).Value;
+            }
+
+            return string.Format("http://schema.org/{0}", supportedName);
         }
     }
 }

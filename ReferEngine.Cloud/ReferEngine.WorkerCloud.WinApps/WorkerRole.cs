@@ -106,23 +106,23 @@ namespace ReferEngine.WorkerCloud.WinApps
 
                 try
                 {
-                    const string appStoreSiteMap = "http://apps.microsoft.com/windows/sitemap/sitemap_{0}.xml";
-                    int sitemapIndex = 1;
-                    string url = string.Format(appStoreSiteMap, sitemapIndex);
-                    while (ProcessStoreSitemap(url))
-                    {
-                        if (sitemapIndex % 5 == 0)
-                        {
-                            Tracer.Trace(TraceMessage.Info("ProcessStoreSitemap").AddProperty("url", url));
-                        }
-                        sitemapIndex++;
-                        url = string.Format(appStoreSiteMap, sitemapIndex);
-                    }
+                    //const string appStoreSiteMap = "http://apps.microsoft.com/windows/sitemap/sitemap_{0}.xml";
+                    //int sitemapIndex = 1;
+                    //string url = string.Format(appStoreSiteMap, sitemapIndex);
+                    //while (ProcessStoreSitemap(url))
+                    //{
+                    //    if (sitemapIndex % 5 == 0)
+                    //    {
+                    //        Tracer.Trace(TraceMessage.Info("ProcessStoreSitemap").AddProperty("url", url));
+                    //    }
+                    //    sitemapIndex++;
+                    //    url = string.Format(appStoreSiteMap, sitemapIndex);
+                    //}
 
                     // Now that we got all the links, time to scrape
-                    IList<WindowsAppStoreLink> windowsAppStoreLinks = DataOperations.GetWindowsAppStoreLinks();
+                    //IList<WindowsAppStoreLink> windowsAppStoreLinks = DataOperations.GetWindowsAppStoreLinks();
 
-                    //IList<WindowsAppStoreLink> windowsAppStoreLinks = new List<WindowsAppStoreLink>();
+                    IList<WindowsAppStoreLink> windowsAppStoreLinks = new List<WindowsAppStoreLink>();
                     //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/movietimes/0db46cc7-ddbf-4e1b-9316-3ee674ac5756/m/ROW" });
                     //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/appy-geek/f39fcc92-5236-4f57-8357-f0903d9a22ee" });
                     //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/wow-engineer/1586f767-2ae2-4b1b-a9bb-543714486652" });
@@ -131,6 +131,7 @@ namespace ReferEngine.WorkerCloud.WinApps
                     //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/trendwatcher/7d6e52bc-2bc3-428e-b4fe-74d015b04f6e/m/ROW" });
                     //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/wow-herbalist/8eb2ba67-2a03-42b1-9022-d029c10ae144" });
                     //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-US/app/blu-graphing-calculator/764cce31-8f93-48a6-b4fc-008eb78e50d4" });
+                    windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-us/app/windows8-player-pro/378b7c35-d0ff-4eea-8ea6-9b220030aa41" });
                     //windowsAppStoreLinks.Add(new WindowsAppStoreLink { Link = "http://apps.microsoft.com/windows/en-US/app/skype/5e19cc61-8994-4797-bdc7-c21263f6282b" });
 
                     numberOfLinks = windowsAppStoreLinks.Count();

@@ -462,9 +462,13 @@
     <Content Include="TypeScript\AppStore\Windows\Search.min.js">
       <DependentUpon>Search.ts</DependentUpon>
     </Content>
+    <Content Include="TypeScript\lib\jquery.raty.js" />
     <Content Include="Views\Admin\Panel.cshtml" />
     <Content Include="TypeScript\admin\windowsStoreCategories.min.js.map">
       <DependentUpon>windowsStoreCategories.js</DependentUpon>
+    </Content>
+    <Content Include="TypeScript\lib\jquery.raty.min.js.map">
+      <DependentUpon>jquery.raty.js</DependentUpon>
     </Content>
     <TypeScriptCompile Include="TypeScript\admin\windowsStoreCategories.ts" />
     <Content Include="TypeScript\admin\windowsStoreCategories.js">

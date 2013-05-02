@@ -11,7 +11,7 @@
     ViewBag.Title += category.HasParent ? ViewResources.TitleSeparator + category.ParentCategoryName : "";
     ViewBag.PageDescription = appInfo.DescriptionHtml;
 
-    string colorHtml = appInfo.BackgroundColor ?? "#00AFF0";
+    string colorHtml = appInfo.GetBackgroundColor();
     System.Drawing.Color color = System.Drawing.ColorTranslator.FromHtml(colorHtml);
     U.HsbColor hsbColor = U.HsbColor.FromColor(color);
     U.HsbColor darkerHsbColor = new U.HsbColor(hsbColor.H, hsbColor.S, hsbColor.B * 0.8);
@@ -82,12 +82,20 @@
     <script>
         window.re = {};
         window.re["appId"] = "@appId";
+        window.re["rating"] = "@appInfo.Rating";
     </script>
 
     <script data-main="/typescript/appstore/windows/windowsApp.js" type="text/javascript" src="~/typescript/lib/require.js"></script> 
 }
 
-<div class="row">
+<div class="row" itemscope itemtype="http://schema.org/SoftwareApplication">
+    @if (appInfo.Category.HasParent)
+    {
+        <meta itemprop="applicationSubCategory" content="@appInfo.Category.Name" />        
+    }
+    <meta itemprop="operatingSystems" content="Windows" />
+    <meta itemprop="operatingSystemVersion" content="8" />
+    <link itemprop="SoftwareApplicationCategory" href="@appInfo.Category.Schema"/>
     <div class="span4">
         <aside>
             @if (isWindows8)
@@ -123,7 +131,7 @@
                 <div data-bind="visible: RecommendersLoaded() && Recommenders().length == 0">
                     <p>No recommendations yet.</p>
                     <p class="hey-dev">
-                        Are you the developer of @Model.WindowsAppStoreInfo.Name?
+                        Are you the developer of @appName?
                         @Links.Developer("Enable recommendations for your app today!")
                     </p>
                 </div>
@@ -138,7 +146,7 @@
                             <div class="rcmd-text">
                                 <h5>
                                     <span data-bind="text: Name" class="fb-name"></span>
-                                    recommended @Model.WindowsAppStoreInfo.Name.
+                                    recommended @appName.
                                 </h5>                         
                                 <p class="rcmd-time muted">
                                     <span data-bind="text: Time"></span>
@@ -156,14 +164,34 @@
                     </span>&nbsp;&nbsp;App Details
                 </h4>
                 <ul class="project-detal">
-                    @if (!string.IsNullOrEmpty(appInfo.AgeRating) && appInfo.AgeRating.Length > 13)
+                    <li itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                        <label>Windows Store Rating: </label>
+                        <span itemprop="ratingValue" style="display: none">4.6</span>
+                        <div id="star-rating"></div> (<span itemprop="ratingCount">@appInfo.NumberOfRatings</span> ratings)
+                    </li>
+                    <li itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                        <label>Price: </label>
+                        <span itemprop="price">@appInfo.GetPriceString()</span>
+                        <meta itemprop="priceCurrency" content="USD" />
+                        <link itemprop="availability" href="http://schema.org/InStock" />
+                    </li>
+                    @if (!string.IsNullOrEmpty(appInfo.AgeRating))
                     {
-                        <li><label>Age Rating:</label> @appInfo.AgeRating.Substring(12)</li>
+                        <li>
+                            <label>Age Rating:</label> 
+                            <span itemprop="contentRating">@appInfo.AgeRating</span>
+                        </li>
                     }
-                    <li><label><a href="@appInfo.SupportLink">Support Link</a></label></li>
-                    <li><label><a href="@appInfo.WebsiteLink" target="_blank">App Website</a></label></li>
                     <li><label>Languages:</label> @appInfo.Languages</li>
-                    <li><label>Publisher:</label> @appInfo.Developer</li>
+                    
+                    <li><label><a href="@appInfo.SupportLink">Support Link</a></label></li>
+                    <li itemprop="author" itemscope itemtype="http://schema.org/Organization">
+                        <label>Publisher:</label> 
+                        <a href="@appInfo.WebsiteLink" itemprop="url" target="_blank">
+                            <span itemprop="name">@appInfo.Developer</span>
+                        </a>
+                    </li>
+                    
                     <li><label>Copyright:</label> @Html.Raw(appInfo.Copyright)</li>
                 </ul>
             </div>
@@ -171,12 +199,12 @@
             {
                 <div class="widget">
                     <h4 class="heading">
-                    <span class="btn">
-                        @(new ImageTag("icon_laptop_30_mhra4d", "png").ToHtmlString())
-                    </span>&nbsp;&nbsp;App Developer?
+                        <span class="btn">
+                            @(new ImageTag("icon_laptop_30_mhra4d", "png").ToHtmlString())
+                        </span>&nbsp;&nbsp;App Developer?
                     </h4>
                     <p>
-                        Are you the developer of @Model.WindowsAppStoreInfo.Name?
+                        Are you the developer of @appName?
                     </p>
                     <p>
                         Register to modify the content of this page. You can add high resolution
@@ -189,8 +217,8 @@
     <div class="span8">
         <article class="app-details">
             <header>
-                <img src="@Model.WindowsAppStoreInfo.LogoImage.GetLink()" class="pull-left" />
-                <h4>@appName</h4>
+                <img src="@Model.WindowsAppStoreInfo.LogoImage.GetLink()" class="pull-left" itemprop="image" />
+                <h4 itemprop="name">@appName</h4>
             </header>
             <div class="clearfix">
             </div>
@@ -202,9 +230,9 @@
                             for (int i = 0; i < appInfo.AppScreenshots.Count(); i++)
                             {
                                 var image = appInfo.AppScreenshots.ElementAt(i).CloudinaryImage;
-                                <div class="@MvcHtmlString.Create(i == 0 ? "active" : "") item">
-                                    <img alt="@image.Description" src="@image.GetLink()" />
-                                    <p>@Html.Raw(image.Description)</p>
+                                <div class="@MvcHtmlString.Create(i == 0 ? "active" : "") item" itemprop="screenshot" itemscope itemtype="http://schema.org/ImageObject">
+                                    <img alt="@image.Description" src="@image.GetLink()" itemprop="contentURL" />
+                                    <p itemprop="description">@Html.Raw(image.Description)</p>
                                 </div>
                             }
                         }
@@ -223,9 +251,9 @@
                             for (int i = 0; i < Model.App.AppScreenshots.Count(); i++)
                             {
                                 var image = Model.App.AppScreenshots.ElementAt(i).CloudinaryImage;
-                                <div class="@MvcHtmlString.Create(i == 0 && !renderedActive ? "active" : "") item">
-                                    <img alt="@image.Description" src="@image.GetLink()" />
-                                    <p>@Html.Raw(image.Description)</p>
+                                <div class="@MvcHtmlString.Create(i == 0 && !renderedActive ? "active" : "") item" itemprop="screenshot" itemscope itemtype="http://schema.org/ImageObject">
+                                    <img alt="@image.Description" src="@image.GetLink()" itemprop="contentURL" />
+                                    <p itemprop="description">@Html.Raw(image.Description)</p>
                                 </div>
                             }
                         }
@@ -234,7 +262,7 @@
                     </div>
                 </div>
                 <h4>Description</h4>
-                <p>@Html.Raw(appInfo.DescriptionHtml)</p>
+                <p itemprop="description">@Html.Raw(appInfo.DescriptionHtml)</p>
                 <h4>Features</h4>
                 <p>@Html.Raw(appInfo.FeaturesHtml)</p>
             </div>
@@ -251,8 +279,8 @@
         </div>
         <div class="modal-body">
             <p>
-                @appInfo.Name is a Windows 8 application.
-                You need to be on a Windows 8 PC to open the Windows Store and view @appInfo.Name.
+                @appName is a Windows 8 application.
+                You need to be on a Windows 8 PC to open the Windows Store and view @appName.
             </p>
         </div>
     </div>      

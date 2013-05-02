@@ -12,7 +12,7 @@ namespace ReferEngine.Common.Models
         {
             Link = "/app-store/windows/" + windowsAppStoreInfo.LinkPart;
             AppName = windowsAppStoreInfo.Name;
-            BackgroundColor = windowsAppStoreInfo.BackgroundColor;
+            BackgroundColor = windowsAppStoreInfo.GetBackgroundColor();
 
             if (windowsAppStoreInfo.LogoImage != null)
             {

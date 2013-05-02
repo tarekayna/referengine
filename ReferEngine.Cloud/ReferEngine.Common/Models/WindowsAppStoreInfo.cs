@@ -75,6 +75,21 @@ namespace ReferEngine.Common.Models
         [DataMember]
         public virtual ICollection<AppScreenshot> AppScreenshots { get; private set; }
 
+        public string GetBackgroundColor()
+        {
+            const string defaultBackgroundColor = "#00AFF0";
+            if (string.IsNullOrEmpty(BackgroundColor))
+            {
+                return defaultBackgroundColor;
+            }
+            return BackgroundColor.Equals("#FFFFFF", StringComparison.OrdinalIgnoreCase) ? defaultBackgroundColor : BackgroundColor;
+        }
+
+        public string GetPriceString()
+        {
+            return Math.Abs(Price - 0) < double.Epsilon ? "Free" : "$" + Price.ToString();
+        }
+
         public string LinkPart
         {
             get

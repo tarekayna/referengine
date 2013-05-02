@@ -704,6 +704,7 @@ interface JQuery {
     queue(newQueueOrCallback: any): JQuery;
     
     popover(options: any): JQuery;
+    raty(options: any): JQuery;
 }
 
 declare var jQuery: JQueryStatic;

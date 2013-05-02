@@ -15,6 +15,11 @@ define(["require", "exports", "../../common/notifications"], function(require, e
                     $('#open-store-frame').attr('src', link);
                 });
             }
+            $("#star-rating").raty({
+                score: re.rating,
+                readOnly: true,
+                precision: true
+            });
             $(".popover-button").popover({
             });
         };
@@ -74,7 +79,8 @@ define(["require", "exports", "../../common/notifications"], function(require, e
     require([
         "../../lib/knockout", 
         "../../lib/date", 
-        "../../lib/daterangepicker"
+        "../../lib/daterangepicker", 
+        "../../lib/jquery.raty"
     ], function (_ko) {
         ko = _ko;
         Date2 = Date;
