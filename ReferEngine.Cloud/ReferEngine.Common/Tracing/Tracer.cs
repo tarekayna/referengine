@@ -72,12 +72,13 @@ namespace ReferEngine.Common.Tracing
 
         public static IEnumerable<TraceMessage> GetTraceMessages(string role, int page, int requestedPageSize)
         {
-            int pageSize = requestedPageSize > 100 ? 100 : requestedPageSize;
+            const int maxPageSize = 500;
+            int pageSize = requestedPageSize > maxPageSize ? maxPageSize : requestedPageSize;
             int take = pageSize * page;
             int skip = pageSize * (page - 1);
-            TableQuery<TraceMessage> query = new TableQuery<TraceMessage>();
-            query.Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, role));
-            query.TakeCount = take;
+            var query = new TableQuery<TraceMessage>()
+                                .Take(take)
+                                .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, role));
             IEnumerable<TraceMessage> list = new List<TraceMessage>(Table.ExecuteQuery(query));
             if (list.Count() <= skip)
             {

@@ -31,7 +31,7 @@ namespace ReferEngine.Web.Controllers
             return View();
         }
 
-        public ActionResult TraceLogs(string role = "ReferEngine.WorkerCloud.WinApps", int page = 1, int pageSize = 20)
+        public ActionResult TraceLogs(string role = "ReferEngine.WorkerCloud.WinApps", int page = 1, int pageSize = 50)
         {
             TraceLogsViewModel viewModel = new TraceLogsViewModel
                 {
