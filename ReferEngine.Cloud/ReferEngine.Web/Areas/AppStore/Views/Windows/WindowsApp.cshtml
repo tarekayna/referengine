@@ -93,8 +93,7 @@
     {
         <meta itemprop="applicationSubCategory" content="@appInfo.Category.Name" />        
     }
-    <meta itemprop="operatingSystems" content="Windows" />
-    <meta itemprop="operatingSystemVersion" content="8" />
+    <meta itemprop="operatingSystem" content="Windows 8" />
     <link itemprop="SoftwareApplicationCategory" href="@appInfo.Category.Schema"/>
     <div class="span4">
         <aside>
@@ -166,12 +165,13 @@
                 <ul class="project-detal">
                     <li itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
                         <label>Windows Store Rating: </label>
-                        <span itemprop="ratingValue" style="display: none">4.6</span>
+                        <meta itemprop="ratingValue" content="@appInfo.Rating" />
                         <div id="star-rating"></div> (<span itemprop="ratingCount">@appInfo.NumberOfRatings</span> ratings)
                     </li>
                     <li itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                         <label>Price: </label>
-                        <span itemprop="price">@appInfo.GetPriceString()</span>
+                        <span>@appInfo.GetPriceString()</span>
+                        <meta itemprop="price" content="@appInfo.Price" />
                         <meta itemprop="priceCurrency" content="USD" />
                         <link itemprop="availability" href="http://schema.org/InStock" />
                     </li>
