@@ -266,6 +266,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\LessTransform.cs" />
     <Compile Include="App_Start\MiniProfiler.cs" />
@@ -470,6 +471,7 @@
     <Content Include="TypeScript\lib\jquery.raty.min.js.map">
       <DependentUpon>jquery.raty.js</DependentUpon>
     </Content>
+    <Content Include="Views\Shared\_FacebookSdk.cshtml" />
     <TypeScriptCompile Include="TypeScript\admin\windowsStoreCategories.ts" />
     <Content Include="TypeScript\admin\windowsStoreCategories.js">
       <DependentUpon>windowsStoreCategories.ts</DependentUpon>

@@ -1,0 +1,31 @@
+﻿﻿<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '368842109866922',
+            channelUrl: '//www.referengine.com/facebook_channel.html',
+            status: true,
+            cookie: true,
+            xfbml: true
+        });
+
+    // Additional init code here
+
+  };
+
+  // Load the SDK Asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+    @if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local)
+    {
+        <text>js.src = "//connect.facebook.net/en_US/all/debug.js";</text>
+    }
+    else
+    {
+        <text>js.src = "//connect.facebook.net/en_US/all.js";</text>
+    }
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+</script>
