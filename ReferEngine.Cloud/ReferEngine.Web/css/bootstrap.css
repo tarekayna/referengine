@@ -99,7 +99,9 @@ sub {
 }
 
 img {
+/* ReSharper disable InvalidValue */
   width: auto\9;
+/* ReSharper restore InvalidValue */
   height: auto;
   max-width: 100%;
   vertical-align: middle;

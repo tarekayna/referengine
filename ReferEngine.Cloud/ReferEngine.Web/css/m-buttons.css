@@ -4,6 +4,7 @@
  * I do not claim ownership on the origin of design and icons.
  * Built by Ace Subido (http://github.com/ace-subido)
  */
+/* ReSharper disable InvalidValue */
 a:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
@@ -189,9 +190,9 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   background-image: linear-gradient(top, #eeeeee, #eeeeee);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#eeeeee', GradientType=0);
-  -webkit-background-clip: padding;
-  -moz-background-clip: padding;
-  background-clip: padding;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+  background-clip: padding-box;
   /* IE hacks */
 
   zoom: 1;
@@ -675,3 +676,4 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   display: block;
   margin-top: 1px;
 }
+/* ReSharper restore InvalidValue */

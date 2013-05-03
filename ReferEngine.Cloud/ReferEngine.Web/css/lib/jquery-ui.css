@@ -640,7 +640,9 @@ button.ui-button::-moz-focus-inner {
 /* For IE8 - See #6727 */
 .ui-slider.ui-state-disabled .ui-slider-handle,
 .ui-slider.ui-state-disabled .ui-slider-range {
+/* ReSharper disable InvalidValue */
 	filter: inherit;
+/* ReSharper restore InvalidValue */
 }
 
 .ui-slider-horizontal {
