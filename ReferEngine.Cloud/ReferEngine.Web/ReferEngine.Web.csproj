@@ -700,7 +700,6 @@
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RecommendController.cs" />
-    <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="DataAccess\BlobStorageOperations.cs" />
     <Compile Include="App_Start\ErrorEntity.cs" />
     <Compile Include="Filters\LogAttribute.cs" />
@@ -1012,7 +1011,6 @@
     <Content Include="Views\Admin\Admin.cshtml" />
     <Content Include="Views\Shared\_CrazyEgg.cshtml" />
     <Content Include="Views\App\Dashboard.cshtml" />
-    <Content Include="Views\Shared\_MINIPROFILER UPDATED Layout.cshtml" />
     <Content Include="Views\Shared\_SetJavaScriptGlobalVariables.cshtml" />
     <Content Include="Views\Shared\_LiveChat.cshtml" />
   </ItemGroup>
@@ -1028,9 +1026,6 @@
     <Content Include="css\fonts\fontawesome-webfont.eot" />
     <Content Include="css\fonts\fontawesome-webfont.ttf" />
     <Content Include="css\fonts\fontawesome-webfont.woff" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\App\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Recommend\win8\_RecommendWin8Layout.cshtml" />
