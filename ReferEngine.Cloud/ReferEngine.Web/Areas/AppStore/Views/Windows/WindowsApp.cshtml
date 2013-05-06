@@ -74,7 +74,12 @@
     @Html.Partial("_WindowsStoreNavigation", navigationViewModel)
 }
 
-@section ScriptsAfterBody
+@section SearchForm
+{
+    @Html.Partial("_WindowsSearchForm")
+}
+
+@section Scripts
 {
     @{
         double appId = Model.App != null ? Model.App.Id : -1;

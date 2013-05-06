@@ -1,4 +1,6 @@
-﻿using Microsoft.Web.WebPages.OAuth;
+﻿using System.Collections.Generic;
+using Microsoft.Web.WebPages.OAuth;
+using ReferEngine.Common.Models;
 
 namespace ReferEngine.Web.App_Start
 {
@@ -14,7 +16,19 @@ namespace ReferEngine.Web.App_Start
             //    consumerKey: "",
             //    consumerSecret: "");
 
-            OAuthWebSecurity.RegisterFacebookClient("368842109866922", "b673f45aa978225ae8c9e4817a726be7");
+            //CloudinaryImage cloudinaryImage = new CloudinaryImage();
+            //cloudinaryImage.Id = "FB_f_Logo__blue_1024_jz915q";
+            //cloudinaryImage.Format = "png";
+
+            //Dictionary<string, object> facebooksocialData = new Dictionary<string, object>
+            //    {
+            //        {"Icon", cloudinaryImage.GetLink("w_50")}
+            //    };
+            OAuthWebSecurity.RegisterFacebookClient(
+                appId: "368842109866922",
+                appSecret: "b673f45aa978225ae8c9e4817a726be7");
+            //displayName: "Facebook",
+            //extraData: facebooksocialData);
 
             //OAuthWebSecurity.RegisterGoogleClient();
         }

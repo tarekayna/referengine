@@ -11,6 +11,22 @@ namespace ReferEngine.Common.Data
 {
     public static class ServiceBusOperations
     {
+        // When testing ServiceBusOperations locally, set this to false
+        private static bool? _simulateWithoutConnecting;
+        private static bool SimulateWithoutConnecting
+        {
+            get
+            {
+                if (!_simulateWithoutConnecting.HasValue)
+                {
+                    _simulateWithoutConnecting = Util.CurrentServiceConfiguration ==
+                                                 Util.ReferEngineServiceConfiguration.Local;
+                }
+
+                return _simulateWithoutConnecting.Value;
+            }
+        }
+
         private static readonly IList<Queue> Queues = new List<Queue>();
 
         private static NamespaceManager CreateNamespaceManager()
@@ -23,6 +39,8 @@ namespace ReferEngine.Common.Data
 
         public static void Initialize()
         {
+            if (SimulateWithoutConnecting) return;
+
             ServiceBusEnvironment.SystemConnectivity.Mode = ConnectivityMode.Http;
 
             var namespaceManager = CreateNamespaceManager();
@@ -44,12 +62,16 @@ namespace ReferEngine.Common.Data
 
         public static void AddToQueue(Object objectToQueue)
         {
+            if (SimulateWithoutConnecting) return;
+
             Queue queue = Queues.First(q => q.SupportedType.IsEquivalentTo(objectToQueue.GetType()));
             queue.Enqueue(objectToQueue);
         }
 
         public static BrokeredMessage GetMessage()
         {
+            if (SimulateWithoutConnecting) return null;
+
             BrokeredMessage message = null;
             foreach (Queue queue in Queues)
             {

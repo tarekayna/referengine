@@ -21,6 +21,11 @@
     @Html.Partial("_WindowsStoreNavigation", navigationViewModel)
 }
 
+@section SearchForm
+{
+    @Html.Partial("_WindowsSearchForm")
+}
+
 <div class="row">
     <ul class="portfolio-area da-thumbs"> 
         @foreach (var category in Model.SubCategories)

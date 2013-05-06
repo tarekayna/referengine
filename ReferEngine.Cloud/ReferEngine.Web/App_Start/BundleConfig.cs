@@ -42,7 +42,6 @@ namespace ReferEngine.Web.App_Start
                                    "~/typescript/lib/modernizr.js",
                                    "~/typescript/lib/jquery.elastislide.js",
                                    "~/typescript/lib/jquery.flexslider.js",
-                                   "~/typescript/lib/jquery.tweet.js",
                                    "~/typescript/lib/application.js",
                                    "~/typescript/lib/jquery.prettyPhoto.js",
                                    "~/typescript/lib/portfolio/jquery.quicksand.js",
@@ -68,9 +67,6 @@ namespace ReferEngine.Web.App_Start
                                    
                     new BundleInfo("~/js/pricing",
                                    "~/js/pricing.js"),
-
-                    new BundleInfo("~/js/shared/layout-not-auth",
-                                   "~/js/shared/layout-not-auth.js"),
 
                     new BundleInfo("~/js/app/edit",
                                    "~/js/app/edit.js"),

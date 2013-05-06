@@ -7,6 +7,7 @@
  *
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
+/* ReSharper disable InvalidValue */
 /*@linkColor:             #08c;*/
 /*@navbarBackground:                darken(@navbarBackgroundHighlight, 5%);
 @navbarBorder:                    darken(@navbarBackground, 12%);*/
@@ -1096,3 +1097,5 @@
     overflow: visible !important;
   }
 }
+/*!
+/* ReSharper restore InvalidValue */

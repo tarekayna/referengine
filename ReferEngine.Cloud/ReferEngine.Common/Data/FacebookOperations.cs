@@ -84,7 +84,7 @@ namespace ReferEngine.Common.Data
             }
             return _currentUser;
         }
-
+        
         [DataMember]
         private IList<Person> _friends;
         public async Task<IList<Person>> GetFriendsAsync()

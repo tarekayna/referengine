@@ -17,7 +17,12 @@
     @Html.Partial("_WindowsStoreNavigation", navigationViewModel)
 }
 
-@section ScriptsAfterBody
+@section SearchForm
+{
+    @Html.Partial("_WindowsSearchForm")
+}
+
+@section Scripts
 {
     <script type="text/javascript">
         var re = {};

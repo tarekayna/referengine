@@ -4,11 +4,11 @@
     <ActivePublishProfile>referengine.com staging</ActivePublishProfile>
     <DeploymentProfilingMode>Instrumentation</DeploymentProfilingMode>
     <DeploymentEnableTierInteractionProfiling>False</DeploymentEnableTierInteractionProfiling>
-    <WebRoleHttpsSkipLaunchInBrowser>
-    </WebRoleHttpsSkipLaunchInBrowser>
+    <WebRoleHttpsSkipLaunchInBrowser>ReferEngine.Web</WebRoleHttpsSkipLaunchInBrowser>
     <RemoteDesktopMoreOptions>True</RemoteDesktopMoreOptions>
     <PackageProfile>TestCloud</PackageProfile>
     <PackageSolutionConfiguration>Release</PackageSolutionConfiguration>
     <PackageEnableRemoteDesktop>True</PackageEnableRemoteDesktop>
+    <UseIISExpress>True</UseIISExpress>
   </PropertyGroup>
 </Project>

@@ -2,30 +2,21 @@
 
 @{
     ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+    if (Model.Count == 0)
+    {
+        throw new InvalidOperationException();
+    }
 }
 
-@if (Model.Count == 0)
+@using (Html.BeginForm("ExternalLogin", "Account", new { viewProperties.ReturnUrl }))
 {
-    <div class="message-info">
-        <p>There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=252166">this article</a>
-        for details on setting up this ASP.NET application to support logging in via external services.</p>
-    </div>
-}
-else
-{
-    using (Html.BeginForm("ExternalLogin", "Account", new { viewProperties.ReturnUrl }))
-    {
     @Html.AntiForgeryToken()
-    <fieldset id="socialLoginList">
-        <legend>Log in using another service</legend>
-        <p>
-        @foreach (AuthenticationClientData p in Model)
-        {
-            <button type="submit" name="provider" value="@p.AuthenticationClient.ProviderName" title="Log in using your @p.DisplayName account">
-                @p.DisplayName
-            </button>
-        }
-        </p>
-    </fieldset>
+    foreach (AuthenticationClientData provider in Model)
+    {
+        <button type="submit" class="provider-btn" name="provider" value="@provider.AuthenticationClient.ProviderName" 
+            title="Log in using your @provider.DisplayName account" >
+            <img src="@provider.ExtraData["Icon"]" alt="Icon for @provider.DisplayName" />
+            <h3>Connect using @provider.DisplayName</h3>
+        </button>
     }
 }

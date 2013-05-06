@@ -1,4 +1,5 @@
 ﻿using Microsoft.ServiceBus.Messaging;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Email;
@@ -7,13 +8,26 @@ using System;
 using System.Net;
 using System.Threading;
 using ReferEngine.Common.Tracing;
-using ReferEngine.Workers.DataWriter.Properties;
 
 namespace ReferEngine.Workers.DataWriter
 {
     public class WorkerRole : RoleEntryPoint
     {
         public bool IsStopped { get; set; }
+
+        private int _sleepTime = -1;
+
+        private int SleepTime
+        {
+            get
+            {
+                if (_sleepTime == -1)
+                {
+                    _sleepTime = Convert.ToInt32(CloudConfigurationManager.GetSetting("SleepBetweenGetMessage"));
+                }
+                return _sleepTime;
+            }
+        }
 
         public override void Run()
         {
@@ -24,7 +38,7 @@ namespace ReferEngine.Workers.DataWriter
                     BrokeredMessage message = ServiceBusOperations.GetMessage();
                     if (message == null)
                     {
-                        Thread.Sleep(Settings.Default.WorkerThreadSleepTimeout);
+                        Thread.Sleep(SleepTime);
                     }
                     else
                     {
@@ -104,7 +118,7 @@ namespace ReferEngine.Workers.DataWriter
                         throw;
                     }
 
-                    Thread.Sleep(Settings.Default.WorkerThreadSleepTimeout);
+                    Thread.Sleep(SleepTime);
                 }
                 catch (OperationCanceledException e)
                 {

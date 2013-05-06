@@ -1,5 +1,6 @@
 ﻿@{ 
     string pageTitle = ViewResources.ReferEngine + ViewResources.TitleSeparator + ViewResources.MainSolgan;
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
 }
 
 <!DOCTYPE html>
@@ -14,7 +15,7 @@
         <meta property="og:url" content="@Request.Url"/>
         <meta property="og:description" content="@ViewResources.MainDescription"/>
         <meta property="og:image" content="https://cloudinary-a.akamaihd.net/referengine/image/upload/logo_mark_500_qg2mad.png" />
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        @Html.Partial("_OpenSansFont")
         @Html.Partial("_FavIcon")
         @Styles.Render("~/bundles/home")
     </head>
@@ -25,10 +26,22 @@
         <div class="text-center">
             <div class="clean-logo">
                 <div class="brand logo">
-                    @Images.LogoMark.Height(40).Width(40).Alt(ViewResources.ReferEngine).ToHtmlString("h_80,w_80")
-                    <div>@ViewResources.ReferEngine <span class="tm"><sup>TM</sup></span></div>
+                    @Images.LogoWebHeader.Height(40).Width(229).Alt(ViewResources.ReferEngine).ToHtmlString("h_40")
                 </div>
             </div>
+            @if (Request.IsAuthenticated && viewProperties != null && viewProperties.CurrentUser != null)
+            {
+                <div>
+                    Welcome back, @viewProperties.CurrentUser.FirstName!
+                </div>
+            }
+            else
+            {
+                <div class="user-buttons">
+                    <a href="~/account/login" class="btn login">Log in</a>
+                    <a href="~/account/register" class="btn register">Join Refer Engine</a>
+                </div>
+            }
             @RenderBody()
         </div>
 
@@ -39,6 +52,7 @@
                 <li>@Links.WindowsAppStore(ViewResources.WindowsStoreApps)</li>
                 <li><a>@ViewResources.iPhoneAndiPadApps</a></li>
             </ul>
+
         </div>
 
         @Html.Partial("_GoogleAnalytics")

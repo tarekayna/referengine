@@ -4,14 +4,12 @@ using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Web.Models.Common;
 using ReferEngine.Web.Models.Recommend.Win8;
-using StackExchange.Profiling;
 using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Xml;
-
 
 namespace ReferEngine.Web.Controllers
 {
