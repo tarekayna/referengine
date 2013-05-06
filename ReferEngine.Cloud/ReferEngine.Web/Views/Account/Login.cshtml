@@ -4,6 +4,20 @@
     ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
 }
 
+<div class="row">
+    <div class="span4 offset3 text-center">
+        <form action="~/Account/FacebookLogin" method="post" id="fb-login">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="ReturnUrl" value="https://referengine.fwd.wf/account/" />
+            <a href="javascript: document.getElementById('fb-login').submit()">
+                <img src="https://cloudinary-a.akamaihd.net/referengine/image/upload/w_50/FB_f_Logo__blue_1024_jz915q.png" 
+                    alt="Icon for Facebook" style="float: left">
+                <h3>Login using Facebook</h3>
+            </a>
+        </form>
+    </div>
+</div>
+
 @using (Html.BeginForm(new { viewProperties.ReturnUrl }))
 {
     @Html.AntiForgeryToken()

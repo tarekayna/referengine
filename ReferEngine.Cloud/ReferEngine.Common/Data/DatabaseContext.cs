@@ -24,6 +24,7 @@ namespace ReferEngine.Common.Data
         public DbSet<PrivateBetaSignup> PrivateBetaSignups { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Membership> Memberships { get; set; }
+        public DbSet<OAuthMembership> OAuthMemberships { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserInRole> UsersInRoles { get; set; }
         public DbSet<IpAddressLocation> IpAddressLocations { get; set; }
@@ -93,6 +94,7 @@ namespace ReferEngine.Common.Data
 
             mb.Configurations.Add(new UserConfiguration());
             mb.Configurations.Add(new MembershipConfiguration());
+            mb.Configurations.Add(new OAuthMembershipConfiguration());
             mb.Configurations.Add(new RoleConfiguration());
             mb.Configurations.Add(new UserInRoleConfiguration());
             mb.Configurations.Add(new IpAddressLocationConfiguration());
@@ -154,6 +156,24 @@ namespace ReferEngine.Common.Data
                 Property(m => m.PasswordVerificationTokenExpirationDate)
                     .HasColumnName("PasswordVerificationTokenExpirationDate")
                     .IsOptional();
+            }
+        }
+
+        public class OAuthMembershipConfiguration : EntityTypeConfiguration<OAuthMembership>
+        {
+            public OAuthMembershipConfiguration()
+            {
+                ToTable("webpages_OAuthMembership");
+                HasKey(u => u.UserId);
+                Property(u => u.UserId)
+                    .HasColumnName("UserId")
+                    .IsRequired();
+                Property(m => m.Provider)
+                    .HasColumnName("Provider")
+                    .IsRequired();
+                Property(m => m.ProviderUserId)
+                    .HasColumnName("ProviderUserId")
+                    .IsRequired();
             }
         }
 

@@ -161,26 +161,63 @@ namespace ReferEngine.Common.Data
             });
         }
 
+        internal static User AddUser(User user, string roleName)
+        {
+            return (User)DbConnector.Execute(db =>
+                                                 {
+                                                     var addedUser = db.Users.Add(user);
+                                                     db.SaveChanges();
+
+                                                     Role role = db.Roles.FirstOrDefault(r => r.RoleName.Equals(roleName, StringComparison.InvariantCultureIgnoreCase));
+                                                     if (role == null)
+                                                     {
+                                                         role = new Role();
+                                                         role.RoleName = roleName;
+                                                         role = db.Roles.Add(role);
+                                                         db.SaveChanges();
+                                                     }
+                                                     db.UsersInRoles.Add(new UserInRole
+                                                                                 {
+                                                                                     RoleId = role.RoleId,
+                                                                                     UserId = addedUser.Id
+                                                                                 });
+                                                     db.SaveChanges();
+                                                     return null;
+                                                 });
+        }
+
         internal static User GetUser(int id)
         {
-            return (User) DbConnector.Execute(db =>
-                {
-                    User user = db.Users.First(c => c.Id == id);
-                    user.Apps = QueryForActiveApps(db, a => a.UserId == user.Id);
-                    return user;
-                });
+            return (User)DbConnector.Execute(db =>
+            {
+                User user = db.Users.First(c => c.Id == id);
+                user.Apps = QueryForActiveApps(db, a => a.UserId == user.Id);
+                return user;
+            });
         }
 
         internal static User GetUserFromConfirmationCode(string code)
         {
-            return (User) DbConnector.Execute(db =>
-                {
-                    Membership membership =
-                        db.Memberships.First(m => m.ConfirmationToken.Equals(code, StringComparison.OrdinalIgnoreCase));
-                    User user = db.Users.First(u => u.Id == membership.UserId);
-                    user.Apps = QueryForActiveApps(db, a => a.UserId == user.Id);
-                    return user;
-                });
+            return (User)DbConnector.Execute(db =>
+            {
+                Membership membership =
+                    db.Memberships.First(m => m.ConfirmationToken.Equals(code, StringComparison.OrdinalIgnoreCase));
+                User user = db.Users.First(u => u.Id == membership.UserId);
+                user.Apps = QueryForActiveApps(db, a => a.UserId == user.Id);
+                return user;
+            });
+        }
+
+        internal static User GetUserFromFacebookId(string facebookId)
+        {
+            return (User)DbConnector.Execute(db =>
+            {
+                var oAuthMembership = db.OAuthMemberships.FirstOrDefault(o => o.Provider == "Facebook" && o.ProviderUserId == facebookId);
+                if (oAuthMembership == null) return null;
+                User user = db.Users.First(u => u.Id == oAuthMembership.UserId);
+                user.Apps = QueryForActiveApps(db, a => a.UserId == user.Id);
+                return user;
+            });
         }
 
         internal static Membership GetMembership(string email)

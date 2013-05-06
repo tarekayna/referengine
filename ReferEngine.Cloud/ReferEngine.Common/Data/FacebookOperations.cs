@@ -55,6 +55,11 @@ namespace ReferEngine.Common.Data
         [DataMember]
         private DateTime AccessTokenExpiresAt { get; set; }
 
+        public FacebookOperations(FacebookAccessToken accessToken)
+        {
+            AccessToken = accessToken;
+        }
+
         public FacebookOperations(FacebookAccessToken accessToken, string referEngineAuthToken)
         {
             AccessToken = accessToken;
@@ -153,15 +158,15 @@ namespace ReferEngine.Common.Data
                                          ReferEngineAppSecret,
                                          accessCode);
             UriBuilder uriBuilder = new UriBuilder("https", "graph.facebook.com")
-                {
-                    Path = "oauth/access_token",
-                    Query = query
-                };
+            {
+                Path = "oauth/access_token",
+                Query = query
+            };
 
             HttpClient httpClient = new HttpClient();
 
             string response;
-            for (int i = 0; true ; i++)
+            for (int i = 0; true; i++)
             {
                 if (i == 2)
                 {
@@ -170,7 +175,7 @@ namespace ReferEngine.Common.Data
                     response = await responseMessage.Content.ReadAsStringAsync();
                     break;
                 }
-                
+
                 try
                 {
                     HttpResponseMessage responseMessage = await httpClient.GetAsync(uriBuilder.Uri);
@@ -183,6 +188,33 @@ namespace ReferEngine.Common.Data
                     Trace.TraceError(e.Message);
                 }
             }
+
+            const string str = "access_token=";
+            const string expiresStr = "&expires=";
+            int start = response.IndexOf(str, StringComparison.Ordinal) + str.Length;
+            int end = response.IndexOf(expiresStr, StringComparison.Ordinal);
+            string token = response.Substring(start, end - start);
+            int expiresIn = Convert.ToInt32(response.Substring(end + expiresStr.Length));
+            DateTime expiresAt = DateTime.Now.AddSeconds(expiresIn);
+            return new FacebookAccessToken(token, expiresAt);
+        }
+
+        public static async Task<FacebookAccessToken> ExchangeToken(string accessToken)
+        {
+            string query = String.Format("client_id={0}&client_secret={1}&grant_type=fb_exchange_token&fb_exchange_token={2}",
+                                         ReferEngineAppId,
+                                         ReferEngineAppSecret,
+                                         accessToken);
+            UriBuilder uriBuilder = new UriBuilder("https", "graph.facebook.com")
+            {
+                Path = "oauth/access_token",
+                Query = query
+            };
+
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(uriBuilder.Uri);
+            responseMessage.EnsureSuccessStatusCode();
+            string response = await responseMessage.Content.ReadAsStringAsync();
 
             const string str = "access_token=";
             const string expiresStr = "&expires=";

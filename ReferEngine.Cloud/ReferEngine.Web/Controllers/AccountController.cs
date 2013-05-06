@@ -1,4 +1,5 @@
-﻿using DotNetOpenAuth.AspNet;
+﻿using System.Threading.Tasks;
+using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Email;
@@ -18,6 +19,9 @@ namespace ReferEngine.Web.Controllers
     [Authorize]
     public class AccountController : BaseController
     {
+        private const string FacebookTokenSessionKey = "facebooktoken";
+        private const string FacebookProviderName = "Facebook";
+
         [AllowAnonymous]
         public ActionResult Login(string returnUrl, string successMessage)
         {
@@ -118,7 +122,7 @@ namespace ReferEngine.Web.Controllers
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
-
+            Session.Remove(FacebookTokenSessionKey);
             return RedirectToAction("Index", "Home");
         }
 
@@ -288,20 +292,28 @@ namespace ReferEngine.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult ExternalLogin(string provider, string returnUrl)
+        public ActionResult FacebookLogin(string returnUrl)
         {
-            return new ExternalLoginResult(provider, Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
+            return new ExternalLoginResult(FacebookProviderName, Url.Action("FacebookLoginCallback", new { ReturnUrl = returnUrl }));
         }
 
         [AllowAnonymous]
-        public ActionResult ExternalLoginCallback(string returnUrl)
+        public async Task<ActionResult> FacebookLoginCallback(string returnUrl)
         {
-            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
-            AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
+            AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action("FacebookLoginCallback", new { ReturnUrl = returnUrl }));
             if (!result.IsSuccessful)
             {
                 return RedirectToAction("ExternalLoginFailure");
             }
+
+            //Session[FacebookTokenSessionKey] = result.ExtraData["accesstoken"];
+            
+            string accessToken = result.ExtraData["accesstoken"];
+            string facebookId = result.ExtraData["id"];
+            string email = result.ExtraData["username"];
+            //string name = result.ExtraData["name"];
+            //string gender = result.ExtraData["gender"];
+            //string link = result.ExtraData["link"];
 
             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))
             {
@@ -314,61 +326,71 @@ namespace ReferEngine.Web.Controllers
                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);
                 return RedirectToLocal(returnUrl);
             }
-            else
-            {
-                // User is new, ask for their desired membership name
-                string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
-                viewProperties.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
-                viewProperties.ReturnUrl = returnUrl;
-                return View("ExternalLoginConfirmation", new RegisterExternalLoginModel
-                    {
-                        UserName = result.UserName, 
-                        ExternalLoginData = loginData
-                    });
-            }
+
+            User user = new User();
+            user.Email = email;
+
+            FacebookOperations facebookOperations = new FacebookOperations(new FacebookAccessToken(accessToken, DateTime.UtcNow.AddHours(5)));
+            Person currentPerson = await facebookOperations.GetCurrentUserAsync();
+
+            user.FirstName = currentPerson.FirstName;
+            user.LastName = currentPerson.LastName;
+            user.TimeStamp = DateTime.UtcNow;
+
+            DataOperations.AddUser(user, "User");
+
+            OAuthWebSecurity.CreateOrUpdateAccount(FacebookProviderName, facebookId, email);
+            OAuthWebSecurity.Login(FacebookProviderName, facebookId, createPersistentCookie: false);
+            return RedirectToLocal(returnUrl);
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
-        {
-            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
-            string provider;
-            string providerUserId;
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
+        //{
+        //    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+        //    string provider;
+        //    string providerUserId;
 
-            if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))
-            {
-                return RedirectToAction("Manage");
-            }
+        //    if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))
+        //    {
+        //        return RedirectToAction("Manage");
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
-                {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.Email.ToLower() == model.UserName.ToLower());
-                    // Check if user already exists
-                    if (user == null)
-                    {
-                        // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { Email = model.UserName });
-                        db.SaveChanges();
+        //    if (ModelState.IsValid)
+        //    {
+        //        // Insert a new user into the database
+        //        using (UsersContext db = new UsersContext())
+        //        {
+        //            UserProfile user = db.UserProfiles.FirstOrDefault(u => u.Email.ToLower() == model.UserName.ToLower());
+        //            // Check if user already exists
+        //            if (user == null)
+        //            {
+        //                // Insert name into the profile table
+        //                db.UserProfiles.Add(new UserProfile { Email = model.UserName });
+        //                db.SaveChanges();
 
-                        OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
-                        OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
+        //                FacebookAccessToken facebookAccessToken =
+        //                    new FacebookAccessToken(Session[FacebookTokenSessionKey].ToString(),
+        //                                            Convert.ToDateTime(Session[FacebookExpiresAtSessionKey].ToString()));
+        //                FacebookOperations facebookOperations = new FacebookOperations(facebookAccessToken);
+        //                facebookOperations.GetCurrentUser();
 
-                        return RedirectToLocal(returnUrl);
-                    }
+        //                OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
+        //                OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
+
+        //                return RedirectToLocal(returnUrl);
+        //            }
                     
-                    ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
-                }
-            }
+        //            ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
+        //        }
+        //    }
 
-            viewProperties.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
-            viewProperties.ReturnUrl = returnUrl;
-            return View(model);
-        }
+        //    viewProperties.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
+        //    viewProperties.ReturnUrl = returnUrl;
+        //    return View(model);
+        //}
 
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()

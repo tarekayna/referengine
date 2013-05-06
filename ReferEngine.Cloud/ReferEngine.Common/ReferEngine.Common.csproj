@@ -329,6 +329,7 @@
     <Compile Include="Models\AppScreenshot.cs" />
     <Compile Include="Models\ChartUnitResult.cs" />
     <Compile Include="Models\CloudinaryImage.cs" />
+    <Compile Include="Models\OAuthMembership.cs" />
     <Compile Include="Models\WindowsAppStoreInfoClientSide.cs" />
     <Compile Include="Models\ImageInfo.cs" />
     <Compile Include="Models\Invite.cs" />

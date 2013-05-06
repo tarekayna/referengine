@@ -2,9 +2,8 @@
 
 <div class="row">
     <div class="span12 text-center">
-        <form action="~/Account/ExternalLogin" method="post" id="fb-login">
+        <form action="~/Account/FacebookLogin" method="post" id="fb-login">
             @Html.AntiForgeryToken()
-            <input type="hidden" name="Provider" value="Facebook" />
             <input type="hidden" name="ReturnUrl" value="https://referengine.fwd.wf/account/" />
             <a href="javascript: document.getElementById('fb-login').submit()">
                 <img src="https://cloudinary-a.akamaihd.net/referengine/image/upload/w_50/FB_f_Logo__blue_1024_jz915q.png" alt="Icon for Facebook">
@@ -13,6 +12,20 @@
         </form>
     </div>
 </div>
+
+@*<div class="row">
+    <div class="span12 text-center">
+        <form action="~/Account/ExternalLogin" method="post" id="fb-login">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="Provider" value="Facebook" />
+            <input type="hidden" name="ReturnUrl" value="https://referengine.fwd.wf/account/" />
+            <a href="javascript: FB.login()">
+                <img src="https://cloudinary-a.akamaihd.net/referengine/image/upload/w_50/FB_f_Logo__blue_1024_jz915q.png" alt="Icon for Facebook">
+                <h3>Connect using Facebook</h3>
+            </a>
+        </form>
+    </div>
+</div>*@
 
 <style>
     .provider-btn {

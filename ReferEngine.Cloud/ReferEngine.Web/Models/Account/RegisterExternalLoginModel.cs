@@ -9,5 +9,8 @@ namespace ReferEngine.Web.Models.Account
         public string UserName { get; set; }
 
         public string ExternalLoginData { get; set; }
+
+        public string FullName { get; set; }
+        public string Link { get; set; }
     }
 }

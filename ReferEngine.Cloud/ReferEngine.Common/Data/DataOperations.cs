@@ -113,6 +113,11 @@ namespace ReferEngine.Common.Data
             return DatabaseOperations.GetUserFromConfirmationCode(code);
         }
 
+        public static User AddUser(User user, string roleName)
+        {
+            return DatabaseOperations.AddUser(user, roleName);
+        }
+
         public static Membership GetMembership(string email)
         {
             return DatabaseOperations.GetMembership(email);
