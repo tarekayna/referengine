@@ -123,11 +123,6 @@ namespace ReferEngine.Common.Data
             return DatabaseOperations.GetMembership(email);
         }
 
-        public static string GetRole(int userId)
-        {
-            return DatabaseOperations.GetRole(userId);
-        }
-
         public static IList<UserMembership> GetUserMemberships()
         {
             return DatabaseOperations.GetUserMemberships();
