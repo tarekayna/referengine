@@ -19,7 +19,6 @@ namespace ReferEngine.Web.Controllers
     [Authorize]
     public class AccountController : BaseController
     {
-        private const string FacebookTokenSessionKey = "facebooktoken";
         private const string FacebookProviderName = "Facebook";
 
         [AllowAnonymous]
@@ -122,7 +121,7 @@ namespace ReferEngine.Web.Controllers
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
-            Session.Remove(FacebookTokenSessionKey);
+            Session.Remove(FacebookAccessSessionKey);
             return RedirectToAction("Index", "Home");
         }
 
@@ -306,14 +305,15 @@ namespace ReferEngine.Web.Controllers
                 return RedirectToAction("ExternalLoginFailure");
             }
 
-            //Session[FacebookTokenSessionKey] = result.ExtraData["accesstoken"];
-            
             string accessToken = result.ExtraData["accesstoken"];
             string facebookId = result.ExtraData["id"];
-            string email = result.ExtraData["username"];
+            //string email = result.ExtraData["username"];
             //string name = result.ExtraData["name"];
             //string gender = result.ExtraData["gender"];
             //string link = result.ExtraData["link"];
+
+            FacebookAccessSession facebookAccessSession = new FacebookAccessSession(accessToken, DateTime.UtcNow.AddHours(2));
+            Session[FacebookAccessSessionKey] = facebookAccessSession;
 
             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))
             {
@@ -327,19 +327,23 @@ namespace ReferEngine.Web.Controllers
                 return RedirectToLocal(returnUrl);
             }
 
-            User user = new User();
-            user.Email = email;
+            Person currentPerson = await facebookAccessSession.GetCurrentUserAsync();
+            DataOperations.AddFacebookOperations(facebookAccessSession);
 
-            FacebookOperations facebookOperations = new FacebookOperations(new FacebookAccessToken(accessToken, DateTime.UtcNow.AddHours(5)));
-            Person currentPerson = await facebookOperations.GetCurrentUserAsync();
+            User user = new User
+                {
+                    Email = currentPerson.Email,
+                    FirstName = currentPerson.FirstName,
+                    LastName = currentPerson.LastName,
+                    TimeStamp = DateTime.UtcNow
+                };
 
-            user.FirstName = currentPerson.FirstName;
-            user.LastName = currentPerson.LastName;
-            user.TimeStamp = DateTime.UtcNow;
+            DataOperations.AddUser(user, roleName: "User");
 
-            DataOperations.AddUser(user, "User");
+            await facebookAccessSession.GetFriendsAsync();
+            ServiceBusOperations.AddToQueue(facebookAccessSession);
 
-            OAuthWebSecurity.CreateOrUpdateAccount(FacebookProviderName, facebookId, email);
+            OAuthWebSecurity.CreateOrUpdateAccount(FacebookProviderName, facebookId, currentPerson.Email);
             OAuthWebSecurity.Login(FacebookProviderName, facebookId, createPersistentCookie: false);
             return RedirectToLocal(returnUrl);
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
 
@@ -26,6 +27,13 @@ namespace ReferEngine.Web.Models.Common
         public string ProviderDisplayName { get; set; }
 
         public string ReferEngineAuthToken { get; set; }
+
+        public FacebookAccessSession FacebookAccessSession { get; set; }
+
+        public bool IsFacebookUser
+        {
+            get { return FacebookAccessSession != null; }
+        }
 
         public string GetJavaScriptGlobalVariables()
         {

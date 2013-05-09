@@ -3,10 +3,10 @@
   <WorkerRole name="ReferEngine.WorkerCloud.WinApps" vmsize="ExtraSmall">
     <Imports>
       <Import moduleName="RemoteAccess" />
-    </Imports>
+    <Import moduleName="Diagnostics" /></Imports>
     <ConfigurationSettings>
       <Setting name="CurrentServiceConfiguration" />
       <Setting name="TracerConnectionString" />
-    </ConfigurationSettings>
-  </WorkerRole>
+    <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" /></ConfigurationSettings>
+  <Startup priority="-2"><Task commandLine="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe install" executionContext="elevated" taskType="simple" /></Startup></WorkerRole>
 </ServiceDefinition>

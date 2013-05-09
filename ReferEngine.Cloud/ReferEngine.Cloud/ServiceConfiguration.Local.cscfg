@@ -14,10 +14,10 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" value="{&quot;caches&quot;:[{&quot;name&quot;:&quot;default&quot;,&quot;policy&quot;:{&quot;eviction&quot;:{&quot;type&quot;:0},&quot;expiration&quot;:{&quot;defaultTTL&quot;:10,&quot;isExpirable&quot;:true,&quot;type&quot;:1},&quot;serverNotification&quot;:{&quot;isEnabled&quot;:false}},&quot;secondaries&quot;:0}]}" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" value="1" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" value="30" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" value="DefaultEndpointsProtocol=https;AccountName=referenginecachetest;AccountKey=oxpQdMHF9Z0yOqos70odJaR1/8hJQpRy1grEhRukimIDDwuaWbWTYgR76N08lwq5VGodsluL1AttLwBdLgvApw==" />
     </ConfigurationSettings>
     <Certificates>
-      <Certificate name="ReferEngineTestCertificate" thumbprint="ad6316f4e279d0684106f4a88ce38bfab0315e3a" thumbprintAlgorithm="sha1" />
+      <Certificate name="ReferEngineTestCertificate" thumbprint="F8ACE24A36F93B006BFAF495F6C14FB827AC61A3" thumbprintAlgorithm="sha1" />
       <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="FF552F5649004ED2C7CCA344CB9D47ACD4737C7D" thumbprintAlgorithm="sha1" />
     </Certificates>
   </Role>

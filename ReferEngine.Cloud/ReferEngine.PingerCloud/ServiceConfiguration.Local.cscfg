@@ -5,6 +5,8 @@
     <ConfigurationSettings>
       <Setting name="CurrentServiceConfiguration" value="Local" />
       <Setting name="TracerConnectionString" value="DefaultEndpointsProtocol=https;AccountName=tracedatalocal;AccountKey=DIj+Qrv19TTLoBNKhSfd4rHhrJjlCosHrcu08x2JaLhFf4J1RqQpKTNJaZ9tmqL1xsFuXmY/vr9oQW0kUKeQ9Q==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

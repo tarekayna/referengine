@@ -9,6 +9,8 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2014-02-02T23:59:59.0000000-08:00" />
       <Setting name="CurrentServiceConfiguration" value="Local" />
       <Setting name="TracerConnectionString" value="DefaultEndpointsProtocol=https;AccountName=tracedatalocal;AccountKey=DIj+Qrv19TTLoBNKhSfd4rHhrJjlCosHrcu08x2JaLhFf4J1RqQpKTNJaZ9tmqL1xsFuXmY/vr9oQW0kUKeQ9Q==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="" />
     </ConfigurationSettings>
     <Certificates>
       <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="FF552F5649004ED2C7CCA344CB9D47ACD4737C7D" thumbprintAlgorithm="sha1" />

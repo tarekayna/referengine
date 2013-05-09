@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
+using System.Linq;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Web.Models.Account;
@@ -19,6 +20,8 @@ namespace ReferEngine.Web.Controllers
         private static object _initializerLock = new object();
         private static bool _isInitialized;
 
+        protected const string FacebookAccessSessionKey = "FacebookAccessSession";
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             // Ensure ASP.NET Simple Membership is initialized only once per app start
@@ -30,6 +33,7 @@ namespace ReferEngine.Web.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 viewProperties.CurrentUser = DataOperations.GetUser(WebSecurity.CurrentUserId);
+                viewProperties.FacebookAccessSession = (FacebookAccessSession)(Session[FacebookAccessSessionKey]);
             }
 
             base.OnActionExecuting(filterContext);

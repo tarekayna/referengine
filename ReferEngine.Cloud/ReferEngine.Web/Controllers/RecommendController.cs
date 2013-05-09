@@ -224,7 +224,7 @@ namespace ReferEngine.Web.Controllers
             // App is cool
             viewProperties.CurrentApp = appAuthorization.App;
             string accessCode = facebookCode.Replace("%23", "#");
-            FacebookOperations facebookOperations = await FacebookOperations.CreateAsync(accessCode, authToken);
+            FacebookAccessSession facebookOperations = await FacebookAccessSession.CreateAsync(accessCode, authToken);
 
             // Facebook is cool
             Person me = await facebookOperations.GetCurrentUserAsync();

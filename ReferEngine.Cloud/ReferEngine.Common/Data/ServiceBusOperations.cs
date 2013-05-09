@@ -52,7 +52,7 @@ namespace ReferEngine.Common.Data
                                                            messagingFactorySettings);
 
             // Add Queues by Priority
-            Queues.Add(new Queue(namespaceManager, messagingFactory, "FacebookOperations", typeof(FacebookOperations)));
+            Queues.Add(new Queue(namespaceManager, messagingFactory, "FacebookOperations", typeof(FacebookAccessSession)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "AppRecommendation", typeof(AppRecommendation)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "AppAuthorization", typeof(AppAuthorization)));
             Queues.Add(new Queue(namespaceManager, messagingFactory, "PrivateBetaSignup", typeof(PrivateBetaSignup)));

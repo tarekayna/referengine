@@ -48,7 +48,7 @@ namespace ReferEngine.Workers.DataWriter
                         {
                             case "ReferEngine.Common.Data.FacebookOperations":
                                 {
-                                    FacebookOperations facebookOperations = message.GetBody<FacebookOperations>();
+                                    FacebookAccessSession facebookOperations = message.GetBody<FacebookAccessSession>();
                                     DataOperations.AddOrUpdatePerson(facebookOperations.GetCurrentUser());
                                     DataOperations.AddPersonAndFriends(facebookOperations.GetCurrentUser(), facebookOperations.GetFriends(), message);
                                     break;

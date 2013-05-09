@@ -49,6 +49,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="docu\TimePeriod_en.pdf" />
     <None Include="Pack.ps1" />
     <None Include="NuGetPackage.ps1" />

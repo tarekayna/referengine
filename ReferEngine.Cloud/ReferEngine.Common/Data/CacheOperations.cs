@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Microsoft.ApplicationServer.Caching;
 using ReferEngine.Common.Models;
+using ReferEngine.Common.Utilities;
 using ReferEngine.Common.ViewModels.AppStore.Windows;
 
 namespace ReferEngine.Common.Data
@@ -90,6 +91,8 @@ namespace ReferEngine.Common.Data
 
         public User Get(long id)
         {
+            // if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local) return null;
+
             return base.Get(id.ToString());
         }
 
@@ -111,6 +114,8 @@ namespace ReferEngine.Common.Data
 
         public App Get(long id)
         {
+            // if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local) return null;
+
             return base.Get(id.ToString());
         }
 
@@ -132,6 +137,8 @@ namespace ReferEngine.Common.Data
 
         public App Get(string platform, string name)
         {
+            // if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local) return null;
+
             return base.Get(platform, name);
         }
 
@@ -153,6 +160,8 @@ namespace ReferEngine.Common.Data
 
         public WindowsAppViewModel Get(string name)
         {
+            // if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local) return null;
+
             return base.Get(name);
         }
 
@@ -174,6 +183,8 @@ namespace ReferEngine.Common.Data
 
         public WindowsCategoryViewModel Get(WindowsAppStoreCategory category, int numberOfApps, int pageNumber)
         {
+            // if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local) return null;
+
             return base.Get(category.Name, category.ParentCategoryName, numberOfApps.ToString(), pageNumber.ToString());
         }
 
@@ -196,6 +207,8 @@ namespace ReferEngine.Common.Data
 
         public App Get(string packageFamilyName, string verificationCode)
         {
+            // if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local) return null;
+
             return base.Get(packageFamilyName, verificationCode);
         }
 
@@ -306,6 +319,8 @@ namespace ReferEngine.Common.Data
 
         public static AppAuthorization GetAppAuthorization(string token)
         {
+            // if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local) return null;
+
             object cached = null;
             try
             {
@@ -320,6 +335,8 @@ namespace ReferEngine.Common.Data
 
         public static Person GetPerson(Int64 facebookId)
         {
+            // if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local) return null;
+
             String key = String.Format(CacheKeyFormat.Person, facebookId);
             object cached = null;
             try
@@ -339,14 +356,16 @@ namespace ReferEngine.Common.Data
             CachePutSafe(key, person);
         }
 
-        public static void AddFacebookOperations(string token, FacebookOperations facebookOperations)
+        public static void AddFacebookOperations(string token, FacebookAccessSession facebookOperations)
         {
             string key = string.Format(CacheKeyFormat.FacebookOperations, token);
             CachePutSafe(key, facebookOperations);
         }
 
-        public static FacebookOperations GetFacebookOperations(string token)
+        public static FacebookAccessSession GetFacebookOperations(string token)
         {
+            // if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local) return null;
+
             string key = string.Format(CacheKeyFormat.FacebookOperations, token);
             object cached = null;
             try
@@ -359,7 +378,7 @@ namespace ReferEngine.Common.Data
             }
             if (cached != null)
             {
-                return (FacebookOperations)cached;
+                return (FacebookAccessSession)cached;
             }
 
             return null;
@@ -367,6 +386,8 @@ namespace ReferEngine.Common.Data
 
         public static IpAddressLocation GetIpAddressLocation(string ipAddress)
         {
+            // if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local) return null;
+
             String key = String.Format(CacheKeyFormat.IpAddress, ipAddress);
             object cached = null;
             try
@@ -390,6 +411,8 @@ namespace ReferEngine.Common.Data
 
         public static AppAutoShowOptions GetAppAutoShowOptions(long appId)
         {
+            // if (Util.CurrentServiceConfiguration == Util.ReferEngineServiceConfiguration.Local) return null;
+
             String key = String.Format(CacheKeyFormat.AppAutoShowOptions, appId);
             object cached = null;
             try

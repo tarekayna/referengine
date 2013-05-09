@@ -49,7 +49,7 @@ namespace ReferEngine.Common.Data
             return DatabaseOperations.GetAppReceipt(id);
         }
 
-        public static FacebookOperations GetFacebookOperations(string token)
+        public static FacebookAccessSession GetFacebookOperations(string token)
         {
             return CacheOperations.GetFacebookOperations(token);
         }
@@ -343,7 +343,7 @@ namespace ReferEngine.Common.Data
             DatabaseOperations.AddAppAuthorization(auth);
         }
 
-        public static void AddFacebookOperations(FacebookOperations facebookOperations)
+        public static void AddFacebookOperations(FacebookAccessSession facebookOperations)
         {
             CacheOperations.AddFacebookOperations(facebookOperations.ReferEngineAuthToken, facebookOperations);
         }

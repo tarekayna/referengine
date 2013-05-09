@@ -5,6 +5,8 @@
     <ConfigurationSettings>
       <Setting name="CurrentServiceConfiguration" value="TestCloud" />
       <Setting name="TracerConnectionString" value="DefaultEndpointsProtocol=https;AccountName=tracedatatest;AccountKey=L+aCTcmNsCXSAtbZeoqCfDnELQhyl4CpjVE0UpA4ElukBLRIshyLBHBcou0/tB6Pn+ncwb620GnZiu3UDD/Jbg==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

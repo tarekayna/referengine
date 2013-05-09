@@ -61,6 +61,10 @@ ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
                             <form action="~/account/logOff" id="logoutForm" method="post">
                                 <div class="btn-group">
                                     <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                        @if (viewProperties.IsFacebookUser)
+                                        {
+                                            <img src="@viewProperties.FacebookAccessSession.GetCurrentUser().PictureUrl" />
+                                        }
                                         <span>@viewProperties.CurrentUser.FirstName @viewProperties.CurrentUser.LastName</span>
                                         <span class="caret"></span>
                                     </button>
