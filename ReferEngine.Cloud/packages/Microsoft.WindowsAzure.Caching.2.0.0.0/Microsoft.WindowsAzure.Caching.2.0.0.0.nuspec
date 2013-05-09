@@ -13,6 +13,9 @@
     <description>Windows Azure Caching is a distributed, in-memory cache that can be set up in your Windows Azure deployment on web or worker roles.  Caching increases performance by allowing you to store commonly accessed data in memory and reduces load on backend databases.  The Windows Azure Caching NuGet package allows you to quickly provision a web or worker role to consume cache by adding necessary client references and configuration snippets.
 This NuGet package can only be used with the Windows Azure SDK for .NET - 2.0 version of Windows Azure Caching.</description>
     <summary>A package that adds client libraries and configuration for Windows Azure Caching.</summary>
+    <releaseNotes />
+    <copyright />
+    <language />
     <tags>Microsoft Azure WindowsAzure Cache Caching Dedicated Distributed In-memory SQL windowsazureofficial</tags>
   </metadata>
 </package>
