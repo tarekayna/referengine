@@ -450,10 +450,12 @@
     </Content>
     <Content Include="Views\Shared\_FacebookSdk.cshtml" />
     <Content Include="Views\Shared\_OpenSansFont.cshtml" />
-    <Content Include="Views\Shared\_Header.cshtml" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Views\Shared\Header\_Header_NotAuthenticated.cshtml" />
+    <Content Include="Views\Shared\Header\_Header_Authenticated.cshtml" />
+    <Content Include="Views\Shared\Header\_Header_Logo.cshtml" />
     <TypeScriptCompile Include="TypeScript\admin\windowsStoreCategories.ts" />
     <Content Include="TypeScript\admin\windowsStoreCategories.js">
       <DependentUpon>windowsStoreCategories.ts</DependentUpon>
@@ -973,13 +975,11 @@
     <Content Include="Areas\Developer\Views\DeveloperHome\Pricing.cshtml" />
     <Content Include="Views\About\Rules.cshtml" />
     <Content Include="Views\Shared\_MixPanel.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />

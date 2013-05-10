@@ -1,0 +1,23 @@
+﻿<div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+        <div class="container">
+            @Html.Partial("Header/_Header_Logo")
+            <ul class="nav topnav">
+                <li>@Links.WindowsAppStore(ViewResources.WindowsStoreApps)</li>
+                <li>@Links.Developer(ViewResources.Developers)</li>
+                <li class="divider-vertical"></li>
+                <li>
+                    <a href="javascript: document.getElementById('fb-login').submit()">
+                        <img src="https://cloudinary-a.akamaihd.net/referengine/image/upload/w_30/FB_f_Logo__blue_1024_jz915q.png" 
+                                alt="Icon for Facebook" style="float: left; margin: -5px 10px 0 0">
+                        Login using Facebook
+                    </a>
+                    <form action="~/Account/FacebookLogin" method="post" id="fb-login" style="display: none">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="ReturnUrl" value="@Request.Url.PathAndQuery" />
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -10,6 +10,7 @@ using System.Net;
 using System.Web.Mvc;
 using System.Web.Security;
 using WebMatrix.WebData;
+using Roles = ReferEngine.Common.Models.Roles;
 
 namespace ReferEngine.Web.Controllers
 {
@@ -47,7 +48,7 @@ namespace ReferEngine.Web.Controllers
             viewProperties.ActiveMenuItem = "Dashboard";
 
             if (viewProperties.CurrentApp != null &&
-               (viewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
+               (viewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || User.IsInRole(Roles.Admin)))
             {
                 return View();
             }
@@ -63,7 +64,7 @@ namespace ReferEngine.Web.Controllers
             viewProperties.CurrentApp = DataOperations.GetApp(id);
 
             if (viewProperties.CurrentApp == null ||
-               (viewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
+               (viewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !User.IsInRole(Roles.Admin)))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
@@ -83,7 +84,7 @@ namespace ReferEngine.Web.Controllers
             App app = viewProperties.CurrentApp;
 
             if (viewProperties.CurrentApp == null ||
-               (viewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
+               (viewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !User.IsInRole(Roles.Admin)))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
@@ -104,7 +105,7 @@ namespace ReferEngine.Web.Controllers
             App app = viewProperties.CurrentApp;
 
             if (viewProperties.CurrentApp == null ||
-               (viewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !Roles.IsUserInRole("Admin")))
+               (viewProperties.CurrentApp.UserId != WebSecurity.CurrentUserId && !User.IsInRole(Roles.Admin)))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
@@ -122,7 +123,7 @@ namespace ReferEngine.Web.Controllers
             viewProperties.ActiveMenuItem = "Settings";
 
             if (viewProperties.CurrentApp != null &&
-               (viewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin")))
+               (viewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || User.IsInRole(Roles.Admin)))
             {
                 return View(first);
             }
@@ -149,7 +150,7 @@ namespace ReferEngine.Web.Controllers
         {
             ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
             return viewProperties.CurrentApp != null &&
-                   (viewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || Roles.IsUserInRole("Admin"));
+                   (viewProperties.CurrentApp.UserId == WebSecurity.CurrentUserId || User.IsInRole(Roles.Admin));
         }
 
         private static TimeSpan GetTimeSpan(string timespan)

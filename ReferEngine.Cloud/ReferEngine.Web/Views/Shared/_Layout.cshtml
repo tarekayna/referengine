@@ -40,14 +40,21 @@
         }
 
         @Html.Partial("_FavIcon")
-        @Html.Partial("_OpenSansFont");
+        @Html.Partial("_OpenSansFont")
         @Styles.Render("~/bundles/css/defaultLayout")
         @RenderSection("Styles", required: false)
     </head>
     <body>
         <div class='notifications top-right'></div>
         
-        @Html.Partial("_Header")
+        @if (Request.IsAuthenticated)
+        {
+            @:@Html.Partial("Header/_Header_Authenticated")
+        }
+        else
+        {
+            @:@Html.Partial("Header/_Header_NotAuthenticated")
+        }
         
         <section id="subintro">
             <div class="jumbotron subhead" id="overview">

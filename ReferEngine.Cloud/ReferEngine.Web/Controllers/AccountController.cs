@@ -21,6 +21,19 @@ namespace ReferEngine.Web.Controllers
     {
         private const string FacebookProviderName = "Facebook";
 
+        public async Task<ActionResult> Like(string returnUrl, string msAppId)
+        {
+            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+
+            var appInfo = DataOperations.GetWindowsAppStoreInfo(msAppId);
+            if (appInfo != null)
+            {
+                await viewProperties.FacebookAccessSession.PostAppLikeAsync(appInfo);
+            }
+
+            return RedirectToLocal(returnUrl);
+        }
+
         [AllowAnonymous]
         public ActionResult Login(string returnUrl, string successMessage)
         {
@@ -43,6 +56,7 @@ namespace ReferEngine.Web.Controllers
                     if (string.IsNullOrEmpty(returnUrl))
                     {
                         var user = DataOperations.GetUser(model.Email);
+                        Session[SessionKey.CurrentUser] = user;
                         return user.Apps.Any() ? RedirectToLocal("/app/dashboard/" + user.Apps.First().Id) : RedirectToLocal("/app/new");
                     }
                     
@@ -121,7 +135,7 @@ namespace ReferEngine.Web.Controllers
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
-            Session.Remove(FacebookAccessSessionKey);
+            Session.Remove(SessionKey.FacebookAccessSession);
             return RedirectToAction("Index", "Home");
         }
 
@@ -313,7 +327,7 @@ namespace ReferEngine.Web.Controllers
             //string link = result.ExtraData["link"];
 
             FacebookAccessSession facebookAccessSession = new FacebookAccessSession(accessToken, DateTime.UtcNow.AddHours(2));
-            Session[FacebookAccessSessionKey] = facebookAccessSession;
+            Session[SessionKey.FacebookAccessSession] = facebookAccessSession;
 
             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))
             {
@@ -400,15 +414,6 @@ namespace ReferEngine.Web.Controllers
         public ActionResult ExternalLoginFailure()
         {
             return View();
-        }
-
-        [AllowAnonymous]
-        [ChildActionOnly]
-        public ActionResult ExternalLoginsList(string returnUrl)
-        {
-            ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
-            viewProperties.ReturnUrl = returnUrl;
-            return PartialView("_ExternalLoginsListPartial", OAuthWebSecurity.RegisteredClientData);
         }
 
         [ChildActionOnly]

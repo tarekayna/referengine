@@ -163,7 +163,7 @@
     <Compile Include="Data\DbConnector.cs" />
     <Compile Include="Data\DataOperations.cs" />
     <Compile Include="Data\DatabaseOperations.cs" />
-    <Compile Include="Data\FacebookOperations.cs" />
+    <Compile Include="Data\FacebookAccessSession.cs" />
     <Compile Include="Data\CloudinaryConnector.cs" />
     <Compile Include="Data\IpCheckOperations.cs" />
     <Compile Include="Migrations\201302071841012_IpAddressLocation.cs" />
@@ -393,6 +393,7 @@
     <Compile Include="Tracing\TraceMessage.cs" />
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="Utilities\HsbColor.cs" />
+    <Compile Include="Utilities\IPrincipalExtensions.cs" />
     <Compile Include="Utilities\RequireHttpsPermanentRemoteAttribute.cs" />
     <Compile Include="Utilities\DateTimeExtensions.cs" />
     <Compile Include="Utilities\EnumExtensions.cs" />

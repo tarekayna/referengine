@@ -3,8 +3,8 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
-using System.Linq;
 using ReferEngine.Common.Data;
+using ReferEngine.Common.Models;
 using ReferEngine.Common.Utilities;
 using ReferEngine.Web.Models.Account;
 using ReferEngine.Web.Models.Common;
@@ -20,7 +20,11 @@ namespace ReferEngine.Web.Controllers
         private static object _initializerLock = new object();
         private static bool _isInitialized;
 
-        protected const string FacebookAccessSessionKey = "FacebookAccessSession";
+        protected static class SessionKey
+        {
+            public const string FacebookAccessSession = "FacebookAccessSession";
+            public const string CurrentUser = "CurrentUser";
+        }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -32,8 +36,17 @@ namespace ReferEngine.Web.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                viewProperties.CurrentUser = DataOperations.GetUser(WebSecurity.CurrentUserId);
-                viewProperties.FacebookAccessSession = (FacebookAccessSession)(Session[FacebookAccessSessionKey]);
+                if (Session[SessionKey.CurrentUser] == null)
+                {
+                    User user = DataOperations.GetUser(User.Identity.Name);
+                    Session[SessionKey.CurrentUser] = user;
+                    viewProperties.CurrentUser = user;
+                }
+                else
+                {
+                    viewProperties.CurrentUser = (User)(Session[SessionKey.CurrentUser]);                    
+                }
+                viewProperties.FacebookAccessSession = (FacebookAccessSession)(Session[SessionKey.FacebookAccessSession]);
             }
 
             base.OnActionExecuting(filterContext);

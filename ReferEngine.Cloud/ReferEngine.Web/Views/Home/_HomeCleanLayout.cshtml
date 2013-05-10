@@ -29,17 +29,33 @@
                     @Images.LogoWebHeader.Height(40).Width(229).Alt(ViewResources.ReferEngine).ToHtmlString("h_40")
                 </div>
             </div>
-            @if (Request.IsAuthenticated && viewProperties != null && viewProperties.CurrentUser != null)
+            @if (Request.IsAuthenticated)
             {
-                <div>
-                    Welcome back, @viewProperties.CurrentUser.FirstName!
-                </div>
+                if (viewProperties.HasFacebookAccessSession)
+                {
+                    <div class="user-login">
+                        Hi, @viewProperties.FacebookAccessSession.GetCurrentUser().FirstName!
+                    </div>
+                }
+                else if (viewProperties.HasCurrentUser)
+                {
+                    <div class="user-login">
+                        Hi, @viewProperties.CurrentUser.FirstName!
+                    </div>
+                }
             }
             else
             {
-                <div class="user-buttons">
-                    <a href="~/account/login" class="btn login">Log in</a>
-                    <a href="~/account/register" class="btn register">Join Refer Engine</a>
+                <div class="user-login">
+                    <a href="javascript: document.getElementById('fb-login').submit()">
+                        <img src="https://cloudinary-a.akamaihd.net/referengine/image/upload/w_30/FB_f_Logo__blue_1024_jz915q.png" 
+                                alt="Icon for Facebook">
+                        Login using Facebook
+                    </a>
+                    <form action="~/Account/FacebookLogin" method="post" id="fb-login" style="display: none">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="ReturnUrl" value="@Request.Url.PathAndQuery" />
+                    </form>
                 </div>
             }
             @RenderBody()

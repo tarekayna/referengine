@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 using ReferEngine.Common.Data;
 using ReferEngine.Common.Models;
@@ -9,9 +8,13 @@ namespace ReferEngine.Web.Models.Common
 {
     public class ViewProperties
     {
-        public bool UseJQueryUi { get; set; }
-        public App CurrentApp { get; set; }
         public User CurrentUser { get; set; }
+        public FacebookAccessSession FacebookAccessSession { get; set; }
+        public bool HasCurrentUser { get { return CurrentUser != null; } }
+        public bool HasFacebookAccessSession { get { return FacebookAccessSession != null; } }
+
+        public App CurrentApp { get; set; }
+
         public string ReturnUrl { get; set; }
         public string PageTitle { get; set; }
         public string ActiveMenuItem { get; set; }
@@ -27,13 +30,6 @@ namespace ReferEngine.Web.Models.Common
         public string ProviderDisplayName { get; set; }
 
         public string ReferEngineAuthToken { get; set; }
-
-        public FacebookAccessSession FacebookAccessSession { get; set; }
-
-        public bool IsFacebookUser
-        {
-            get { return FacebookAccessSession != null; }
-        }
 
         public string GetJavaScriptGlobalVariables()
         {
