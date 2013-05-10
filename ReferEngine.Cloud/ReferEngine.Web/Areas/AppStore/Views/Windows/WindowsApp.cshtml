@@ -224,6 +224,13 @@
             <header>
                 <img src="@Model.WindowsAppStoreInfo.LogoImage.GetLink()" class="pull-left" itemprop="image" />
                 <h4 itemprop="name">@appName</h4>
+                <form method="POST" action="~/account/like" id="like-app" style="display: none">
+                    <input type="hidden" name="msAppId" value="@Model.WindowsAppStoreInfo.MsAppId" />
+                    <input type="hidden" name="returnUrl" value="@Request.Url.PathAndQuery" />
+                </form>
+                <span class="pull-right">
+                    <a href="javascript: document.getElementById('like-app').submit()">Like</a>
+                </span>
             </header>
             <div class="clearfix">
             </div>
