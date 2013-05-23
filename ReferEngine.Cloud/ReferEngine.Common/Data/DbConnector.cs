@@ -1,6 +1,4 @@
-﻿using System.Text;
-using ReferEngine.Common.Email;
-using ReferEngine.Common.Tracing;
+﻿using ReferEngine.Common.Tracing;
 using ReferEngine.Common.Utilities;
 using System;
 using System.Collections.Generic;

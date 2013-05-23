@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Microsoft.WindowsAzure;
 using System.Linq;
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using CloudStorageAccount = Microsoft.WindowsAzure.Storage.CloudStorageAccount;
 
@@ -29,8 +32,10 @@ namespace ReferEngine.Common.Tracing
             get { return "TraceData"; }
         }
 
+        private static SpinLock _tableLock = new SpinLock();
+
         private static CloudTable _table;
-        private static CloudTable Table
+        public static CloudTable Table
         {
             get
             {
@@ -47,8 +52,18 @@ namespace ReferEngine.Common.Tracing
 
         public static void Trace(TraceMessage traceMessage)
         {
-            TableOperation insertOperation = TableOperation.Insert(traceMessage);
-            Table.Execute(insertOperation);
+            bool gotLock = false;
+            try
+            {
+                _tableLock.Enter(ref gotLock);
+                traceMessage.Time = DateTime.UtcNow;
+                Table.Execute(TableOperation.Insert(traceMessage));
+                Console.WriteLine(traceMessage.Message);
+            }
+            finally 
+            {
+                if (gotLock) _tableLock.Exit();
+            }
         }
 
         private static IList<string> _roles;

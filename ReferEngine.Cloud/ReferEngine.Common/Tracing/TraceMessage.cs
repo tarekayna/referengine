@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Web.Helpers;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage.Table;
@@ -24,7 +25,16 @@ namespace ReferEngine.Common.Tracing
 
     public sealed class TraceMessage : TableEntity
     {
-        public DateTime Time { get; set; }
+        private DateTime _time;
+        public DateTime Time
+        {
+            get { return _time; }
+            set
+            {
+                _time = value;
+                RowKey = (DateTime.MaxValue.Ticks - Time.Ticks).ToString("d19");
+            }
+        }
         public string Message { get; set; }
         public string RoleInstanceId { get; set; }
         public string RoleName { get; set; }
@@ -60,14 +70,16 @@ namespace ReferEngine.Common.Tracing
             RoleInstanceId = RoleEnvironment.CurrentRoleInstance.Id;
             RoleName = RoleEnvironment.CurrentRoleInstance.Role.Name;
             PartitionKey = RoleEnvironment.CurrentRoleInstance.Role.Name;
-            RowKey = (DateTime.MaxValue.Ticks - Time.Ticks).ToString("d19");
         }
 
         public TraceMessage AddProperty(string key, object value)
         {
-            if (_properties == null) _properties = new Dictionary<string, string>();
-            _properties.Add(key, value.ToString());
-            PropertiesString = Json.Encode(_properties);
+            if (!string.IsNullOrEmpty(key) && value != null)
+            {
+                if (_properties == null) _properties = new Dictionary<string, string>();
+                _properties.Add(key, value.ToString());
+                PropertiesString = Json.Encode(_properties);
+            }
             return this;
         }
 
@@ -76,11 +88,42 @@ namespace ReferEngine.Common.Tracing
             return new TraceMessage(message, TraceMessageCategory.Error);
         }
 
-        public static TraceMessage Exception(Exception e)
+        public static TraceMessage Exception(Exception exception)
         {
-            TraceMessage traceMessage = new TraceMessage(e.Message, TraceMessageCategory.Error);
-            traceMessage.AddProperty("Stack Trace", e.StackTrace);
-            traceMessage.AddProperty("Source", e.Source);
+            TraceMessage traceMessage = new TraceMessage(exception.Message, TraceMessageCategory.Error);
+            int index = 1;
+            var currentException = exception;
+
+            while (currentException != null)
+            {
+                traceMessage.AddProperty("Stack Trace " + index, exception.StackTrace);
+                traceMessage.AddProperty("Source " + index, exception.Source);
+                index++;
+                currentException = currentException.InnerException;
+            }
+
+            index = 1;
+            if (exception is DbEntityValidationException)
+            {
+                var entityException = (DbEntityValidationException) exception;
+                foreach (var error in entityException.EntityValidationErrors)
+                {
+                    foreach (var property in error.Entry.CurrentValues.PropertyNames)
+                    {
+                        var name = string.Format("EV-{0}-{1}", index, property);
+                        traceMessage.AddProperty(name, error.Entry.CurrentValues[property]);
+                    }
+
+                    foreach (var dbValidationError in error.ValidationErrors)
+                    {
+                        var name = string.Format("EV-{0}-{1}", index, dbValidationError.PropertyName);
+                        traceMessage.AddProperty(name, dbValidationError.ErrorMessage);
+                    }
+                    
+                    index++;
+                }
+            }
+
             return traceMessage;
         }
 

@@ -346,5 +346,10 @@ namespace ReferEngine.Common.Utilities
 
             return string.Format("http://schema.org/{0}", supportedName);
         }
+
+        public static DateTime EpochPlusMilliseconds(string milliseconds)
+        {
+            return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddMilliseconds(Convert.ToInt64(milliseconds));
+        }
     }
 }

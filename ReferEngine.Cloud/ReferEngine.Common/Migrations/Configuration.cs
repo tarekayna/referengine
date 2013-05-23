@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.Linq;
 using ReferEngine.Common.Data;
-using ReferEngine.Common.Models;
+using System.Data.Entity.Migrations;
 
 namespace ReferEngine.Common.Migrations
 {

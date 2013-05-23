@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.ServiceBus;
+﻿using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using ReferEngine.Common.Models;
-using System.Linq;
-using ReferEngine.Common.Properties;
 using ReferEngine.Common.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ReferEngine.Common.Data
 {
@@ -84,64 +83,6 @@ namespace ReferEngine.Common.Data
             return message;
         }
 
-        private class Queue
-        {
-            private string Name { get; set; }
-            private NamespaceManager NamespaceManager { get; set; }
-            private MessagingFactory MessagingFactory { get; set; }
-            public Type SupportedType { get; private set; }
-            private QueueClient Client { get; set; }
-            private QueueClient DeadLetterClient { get; set; }
-
-            public Queue(NamespaceManager namespaceManager, MessagingFactory messagingFactory, string queueName, Type supportedType)
-            {
-                NamespaceManager = namespaceManager;
-                MessagingFactory = messagingFactory;
-                Name = queueName;
-                SupportedType = supportedType;
-                CreateIfNeeded();
-                Client = messagingFactory.CreateQueueClient(Name);
-                DeadLetterClient = messagingFactory.CreateQueueClient(Name + "/$DeadLetterQueue");
-            }
-
-            public void Enqueue(Object obj)
-            {
-                if (obj.GetType() == SupportedType)
-                {
-                    Client.Send(new BrokeredMessage(obj));
-                }
-            }
-
-            public BrokeredMessage Receive()
-            {
-                TimeSpan timeSpan = TimeSpan.FromMinutes(0);
-                //BrokeredMessage message = Client.Receive(timeSpan);
-                BrokeredMessage message = Client.Receive(timeSpan) ?? DeadLetterClient.Receive(timeSpan);
-
-                if (message != null)
-                {
-                    message.ContentType = SupportedType.ToString();
-                }
-                return message;
-            }
-
-            private void CreateIfNeeded()
-            {
-                if (NamespaceManager.QueueExists(Name))
-                {
-                    return;
-                }
-                try
-                {
-                    NamespaceManager.CreateQueue(Name);
-                }
-                catch (MessagingEntityAlreadyExistsException)
-                {
-                    // already exists, good
-                }
-            }
-        }
-
         private static ServiceBusAccessInfo GetAccessInfo()
         {
             ServiceBusAccessInfo accessInfo = new ServiceBusAccessInfo();
@@ -168,13 +109,6 @@ namespace ReferEngine.Common.Data
             }
 
             return accessInfo;
-        }
-
-        private class ServiceBusAccessInfo
-        {
-            public string Issuer { get; set; }
-            public string Namespace { get; set; }
-            public string Key { get; set; }
         }
     }
 }

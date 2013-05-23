@@ -1,3 +1,3 @@
-update-database -ProjectName ReferEngine.Common -StartupProjectName ReferEngine.Common -ConnectionStringName west
-update-database -ProjectName ReferEngine.Common -StartupProjectName ReferEngine.Common -ConnectionStringName east
-update-database -ProjectName ReferEngine.Common -StartupProjectName ReferEngine.Common -ConnectionStringName asia
+UpdateDatabase_Production_Asia.ps1
+UpdateDatabase_Production_East.ps1
+UpdateDatabase_Production_West.ps1

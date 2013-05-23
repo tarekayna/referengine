@@ -428,6 +428,7 @@
     <Content Include="Less\Shared\defaultLayout.min.css">
       <DependentUpon>defaultLayout.less</DependentUpon>
     </Content>
+    <Content Include="Areas\AppStore\Views\iPhoneAndiPad\iOSStore.cshtml" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -672,6 +673,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Compile Include="Areas\AppStore\AppStoreAreaRegistration.cs" />
+    <Compile Include="Areas\AppStore\Controllers\iPhoneAndiPadController.cs" />
     <Compile Include="Areas\AppStore\Controllers\WindowsController.cs" />
     <Compile Include="Areas\AppStore\ViewModels\WindowsStoreSearchViewModel.cs" />
     <Compile Include="Areas\AppStore\ViewModels\WindowsStoreNavigationViewModel.cs" />

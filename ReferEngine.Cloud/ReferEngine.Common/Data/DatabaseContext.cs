@@ -89,8 +89,7 @@ namespace ReferEngine.Common.Data
             mb.Entity<Invite>().HasKey(i => i.Email);
 
             mb.Entity<AppAutoShowOptions>().HasKey(o => o.AppId);
-            mb.Entity<AppAutoShowOptions>().Property(s => s.AppId)
-                        .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            mb.Entity<AppAutoShowOptions>().Property(s => s.AppId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             mb.Configurations.Add(new UserConfiguration());
             mb.Configurations.Add(new MembershipConfiguration());

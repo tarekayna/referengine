@@ -22,7 +22,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.WorkerCloud.Win
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2E9C1DE6-19FF-4F02-A5FE-55C4EC6C75B3}"
 	ProjectSection(SolutionItems) = preProject
+		AddMigration_iOS_Local.ps1 = AddMigration_iOS_Local.ps1
 		AddMigration_West_Local.ps1 = AddMigration_West_Local.ps1
+		UpdateDatabase_iOS_Local.ps1 = UpdateDatabase_iOS_Local.ps1
+		UpdateDatabase_iOS_Production_All.ps1 = UpdateDatabase_iOS_Production_All.ps1
+		UpdateDatabase_iOS_Production_East.ps1 = UpdateDatabase_iOS_Production_East.ps1
+		UpdateDatabase_iOS_Production_West.ps1 = UpdateDatabase_iOS_Production_West.ps1
+		UpdateDatabase_Production_All.ps1 = UpdateDatabase_Production_All.ps1
 		UpdateDatabase_Production_Asia.ps1 = UpdateDatabase_Production_Asia.ps1
 		UpdateDatabase_Production_East.ps1 = UpdateDatabase_Production_East.ps1
 		UpdateDatabase_Production_West.ps1 = UpdateDatabase_Production_West.ps1
@@ -32,6 +38,12 @@ EndProject
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "ReferEngine.PingerCloud", "ReferEngine.PingerCloud\ReferEngine.PingerCloud.ccproj", "{28E922B7-A292-48FB-A538-851F8BEA9821}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.Pinger", "ReferEngine.Pinger\ReferEngine.Pinger.csproj", "{AEBA45D3-6232-454B-8311-BB06246B8AAB}"
+EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "ReferEngine.iTunesCollectorCloud", "ReferEngine.iTunesCollectorCloud\ReferEngine.iTunesCollectorCloud.ccproj", "{43C18189-6B18-4128-824A-7471E11CB632}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.iTunesCollector", "ReferEngine.iTunesCollector\ReferEngine.iTunesCollector.csproj", "{BBA48BA9-C172-4A41-9862-80ED51A0F7B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.iTunesQueueCruncher", "ReferEngine.iTunesQueueCruncher\ReferEngine.iTunesQueueCruncher.csproj", "{E53C9827-4BFC-4001-BAEE-B6338EC9BF97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +91,18 @@ Global
 		{AEBA45D3-6232-454B-8311-BB06246B8AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEBA45D3-6232-454B-8311-BB06246B8AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEBA45D3-6232-454B-8311-BB06246B8AAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43C18189-6B18-4128-824A-7471E11CB632}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43C18189-6B18-4128-824A-7471E11CB632}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43C18189-6B18-4128-824A-7471E11CB632}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43C18189-6B18-4128-824A-7471E11CB632}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBA48BA9-C172-4A41-9862-80ED51A0F7B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBA48BA9-C172-4A41-9862-80ED51A0F7B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBA48BA9-C172-4A41-9862-80ED51A0F7B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBA48BA9-C172-4A41-9862-80ED51A0F7B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E53C9827-4BFC-4001-BAEE-B6338EC9BF97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E53C9827-4BFC-4001-BAEE-B6338EC9BF97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E53C9827-4BFC-4001-BAEE-B6338EC9BF97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E53C9827-4BFC-4001-BAEE-B6338EC9BF97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
