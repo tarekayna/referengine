@@ -573,14 +573,14 @@ namespace ReferEngine.Common.Data.iOS
             });
         }
 
-        public static void AddNewDataImport(iOSDataImport dataImport)
+        public static void AddDataImportStep(iOSDataImportStep dataImportStep)
         {
             iOSDatabaseConnector.Execute(db =>
-                {
-                    db.DataImports.Add(dataImport);
-                    db.SaveChanges();
-                    return null;
-                });
+            {
+                db.DataImportSteps.Add(dataImportStep);
+                db.SaveChanges();
+                return null;
+            });
         }
 
         private static DateTime RenewLocksIfNeeded(BrokeredMessage[] messages, DateTime lockedUntilUtc)

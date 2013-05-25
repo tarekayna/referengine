@@ -62,14 +62,14 @@ namespace ReferEngine.Common.Data.iOS
             switch (Util.CurrentServiceConfiguration)
             {
                 case Util.ReferEngineServiceConfiguration.ProductionCloud:
-                    accessInfo.Namespace = "ios-production";
+                    accessInfo.Namespace = "iOS-Prod";
                     accessInfo.Issuer = "owner";
-                    accessInfo.Key = "dQaG3CjJ5Mygco4ZQnQSpkZui3fC0vBSV8z4gr42edM=";
+                    accessInfo.Key = "aQRbNPrsIPe/TDwaLemkbN+xyWPIdD9bNeZJKCa5nqI=";
                     break;
                 case Util.ReferEngineServiceConfiguration.TestCloud:
                     accessInfo.Namespace = "ios-test";
                     accessInfo.Issuer = "owner";
-                    accessInfo.Key = "l5tU3iRCXue6pd6FKzdu3r7WBFRPoRpOJata1ygHHx4=";
+                    accessInfo.Key = "+8VPpbs5AhHY/mEOw+kK+xqH0P9uZTkW9Gknfu9IP8k=";
                     break;
                 case Util.ReferEngineServiceConfiguration.Local:
                     accessInfo.Namespace = "ios-local";

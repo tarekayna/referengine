@@ -78,16 +78,12 @@ namespace ReferEngine.Common.Data.iOS
                 x => x.CloudinaryImage.OriginalLink.Equals(originalLink, StringComparison.OrdinalIgnoreCase)));
         }
 
-        internal static iOSDataImport GetLastDataImport()
+        internal static iOSDataImportStep GetDataImportStep(ImportType importType, string dateString, ImportStepName stepName)
         {
-            return (iOSDataImport)iOSDatabaseConnector.Execute(db =>
-                {
-                    if (db.DataImports.Any())
-                    {
-                        return db.DataImports.OrderByDescending(x => x.DateString).Last();
-                    }
-                    return null;
-                });
+            return (iOSDataImportStep)iOSDatabaseConnector.Execute(db =>
+                                        db.DataImportSteps.FirstOrDefault(x => x.DateString == dateString &&
+                                                                               x.ImportType == importType &&
+                                                                               x.Name == stepName));
         }
 
         internal static iOSAppViewModel GetAppViewModelByName(string appName)

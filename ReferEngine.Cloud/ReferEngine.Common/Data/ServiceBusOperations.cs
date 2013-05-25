@@ -70,15 +70,12 @@ namespace ReferEngine.Common.Data
         public static BrokeredMessage GetMessage()
         {
             if (SimulateWithoutConnecting) return null;
-
             BrokeredMessage message = null;
             foreach (Queue queue in Queues)
             {
+                if (queue.IsEmpty()) continue;
                 message = queue.Receive();
-                if (message != null)
-                {
-                    break;
-                }
+                if (message != null) break;
             }
             return message;
         }

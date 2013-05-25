@@ -17,7 +17,7 @@
     </Certificates>
   </Role>
   <Role name="ReferEngine.iTunesQueueCruncher">
-    <Instances count="4" />
+    <Instances count="12" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="tarek990" />

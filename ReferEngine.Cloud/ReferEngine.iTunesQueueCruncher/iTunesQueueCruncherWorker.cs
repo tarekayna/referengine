@@ -14,34 +14,45 @@ namespace ReferEngine.iTunesQueueCruncher
     public class iTunesQueueCruncherWorker : RoleEntryPoint
     {
         private const char FieldSeparator = (char)1;
-        private const int BatchSize = 5000;
+        private const char RecordSeparator = (char)2;
+        private const int BatchSize = 500;
         delegate void ProcessRecordsDelegateWithMessages(IEnumerable<IList<string>> unprocessedRecordsInfo, BrokeredMessage[] messages);
 
         private void ProcessMessagesInQueue(Queue queue, ProcessRecordsDelegateWithMessages processRecordsDelegate)
         {
+            var numberOfProcessedMessages = 0;
+            var numberOfProcessedRecords = 0;
             while (true)
             {
-                var messages = queue.ReceiveBatch(BatchSize);
-                if (messages == null) return;
-                var messagesArray = messages.ToArray();
-                if (!messagesArray.Any()) return;
+                if (queue.IsEmpty()) break;
+                var batch = queue.ReceiveBatch(BatchSize);
+                if (batch == null) break;
+                var messages = batch.ToArray();
+                if (!messages.Any()) break;
 
-                var records = messagesArray.Select(x => x.GetBody<string>().Split(FieldSeparator));
-                processRecordsDelegate(records, messagesArray);
-
-                for (int i = 0; i < messagesArray.Count(); i++)
+                var records = new List<IList<string>>();
+                foreach (var brokeredMessage in messages)
                 {
-                    var lockedUntilUtc = messagesArray.ElementAt(i).LockedUntilUtc;
-                    if (DateTime.UtcNow > lockedUntilUtc.Subtract(TimeSpan.FromSeconds(30)))
+                    var messageBody = brokeredMessage.GetBody<string>();
+                    var messageRecords = messageBody.Split(RecordSeparator);
+                    foreach (var messageRecord in messageRecords)
                     {
-                        for (int j = i; j < messagesArray.Count(); j++)
-                        {
-                            messagesArray.ElementAt(j).RenewLock();
-                        }
+                        records.Add(messageRecord.Split(FieldSeparator));
                     }
-                    messagesArray.ElementAt(i).Complete();
                 }
-                Tracer.Trace(TraceMessage.Info(queue.Name + " processed " + messagesArray.Count()));
+
+                processRecordsDelegate(records, messages);
+                numberOfProcessedMessages += messages.Count();
+                numberOfProcessedRecords += records.Count();
+
+                queue.CompleteBatch(messages);
+            }
+
+            if (numberOfProcessedMessages > 0 || numberOfProcessedRecords > 0)
+            {
+                var msg = string.Format("{0} - Processed - Records: {1}, Messages: {2}", queue.Name,
+                                        numberOfProcessedMessages, numberOfProcessedRecords);
+                Tracer.Trace(TraceMessage.Info(msg));
             }
         }
 
@@ -65,7 +76,7 @@ namespace ReferEngine.iTunesQueueCruncher
                     ProcessMessagesInQueue(iOSServiceBusOperations.ApplicationPopularityPerGenreQueue, iOSDatabaseWriter.AddOrUpdateAppPopularityPerGenres);
                     ProcessMessagesInQueue(iOSServiceBusOperations.ApplicationPriceQueue, iOSDatabaseWriter.AddOrUpdateAppPrices);
 
-                    Thread.Sleep(TimeSpan.FromMinutes(10));
+                    Thread.Sleep(TimeSpan.FromMinutes(1));
                 }
                 catch (Exception exception)
                 {

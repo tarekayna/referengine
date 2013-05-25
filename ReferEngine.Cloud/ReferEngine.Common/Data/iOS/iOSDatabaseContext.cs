@@ -29,7 +29,7 @@ namespace ReferEngine.Common.Data.iOS
         public DbSet<iOSStorefront> iOSStorefronts { get; set; }
         public DbSet<AppScreenshot> AppScreenshots { get; set; }
         public DbSet<CloudinaryImage> CloudinaryImages { get; set; }
-        public DbSet<iOSDataImport> DataImports { get; set; }
+        public DbSet<iOSDataImportStep> DataImportSteps { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {

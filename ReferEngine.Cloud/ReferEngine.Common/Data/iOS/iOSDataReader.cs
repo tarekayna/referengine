@@ -9,9 +9,9 @@ namespace ReferEngine.Common.Data.iOS
 {
     public static class iOSDataReader
     {
-        public static iOSDataImport GetLastDataImport()
+        public static iOSDataImportStep GetDataImportStep(ImportType importType, string dateString, ImportStepName stepName)
         {
-            return iOSDatabaseReader.GetLastDataImport();
+            return iOSDatabaseReader.GetDataImportStep(importType, dateString, stepName);
         }
 
         public static iOSApp GetApp(int id)

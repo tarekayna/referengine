@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
+using ReferEngine.Common.Tracing;
 
 namespace ReferEngine.Common.Data
 {
@@ -44,6 +46,12 @@ namespace ReferEngine.Common.Data
                     catch (MessagingException e)
                     {
                         if (!e.IsTransient) throw;
+                        SleepForOneSecond();
+                    }
+                    catch (TimeoutException e)
+                    {
+                        Tracer.Trace(TraceMessage.Warning(e.Message));
+                        SleepForOneSecond();
                     }
                 }
             }
@@ -65,6 +73,23 @@ namespace ReferEngine.Common.Data
                     {
                         if (!e.IsTransient) throw;
                     }
+                }
+            }
+        }
+
+        public void CompleteBatch(BrokeredMessage[] messages)
+        {
+            for (int i = 0; i < MaximumNumberOfTries; i++)
+            {
+                try
+                {
+                    var guids = messages.Select(x => x.LockToken);
+                    Client.CompleteBatch(guids);
+                    break;
+                }
+                catch (MessagingException e)
+                {
+                    if (!e.IsTransient) throw;
                 }
             }
         }
@@ -117,6 +142,16 @@ namespace ReferEngine.Common.Data
             return QueueDescription.MessageCount;
         }
 
+        public bool HasMessages()
+        {
+            return GetMessageCount() > 0;
+        }
+
+        public bool IsEmpty()
+        {
+            return GetMessageCount() == 0;
+        }
+
         private void CreateIfNeeded()
         {
             if (NamespaceManager.QueueExists(Name))
@@ -136,6 +171,11 @@ namespace ReferEngine.Common.Data
             {
                 // already exists, good
             }
+        }
+
+        private void SleepForOneSecond()
+        {
+            Thread.Sleep(TimeSpan.FromSeconds(1));
         }
     }
 }
