@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ReferEngine.iTunesQueueCruncher")]
+[assembly: AssemblyTitle("ReferEngine.iOSQueueCruncher")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ReferEngine.iTunesQueueCruncher")]
+[assembly: AssemblyProduct("ReferEngine.iOSQueueCruncher")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("ca274309-3875-4dca-8f80-a4f8e75407fa")]
+[assembly: Guid("e68374af-de20-4299-864a-3c52aba9e9a0")]
 
 // Version information for an assembly consists of the following four values:
 //

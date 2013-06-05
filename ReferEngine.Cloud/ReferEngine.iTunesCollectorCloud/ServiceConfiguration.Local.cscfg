@@ -16,18 +16,4 @@
       <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="FD01045F5D1DF885011A58575EB4DB6664F264A0" thumbprintAlgorithm="sha1" />
     </Certificates>
   </Role>
-  <Role name="ReferEngine.iTunesQueueCruncher">
-    <Instances count="1" />
-    <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="tarek990" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEEcFLj+52Q6pSihoa7GpbWUwDQYJKoZIhvcNAQEBBQAEggEANw6AE7w8fHm1MsJ3LnzOPLkFldCLSQ2W54P1misscNkG1XIJ0gyTBiWi3MD3Qv74e2ESPs9Yxa7qZR2QnSImL+AXhXN6lxV50wPoqkGl1nJPWhZLAGHF8QpfyR1PtJrrPUrU02SNjDE54tZy2C8pxIkIq0GZXxK5vZ4ndCNExI1Sjmshh9iaE+AXaV0YJ97qwCqNiVCjuoEvPuuEcblhr4oJJlwoX+hIClAij1xxVKnU1heahzNWmmKjLW2d8GOu0FQGSFK99BGgIiRqeMmQBy0KkvTpgyDJgNkLHgq4N8wWRhatdktglgzvTEADFvW1Eyb4Pv9LhYdYFsNWcIzS7TAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECMIAit32iYdngBD37T3Z4eiGGzA71nJQgonD" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2014-05-12T23:59:59.0000000-07:00" />
-      <Setting name="CurrentServiceConfiguration" value="Local" />
-      <Setting name="TracerConnectionString" value="DefaultEndpointsProtocol=https;AccountName=tracedatalocal;AccountKey=DIj+Qrv19TTLoBNKhSfd4rHhrJjlCosHrcu08x2JaLhFf4J1RqQpKTNJaZ9tmqL1xsFuXmY/vr9oQW0kUKeQ9Q==" />
-    </ConfigurationSettings>
-    <Certificates>
-      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="FD01045F5D1DF885011A58575EB4DB6664F264A0" thumbprintAlgorithm="sha1" />
-    </Certificates>
-  </Role>
 </ServiceConfiguration>

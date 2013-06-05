@@ -28,7 +28,7 @@ namespace ReferEngine.Web.Resources
         public ImageTag(string cloudinaryId, string cloudinaryFormat, string transformation = null)
         {
             _tagBuilder = new TagBuilder("img");
-            _cloudinaryImage = new CloudinaryImage { Id = cloudinaryId, Format = cloudinaryFormat };
+            _cloudinaryImage = new CloudinaryImage(cloudinaryId, cloudinaryFormat);
             _tagBuilder.Attributes.Add("src", _cloudinaryImage.GetLink(transformation));
         }
 

@@ -14,13 +14,4 @@
       <LocalStorage name="localStore" sizeInMB="204800" cleanOnRoleRecycle="false" />
     </LocalResources>
   </WorkerRole>
-  <WorkerRole name="ReferEngine.iTunesQueueCruncher" vmsize="ExtraSmall">
-    <Imports>
-      <Import moduleName="RemoteAccess" />
-    </Imports>
-    <ConfigurationSettings>
-      <Setting name="CurrentServiceConfiguration" />
-      <Setting name="TracerConnectionString" />
-    </ConfigurationSettings>
-  </WorkerRole>
 </ServiceDefinition>

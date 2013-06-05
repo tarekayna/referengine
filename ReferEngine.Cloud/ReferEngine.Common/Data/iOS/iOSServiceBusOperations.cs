@@ -1,4 +1,6 @@
-﻿using Microsoft.ServiceBus;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using ReferEngine.Common.Utilities;
 using System;
@@ -20,6 +22,8 @@ namespace ReferEngine.Common.Data.iOS
         public static Queue GenreApplicationsQueue;
         public static Queue ApplicationPopularityPerGenreQueue;
         public static Queue ApplicationPriceQueue;
+
+        public static readonly IList<Queue> Queues = new List<Queue>();
 
         public static void Initialize()
         {
@@ -43,8 +47,22 @@ namespace ReferEngine.Common.Data.iOS
             ApplicationDeviceTypesQueue = new Queue(namespaceManager, messagingFactory, "AppDeviceType", typeof(string));
             ArtistApplicationsQueue = new Queue(namespaceManager, messagingFactory, "ArtistApp", typeof(string));
             GenreApplicationsQueue = new Queue(namespaceManager, messagingFactory, "GenreApp", typeof(string));
-            ApplicationPopularityPerGenreQueue = new Queue(namespaceManager, messagingFactory, "AppPopularityByGenre", typeof(string));
+            ApplicationPopularityPerGenreQueue = new Queue(namespaceManager, messagingFactory, "Popularity", typeof(string));
             ApplicationPriceQueue = new Queue(namespaceManager, messagingFactory, "AppPrice", typeof(string));
+
+            Queues.Add(AppsQueue);
+            Queues.Add(ArtistsQueue);
+            Queues.Add(AppDetailsQueue);
+            Queues.Add(MediaTypesQueue);
+            Queues.Add(DeviceTypesQueue);
+            Queues.Add(GenresQueue);
+            Queues.Add(StorefrontsQueue);
+            Queues.Add(ArtistTypesQueue);
+            Queues.Add(ApplicationDeviceTypesQueue);
+            Queues.Add(ArtistApplicationsQueue);
+            Queues.Add(GenreApplicationsQueue);
+            Queues.Add(ApplicationPopularityPerGenreQueue);
+            Queues.Add(ApplicationPriceQueue);
         }
 
         private static NamespaceManager CreateNamespaceManager()
@@ -62,25 +80,47 @@ namespace ReferEngine.Common.Data.iOS
             switch (Util.CurrentServiceConfiguration)
             {
                 case Util.ReferEngineServiceConfiguration.ProductionCloud:
-                    accessInfo.Namespace = "iOS-Prod";
+                case Util.ReferEngineServiceConfiguration.Local:
+                    accessInfo.Namespace = "ios-prodcloud";
                     accessInfo.Issuer = "owner";
-                    accessInfo.Key = "aQRbNPrsIPe/TDwaLemkbN+xyWPIdD9bNeZJKCa5nqI=";
+                    accessInfo.Key = "ib1jZGC6tO0NLoOPOgcrUAiTvMbr9QRF1wrxdh+jQzw=";
                     break;
                 case Util.ReferEngineServiceConfiguration.TestCloud:
                     accessInfo.Namespace = "ios-test";
                     accessInfo.Issuer = "owner";
                     accessInfo.Key = "+8VPpbs5AhHY/mEOw+kK+xqH0P9uZTkW9Gknfu9IP8k=";
                     break;
-                case Util.ReferEngineServiceConfiguration.Local:
-                    accessInfo.Namespace = "ios-local";
-                    accessInfo.Issuer = "owner";
-                    accessInfo.Key = "l5tU3iRCXue6pd6FKzdu3r7WBFRPoRpOJata1ygHHx4=";
-                    break;
+                //case Util.ReferEngineServiceConfiguration.Local:
+                //    accessInfo.Namespace = "ios-local";
+                //    accessInfo.Issuer = "owner";
+                //    accessInfo.Key = "l5tU3iRCXue6pd6FKzdu3r7WBFRPoRpOJata1ygHHx4=";
+                //    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
             return accessInfo;
+        }
+
+        public static void RenewLocks(BrokeredMessage[] messages)
+        {
+            TimeSpan renewDelta = TimeSpan.FromMinutes(2);
+            const int maxRetries = 3;
+            for (int i = 0; i < maxRetries; i++)
+            {
+                try
+                {
+                    foreach (var brokeredMessage in messages.Where(brokeredMessage => DateTime.UtcNow > brokeredMessage.LockedUntilUtc.Subtract(renewDelta)))
+                    {
+                        brokeredMessage.RenewLock();
+                    }
+                    break;
+                }
+                catch (MessagingCommunicationException)
+                {
+                    // it's ok, try again
+                }
+            }
         }
     }
 }

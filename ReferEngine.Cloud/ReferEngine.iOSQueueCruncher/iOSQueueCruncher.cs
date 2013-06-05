@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Threading;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
@@ -9,9 +10,9 @@ using System.Net;
 using System.Linq;
 using ReferEngine.Common.Tracing;
 
-namespace ReferEngine.iTunesQueueCruncher
+namespace ReferEngine.iOSQueueCruncher
 {
-    public class iTunesQueueCruncherWorker : RoleEntryPoint
+    public class iOSQueueCruncher : RoleEntryPoint
     {
         private const char FieldSeparator = (char)1;
         private const char RecordSeparator = (char)2;
@@ -20,15 +21,15 @@ namespace ReferEngine.iTunesQueueCruncher
 
         private void ProcessMessagesInQueue(Queue queue, ProcessRecordsDelegateWithMessages processRecordsDelegate)
         {
-            var numberOfProcessedMessages = 0;
-            var numberOfProcessedRecords = 0;
             while (true)
             {
-                if (queue.IsEmpty()) break;
+                if (queue.IsDisabled() || queue.IsEmpty()) break;
                 var batch = queue.ReceiveBatch(BatchSize);
                 if (batch == null) break;
                 var messages = batch.ToArray();
                 if (!messages.Any()) break;
+
+                Tracer.Trace(TraceMessage.Info(string.Format("Processing {0} messages in {1}", messages.Count(), queue.Name)));
 
                 var records = new List<IList<string>>();
                 foreach (var brokeredMessage in messages)
@@ -42,16 +43,11 @@ namespace ReferEngine.iTunesQueueCruncher
                 }
 
                 processRecordsDelegate(records, messages);
-                numberOfProcessedMessages += messages.Count();
-                numberOfProcessedRecords += records.Count();
 
                 queue.CompleteBatch(messages);
-            }
-
-            if (numberOfProcessedMessages > 0 || numberOfProcessedRecords > 0)
-            {
+                
                 var msg = string.Format("{0} - Processed - Records: {1}, Messages: {2}", queue.Name,
-                                        numberOfProcessedMessages, numberOfProcessedRecords);
+                                        records.Count(), messages.Count());
                 Tracer.Trace(TraceMessage.Info(msg));
             }
         }
@@ -75,18 +71,21 @@ namespace ReferEngine.iTunesQueueCruncher
                     ProcessMessagesInQueue(iOSServiceBusOperations.GenreApplicationsQueue, iOSDatabaseWriter.AddOrUpdateAppGenres);
                     ProcessMessagesInQueue(iOSServiceBusOperations.ApplicationPopularityPerGenreQueue, iOSDatabaseWriter.AddOrUpdateAppPopularityPerGenres);
                     ProcessMessagesInQueue(iOSServiceBusOperations.ApplicationPriceQueue, iOSDatabaseWriter.AddOrUpdateAppPrices);
-
-                    Thread.Sleep(TimeSpan.FromMinutes(1));
+                }
+                catch(DbEntityValidationException exception)
+                {
+                    Tracer.Trace(TraceMessage.Exception(exception));
+                    Thread.Sleep(TimeSpan.FromSeconds(30));
                 }
                 catch (Exception exception)
                 {
                     Tracer.Trace(TraceMessage.Exception(exception));
-                    Thread.Sleep(TimeSpan.FromMinutes(1));
+                    Thread.Sleep(TimeSpan.FromSeconds(30));
                 }
             }
-// ReSharper disable FunctionNeverReturns
+            // ReSharper disable FunctionNeverReturns
         }
-// ReSharper restore FunctionNeverReturns
+        // ReSharper restore FunctionNeverReturns
 
         public override bool OnStart()
         {

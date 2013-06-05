@@ -1075,7 +1075,7 @@ namespace ReferEngine.Common.Data
                             IsActive = true,
                             AppScreenshots = appInfo.AppScreenshots,
                             BackgroundColor = appInfo.BackgroundColor,
-                            BackgroundImage = new CloudinaryImage { Id = "app_default_background_pjr3qo", Format = "jpg" }
+                            BackgroundImage = new CloudinaryImage("app_default_background_pjr3qo", "jpg")
                         };
                     app.ComputeVerificationCode();
                     App addedApp = db.Apps.Add(app);

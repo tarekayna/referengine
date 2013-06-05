@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using Microsoft.ServiceBus.Messaging;
 using ReferEngine.Common.Models;
 using ReferEngine.Common.Models.iOS;
@@ -16,11 +17,9 @@ namespace ReferEngine.Common.Data.iOS
         {
             iOSDatabaseConnector.Execute(db =>
             {
-                var lockedUntilUtc = messages.First().LockedUntilUtc;
-
                 foreach (IList<string> recordInfo in records)
                 {
-                    lockedUntilUtc = RenewLocksIfNeeded(messages, lockedUntilUtc);
+                    iOSServiceBusOperations.RenewLocks(messages);
 
                     var thisRecord = new iOSMediaType
                     {
@@ -48,11 +47,9 @@ namespace ReferEngine.Common.Data.iOS
         {
             iOSDatabaseConnector.Execute(db =>
             {
-                var lockedUntilUtc = messages.First().LockedUntilUtc;
-
                 foreach (IList<string> recordInfo in records)
                 {
-                    lockedUntilUtc = RenewLocksIfNeeded(messages, lockedUntilUtc);
+                    iOSServiceBusOperations.RenewLocks(messages);
 
                     var thisRecord = new iOSDeviceType
                     {
@@ -81,12 +78,10 @@ namespace ReferEngine.Common.Data.iOS
         {
             iOSDatabaseConnector.Execute(db =>
             {
-                var lockedUntilUtc = messages.First().LockedUntilUtc;
-
                 var recordsArray = records.OrderBy(x => x[2]);
                 foreach (IList<string> recordInfo in recordsArray)
                 {
-                    lockedUntilUtc = RenewLocksIfNeeded(messages, lockedUntilUtc);
+                    iOSServiceBusOperations.RenewLocks(messages);
 
                     iOSGenre parentGenre = null;
                     if (!string.IsNullOrEmpty(recordInfo[2]))
@@ -123,11 +118,11 @@ namespace ReferEngine.Common.Data.iOS
         {
             iOSDatabaseConnector.Execute(db =>
             {
-                var lockedUntilUtc = messages.First().LockedUntilUtc;
+                
 
                 foreach (IList<string> recordInfo in records)
                 {
-                    lockedUntilUtc = RenewLocksIfNeeded(messages, lockedUntilUtc);
+                    iOSServiceBusOperations.RenewLocks(messages);
 
                     var thisRecord = new iOSStorefront
                     {
@@ -157,11 +152,9 @@ namespace ReferEngine.Common.Data.iOS
         {
             iOSDatabaseConnector.Execute(db =>
             {
-                var lockedUntilUtc = messages.First().LockedUntilUtc;
-
                 foreach (IList<string> recordInfo in records)
                 {
-                    lockedUntilUtc = RenewLocksIfNeeded(messages, lockedUntilUtc);
+                    iOSServiceBusOperations.RenewLocks(messages);
 
                     var thisRecord = new iOSArtist
                     {
@@ -175,8 +168,9 @@ namespace ReferEngine.Common.Data.iOS
                         thisRecord.IsActualArtist = recordInfo[3] == "1";
                         thisRecord.ViewUrl = recordInfo[4];
                         int artistTypeId = Convert.ToInt32(recordInfo[5]);
-                        if (artistTypeId != 7) continue;
-                        thisRecord.ArtistType = db.iOSArtistTypes.First(x => x.Id == artistTypeId);
+                        var artistType = db.iOSArtistTypes.FirstOrDefault(x => x.Id == artistTypeId);
+                        if (IsNull(artistType, true) || artistTypeId != 7) continue;
+                        thisRecord.ArtistType = artistType;
                     }
                     else
                     {
@@ -208,11 +202,11 @@ namespace ReferEngine.Common.Data.iOS
         {
             iOSDatabaseConnector.Execute(db =>
             {
-                var lockedUntilUtc = messages.First().LockedUntilUtc;
+                
 
                 foreach (IList<string> recordInfo in records)
                 {
-                    lockedUntilUtc = RenewLocksIfNeeded(messages, lockedUntilUtc);
+                    iOSServiceBusOperations.RenewLocks(messages);
 
                     try
                     {
@@ -240,14 +234,13 @@ namespace ReferEngine.Common.Data.iOS
                         if (!string.IsNullOrEmpty(recordInfo[9]))
                         {
                             string artworkLink = recordInfo[9];
-                            thisRecord.ArtworkLarge =
-                                db.CloudinaryImages.FirstOrDefault(x => x.OriginalLink == artworkLink);
+                            string linkHash = CloudinaryImage.GetOriginalLinkHash(artworkLink);
+                            thisRecord.ArtworkLarge = db.CloudinaryImages.FirstOrDefault(x => x.OriginalLinkHash == linkHash);
                             if (thisRecord.ArtworkLarge == null)
                             {
                                 try
                                 {
-                                    thisRecord.ArtworkLarge =
-                                        CloudinaryConnector.UploadRemoteImage(new ImageInfo {Link = artworkLink}, "iOS");
+                                    thisRecord.ArtworkLarge = CloudinaryConnector.UploadRemoteImage(new ImageInfo {Link = artworkLink}, "iOS");
                                 }
                                 catch (Exception e)
                                 {
@@ -258,11 +251,7 @@ namespace ReferEngine.Common.Data.iOS
                                 }
                             }
                         }
-                        //if (!string.IsNullOrEmpty(recordInfo[10]))
-                        //{
-                        //    thisRecord.ArtworkSmall = GetOrUploadCloudinaryImage(recordInfo[10]);
-                        //}
-
+                        
                         var databaseRecord = db.iOSApps.Where(x => x.Id == thisRecord.Id).Include(x => x.ArtworkLarge).FirstOrDefault();
                         if (databaseRecord == null)
                         {
@@ -296,39 +285,48 @@ namespace ReferEngine.Common.Data.iOS
             });
         }
 
-        private static AppScreenshot GetAppScreenshotFromLink(string link)
+        private static AppScreenshot GetAppScreenshotFromLink(string link, iOSDatabaseContext db)
         {
-            return (AppScreenshot) iOSDatabaseConnector.Execute(db =>
+            AppScreenshot appScreenshot = null;
+            var linkHash = CloudinaryImage.GetOriginalLinkHash(link);
+            var cloudinaryImage = db.CloudinaryImages.FirstOrDefault(x => x.OriginalLinkHash == linkHash);
+            if (cloudinaryImage != null)
+            {
+                appScreenshot = db.AppScreenshots.FirstOrDefault(x => x.CloudinaryImage.Id == cloudinaryImage.Id);
+            }
+            if (appScreenshot == null)
+            {
+                var img = CloudinaryConnector.UploadRemoteImage(new ImageInfo {Link = link});
+                if (img != null)
                 {
-                    var appScreenshot =
-                        db.AppScreenshots.FirstOrDefault(
-                            x => x.CloudinaryImage.OriginalLink.Equals(link, StringComparison.OrdinalIgnoreCase));
-                    if (appScreenshot == null)
-                    {
-                        appScreenshot = new AppScreenshot
-                            {
-                                CloudinaryImage = CloudinaryConnector.UploadRemoteImage(new ImageInfo {Link = link})
-                            };
-                    }
-                    return appScreenshot;
-                });
+                    img = db.CloudinaryImages.Add(img);
+                    appScreenshot = db.AppScreenshots.Add(new AppScreenshot {CloudinaryImage = img});
+                }
+            }
+            return appScreenshot;
         }
 
         public static void AddOrUpdateAppDetails(IEnumerable<IList<string>> records, BrokeredMessage[] messages)
         {
             iOSDatabaseConnector.Execute(db =>
             {
-                var lockedUntilUtc = messages.First().LockedUntilUtc;
-
-                foreach (IList<string> recordInfo in records)
+                foreach (IList<string> recordInfo in records.Where(x => x[2].Equals("EN", StringComparison.OrdinalIgnoreCase)))
                 {
-                    lockedUntilUtc = RenewLocksIfNeeded(messages, lockedUntilUtc);
+                    iOSServiceBusOperations.RenewLocks(messages);
 
                     int appId = Convert.ToInt32(recordInfo[1]);
+
+                    var app = db.iOSApps.FirstOrDefault(x => x.Id == appId);
+                    if (app == null)
+                    {
+                        Tracer.Trace(TraceMessage.Error("App does not exist for this AppDetail. AppId = " + recordInfo[1]));
+                        continue;
+                    }
+
                     var thisRecord = new iOSAppDetail
                     {
                         ExportDate = Util.EpochPlusMilliseconds(recordInfo[0]),
-                        App = db.iOSApps.First(x => x.Id == appId),
+                        App = app,
                         LanguageCode = recordInfo[2],
                         Title = recordInfo[3],
                         Description = recordInfo[4],
@@ -337,29 +335,55 @@ namespace ReferEngine.Common.Data.iOS
                         SupportUrl = recordInfo[7]
                     };
 
+                    IList<string> imageLinks = new List<string>();
                     for (int j = 8; j < 12; j++)
                     {
-                        var appScreenshot = GetAppScreenshotFromLink(recordInfo[j]);
-                        thisRecord.AppScreenshots.Add(appScreenshot);
+                        if (string.IsNullOrEmpty(recordInfo[j])) continue;
+                        imageLinks.Add(recordInfo[j]);
                     }
 
-                    var databaseRecord = db.iOSAppDetails.FirstOrDefault(x => x.App.Id == thisRecord.App.Id && x.LanguageCode == thisRecord.LanguageCode);
+                    var databaseRecord = db.iOSAppDetails.Include(x => x.AppScreenshots.Select(y => y.CloudinaryImage)).FirstOrDefault(x => x.App.Id == thisRecord.App.Id && 
+                                                                                                        x.LanguageCode == thisRecord.LanguageCode);
                     if (databaseRecord == null)
                     {
+                        foreach (var image in imageLinks)
+                        {
+                            thisRecord.AppScreenshots.Add(GetAppScreenshotFromLink(image, db));
+                        }
+
                         db.iOSAppDetails.Add(thisRecord);
                     }
                     else
                     {
-                        db.Entry(databaseRecord).CurrentValues.SetValues(thisRecord);
+                        databaseRecord.CompanyUrl = thisRecord.CompanyUrl;
+                        databaseRecord.Title = thisRecord.Title;
+                        databaseRecord.Description = thisRecord.Description;
+                        databaseRecord.ReleaseNotes = thisRecord.ReleaseNotes;
+                        databaseRecord.SupportUrl = thisRecord.SupportUrl;
+                        databaseRecord.ExportDate = thisRecord.ExportDate;
 
-                        var removedScreenshots = databaseRecord.AppScreenshots.Where(s => thisRecord.AppScreenshots.All(i => i.Id != s.Id));
+                        var newScreenshots = imageLinks.Where(x => databaseRecord.AppScreenshots.All(c => c.CloudinaryImage != null && c.CloudinaryImage.OriginalLink != x)).ToArray();
+                        var removedScreenshots = databaseRecord.AppScreenshots.Where(s => s.CloudinaryImage != null && imageLinks.All(i => i != s.CloudinaryImage.OriginalLink)).ToArray();
+
                         foreach (AppScreenshot screenshot in removedScreenshots)
                         {
-                            if (screenshot.CloudinaryImage == null) continue;
-                            CloudinaryConnector.DeleteImage(screenshot.CloudinaryImage);
-                            db.CloudinaryImages.Remove(screenshot.CloudinaryImage);
+                            databaseRecord.AppScreenshots.Remove(screenshot);
+                            if (screenshot.CloudinaryImage != null)
+                            {
+                                CloudinaryConnector.DeleteImage(screenshot.CloudinaryImage);
+                                db.CloudinaryImages.Remove(screenshot.CloudinaryImage);
+                            }
                         }
-                        databaseRecord.AppScreenshots = thisRecord.AppScreenshots;
+
+                        foreach (string newImage in newScreenshots)
+                        {
+                            CloudinaryImage cloudinaryImage = CloudinaryConnector.UploadRemoteImage(new ImageInfo { Link = newImage });
+                            if (cloudinaryImage != null)
+                            {
+                                AppScreenshot appScreenshot = new AppScreenshot {CloudinaryImage = cloudinaryImage};
+                                databaseRecord.AppScreenshots.Add(appScreenshot);
+                            }
+                        }
                     }
                 }
                 db.SaveChanges();
@@ -372,20 +396,25 @@ namespace ReferEngine.Common.Data.iOS
         {
             iOSDatabaseConnector.Execute(db =>
             {
-                var lockedUntilUtc = messages.First().LockedUntilUtc;
+                
                 foreach (IList<string> recordInfo in records)
                 {
-                    lockedUntilUtc = RenewLocksIfNeeded(messages, lockedUntilUtc);
+                    iOSServiceBusOperations.RenewLocks(messages);
                     int appId = Convert.ToInt32(recordInfo[1]);
                     int deviceTypeId = Convert.ToInt32(recordInfo[2]);
                     var databaseRecord = db.iOSAppDeviceTypes.FirstOrDefault(x => x.App.Id == appId && x.DeviceType.Id == deviceTypeId);
                     if (databaseRecord == null)
                     {
+                        var app = db.iOSApps.FirstOrDefault(x => x.Id == appId);
+                        if (IsNull(app)) continue;
+
+                        var deviceType = db.iOSDeviceTypes.FirstOrDefault(x => x.Id == deviceTypeId);
+                        if (IsNull(deviceType, true)) continue;
                         var newRecord = new iOSAppDeviceType
                         {
                             ExportDate = Util.EpochPlusMilliseconds(recordInfo[0]),
-                            App = db.iOSApps.First(x => x.Id == appId),
-                            DeviceType = db.iOSDeviceTypes.First(x => x.Id == deviceTypeId)
+                            App = app,
+                            DeviceType = deviceType
                         };
                         db.iOSAppDeviceTypes.Add(newRecord);
                     }
@@ -402,22 +431,34 @@ namespace ReferEngine.Common.Data.iOS
 
         public static void AddOrUpdateAppArtists(IEnumerable<IList<string>> records, BrokeredMessage[] messages)
         {
-            var lockedUntilUtc = messages.First().LockedUntilUtc;
+            
             iOSDatabaseConnector.Execute(db =>
             {
                 foreach (IList<string> recordInfo in records)
                 {
-                    lockedUntilUtc = RenewLocksIfNeeded(messages, lockedUntilUtc);
+                    iOSServiceBusOperations.RenewLocks(messages);
                     int artistId = Convert.ToInt32(recordInfo[1]);
                     int appId = Convert.ToInt32(recordInfo[2]);
                     var databaseRecord = db.iOSAppArtists.FirstOrDefault(x => x.App.Id == appId && x.Artist.Id == artistId);
                     if (databaseRecord == null)
                     {
+                        var app = db.iOSApps.FirstOrDefault(x => x.Id == appId);
+                        if (app == null)
+                        {
+                            Tracer.Trace(TraceMessage.Warning("Did not find app for AppArtist: " + appId));
+                            continue;
+                        }
+                        var artist = db.iOSArtists.FirstOrDefault(x => x.Id == artistId);
+                        if (artist == null)
+                        {
+                            Tracer.Trace(TraceMessage.Warning("Did not find artist for AppArtist: " + artistId));
+                            continue;
+                        }
                         var newRecord = new iOSAppArtist
                         {
                             ExportDate = Util.EpochPlusMilliseconds(recordInfo[0]),
-                            App = db.iOSApps.First(x => x.Id == appId),
-                            Artist = db.iOSArtists.First(x => x.Id == artistId)
+                            App = app,
+                            Artist = artist
                         };
                         db.iOSAppArtists.Add(newRecord);
                     }
@@ -432,25 +473,46 @@ namespace ReferEngine.Common.Data.iOS
             });
         }
 
+        private static bool IsNull(object obj, bool traceWarning = false)
+        {
+            if (obj == null)
+            {
+                if (traceWarning)
+                {
+                    StackTrace stackTrace = new StackTrace();
+                    var traceMessage = TraceMessage.Warning("Something is null")
+                                                   .AddProperty("StackTrace", stackTrace.ToString());
+                    Tracer.Trace(traceMessage);
+                }
+                return true;
+            }
+            return false;
+        }
+
         public static void AddOrUpdateAppGenres(IEnumerable<IList<string>> records, BrokeredMessage[] messages)
         {
             iOSDatabaseConnector.Execute(db =>
-            {
-                var lockedUntilUtc = messages.First().LockedUntilUtc;
+            {   
                 foreach (IList<string> recordInfo in records)
                 {
-                    lockedUntilUtc = RenewLocksIfNeeded(messages, lockedUntilUtc);
+                    iOSServiceBusOperations.RenewLocks(messages);
                     int genreId = Convert.ToInt32(recordInfo[1]);
                     int appId = Convert.ToInt32(recordInfo[2]);
 
                     var databaseRecord = db.iOSAppGenres.FirstOrDefault(x => x.App.Id == appId && x.Genre.Id == genreId);
                     if (databaseRecord == null)
                     {
+                        var app = db.iOSApps.FirstOrDefault(x => x.Id == appId);
+                        if (IsNull(app)) continue;
+
+                        var genre = db.iOSGenres.FirstOrDefault(x => x.Id == genreId);
+                        if (IsNull(genre, true)) continue;
+
                         var newRecord = new iOSAppGenre
                         {
                             ExportDate = Util.EpochPlusMilliseconds(recordInfo[0]),
-                            App = db.iOSApps.First(x => x.Id == appId),
-                            Genre = db.iOSGenres.First(x => x.Id == genreId),
+                            App = app,
+                            Genre = genre,
                             IsPrimary = recordInfo[3] == "1"
                         };
                         db.iOSAppGenres.Add(newRecord);
@@ -471,10 +533,10 @@ namespace ReferEngine.Common.Data.iOS
         {
             iOSDatabaseConnector.Execute(db =>
             {
-                var lockedUntilUtc = messages.First().LockedUntilUtc;
+                
                 foreach (IList<string> recordInfo in records)
                 {
-                    lockedUntilUtc = RenewLocksIfNeeded(messages, lockedUntilUtc);
+                    iOSServiceBusOperations.RenewLocks(messages);
                     int mediaTypeId = Convert.ToInt32(recordInfo[3]);
                     var thisRecord = new iOSArtistType
                     {
@@ -504,19 +566,20 @@ namespace ReferEngine.Common.Data.iOS
         {
             iOSDatabaseConnector.Execute(db =>
             {
-                var lockedUntilUtc = messages.First().LockedUntilUtc;
                 foreach (IList<string> recordInfo in records)
                 {
-                    lockedUntilUtc = RenewLocksIfNeeded(messages, lockedUntilUtc);
+                    iOSServiceBusOperations.RenewLocks(messages);
                     int appId = Convert.ToInt32(recordInfo[1]);
                     int storefrontId = Convert.ToInt32(recordInfo[4]);
                     var databaseRecord = db.iOSAppPrices.FirstOrDefault(x => x.App.Id == appId && x.Storefront.Id == storefrontId);
                     if (databaseRecord == null)
                     {
+                        var app = db.iOSApps.FirstOrDefault(x => x.Id == appId);
+                        if (IsNull(app)) continue;
                         var newRecord = new iOSAppPrice
                         {
                             ExportDate = Util.EpochPlusMilliseconds(recordInfo[0]),
-                            App = db.iOSApps.First(x => x.Id == appId),
+                            App = app,
                             RetailPrice = recordInfo[2],
                             CurrencyCode = recordInfo[3]
                         };
@@ -535,15 +598,14 @@ namespace ReferEngine.Common.Data.iOS
             });
         }
 
-
         public static void AddOrUpdateAppPopularityPerGenres(IEnumerable<IList<string>> records, BrokeredMessage[] messages)
         {
             iOSDatabaseConnector.Execute(db =>
             {
-                var lockedUntilUtc = messages.First().LockedUntilUtc;
+                
                 foreach (IList<string> recordInfo in records)
                 {
-                    lockedUntilUtc = RenewLocksIfNeeded(messages, lockedUntilUtc);
+                    iOSServiceBusOperations.RenewLocks(messages);
                     int storefrontId = Convert.ToInt32(recordInfo[1]);
                     int genreId = Convert.ToInt32(recordInfo[2]);
                     int appId = Convert.ToInt32(recordInfo[3]);
@@ -551,12 +613,19 @@ namespace ReferEngine.Common.Data.iOS
                                                         x.Storefront.Id == storefrontId && x.Genre.Id == genreId);
                     if (databaseRecord == null)
                     {
+                        var app = db.iOSApps.FirstOrDefault(x => x.Id == appId);
+                        if (IsNull(app)) continue;
+                        var genre = db.iOSGenres.FirstOrDefault(x => x.Id == genreId);
+                        if (IsNull(genre, true)) continue;
+                        var storefront = db.iOSStorefronts.FirstOrDefault(x => x.Id == storefrontId);
+                        if (IsNull(storefront, true)) continue;
+
                         var newRecord = new iOSAppPopularityPerGenre
                         {
                             ExportDate = Util.EpochPlusMilliseconds(recordInfo[0]),
-                            App = db.iOSApps.First(x => x.Id == appId),
-                            Genre = db.iOSGenres.First(x => x.Id == genreId),
-                            Storefront = db.iOSStorefronts.First(x => x.Id == storefrontId),
+                            App = app,
+                            Genre = genre,
+                            Storefront = storefront,
                             Rank = Convert.ToInt32(recordInfo[4])
                         };
                         db.iOSAppPopularityPerGenres.Add(newRecord);
@@ -583,18 +652,103 @@ namespace ReferEngine.Common.Data.iOS
             });
         }
 
-        private static DateTime RenewLocksIfNeeded(BrokeredMessage[] messages, DateTime lockedUntilUtc)
+        public static void RemoveOlderRecords(DateTime dateTime)
         {
-            TimeSpan renewDelta = TimeSpan.FromSeconds(30);
-            if (DateTime.UtcNow > lockedUntilUtc.Subtract(renewDelta))
+            iOSDatabaseConnector.Execute(db =>
             {
-                foreach (var message in messages)
+                var prices = db.iOSAppPrices.Where(x => !x.ExportDate.IsSameDate(dateTime));
+                foreach (var record in prices)
                 {
-                    message.RenewLock();
+                    db.iOSAppPrices.Remove(record);
                 }
-                return messages.First().LockedUntilUtc;
-            }
-            return lockedUntilUtc;
+                db.SaveChanges();
+
+                var pops = db.iOSAppPopularityPerGenres.Where(x => !x.ExportDate.IsSameDate(dateTime));
+                foreach (var record in pops)
+                {
+                    db.iOSAppPopularityPerGenres.Remove(record);
+                }
+                db.SaveChanges();
+
+                var appGenres = db.iOSAppGenres.Where(x => !x.ExportDate.IsSameDate(dateTime));
+                foreach (var record in appGenres)
+                {
+                    db.iOSAppGenres.Remove(record);
+                }
+                db.SaveChanges();
+
+                var appArtists = db.iOSAppArtists.Where(x => !x.ExportDate.IsSameDate(dateTime));
+                foreach (var record in appArtists)
+                {
+                    db.iOSAppArtists.Remove(record);
+                }
+                db.SaveChanges();
+
+                var appDeviceTypes = db.iOSAppDeviceTypes.Where(x => !x.ExportDate.IsSameDate(dateTime));
+                foreach (var record in appDeviceTypes)
+                {
+                    db.iOSAppDeviceTypes.Remove(record);
+                }
+                db.SaveChanges();
+
+                var appDetails = db.iOSAppDetails.Where(x => !x.ExportDate.IsSameDate(dateTime));
+                foreach (var record in appDetails)
+                {
+                    db.iOSAppDetails.Remove(record);
+                }
+                db.SaveChanges();
+
+                var apps = db.iOSApps.Where(x => !x.ExportDate.IsSameDate(dateTime));
+                foreach (var record in apps)
+                {
+                    db.iOSApps.Remove(record);
+                }
+                db.SaveChanges();
+
+                var artists = db.iOSArtists.Where(x => !x.ExportDate.IsSameDate(dateTime));
+                foreach (var record in artists)
+                {
+                    db.iOSArtists.Remove(record);
+                }
+                db.SaveChanges();
+
+                var artistTypes = db.iOSArtistTypes.Where(x => !x.ExportDate.IsSameDate(dateTime));
+                foreach (var record in artistTypes)
+                {
+                    db.iOSArtistTypes.Remove(record);
+                }
+                db.SaveChanges();
+
+                var storefronts = db.iOSStorefronts.Where(x => !x.ExportDate.IsSameDate(dateTime));
+                foreach (var record in storefronts)
+                {
+                    db.iOSStorefronts.Remove(record);
+                }
+                db.SaveChanges();
+
+                var genres = db.iOSGenres.Where(x => !x.ExportDate.IsSameDate(dateTime));
+                foreach (var record in genres)
+                {
+                    db.iOSGenres.Remove(record);
+                }
+                db.SaveChanges();
+
+                var deviceTypes = db.iOSDeviceTypes.Where(x => !x.ExportDate.IsSameDate(dateTime));
+                foreach (var record in deviceTypes)
+                {
+                    db.iOSDeviceTypes.Remove(record);
+                }
+                db.SaveChanges();
+
+                var mediaTypes = db.iOSMediaTypes.Where(x => !x.ExportDate.IsSameDate(dateTime));
+                foreach (var record in mediaTypes)
+                {
+                    db.iOSMediaTypes.Remove(record);
+                }
+                db.SaveChanges();
+
+                return null;
+            });
         }
     }
 }

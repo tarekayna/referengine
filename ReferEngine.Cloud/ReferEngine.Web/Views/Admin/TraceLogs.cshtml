@@ -60,7 +60,13 @@
                     className = className == "text-info" ? "" : className;
                     <hr style="margin: 12px"/>
                     <div class="row @className">
-                        <div class="span3">@traceMessage.Time.ToString()</div>
+                        <div class="span3">
+                            @traceMessage.Time.ToString()
+                            <br />
+                            <span style="font-size: xx-small">
+                                @traceMessage.RoleInstanceId
+                            </span>
+                        </div>
                         <div class="span7">
                             <p>@traceMessage.Message</p>
                         </div>

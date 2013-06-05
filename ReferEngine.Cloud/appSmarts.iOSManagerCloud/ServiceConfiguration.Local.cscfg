@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="appSmarts.iOSManagerCloud" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="3" osVersion="*" schemaVersion="2013-03.2.0">
+  <Role name="appSmarts.iOSManager">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="CurrentServiceConfiguration" value="Local" />
+      <Setting name="TracerConnectionString" value="DefaultEndpointsProtocol=https;AccountName=tracedatalocal;AccountKey=DIj+Qrv19TTLoBNKhSfd4rHhrJjlCosHrcu08x2JaLhFf4J1RqQpKTNJaZ9tmqL1xsFuXmY/vr9oQW0kUKeQ9Q==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="tarek990" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCECAFo30RZb2JTAT3kIYkGuYwDQYJKoZIhvcNAQEBBQAEggEAdPJ7MPrrQUH6Gn1QlHRowGH/PyFzS8y2jh2IO5Hoq/Nk1XOm321mN0Xc9VFIvL9GUKnpcvrHYGBlJ4GsKubAe99Tjg1qdzzzuKQqv+t5oF0opE1iwvljfX02cwdgOvFeZohqCcdnHQDHLijXjRTJDWxtbG5UV4gAtcFEffV61DpqSxTYTKWJrdTkXnbqO91cfrbsDa1Rr73NtpJzsDtvvv4f9lXNfJDKAvP+qR06njEDEkcsMUzz54PxeuR3jtRb5zm/p0M0qO6At6AqAZyyEB6EbGAWWtS3GP0TuUgQUMm/qNfFYWd4jvoDi75TPUozOn2mnGZZ+vEnYT/ouYP99TAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECH/FBE75d3wMgBCcWuellZ2MYtRsG5y5henz" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2014-06-04T23:59:59.0000000-05:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+      <Setting name="MessagesPerInstance" value="8" />
+      <Setting name="SleepInMinutes" value="10" />
+      <Setting name="MaxInstanceCount" value="80" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="CN=tarek-macbook" thumbprint="72FD922AC57C5FC56EC4B446F372E67BB8864ABD" thumbprintAlgorithm="sha1" />
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="BA547304A4AEA6C1FFD3767BE3BCBB158B83B876" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+</ServiceConfiguration>

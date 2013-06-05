@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Net;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using ReferEngine.Common.Models;
@@ -41,13 +42,9 @@ namespace ReferEngine.Common.Data
                                                      Tags = t
                                                  };
             ImageUploadResult uploadResult = Cloudinary.Upload(uploadParams);
-            CloudinaryImage cloudinaryImage = new CloudinaryImage
-                                                  {
-                                                      Id = uploadResult.PublicId,
-                                                      OriginalLink = imageInfo.Link,
-                                                      Description = imageInfo.Description,
-                                                      Format = uploadResult.Format
-                                                  };
+            if (uploadResult.StatusCode == HttpStatusCode.NotFound || string.IsNullOrEmpty(uploadResult.PublicId)) return null;
+            CloudinaryImage cloudinaryImage = new CloudinaryImage(uploadResult.PublicId, uploadResult.Format,
+                                                                  imageInfo.Link) {Description = imageInfo.Description};
             return cloudinaryImage;
         }
 
@@ -57,12 +54,7 @@ namespace ReferEngine.Common.Data
             ImageUploadParams uploadParams = new ImageUploadParams();
             uploadParams.File = fileDescription;
             ImageUploadResult uploadResult = Cloudinary.Upload(uploadParams);
-            CloudinaryImage cloudinaryImage = new CloudinaryImage
-            {
-                Id = uploadResult.PublicId,
-                Description = description,
-                Format = uploadResult.Format
-            };
+            CloudinaryImage cloudinaryImage = new CloudinaryImage(uploadResult.PublicId, uploadResult.Format) { Description = description };
             return cloudinaryImage;
         }
 

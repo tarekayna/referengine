@@ -48,6 +48,9 @@ namespace ReferEngine.Common.Models.iOS
         [StringValue("AppPrice")]
         AppPrice,
 
+        [StringValue("RemoveOlderRecords")]
+        RemoveOlderRecords,
+
         [StringValue("Finished")]
         Finished,
     }

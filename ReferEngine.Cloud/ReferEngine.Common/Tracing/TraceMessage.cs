@@ -38,13 +38,14 @@ namespace ReferEngine.Common.Tracing
         public string Message { get; set; }
         public string RoleInstanceId { get; set; }
         public string RoleName { get; set; }
-        public TraceMessageCategory Category 
-        { 
+        public TraceMessageCategory Category
+        {
             get
             {
                 return string.IsNullOrEmpty(CategoryString) ? TraceMessageCategory.Info : (TraceMessageCategory)Enum.Parse(typeof(TraceMessageCategory), CategoryString);
             }
         }
+
         public string CategoryString { get; set; }
         private IDictionary<string, string> _properties;
         public string PropertiesString { get; set; }
@@ -88,6 +89,13 @@ namespace ReferEngine.Common.Tracing
             return new TraceMessage(message, TraceMessageCategory.Error);
         }
 
+        public static TraceMessage ExceptionWarning(Exception exception)
+        {
+            var traceMessage = Exception(exception);
+            traceMessage.CategoryString = TraceMessageCategory.Warning.GetStringValue();
+            return traceMessage;
+        }
+
         public static TraceMessage Exception(Exception exception)
         {
             TraceMessage traceMessage = new TraceMessage(exception.Message, TraceMessageCategory.Error);
@@ -96,6 +104,7 @@ namespace ReferEngine.Common.Tracing
 
             while (currentException != null)
             {
+                traceMessage.AddProperty("Message " + index, exception.Message);
                 traceMessage.AddProperty("Stack Trace " + index, exception.StackTrace);
                 traceMessage.AddProperty("Source " + index, exception.Source);
                 index++;
@@ -105,7 +114,7 @@ namespace ReferEngine.Common.Tracing
             index = 1;
             if (exception is DbEntityValidationException)
             {
-                var entityException = (DbEntityValidationException) exception;
+                var entityException = (DbEntityValidationException)exception;
                 foreach (var error in entityException.EntityValidationErrors)
                 {
                     foreach (var property in error.Entry.CurrentValues.PropertyNames)
@@ -119,7 +128,7 @@ namespace ReferEngine.Common.Tracing
                         var name = string.Format("EV-{0}-{1}", index, dbValidationError.PropertyName);
                         traceMessage.AddProperty(name, dbValidationError.ErrorMessage);
                     }
-                    
+
                     index++;
                 }
             }

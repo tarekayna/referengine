@@ -43,7 +43,13 @@ Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "ReferEngine.iTunesCollector
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.iTunesCollector", "ReferEngine.iTunesCollector\ReferEngine.iTunesCollector.csproj", "{BBA48BA9-C172-4A41-9862-80ED51A0F7B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.iTunesQueueCruncher", "ReferEngine.iTunesQueueCruncher\ReferEngine.iTunesQueueCruncher.csproj", "{E53C9827-4BFC-4001-BAEE-B6338EC9BF97}"
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "ReferEngine.iOSQueueCruncherCloud", "ReferEngine.iOSQueueCruncherCloud\ReferEngine.iOSQueueCruncherCloud.ccproj", "{31A9CF70-F6B4-43BB-9703-0A5B1B485A2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferEngine.iOSQueueCruncher", "ReferEngine.iOSQueueCruncher\ReferEngine.iOSQueueCruncher.csproj", "{01AAF52C-D18C-46B8-B390-55B27ED899E2}"
+EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "appSmarts.iOSManagerCloud", "appSmarts.iOSManagerCloud\appSmarts.iOSManagerCloud.ccproj", "{CA526CED-C28F-494B-BD1C-6742CAC86A5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "appSmarts.iOSManager", "appSmarts.iOSManager\appSmarts.iOSManager.csproj", "{3F37207E-C7B7-43CC-B660-FAD9D025F8DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,10 +105,22 @@ Global
 		{BBA48BA9-C172-4A41-9862-80ED51A0F7B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBA48BA9-C172-4A41-9862-80ED51A0F7B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBA48BA9-C172-4A41-9862-80ED51A0F7B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E53C9827-4BFC-4001-BAEE-B6338EC9BF97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E53C9827-4BFC-4001-BAEE-B6338EC9BF97}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E53C9827-4BFC-4001-BAEE-B6338EC9BF97}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E53C9827-4BFC-4001-BAEE-B6338EC9BF97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31A9CF70-F6B4-43BB-9703-0A5B1B485A2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31A9CF70-F6B4-43BB-9703-0A5B1B485A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31A9CF70-F6B4-43BB-9703-0A5B1B485A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31A9CF70-F6B4-43BB-9703-0A5B1B485A2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01AAF52C-D18C-46B8-B390-55B27ED899E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01AAF52C-D18C-46B8-B390-55B27ED899E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01AAF52C-D18C-46B8-B390-55B27ED899E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01AAF52C-D18C-46B8-B390-55B27ED899E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA526CED-C28F-494B-BD1C-6742CAC86A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA526CED-C28F-494B-BD1C-6742CAC86A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA526CED-C28F-494B-BD1C-6742CAC86A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA526CED-C28F-494B-BD1C-6742CAC86A5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F37207E-C7B7-43CC-B660-FAD9D025F8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F37207E-C7B7-43CC-B660-FAD9D025F8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F37207E-C7B7-43CC-B660-FAD9D025F8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F37207E-C7B7-43CC-B660-FAD9D025F8DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

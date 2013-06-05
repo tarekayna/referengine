@@ -72,24 +72,43 @@ namespace ReferEngine.Common.Data
                     catch (MessagingException e)
                     {
                         if (!e.IsTransient) throw;
+                        SleepForOneSecond();
+                    }
+                    catch (TimeoutException e)
+                    {
+                        Tracer.Trace(TraceMessage.Warning(e.Message));
+                        SleepForOneSecond();
                     }
                 }
             }
         }
 
+        public bool IsDisabled()
+        {
+            return QueueDescription.Status == EntityStatus.Disabled;
+        }
+
         public void CompleteBatch(BrokeredMessage[] messages)
         {
-            for (int i = 0; i < MaximumNumberOfTries; i++)
+            foreach (var brokeredMessage in messages)
             {
-                try
+                for (int i = 0; i < MaximumNumberOfTries; i++)
                 {
-                    var guids = messages.Select(x => x.LockToken);
-                    Client.CompleteBatch(guids);
-                    break;
-                }
-                catch (MessagingException e)
-                {
-                    if (!e.IsTransient) throw;
+                    try
+                    {
+                        brokeredMessage.Complete();
+                        break;
+                    }
+                    catch (MessagingException e)
+                    {
+                        if (!e.IsTransient) throw;
+                        SleepForOneSecond();
+                    }
+                    catch (TimeoutException e)
+                    {
+                        Tracer.Trace(TraceMessage.Warning(e.Message));
+                        SleepForOneSecond();
+                    }
                 }
             }
         }
@@ -108,6 +127,12 @@ namespace ReferEngine.Common.Data
                 catch (MessagingException e)
                 {
                     if (!e.IsTransient) throw;
+                    SleepForOneSecond();
+                }
+                catch (TimeoutException e)
+                {
+                    Tracer.Trace(TraceMessage.Warning(e.Message));
+                    SleepForOneSecond();
                 }
             }
 
@@ -121,17 +146,27 @@ namespace ReferEngine.Common.Data
         public IEnumerable<BrokeredMessage> ReceiveBatch(int count)
         {
             TimeSpan timeSpan = TimeSpan.FromMinutes(0);
-            IEnumerable<BrokeredMessage> result = null;
+            BrokeredMessage[] result = null;
             for (int i = 0; i < MaximumNumberOfTries; i++)
             {
                 try
                 {
-                    result = Client.ReceiveBatch(count, timeSpan) ?? DeadLetterClient.ReceiveBatch(count, timeSpan);
+                    result = Client.ReceiveBatch(count, timeSpan).ToArray();
+                    if (!result.Any())
+                    {
+                        result = DeadLetterClient.ReceiveBatch(count, timeSpan).ToArray();
+                    }
                     break;
                 }
                 catch (MessagingException e)
                 {
                     if (!e.IsTransient) throw;
+                    SleepForOneSecond();
+                }
+                catch (TimeoutException e)
+                {
+                    Tracer.Trace(TraceMessage.Warning(e.Message));
+                    SleepForOneSecond();
                 }
             }
             return result;

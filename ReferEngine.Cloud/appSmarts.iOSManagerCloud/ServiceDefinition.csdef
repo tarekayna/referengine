@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="appSmarts.iOSManagerCloud" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2013-03.2.0">
+  <WorkerRole name="appSmarts.iOSManager" vmsize="ExtraSmall">
+    <Runtime executionContext="elevated" />
+    <Imports>
+      <Import moduleName="RemoteAccess" />
+      <Import moduleName="RemoteForwarder" />
+    </Imports>
+    <ConfigurationSettings>
+      <Setting name="CurrentServiceConfiguration" />
+      <Setting name="TracerConnectionString" />
+      <Setting name="MessagesPerInstance" />
+      <Setting name="SleepInMinutes" />
+      <Setting name="MaxInstanceCount" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="CN=tarek-macbook" storeLocation="LocalMachine" storeName="My" />
+    </Certificates>
+  </WorkerRole>
+</ServiceDefinition>

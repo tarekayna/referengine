@@ -15,14 +15,15 @@ namespace ReferEngine.Common.Data.iOS
             switch (Util.CurrentServiceConfiguration)
             {
                 case Util.ReferEngineServiceConfiguration.ProductionCloud:
+                case Util.ReferEngineServiceConfiguration.Local:
                     _connectionStringNames = new List<string> { "ios_west" };
                     break;
                 case Util.ReferEngineServiceConfiguration.TestCloud:
                     _connectionStringNames = new List<string> { "ios_west_test" };
                     break;
-                case Util.ReferEngineServiceConfiguration.Local:
-                    _connectionStringNames = new List<string> { "ios_local" };
-                    break;
+                //case Util.ReferEngineServiceConfiguration.Local:
+                //    _connectionStringNames = new List<string> { "ios_local" };
+                //    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
