@@ -1,0 +1,36 @@
+﻿.navbar.navbar-fixed-top {
+  position: absolute;
+}
+.navbar-inner {
+  padding: 0;
+}
+.navbar-inner .container img {
+  float: left;
+  display: inline;
+  margin: 5px 10px;
+}
+.navbar-inner .h4 {
+  vertical-align: middle;
+  min-width: 100px;
+}
+.navbar-logo-ctnr {
+  min-width: 200px;
+}
+#landing {
+  margin-top: -20px;
+}
+body > .container {
+  padding-top: 30px;
+}
+.app-logo {
+  float: left;
+  margin: 10px 10px 5px 0;
+  width: 75px;
+  height: 75px;
+}
+.store-logo-ctnr img {
+  margin: 10px;
+}
+.carousel-inner p {
+  margin-top: 5px;
+}

@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# referengine: http://ogp.me/ns/fb/referengine#">    
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>
+            @{
+                string title = ViewResources.WindowsStoreApps +
+                               ViewResources.TitleSeparator +
+                               ViewResources.appSmarts;
+                if (ViewBag.Title != null)
+                {
+                    title = ViewBag.Title +
+                            ViewResources.TitleSeparator +
+                            title;
+                }
+            }
+            @title
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="ReferEngine.com">
+        @{
+            string pageDescription = ViewResources.MainDescription;
+            if (ViewBag.PageDescription != null)
+            {
+                pageDescription = ViewBag.PageDescription + pageDescription;
+            }
+        }
+        <meta name="description" content="@pageDescription" />
+
+        @if (IsSectionDefined("MetaTags"))
+        {
+            @RenderSection("MetaTags")
+        }
+        else
+        {
+            <meta property="og:title" content="@title"/> 
+            <meta property="og:url" content="@Request.Url"/> 
+            <meta property="og:description" content="@pageDescription"/> 
+            <meta property="og:image" content="https://www.referengine.com/img/logo-mark-50.png"/>                 
+        }
+
+        @Html.Partial("_FavIcon")
+        @Html.Partial("_OpenSansFont")
+        @Styles.Render("~/bundles/css/defaultLayout")
+        @RenderSection("Styles", required: false)
+    </head>
+    <body>
+        <div class='notifications top-right'></div>
+        
+        @if (Request.IsAuthenticated)
+        {
+            @:@Html.Partial("Header/_Header_Authenticated")
+        }
+        else
+        {
+            @:@Html.Partial("Header/_Header_NotAuthenticated")
+        }
+        
+        <section id="subintro">
+            <div class="jumbotron subhead" id="overview">
+                <div class="container">
+                    <div class="row">
+                        <div class="span8 navigation">
+                            <h4>
+                                @RenderSection("Navigation", false)
+                            </h4>
+                        </div>
+                        @if (IsSectionDefined("SearchForm"))
+                        {
+                            <div class="span3 pull-right">
+                                <div class="input-append pull-right">
+                                    @RenderSection("SearchForm")
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="maincontent">
+            <div class="container">
+                @RenderBody()
+            </div>
+        </section>
+
+        @Html.Partial("_Footer")
+        
+        @* Local Scripts *@
+        @Scripts.Render("~/bundles/js/defaultLayout")
+        @Html.Partial("_SetJavaScriptGlobalVariables")
+        @RenderSection("Scripts", required: false)
+    
+        @Html.Partial("_PrivateBeta")
+
+        @* 3rd Party Scripts *@
+        @Html.Partial("_MixPanel")
+@*        @Html.Partial("_FacebookSdk")*@
+        @Html.Partial("_GoogleAnalytics")
+    </body>
+</html>

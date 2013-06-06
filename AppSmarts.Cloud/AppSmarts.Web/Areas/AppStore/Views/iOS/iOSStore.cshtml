@@ -1,0 +1,7 @@
+﻿@using ReferEngine.Common.Models.iOS
+@model System.Collections.Generic.IList<ReferEngine.Common.Models.iOS.iOSGenre>
+
+@foreach (iOSGenre genre in Model)
+{
+    <p>@genre.Name</p>
+}

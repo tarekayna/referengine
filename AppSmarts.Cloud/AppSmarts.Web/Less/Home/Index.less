@@ -1,0 +1,142 @@
+﻿@import "..\shared\bootstrap\variables.less";
+@import "..\shared\bootstrap\mixins.less";
+
+body {
+    font-family: 'Open Sans';
+}
+
+.tm {
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none;
+
+    &:visited {
+        color: black;
+    }
+}
+
+.bottom-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 50px;
+    color: #FFF;
+    background-color: #000;
+
+    ul {
+        list-style: none;
+    }
+
+    li {
+        float: right;
+
+        a {
+            padding: 10px 15px;
+            color: #ccc;
+        }
+    }
+}
+
+.text-center {
+    text-align: center;
+}
+
+.clean-logo {
+    padding-top: 50px;
+    text-decoration: none; 
+    font-size: 24px;
+
+    img {
+        border: 0
+    }
+}
+
+.brand {
+    &.logo {
+        margin: auto;
+        width: 210px;
+    }
+
+    .logo-text {
+        margin-top: -5px;
+    }
+}
+
+.user-login {
+    margin: 30px;
+    display: inline-block;
+
+    img {
+        border: none;
+        float: left; 
+        margin: -5px 10px 0 0;
+    }
+
+    a {
+        font-weight: 300;
+    }
+}
+
+.btn {
+  display: inline-block;
+  .ie7-inline-block();
+  padding: 10px 15px;
+  margin: 0 5px; // For input.btn
+  font-size: @baseFontSize;
+  line-height: @baseLineHeight;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  .buttonBackground(@btnBackground, @btnBackgroundHighlight, @grayDark, 0 1px 1px rgba(255,255,255,.75));
+  border: none;
+  *border: 0; // Remove the border to prevent IE7's black border on input:focus
+  border-bottom-color: darken(@btnBorder, 10%);
+  .border-radius(@baseBorderRadius);
+  .ie7-restore-left-whitespace(); // Give IE7 some love
+  .box-shadow(~"inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)");
+
+  // Hover/focus state
+  &:hover,
+  &:focus {
+    color: @grayDark;
+    text-decoration: none;
+    background-position: 0 -15px;
+
+    // transition is only when going to hover/focus, otherwise the background
+    // behind the gradient (there for IE<=9 fallback) gets mismatched
+    .transition(background-position .1s linear);
+  }
+
+  // Focus state for keyboard and accessibility
+  &:focus {
+    .tab-focus();
+  }
+
+  // Active state
+  &.active,
+  &:active {
+    background-image: none;
+    outline: 0;
+    .box-shadow(~"inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05)");
+  }
+
+  // Disabled state
+  &.disabled,
+  &[disabled] {
+    cursor: default;
+    background-image: none;
+    .opacity(65);
+    .box-shadow(none);
+  }
+
+  &.register {
+    .buttonBackground(lighten(@blue, 0.1), @blue, @white, 0 1px 1px rgba(255,255,255,.75));
+  } 
+
+  &.login {
+    .buttonBackground(lighten(@green, 0.1), @green, @white, 0 1px 1px rgba(255,255,255,.75));
+  }
+}

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="ReferCloud" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="3" osVersion="*" schemaVersion="2013-03.2.0">
+  <Role name="AppSmarts.Web">
+    <Instances count="2" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="tarek990" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEBR1UCZ5ulS1RjMhL40zvAswDQYJKoZIhvcNAQEBBQAEggEAKM2ihWZSGPRfV7wPiYtC9t7o2AH/6XOSO3uC3zL0BDjxJL2QtjfE/ApOESi1b+aGPZ0+GPy9PMb999MTwVq5DwdcTrHvMedUo+q+YRm2W29jYDsWdeOEpXEfBS37EnXyZ5s8tRtm7QFvY4BPVMoygDYY24HOJYyZrS5iUSK3PT6+Qqi1VsW8lq61meGhBWJSX9JgLzFm+05vgbl6mbY/D63j0MynDjL+VMpbKle/AsEedO1tyVLjEyBfRT960D/quG2j73/Oo8/ZyfVSS23l0j3LrNAizG5FU3PkcxoUQmFpNrRESSA09cQKcCS+ii6hvImtrnrzXeH1JGCJddN6YTAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECMtAuVnzvWHrgBA/q4UxKjv0ZGnB4LDuYjm0" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2014-02-02T23:59:59.0000000-08:00" />
+      <Setting name="CurrentServiceConfiguration" value="ProductionCloud" />
+      <Setting name="TracerConnectionString" value="DefaultEndpointsProtocol=https;AccountName=tracedata;AccountKey=iu9rCXCyDP1NGkVwCEYBQytUGP4QpkHn+IQ/4fy4ZBY4Phuw6SZBCELEgEBi0xvx7We9V3raD4efzxoE6EwReQ==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=webdiagnosticsproduction;AccountKey=Wfh4Ow8IkZQDahnTfCBZ1AM5Hf/2cBvgmvkIb3cw+hICL7rEv1M7tp+S4u6vpvowdES6eh6Gq5D0+tNG70qVew==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" value="{&quot;caches&quot;:[{&quot;name&quot;:&quot;default&quot;,&quot;policy&quot;:{&quot;eviction&quot;:{&quot;type&quot;:0},&quot;expiration&quot;:{&quot;defaultTTL&quot;:10,&quot;isExpirable&quot;:true,&quot;type&quot;:1},&quot;serverNotification&quot;:{&quot;isEnabled&quot;:false}},&quot;secondaries&quot;:0}]}" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" value="1" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" value="30" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" value="DefaultEndpointsProtocol=https;AccountName=referenginecachestore;AccountKey=ISrbnq9nEdeqnFoRm9AIz4u1hNK0ULpl22CmF7tdFs5Es2WfoatIFInZv+iknDEgG11aA11mAuL1rznDsQTo6w==" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="ReferEngineTestCertificate" thumbprint="8557BE533016DBF4850D0CB577ADBACF1C8E56D0" thumbprintAlgorithm="sha1" />
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="876EBD89384A141DC765BC459AFD510CB1A0BE23" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+  <Role name="AppSmarts.WebDataWriter">
+    <Instances count="2" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.ServiceBus.ConnectionString" value="Endpoint=sb://referenginedatawritebus.servicebus.windows.net;SharedSecretIssuer=owner;SharedSecretValue=gyFFjJOT98wjzS77VRhZGic8YooQhQTSOcv9VSjSzW4=" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="tarek990" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEBR1UCZ5ulS1RjMhL40zvAswDQYJKoZIhvcNAQEBBQAEggEAKM2ihWZSGPRfV7wPiYtC9t7o2AH/6XOSO3uC3zL0BDjxJL2QtjfE/ApOESi1b+aGPZ0+GPy9PMb999MTwVq5DwdcTrHvMedUo+q+YRm2W29jYDsWdeOEpXEfBS37EnXyZ5s8tRtm7QFvY4BPVMoygDYY24HOJYyZrS5iUSK3PT6+Qqi1VsW8lq61meGhBWJSX9JgLzFm+05vgbl6mbY/D63j0MynDjL+VMpbKle/AsEedO1tyVLjEyBfRT960D/quG2j73/Oo8/ZyfVSS23l0j3LrNAizG5FU3PkcxoUQmFpNrRESSA09cQKcCS+ii6hvImtrnrzXeH1JGCJddN6YTAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECMtAuVnzvWHrgBA/q4UxKjv0ZGnB4LDuYjm0" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2014-02-02T23:59:59.0000000-08:00" />
+      <Setting name="CurrentServiceConfiguration" value="ProductionCloud" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+      <Setting name="TracerConnectionString" value="DefaultEndpointsProtocol=https;AccountName=tracedata;AccountKey=iu9rCXCyDP1NGkVwCEYBQytUGP4QpkHn+IQ/4fy4ZBY4Phuw6SZBCELEgEBi0xvx7We9V3raD4efzxoE6EwReQ==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=webdiagnosticsproduction;AccountKey=Wfh4Ow8IkZQDahnTfCBZ1AM5Hf/2cBvgmvkIb3cw+hICL7rEv1M7tp+S4u6vpvowdES6eh6Gq5D0+tNG70qVew==" />
+      <Setting name="SleepBetweenGetMessage" value="1000" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="876EBD89384A141DC765BC459AFD510CB1A0BE23" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+</ServiceConfiguration>

@@ -1,0 +1,11 @@
+﻿@using AppSmarts.Web.Models.Common
+<script type="text/javascript">
+    @{
+        ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+    }
+    
+    @if (viewProperties != null)
+    {
+        @Html.Raw(@viewProperties.GetJavaScriptGlobalVariables())
+    }
+</script>

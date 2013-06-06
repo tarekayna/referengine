@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="ReferEngine.iOSQueueCruncherCloud" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="3" osVersion="*" schemaVersion="2013-03.2.0">
+  <Role name="AppSmarts.iOSQueueCruncher">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="CurrentServiceConfiguration" value="Local" />
+      <Setting name="TracerConnectionString" value="DefaultEndpointsProtocol=https;AccountName=tracedatalocal;AccountKey=DIj+Qrv19TTLoBNKhSfd4rHhrJjlCosHrcu08x2JaLhFf4J1RqQpKTNJaZ9tmqL1xsFuXmY/vr9oQW0kUKeQ9Q==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="tarek990" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEFsusWiwd2GXR7pP2dthjlYwDQYJKoZIhvcNAQEBBQAEggEAK+KujCrtd5vrWiigKBfP1sUN3ygdymGN+mTF1y3jHD/9aAQRPsLrlIGDSCEMoyaHLd1gVARNsrqQ5JCsO8vf0ew7GcvcDrsXLBAspMGX/ntynT4j15UlGI4dbII/VVL9vdkIdw04UMsXuhgE036Rf3U+/zfxBaOZ/pUFsbwRv432rn3ZqCHC+SS/02E3+S3QtRZrnAB8SmDBQBuRMq8xMu7OPcUK90ixjZwpIhXxvSnG/PreCknn3qquENwIo4Z4QGaNupIoawXOXhn2T61yI81v4aRL9gGFpWvxsbhXynISoUoYqogzfgnPpG+eh3Dq8GB+eEqWjbDFLWvT0QvUpjAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECEfyN252dnwxgBC53yRo6AmEjc1WE3imvNcv" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2014-05-27T23:59:59.0000000-07:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="3648524B74AD3B2822E2728C8E51D6DD728CBFD7" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+</ServiceConfiguration>

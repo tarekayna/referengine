@@ -1,0 +1,24 @@
+﻿@using AppSmarts.Models.Common
+@using AppSmarts.Web.Models.Common
+@model AppSmarts.Web.Models.Account.LocalPasswordModel
+
+@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+}
+
+@if (viewProperties.HasLocalPassword)
+{
+    @Html.Partial("_ChangePasswordPartial")
+}
+else
+{ 
+    @Html.Partial("_SetPasswordPartial")
+}
+
+@*<section id="externalLogins">
+    @Html.Action("RemoveExternalLogins")
+
+    <h3>Add an external login</h3>
+    @Html.Action("ExternalLoginsList", new { viewProperties.ReturnUrl })
+</section>*@
+

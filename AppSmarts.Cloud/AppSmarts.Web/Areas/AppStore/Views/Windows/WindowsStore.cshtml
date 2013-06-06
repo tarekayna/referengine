@@ -1,0 +1,23 @@
+﻿@model IList<WindowsAppStoreCategory>
+@using AppSmarts.Common.Models
+@using AppSmarts.Web.Areas.AppStore.ViewModels
+
+@section Navigation
+{
+    @Html.Partial("_WindowsStoreNavigation", new WindowsStoreNavigationViewModel())
+}
+
+@section SearchForm
+{
+    @Html.Partial("_WindowsSearchForm")
+}
+
+<div class="row">
+    <ul class="portfolio-area da-thumbs">    
+        @foreach (WindowsAppStoreCategory category in Model)
+        {
+            @Html.Partial("_WindowsCategoryTile", category)
+        }
+    </ul>
+</div>
+

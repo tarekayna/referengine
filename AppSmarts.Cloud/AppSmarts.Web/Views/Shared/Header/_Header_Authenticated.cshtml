@@ -1,0 +1,99 @@
+﻿@using AppSmarts.Common.Utilities
+@using AppSmarts.Models.Common
+@using AppSmarts.Web.Models.Common
+@using Roles = AppSmarts.Common.Models.Roles
+@{
+ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+}
+
+<div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+        <div class="container">
+            @if (User.IsInRole(Roles.User))
+            {
+                @Html.Partial("Header/_Header_Logo")
+            }
+            else // Dev or Admin
+            {
+                <ul class="nav">
+                    @if (viewProperties.HasCurrentUser && 
+                         viewProperties.CurrentUser.Apps != null && 
+                         viewProperties.CurrentUser.Apps.Count > 0)
+                    {
+                        <div class="btn-group">
+                            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                @if (viewProperties.CurrentApp == null)
+                                {
+                                    <span>Your Apps</span>
+                                }
+                                else
+                                {
+                                    <span>@viewProperties.CurrentApp.Name</span>
+                                }
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                @for (int i = 0; i < viewProperties.CurrentUser.Apps.Count; i++)
+                                {
+                                    <li>
+                                        <a tabindex="-1" href="~/app/dashboard/@viewProperties.CurrentUser.Apps[i].Id">@viewProperties.CurrentUser.Apps[i].Name</a>
+                                    </li>
+                                }
+                                <li class="divider"></li>
+                                <li><a href="~/app/new"><i class="icon-plus-sign"></i> Add New App</a></li>
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="~/app/new" class="btn"><i class="icon-plus-sign"></i> Add New App</a>
+                    }                           
+                </ul>
+            }
+
+            <div class="nav-collapse collapse">
+                @if (viewProperties.CurrentApp != null)
+                {
+                    <ul class="nav pull-left" id="dev-links">
+                        <li @if(viewProperties.ActiveMenuItem == "Dashboard"){<text>class="active"</text>}>
+                            <a href="~/app/dashboard/@viewProperties.CurrentApp.Id">Dashboard</a>
+                        </li>
+                        <li @if(viewProperties.ActiveMenuItem == "Settings"){<text>class="active"</text>}>
+                            <a href="~/app/settings/@viewProperties.CurrentApp.Id">Settings</a>
+                        </li>
+                    </ul>
+                }
+                <ul class="nav pull-right">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li><a href="~/admin/panel">Admin Panel</a></li>
+                    }
+                    <li class="pull-right">
+                        <form action="~/account/logOff" id="logoutForm" method="post">
+                            @if (viewProperties.HasFacebookAccessSession)
+                            {
+                                <img src="@viewProperties.FacebookAccessSession.GetCurrentUser().PictureUrl" />
+                                <span class="hi-user">Hi, @viewProperties.CurrentUser.FirstName!</span>
+                            }
+                            else if (viewProperties.HasCurrentUser)
+                            {
+                                <span class="hi-user">Hi, @viewProperties.CurrentUser.FirstName!</span>
+                            }                            
+                            <div class="btn-group">
+                                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        @Html.AntiForgeryToken()
+                                        <a href=" javascript:document.getElementById('logoutForm').submit() "><i class="icon-off"></i>Sign Out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

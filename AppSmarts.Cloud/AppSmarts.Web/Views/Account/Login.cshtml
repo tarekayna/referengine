@@ -1,0 +1,77 @@
+﻿@using AppSmarts.Models.Common
+@using AppSmarts.Web.Models.Common
+@model AppSmarts.Web.Models.Account.LoginModel
+
+@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+}
+
+<div class="row">
+    <div class="span4 offset3 text-center">
+        <form action="~/Account/FacebookLogin" method="post" id="fb-login">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="ReturnUrl" value="https://referengine.fwd.wf/account/" />
+            <a href="javascript: document.getElementById('fb-login').submit()">
+                <img src="https://cloudinary-a.akamaihd.net/referengine/image/upload/w_50/FB_f_Logo__blue_1024_jz915q.png" 
+                    alt="Icon for Facebook" style="float: left">
+                <h3>Login using Facebook</h3>
+            </a>
+        </form>
+    </div>
+</div>
+
+@using (Html.BeginForm(new { viewProperties.ReturnUrl }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div id="content" class="txt-middle">
+        <div class="container">
+            <div class="row">
+                <div class="span6 offset3">
+                    
+                    @Html.Partial("_Messaging")
+
+                    <div class="modal modal-flat modal-inline">
+                        <div class="modal-header">
+                            <h3>Login to Refer Engine
+                            </h3>
+                        </div>
+                        <div class="modal-body">
+                            <fieldset>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            <span class="add-on">@@</span>
+                                            @Html.TextBoxFor(m => m.Email, new { @class = "span3", @placeholder = "username@email.com", @name = "Email" })
+                                            @*<input id="Email" name="Email" type="text" placeholder="username@email.com" class="span3" />*@
+                                        </div>
+                                    </div>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            <span class="add-on"><i class="icon-lock"></i></span>
+                                            @*<input type="password" placeholder="Password" id="password" name="password" class="span3">*@
+                                            @Html.PasswordFor(m => m.Password, new { @class="span3", @name="password", @placeholder="password"})
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label class="checkbox inline" for="RememberMe">
+                                            @Html.CheckBoxFor(m => m.RememberMe)
+                                            @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+                                            @*<input id="RememberMe" name="RememberMe" type="checkbox" checked />*@
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn pull-left">Forgot Your Password?</button>
+                            <input type="submit" class="btn btn-primary" value="Log In" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

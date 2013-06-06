@@ -1,0 +1,54 @@
+﻿@{
+    @Scripts.Render("~/js/shared/privateBeta")
+}
+
+<form id="beta-request-form">
+    @Html.AntiForgeryToken()
+    <div id="private-beta" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Register a New Account" aria-hidden="true">
+        <div class="modal-header">
+            <h3>Request an Invite</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form">
+                <fieldset>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Email</td>
+                                <td>
+                                    <input data-val="true" id="beta-request-email" name="email"
+                                        type="text" value="" placeholder="username@mail.com" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>App Name</td>
+                                <td>
+                                    <input data-val="true" data-val-required="The Email field is required." id="beta-request-app-name"
+                                        name="app-name" type="text" value="" placeholder="e.g. Blu Graphing Calculator" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Your App Platform(s)
+                                </td>
+                                <td>
+                                    <select multiple="multiple" name="platforms" id="beta-request-platforms">
+                                        <option value="android">Android</option>
+                                        <option value="ios">iOS</option>
+                                        <option value="web">Web Application</option>
+                                        <option value="windows">Windows 8</option>
+                                        <option value="winphone">Windows Phone</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+            <div class="result">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" value="Submit Request" class="btn btn-primary" />
+        </div>
+    </div>
+</form>

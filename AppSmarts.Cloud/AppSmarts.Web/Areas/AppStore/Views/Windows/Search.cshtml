@@ -1,0 +1,94 @@
+﻿@using AppSmarts.Web.Areas.AppStore.ViewModels
+
+@{
+    ViewBag.Title = Model.SearchTerm;
+    ViewBag.PageDescription = Model + " Apps";
+}
+
+@section Navigation
+{
+    @{
+        var navigationViewModel = new WindowsStoreNavigationViewModel
+            {
+                SearchTerm = Model.SearchTerm
+            };
+    }
+    @Html.Partial("_WindowsStoreNavigation", navigationViewModel)
+}
+
+@section SearchForm
+{
+    @Html.Partial("_WindowsSearchForm")
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        var re = {};
+        re.SearchTerm = '@Model.SearchTerm';
+        re.NumberOfApps = '@Model.NumberOfApps';
+        re.PageNumber = '@Model.PageNumber';
+        re.ParentCategoryName = '@Model.ParentCategoryName';
+        re.CategoryName = '@Model.CategoryName';
+    </script>
+    <script data-main="/typescript/appstore/windows/search.js" type="text/javascript" src="~/typescript/lib/require.js"></script> 
+}
+
+@*<div class="row">
+    <div class="span12">
+        <div class="btn-group pull-right">
+        @if (Model.PageNumber > 1)
+        {
+            var prevPage = Model.PageNumber - 1;
+            var link = Model.Category.LinkPart + "?page=" + prevPage;
+            <a class="btn" href="~/app-store/windows/@link"><i class="icon-arrow-left"></i></a>
+        }
+            <a class="btn disabled">@Model.PageNumber</a>
+        @{
+            var nextPage = Model.PageNumber + 1;
+            var nextLink = Model.Category.LinkPart + "?page=" + nextPage;
+        }
+            <a class="btn" href="~/app-store/windows/@nextLink"><i class="icon-arrow-right"></i></a>
+        </div>
+    </div>
+</div>*@
+<div class="row">
+    <div class="span12 text-center" data-bind="visible: !SearchCompleted()" style="display: none">
+        <h2>Looking for <span data-bind="text: SearchTerm"></span>...</h2>
+    </div>
+    <div class="span12 text-center" data-bind="visible: SearchCompleted() &&  Apps().length == 0" style="display: none">
+        <h2>No apps found for <span data-bind="text: SearchTerm"></span>.</h2>
+    </div>
+    <ul class="portfolio-area da-thumbs" data-bind="visible: SearchCompleted() && Apps().length > 0" style="display:none">
+        <!-- ko foreach: Apps -->
+        <li class="portfolio-item2" data-id="id-0" data-type="web">
+            <div class="span4">
+                <div class="thumbnail">
+                    <a data-bind="attr: {href: Link }" style="color: white">
+                        <div class="image-wrapp">
+                            <div data-bind="visible: ScreenshotLink !== undefined">
+                                <img data-bind="attr: {src: ScreenshotLink}" height="120" width="370" title="" />
+                            </div>
+                            <div data-bind="visible: ScreenshotLink == undefined">
+                                <img src="~/areas/assets/img/dummies/work1.jpg" style="height: 90px; width: 270px" title="" />
+                            </div>
+                        </div>
+                        <div data-bind="style: { 'background-color': BackgroundColor }" style="height: 50px; overflow: hidden; padding: 10px">
+
+                            <div data-bind="visible: LogoLink !== undefined">
+                                <img height="50" width="50" data-bind="attr: { src: LogoLink }" style="float: left; "/>
+                            </div>
+                            <div data-bind="visible: LogoLink == undefined">
+                                <span style="height: 50px; width: 50px; float: left; ">#</span>
+                            </div>
+                            <h3 data-bind="text: AppName" style="margin-left: 60px; margin-top: 0; text-overflow: ellipsis; -ms-text-overflow: ellipsis; -o-text-overflow: ellipsis; white-space: nowrap; overflow: hidden ">
+                            </h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </li>        
+        <!-- /ko -->    
+    </ul>
+</div>
+

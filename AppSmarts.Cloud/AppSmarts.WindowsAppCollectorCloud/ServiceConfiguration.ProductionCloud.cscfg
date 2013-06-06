@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="ReferEngine.WorkerCloud" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="3" osVersion="*" schemaVersion="2013-03.2.0">
+  <Role name="AppSmarts.WindowsAppCollector">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="tarek990" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEGOmb6rueWWMSRm0OAg/TYswDQYJKoZIhvcNAQEBBQAEggEATTCqSEqNghFxrMaK/fTEmmuUHpcCS9d26+zkqGCtOJAQQgwRbkhfL6UScIg60nMuFDfPFNAM30pPqdHFiS2DNxBj8Kq/Ik7LoUtooZ9c06pej9xuQGkoymt6524Ut9ra6sZeTGJJ+hiU9Jrh2UVShK8HMMVbXia/YFoBIfS1sTI9Npm7hcT6aBDRPhyrGZe5f1qbC+/DRXyLX354JPFjHwVKK4AHm1TAXLNpsXaOoQnZeOwM0qymC7QhICi/QZQuY/RTUh8usWQpbxUm59vE5qrczLK7DZMTjJX0/op/jHuVcdDESH5CwpMTAFfcAy4LsIZHH4KdhgM+ZGWPFStfpzAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECJHenpGMV1cogBBPAjgemcBoAlFO6fg7yxBZ" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2014-02-02T23:59:59.0000000-08:00" />
+      <Setting name="CurrentServiceConfiguration" value="ProductionCloud" />
+      <Setting name="TracerConnectionString" value="DefaultEndpointsProtocol=https;AccountName=tracedata;AccountKey=iu9rCXCyDP1NGkVwCEYBQytUGP4QpkHn+IQ/4fy4ZBY4Phuw6SZBCELEgEBi0xvx7We9V3raD4efzxoE6EwReQ==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="FF552F5649004ED2C7CCA344CB9D47ACD4737C7D" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+</ServiceConfiguration>

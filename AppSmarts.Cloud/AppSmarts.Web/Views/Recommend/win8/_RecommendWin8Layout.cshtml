@@ -1,0 +1,58 @@
+﻿@using AppSmarts.Common.Utilities
+@using AppSmarts.Models.Common
+@using AppSmarts.Web.Models.Common
+@{
+    ViewProperties viewProperties = ((ViewProperties)ViewData["ViewProperties"]);
+    Verifier.IsNotNullOrEmpty(viewProperties, "viewProperties");
+    Verifier.IsNotNullOrEmpty(viewProperties.CurrentApp, "viewProperties.CurrentApp");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="//cdn.optimizely.com/js/179184149.js"></script>
+    <title>
+        @if (viewProperties.CurrentApp != null)
+        {
+            @:@viewProperties.CurrentApp.Name | Refer Engine
+        }
+        else
+        {
+            @:Refer Engine
+        }
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Apexa Inc.">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Duru+Sans' rel='stylesheet' type='text/css'>
+    @Html.Partial("_SetJavaScriptGlobalVariables")
+    @RenderSection("styles", required: false)
+</head>
+    <body>
+        <div id="re-ctnr">
+            <header>
+                @HtmlHelperExtensions.Image(Html, viewProperties.CurrentApp.LogoImage.GetLink(), viewProperties.CurrentApp.Name, "app-logo")
+                <div class="app-name">@viewProperties.CurrentApp.Name</div>
+                @Html.Partial("_LogoMark30")
+                <h4 class="logo-text">Refer Engine</h4>
+            </header>
+            <span class="enc">
+                &#x1f512; encrypted connection
+            </span>
+            <div id="re-content">
+                @RenderBody()
+            </div>
+            <footer>
+                @RenderSection("footer")
+            </footer>
+        </div>
+        
+        @Html.Partial("_MixPanel")
+
+        @Scripts.Render("~/bundles/libs/base")
+
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
