@@ -1,2 +1,0 @@
-update-database -ProjectName ReferEngine.Common -StartupProjectName ReferEngine.Common -ConnectionStringName ios_west -ConfigurationTypeName ReferEngine.Common.iOSMigrations.iOSConfiguration
-update-database -ProjectName ReferEngine.Common -StartupProjectName ReferEngine.Common -ConnectionStringName ios_east -ConfigurationTypeName ReferEngine.Common.iOSMigrations.iOSConfiguration
