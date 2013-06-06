@@ -365,6 +365,14 @@
     <Compile Include="Migrations\201306052132531_ClouinaryImageHash.Designer.cs">
       <DependentUpon>201306052132531_ClouinaryImageHash.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201306052151174_CloudinaryHash.cs" />
+    <Compile Include="Migrations\201306052151174_CloudinaryHash.Designer.cs">
+      <DependentUpon>201306052151174_CloudinaryHash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201306052154467_CloudinaryTest.cs" />
+    <Compile Include="Migrations\201306052154467_CloudinaryTest.Designer.cs">
+      <DependentUpon>201306052154467_CloudinaryTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppAutoShowOptions.cs" />
     <Compile Include="Models\AppRewardPlan.cs" />
     <Compile Include="Models\AppScreenshot.cs" />
@@ -655,6 +663,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201306052132531_ClouinaryImageHash.resx">
       <DependentUpon>201306052132531_ClouinaryImageHash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306052151174_CloudinaryHash.resx">
+      <DependentUpon>201306052151174_CloudinaryHash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306052154467_CloudinaryTest.resx">
+      <DependentUpon>201306052154467_CloudinaryTest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

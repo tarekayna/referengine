@@ -76,14 +76,6 @@ namespace ReferEngine.Web.App_Start
             #region Style Bundles
             List<BundleInfo> styleBundles = new List<BundleInfo>
                 {
-                    new BundleInfo("~/bundles/css/bootstrap",
-                                   "~/css/bootstrap.css",
-                                   "~/css/bootstrap-notify.css",
-                                   "~/css/font-awesome.css",
-                                   "~/css/m-buttons.css",
-                                   "~/css/base.css",
-                                   "~/css/blue.css"),
-                                   
                     new BundleInfo("~/bundles/css/defaultLayout",
                                    "~/less/shared/bootstrap/bootstrap.css",
                                    "~/less/shared/bootstrap/responsive.css",
